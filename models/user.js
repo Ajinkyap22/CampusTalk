@@ -6,6 +6,7 @@ const UserSchema = new Schema({
   lastName: { type: String, maxlength: 30 },
   email: { type: String, maxlength: 320, required: true },
   phone: { type: String, maxlength: 15 },
+  googleId: { type: String },
   password: { type: String, required: true },
   picture: { type: String },
   posts: { type: Array, default: [] },

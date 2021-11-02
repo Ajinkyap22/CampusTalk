@@ -13,7 +13,9 @@ const app = express();
 
 // Set up mongoose
 const mongoose = require("mongoose");
-const mongoDB = process.env.MONGO_URL;
+const mongoDB = (process.envGOOGLE_CLIENT_ID =
+  "508773087854-ntd2udfm7p2n4hcm02i62b3a2832qi9b.apps.googleusercontent.com");
+GOOGLE_CLIENT_SECRET = "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".MONGO_URL;
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error"));

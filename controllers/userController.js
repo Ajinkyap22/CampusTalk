@@ -122,3 +122,5 @@ exports.user = async function (req, res) {
     res.json(user);
   });
 };
+
+// login
