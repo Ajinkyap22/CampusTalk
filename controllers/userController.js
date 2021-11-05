@@ -71,7 +71,7 @@ exports.signup_post = [
 
     if (!errors.isEmpty()) return res.json({ errros: errors.array() });
 
-    // check if username exists
+    // check if email exists
     const userExists = await User.find({ email: req.body.email });
     if (userExists.length > 0) {
       return res.status(409).json({
@@ -123,4 +123,100 @@ exports.user = async function (req, res) {
   });
 };
 
-// login
+// google auth
+exports.google = async function (req, res) {
+  const { token } = req.body;
+
+  const ticket = await client.verifyIdToken({
+    idToken: token,
+    audience: process.env.GOOGLE_CLIENT_ID,
+  });
+
+  const { given_name, family_name, email, picture } = ticket.getPayload();
+
+  User.findOneAndUpdate(
+    { email },
+    { firstName: given_name, lastName: family_name, email, picture },
+    { upsert: true },
+    function (err, user) {
+      if (err) res.json(err);
+
+      jwt.sign(
+        { _id: user._id, email: user.email },
+        process.env.SECRET,
+        { expiresIn: "10m" },
+        (err, token) => {
+          if (err) return res.status(400).json(err);
+          return res.json({
+            token: token,
+            user: { _id: user._id, email: user.email },
+          });
+        }
+      );
+    }
+  );
+};
+
+// delete single user
+exports.delete_user = function (req, res) {
+  User.findByIdAndRemove(req.params.id, function (err, user) {
+    if (err) return res.json(err);
+
+    return res.json(user);
+  });
+};
+
+// update profile
+exports.profile = [
+  // sanitize and validate fields
+  body("firstName", "First name cannot be empty.")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+
+  body("lastName", "Last name cannot be empty.")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+
+  body("email", "E-mail must be at least 3 characters long.")
+    .trim()
+    .isLength({ min: 3 })
+    .escape(),
+
+  // process request
+  async (req, res) => {
+    // extract errors
+    const errors = validationResult(req.body);
+
+    if (!errors.isEmpty()) return res.json({ errros: errors.array() });
+
+    // check if email exists
+    const userExists = await User.find({ email: req.body.email });
+
+    if (userExists.length > 0) {
+      return res.status(409).json({
+        error: "E-mail ID already in use",
+      });
+    }
+
+    // update profile
+    User.findByIdAndUpdate(
+      req.user._id,
+      {
+        $set: {
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          email: req.body.email,
+          picture: req.body.picture || "",
+        },
+      },
+      {},
+      function (err, user) {
+        if (err) return res.json(err);
+
+        return res.json(user);
+      }
+    );
+  },
+];

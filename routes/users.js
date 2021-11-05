@@ -16,15 +16,12 @@ router.post("/signup", userController.signup_post);
 router.get("/:id", userController.user);
 
 // google auth
-router.get("/google", passport.authenticate("google", { scope: ["profile"] }));
+router.post("/google", userController.google);
 
-// google auth redirect
-router.get(
-  "/google/callback",
-  passport.authenticate("google", { failureRedirect: "/login" }),
-  function (req, res) {
-    return res.json("Sign in successful.");
-  }
-);
+// delete user
+router.delete("/delete/:id", userController.delete_user);
+
+// user profile info
+// firstname, lastname, email, picture
 
 module.exports = router;
