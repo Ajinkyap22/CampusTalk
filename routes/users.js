@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/userController");
 const passport = require("passport");
+const upload = require("../config/multer");
 
 // GET all users
 router.get("/", userController.users_get);
@@ -22,6 +23,6 @@ router.post("/google", userController.google);
 router.delete("/delete/:id", userController.delete_user);
 
 // user profile info
-// firstname, lastname, email, picture
+router.put("/profile/:id", upload.single("picture"), userController.profile);
 
 module.exports = router;

@@ -194,7 +194,7 @@ exports.profile = [
     // check if email exists
     const userExists = await User.find({ email: req.body.email });
 
-    if (userExists.length > 0) {
+    if (userExists.length > 0 && userExists[0]._id != req.params.id) {
       return res.status(409).json({
         error: "E-mail ID already in use",
       });
@@ -202,16 +202,16 @@ exports.profile = [
 
     // update profile
     User.findByIdAndUpdate(
-      req.user._id,
+      req.params.id,
       {
         $set: {
           firstName: req.body.firstName,
           lastName: req.body.lastName,
           email: req.body.email,
-          picture: req.body.picture || "",
+          picture: req.file.filename || req.body.picture || "",
         },
       },
-      {},
+      { new: true },
       function (err, user) {
         if (err) return res.json(err);
 
