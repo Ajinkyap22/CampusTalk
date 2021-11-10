@@ -10,6 +10,15 @@ exports.forums = function (req, res) {
   });
 };
 
+// get single forum
+exports.get_forum = function (req, res) {
+  Forum.findById(req.params.id, function (err, forum) {
+    if (err) return res.json(err);
+
+    return res.json(forum);
+  });
+};
+
 // create a forum
 exports.create_forum = [
   // sanitize and validate fields
@@ -45,3 +54,12 @@ exports.create_forum = [
     );
   },
 ];
+
+// delete a forum
+exports.delete_forum = function (req, res) {
+  Forum.findByIdAndRemove(req.params.id, function (err, forum) {
+    if (err) return res.json(err);
+
+    return res.json(forum);
+  });
+};
