@@ -7,14 +7,14 @@ const upload = require("../config/multer");
 // GET all users
 router.get("/", userController.users_get);
 
+// get single user
+router.get("/:id", userController.user);
+
 // POST login
 router.post("/login", userController.login_post);
 
 // POST signup
 router.post("/signup", userController.signup_post);
-
-// get single user
-router.get("/:id", userController.user);
 
 // google auth
 router.post("/google", userController.google);

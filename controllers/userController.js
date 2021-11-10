@@ -46,18 +46,13 @@ exports.signup_post = [
   // sanitize and validate fields
   body("email", "E-mail must be at least 3 characters long.")
     .trim()
-    .isLength({ min: 3 })
-    .escape(),
-
+    .isLength({ min: 3 }),
   body("password", "Password must be at least 8 characters long.")
     .trim()
-    .isLength({ min: 8 })
-    .escape(),
-
+    .isLength({ min: 8 }),
   body("confirmPassword", "Password must be at least 8 characters long.")
     .trim()
     .isLength({ min: 8 })
-    .escape()
     .custom(async (value, { req }) => {
       if (value !== req.body.password)
         throw new Error("Cnofirmed Password must be the same as password");
@@ -181,9 +176,7 @@ exports.profile = [
 
   body("email", "E-mail must be at least 3 characters long.")
     .trim()
-    .isLength({ min: 3 })
-    .escape(),
-
+    .isLength({ min: 3 }),
   // process request
   async (req, res) => {
     // extract errors

@@ -6,8 +6,8 @@ const logger = require("morgan");
 const cors = require("cors");
 require("./config/passport");
 
-const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
+const forumRouter = require("./routes/forum");
 
 const app = express();
 
@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", indexRouter);
 app.use("/api/users", usersRouter);
+app.use("/api/forums", forumRouter);
 
 module.exports = app;
