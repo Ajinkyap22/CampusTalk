@@ -6,10 +6,11 @@ const ForumSchema = new Schema({
   address: { type: String, maxlength: 100, required: true },
   website: { type: String, maxlength: 2000, required: true },
   email: { type: String, maxlength: 320, required: true },
-  description: { type: String, maxlength: 100 },
+  description: { type: String, maxlength: 200 },
   rules: { type: Array, default: [] },
   picture: { type: String },
   members: { type: Array, default: [] },
+  moderators: { type: Array, default: [] },
   posts: { type: Array, default: [] },
   timestamp: { type: Date, default: Date.now },
 });

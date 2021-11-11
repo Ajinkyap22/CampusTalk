@@ -1,4 +1,5 @@
 const Forum = require("../models/forum");
+const User = require("../models/user");
 const { body, validationResult } = require("express-validator");
 
 // get all forums
@@ -63,3 +64,77 @@ exports.delete_forum = function (req, res) {
     return res.json(forum);
   });
 };
+
+// update forum
+exports.update_forum = [
+  // sanitize and validate fields
+  body("forumName", "Institute name cannot be empty.")
+    .trim()
+    .isLength({ min: 1 }),
+  body("address", "Address cannot be empty.").trim().isLength({ min: 1 }),
+  body("website", "Website URL must be at least 3 characters long.")
+    .trim()
+    .isLength({ min: 3 }),
+  body("email", "E-mail must be at least 3 characters long.")
+    .trim()
+    .isLength({ min: 3 }),
+
+  // process request
+  (req, res) => {
+    const errors = validationResult(req.body);
+
+    if (!errors.isEmpty()) return res.json({ errros: errors.array() });
+
+    Forum.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: {
+          forumName: req.body.forumName,
+          address: req.body.address,
+          website: req.body.website,
+          email: req.body.email,
+          description: req.body.description,
+          picture: req.file.filename || req.body.picture || "",
+        },
+      },
+      { new: true },
+      function (err, forum) {
+        if (err) return res.json(err);
+
+        return res.json(forum);
+      }
+    );
+  },
+];
+
+// add rule
+exports.add_rule = [
+  // validate & sanitize
+  body("rule", "Rule cannot be empty").trim().isLength({ min: 1 }),
+
+  // process request
+  (req, res) => {
+    const errors = validationResult(req.body);
+
+    if (!errors.isEmpty()) return res.json({ errors: errors.array() });
+
+    Forum.findByIdAndUpdate(
+      req.params.id,
+      {
+        $push: {
+          rules: req.body.rule,
+        },
+      },
+      { new: true },
+      function (err, forum) {
+        if (err) return res.json(err);
+
+        return res.json(forum.rules);
+      }
+    );
+  },
+];
+
+// delete rule
+
+// join forum
