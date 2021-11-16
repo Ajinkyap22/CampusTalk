@@ -2,13 +2,16 @@ const app = require("../app");
 const supertest = require("supertest");
 const request = supertest(app);
 const mongoose = require("mongoose");
-const databaseName = "user";
 const User = require("../models/user");
 jest.setTimeout(10000);
 
-beforeAll(async () => {
-  const url = `mongodb://127.0.0.1/${databaseName}`;
-  await mongoose.connect(url, { useNewUrlParser: true });
+const { setUpDB } = require("./test-setup");
+
+setUpDB("user");
+
+it("Seeding test", async () => {
+  const users = await User.find();
+  expect(users.length).toBe(3);
 });
 
 it("Sign up", (done) => {
@@ -40,6 +43,6 @@ it("Login", (done) => {
     .expect(200, done);
 });
 
-afterAll(async () => {
-  await User.deleteMany();
-});
+// delete user
+
+// update profile
