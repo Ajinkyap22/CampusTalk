@@ -4,6 +4,7 @@ const request = supertest(app);
 const mongoose = require("mongoose");
 const User = require("../models/user");
 jest.setTimeout(10000);
+let token, id;
 
 const { setUpDB } = require("./test-setup");
 
@@ -40,9 +41,47 @@ it("Login", (done) => {
       password: "test1234",
     })
     .expect("Content-Type", /json/)
-    .expect(200, done);
+    .expect(200)
+    .end((err, res) => {
+      if (err) return done(err);
+      else {
+        token = res.body.token;
+        id = res.body.user._id;
+        return done();
+      }
+    });
+});
+
+// update profile
+it("Updates user profile", (done) => {
+  request
+    .put(`/api/users/profile/${id}`)
+    .set("Authorization", `Bearer ${token}`)
+    .field("firstName", "Test")
+    .field("lastName", "User")
+    .field("email", "test@gmail.com")
+    .attach("picture", "./public/images/logo.png")
+    .expect("Content-Type", /json/)
+    .expect(200)
+    .end((err, res) => {
+      if (err) return done(err);
+      else {
+        expect(res.body).toMatchObject({
+          firstName: "Test",
+          lastName: "User",
+          email: "test@gmail.com",
+          picture: expect.stringMatching(/picture/),
+        });
+
+        return done();
+      }
+    });
 });
 
 // delete user
-
-// update profile
+it("Deletes user", (done) => {
+  request
+    .delete(`/api/users/delete/${id}`)
+    .expect("Content-Type", /json/)
+    .expect(200, done);
+});
