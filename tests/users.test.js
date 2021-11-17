@@ -1,7 +1,6 @@
 const app = require("../app");
 const supertest = require("supertest");
 const request = supertest(app);
-const mongoose = require("mongoose");
 const User = require("../models/user");
 jest.setTimeout(10000);
 let token, id;
@@ -47,6 +46,24 @@ it("Login", (done) => {
       else {
         token = res.body.token;
         id = res.body.user._id;
+        return done();
+      }
+    });
+});
+
+// get user
+it("Retreives a user", (done) => {
+  request
+    .get(`/api/users/${id}`)
+    .expect("Content-Type", /json/)
+    .expect(200)
+    .end((err, res) => {
+      if (err) return done(err);
+      else {
+        expect(res.body).toMatchObject({
+          email: "test@gmail.com",
+        });
+
         return done();
       }
     });
