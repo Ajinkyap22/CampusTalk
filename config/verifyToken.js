@@ -1,3 +1,6 @@
+require("dotenv").config();
+const jwt = require("jsonwebtoken");
+
 // Verify Token
 function verifyToken(req, res, next) {
   // Get auth header value
@@ -11,8 +14,13 @@ function verifyToken(req, res, next) {
     const bearerToken = bearer[1];
     // Set the token
     req.token = bearerToken;
-    // Next middleware
-    next();
+    // verify the token
+    jwt.verify(req.token, process.env.SECRET, (err, authData) => {
+      if (err) return res.status(400).json(err);
+      req.user = authData;
+      // Next middleware
+      next();
+    });
   } else {
     // Forbidden
     res.sendStatus(403);

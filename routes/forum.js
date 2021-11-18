@@ -14,7 +14,7 @@ router.get("/:id", forumController.get_forum);
 router.post("/create-forum", verifyToken, forumController.create_forum);
 
 // DELETE forum
-router.delete("/:id/delete", verifyToken, forumController.delete_forum);
+router.delete("/delete/:id", verifyToken, forumController.delete_forum);
 
 // update forum
 router.put(
