@@ -95,3 +95,73 @@ it("Retrives forum by id", (done) => {
       }
     });
 });
+
+// update a forum
+it("Update a forum", (done) => {
+  request
+    .put(`/api/forums/update/${forumId}`)
+    .set("Authorization", `Bearer ${token}`)
+    .field("forumName", "Demo Forum")
+    .field("email", "test@gmail.com")
+    .field("website", "www.testforum.com")
+    .field("address", "Test Address")
+    .attach("picture", "./public/images/logo.png")
+    .expect("Content-Type", /json/)
+    .expect(200)
+    .end((err, res) => {
+      if (err) return done(err);
+      else {
+        expect(res.body).toMatchObject({
+          forumName: "Demo Forum",
+          email: "test@gmail.com",
+          website: "www.testforum.com",
+          address: "Test Address",
+          picture: expect.stringMatching(/picture/),
+        });
+        return done();
+      }
+    });
+});
+
+// add rule
+it("Adds a forum rule", (done) => {
+  request
+    .post(`/api/forums/${forumId}/rules/add`)
+    .set("Authorization", `Bearer ${token}`)
+    .send({
+      rule: "No abusive language allowed",
+    })
+    .expect("Content-Type", /json/)
+    .expect(200)
+    .end((err, res) => {
+      if (err) return done(err);
+      else {
+        expect(res.body).toEqual(
+          expect.arrayContaining(["No abusive language allowed"])
+        );
+        return done();
+      }
+    });
+});
+
+// delete forum
+it("Deletes a forum", (done) => {
+  request
+    .delete(`/api/forums/delete/${forumId}`)
+    .set("Authorization", `Bearer ${token}`)
+    .expect("Content-Type", /json/)
+    .expect(200)
+    .end((err, res) => {
+      if (err) return done(err);
+      else {
+        expect(res.body).toMatchObject({
+          forumName: "Demo Forum",
+          email: "test@gmail.com",
+          website: "www.testforum.com",
+          address: "Test Address",
+        });
+
+        return done();
+      }
+    });
+});

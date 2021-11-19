@@ -18,7 +18,7 @@ router.delete("/delete/:id", verifyToken, forumController.delete_forum);
 
 // update forum
 router.put(
-  "/:id/update",
+  "/update/:id",
   verifyToken,
   upload.single("picture"),
   forumController.update_forum
