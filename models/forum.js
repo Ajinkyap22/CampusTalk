@@ -9,7 +9,7 @@ const ForumSchema = new Schema({
   description: { type: String, maxlength: 200 },
   rules: { type: Array, default: [] },
   picture: { type: String },
-  members: { type: Array, default: [] },
+  members: [{ type: Schema.Types.ObjectId, ref: "User" }],
   moderators: { type: Array, default: [] },
   posts: { type: Array, default: [] },
   timestamp: { type: Date, default: Date.now },

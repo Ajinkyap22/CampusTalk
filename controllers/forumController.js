@@ -171,20 +171,40 @@ exports.join_forum = function (req, res) {
         members: req.body.id,
       },
     },
-    { new: true },
-    (err, forum) => {
+    { new: true }
+  )
+    .populate({ path: "members", model: "User" })
+    .exec((err, forum) => {
       if (err) return res.json(err);
 
       return res.json(forum.members);
-    }
-  );
+    });
 };
 
 // get members
 exports.get_members = function (req, res) {
-  Forum.findById(req.params.id, (err, forum) => {
-    if (err) return res.json(err);
+  Forum.findById(req.params.id)
+    .populate({ path: "members", model: "User" })
+    .exec((err, forum) => {
+      if (err) return res.json(err);
 
-    return res.json(forum.members);
-  });
+      return res.json(forum.members);
+    });
+};
+
+// remove a member
+exports.remove_member = function (req, res) {
+  Forum.findByIdAndUpdate(req.params.id, {
+    $pull: {
+      members: {
+        _id: req.body.id,
+      },
+    },
+  })
+    .populate({ path: "members", model: "User" })
+    .exec((err, forum) => {
+      if (err) return res.json(err);
+
+      return res.json(forum.members);
+    });
 };

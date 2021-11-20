@@ -39,4 +39,7 @@ router.post("/:id/join", verifyToken, forumController.join_forum);
 // get members
 router.get("/:id/members", forumController.get_members);
 
+// remove a member
+router.post("/:id/members/delete", verifyToken, forumController.remove_member);
+
 module.exports = router;

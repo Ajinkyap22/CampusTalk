@@ -184,6 +184,14 @@ it("Join a forum", (done) => {
     .end((err, res) => {
       if (err) return done(err);
 
+      expect(res.body).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            email: "test@gmail.com",
+          }),
+        ])
+      );
+
       return done();
     });
 });
@@ -192,6 +200,31 @@ it("Join a forum", (done) => {
 it("Retrieves members of a forum", (done) => {
   request
     .get(`/api/forums/${forumId}/members`)
+    .expect("Content-Type", /json/)
+    .expect(200)
+    .end((err, res) => {
+      if (err) return done(err);
+
+      expect(res.body).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            email: "test@gmail.com",
+          }),
+        ])
+      );
+
+      return done();
+    });
+});
+
+// remove a member
+it("Removes a member", (done) => {
+  request
+    .post(`/api/forums/${forumId}/members/delete`)
+    .set("Authorization", `Bearer ${token}`)
+    .send({
+      id: id,
+    })
     .expect("Content-Type", /json/)
     .expect(200)
     .end((err, res) => {
