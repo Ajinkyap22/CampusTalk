@@ -20,36 +20,34 @@ beforeAll((done) => {
     })
     .end((err, res) => {
       if (err) return done(err);
-      else {
-        token = res.body.token;
-        id = res.body.user._id;
-        return done(err);
-      }
+
+      token = res.body.token;
+      id = res.body.user._id;
+      return done(err);
     });
 });
 
 // get all forums
-it("Retrives all forums", (done) => {
+it("Retrieves all forums", (done) => {
   request
     .get("/api/forums")
     .expect("Content-Type", /json/)
     .expect(200)
     .end((err, res) => {
       if (err) return done(err);
-      else {
-        expect(res.body).toEqual(
-          expect.arrayContaining([
-            expect.objectContaining({
-              forumName: "Test Forum",
-              email: "testing1@gmail.com",
-              website: "www.test.com",
-              address: "12345678",
-            }),
-          ])
-        );
 
-        return done();
-      }
+      expect(res.body).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            forumName: "Test Forum",
+            email: "testing1@gmail.com",
+            website: "www.test.com",
+            address: "12345678",
+          }),
+        ])
+      );
+
+      return done();
     });
 });
 
@@ -68,31 +66,29 @@ it("Creates new forum", (done) => {
     .expect(200)
     .end((err, res) => {
       if (err) return done(err);
-      else {
-        forumId = res.body._id;
-        return done();
-      }
+
+      forumId = res.body._id;
+      return done();
     });
 });
 
 // get forum
-it("Retrives forum by id", (done) => {
+it("Retrieves forum by id", (done) => {
   request
     .get(`/api/forums/${forumId}`)
     .expect("Content-Type", /json/)
     .expect(200)
     .end((err, res) => {
       if (err) return done(err);
-      else {
-        expect(res.body).toMatchObject({
-          forumName: "Demo Forum",
-          email: "test@gmail.com",
-          website: "www.testforum.com",
-          address: "Test Address",
-        });
 
-        return done();
-      }
+      expect(res.body).toMatchObject({
+        forumName: "Demo Forum",
+        email: "test@gmail.com",
+        website: "www.testforum.com",
+        address: "Test Address",
+      });
+
+      return done();
     });
 });
 
@@ -110,16 +106,15 @@ it("Update a forum", (done) => {
     .expect(200)
     .end((err, res) => {
       if (err) return done(err);
-      else {
-        expect(res.body).toMatchObject({
-          forumName: "Demo Forum",
-          email: "test@gmail.com",
-          website: "www.testforum.com",
-          address: "Test Address",
-          picture: expect.stringMatching(/picture/),
-        });
-        return done();
-      }
+
+      expect(res.body).toMatchObject({
+        forumName: "Demo Forum",
+        email: "test@gmail.com",
+        website: "www.testforum.com",
+        address: "Test Address",
+        picture: expect.stringMatching(/picture/),
+      });
+      return done();
     });
 });
 
@@ -135,12 +130,76 @@ it("Adds a forum rule", (done) => {
     .expect(200)
     .end((err, res) => {
       if (err) return done(err);
-      else {
-        expect(res.body).toEqual(
-          expect.arrayContaining(["No abusive language allowed"])
-        );
-        return done();
-      }
+
+      expect(res.body).toEqual(
+        expect.arrayContaining(["No abusive language allowed"])
+      );
+      return done();
+    });
+});
+
+// get forum rules
+it("Retrieves forum rules", (done) => {
+  request
+    .get(`/api/forums/${forumId}/rules`)
+    .expect("Content-Type", /json/)
+    .expect(200)
+    .end((err, res) => {
+      if (err) return done(err);
+
+      expect(res.body).toEqual(
+        expect.arrayContaining(["No abusive language allowed"])
+      );
+
+      return done();
+    });
+});
+
+// delete rules
+it("Delete all rules", (done) => {
+  request
+    .delete(`/api/forums/${forumId}/rules/delete`)
+    .set("Authorization", `Bearer ${token}`)
+    .expect("Content-Type", /json/)
+    .expect(200)
+    .end((err, res) => {
+      if (err) return done(err);
+
+      expect(res.body).toEqual([]);
+
+      return done();
+    });
+});
+
+// join forum
+it("Join a forum", (done) => {
+  request
+    .post(`/api/forums/${forumId}/join`)
+    .set("Authorization", `Bearer ${token}`)
+    .send({
+      id: id,
+    })
+    .expect("Content-Type", /json/)
+    .expect(200)
+    .end((err, res) => {
+      if (err) return done(err);
+
+      return done();
+    });
+});
+
+// get members
+it("Retrieves members of a forum", (done) => {
+  request
+    .get(`/api/forums/${forumId}/members`)
+    .expect("Content-Type", /json/)
+    .expect(200)
+    .end((err, res) => {
+      if (err) return done(err);
+
+      console.log(res.body);
+
+      return done();
     });
 });
 
@@ -153,15 +212,14 @@ it("Deletes a forum", (done) => {
     .expect(200)
     .end((err, res) => {
       if (err) return done(err);
-      else {
-        expect(res.body).toMatchObject({
-          forumName: "Demo Forum",
-          email: "test@gmail.com",
-          website: "www.testforum.com",
-          address: "Test Address",
-        });
 
-        return done();
-      }
+      expect(res.body).toMatchObject({
+        forumName: "Demo Forum",
+        email: "test@gmail.com",
+        website: "www.testforum.com",
+        address: "Test Address",
+      });
+
+      return done();
     });
 });

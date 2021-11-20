@@ -24,7 +24,19 @@ router.put(
   forumController.update_forum
 );
 
+// get rules
+router.get("/:id/rules", forumController.get_rules);
+
 // add rule
 router.post("/:id/rules/add", verifyToken, forumController.add_rule);
+
+// delete all rules
+router.delete("/:id/rules/delete", verifyToken, forumController.delete_rules);
+
+// join forum
+router.post("/:id/join", verifyToken, forumController.join_forum);
+
+// get members
+router.get("/:id/members", forumController.get_members);
 
 module.exports = router;

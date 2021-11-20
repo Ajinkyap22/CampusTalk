@@ -107,6 +107,15 @@ exports.update_forum = [
   },
 ];
 
+// get all rules
+exports.get_rules = function (req, res) {
+  Forum.findById(req.params.id, (err, forum) => {
+    if (err) return res.json(err);
+
+    return res.json(forum.rules);
+  });
+};
+
 // add rule
 exports.add_rule = [
   // validate & sanitize
@@ -135,6 +144,47 @@ exports.add_rule = [
   },
 ];
 
-// delete rule
+// delete rules
+exports.delete_rules = function (req, res) {
+  Forum.findByIdAndUpdate(
+    req.params.id,
+    {
+      $set: {
+        rules: [],
+      },
+    },
+    { new: true },
+    (err, forum) => {
+      if (err) return res.json(err);
+
+      return res.json(forum.rules);
+    }
+  );
+};
 
 // join forum
+exports.join_forum = function (req, res) {
+  Forum.findByIdAndUpdate(
+    req.params.id,
+    {
+      $push: {
+        members: req.body.id,
+      },
+    },
+    { new: true },
+    (err, forum) => {
+      if (err) return res.json(err);
+
+      return res.json(forum.members);
+    }
+  );
+};
+
+// get members
+exports.get_members = function (req, res) {
+  Forum.findById(req.params.id, (err, forum) => {
+    if (err) return res.json(err);
+
+    return res.json(forum.members);
+  });
+};

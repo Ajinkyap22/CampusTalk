@@ -43,11 +43,10 @@ it("Login", (done) => {
     .expect(200)
     .end((err, res) => {
       if (err) return done(err);
-      else {
-        token = res.body.token;
-        id = res.body.user._id;
-        return done();
-      }
+
+      token = res.body.token;
+      id = res.body.user._id;
+      return done();
     });
 });
 
@@ -59,13 +58,12 @@ it("Retreives a user", (done) => {
     .expect(200)
     .end((err, res) => {
       if (err) return done(err);
-      else {
-        expect(res.body).toMatchObject({
-          email: "test@gmail.com",
-        });
 
-        return done();
-      }
+      expect(res.body).toMatchObject({
+        email: "test@gmail.com",
+      });
+
+      return done();
     });
 });
 
@@ -82,16 +80,15 @@ it("Updates user profile", (done) => {
     .expect(200)
     .end((err, res) => {
       if (err) return done(err);
-      else {
-        expect(res.body).toMatchObject({
-          firstName: "Test",
-          lastName: "User",
-          email: "test@gmail.com",
-          picture: expect.stringMatching(/picture/),
-        });
 
-        return done();
-      }
+      expect(res.body).toMatchObject({
+        firstName: "Test",
+        lastName: "User",
+        email: "test@gmail.com",
+        picture: expect.stringMatching(/picture/),
+      });
+
+      return done();
     });
 });
 
