@@ -194,13 +194,15 @@ exports.get_members = function (req, res) {
 
 // remove a member
 exports.remove_member = function (req, res) {
-  Forum.findByIdAndUpdate(req.params.id, {
-    $pull: {
-      members: {
-        _id: req.body.id,
+  Forum.findByIdAndUpdate(
+    req.params.id,
+    {
+      $pull: {
+        members: req.body.id,
       },
     },
-  })
+    { new: true, multi: true }
+  )
     .populate({ path: "members", model: "User" })
     .exec((err, forum) => {
       if (err) return res.json(err);
