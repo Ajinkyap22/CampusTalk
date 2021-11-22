@@ -46,6 +46,7 @@ exports.create_forum = [
         address: req.body.address,
         website: req.body.website,
         email: req.body.email,
+        // moderator: [req.body.id]
       },
       (err, forum) => {
         if (err) return res.json(err);
@@ -201,12 +202,50 @@ exports.remove_member = function (req, res) {
         members: req.body.id,
       },
     },
-    { new: true, multi: true }
+    { new: true }
   )
     .populate({ path: "members", model: "User" })
     .exec((err, forum) => {
       if (err) return res.json(err);
 
       return res.json(forum.members);
+    });
+};
+
+// make moderator
+exports.make_moderator = function (req, res) {
+  Forum.findByIdAndUpdate(
+    req.params.id,
+    {
+      $push: {
+        moderators: req.body.id,
+      },
+    },
+    { new: true }
+  )
+    .populate({ path: "moderators", model: "User" })
+    .exec((err, forum) => {
+      if (err) return res.json(err);
+
+      return res.json(forum.moderators);
+    });
+};
+
+// dismiss moderator
+exports.dismiss_moderator = function (req, res) {
+  Forum.findByIdAndUpdate(
+    req.params.id,
+    {
+      $pull: {
+        moderators: req.body.id,
+      },
+    },
+    { new: true }
+  )
+    .populate({ path: "moderators", model: "User" })
+    .exec((err, forum) => {
+      if (err) return res.json(err);
+
+      return res.json(forum.moderators);
     });
 };

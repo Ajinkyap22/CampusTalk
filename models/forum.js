@@ -10,8 +10,8 @@ const ForumSchema = new Schema({
   rules: { type: Array, default: [] },
   picture: { type: String },
   members: [{ type: Schema.Types.ObjectId, ref: "User" }],
-  moderators: { type: Array, default: [] },
-  posts: { type: Array, default: [] },
+  moderators: [{ type: Schema.Types.ObjectId, ref: "User" }],
+  posts: [{ type: Schema.Types.ObjectId, ref: "Post" }],
   timestamp: { type: Date, default: Date.now },
 });
 

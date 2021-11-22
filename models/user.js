@@ -10,7 +10,6 @@ const UserSchema = new Schema({
   posts: { type: Array, default: [] },
   comments: { type: Array, default: [] },
   forums: { type: Array, default: [] },
-  moderator: { type: Boolean, default: false },
   timestamp: { type: Date, default: Date.now },
 });
 

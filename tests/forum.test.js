@@ -61,6 +61,7 @@ it("Creates new forum", (done) => {
       email: "test@gmail.com",
       website: "www.testforum.com",
       address: "Test Address",
+      user: id,
     })
     .expect("Content-Type", /json/)
     .expect(200)
@@ -224,6 +225,51 @@ it("Removes a member", (done) => {
     .set("Authorization", `Bearer ${token}`)
     .send({
       id: id,
+    })
+    .expect("Content-Type", /json/)
+    .expect(200)
+    .end((err, res) => {
+      if (err) return done(err);
+
+      expect(res.body).toEqual([]);
+
+      return done();
+    });
+});
+
+// make moderator
+it("Makes user moderator", (done) => {
+  request
+    .post(`/api/forums/${forumId}/moderators/make`)
+    .set("Authorization", `Bearer ${token}`)
+    .send({
+      id,
+    })
+    .expect("Content-Type", /json/)
+    .expect(200)
+    .end((err, res) => {
+      if (err) return done(err);
+
+      expect(res.body).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            email: "test@gmail.com",
+            _id: id,
+          }),
+        ])
+      );
+
+      return done();
+    });
+});
+
+// dismiss moderator
+it("Dismisses moderator", (done) => {
+  request
+    .post(`/api/forums/${forumId}/moderators/dismiss`)
+    .set("Authorization", `Bearer ${token}`)
+    .send({
+      id,
     })
     .expect("Content-Type", /json/)
     .expect(200)

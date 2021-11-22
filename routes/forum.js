@@ -42,4 +42,18 @@ router.get("/:id/members", forumController.get_members);
 // remove a member
 router.post("/:id/members/delete", verifyToken, forumController.remove_member);
 
+// make moderator
+router.post(
+  "/:id/moderators/make",
+  verifyToken,
+  forumController.make_moderator
+);
+
+// dismiss as moderator
+router.post(
+  "/:id/moderators/dismiss",
+  verifyToken,
+  forumController.dismiss_moderator
+);
+
 module.exports = router;
