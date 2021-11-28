@@ -6,12 +6,13 @@ const PostSchema = new Schema({
   text: { type: String },
   file: { type: String },
   anonymous: { type: Boolean, default: false },
-  author: { type: Schema.Types.ObjectId, required: true },
-  comments: { type: Array, default: [] },
+  author: { type: Schema.Types.ObjectId, ref: "User", required: true },
+  forum: { type: Schema.Types.ObjectId, ref: "Forum", required: true },
+  comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
   upvotes: { type: Number, defautl: 0 },
   downvotes: { type: Number, defautl: 0 },
   pinned: { type: Boolean, default: false },
   timestamp: { type: Date },
 });
 
-module.exports = mongoose.model("Forum", PostSchema);
+module.exports = mongoose.model("Post", PostSchema);

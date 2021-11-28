@@ -8,6 +8,7 @@ require("./config/passport");
 
 const usersRouter = require("./routes/users");
 const forumRouter = require("./routes/forum");
+const postRouter = require("./routes/post");
 
 const app = express();
 
@@ -27,5 +28,6 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/api/users", usersRouter);
 app.use("/api/forums", forumRouter);
+app.use("/api/forums/:id/posts", postRouter);
 
 module.exports = app;
