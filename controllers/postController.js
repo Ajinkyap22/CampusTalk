@@ -62,3 +62,34 @@ exports.delete_post = function (req, res) {
     return res.json(post);
   });
 };
+
+// update a post
+exports.update_post = [
+  // sanitize and validate fields
+  body("Title", "Title cannot be empty.").trim().isLength({ min: 1 }),
+
+  // process request
+  (req, res) => {
+    const errors = validationResult(req.body);
+
+    if (!errors.isEmpty()) return res.json({ errros: errors.array() });
+
+    Post.findByIdAndUpdate(
+      req.params.postId,
+      {
+        $set: {
+          title: req.body.title,
+          text: req.body.text || "",
+          anonymous: req.body.anonymous || false,
+        },
+      },
+      { new: true }
+    )
+      .populate("author")
+      .exec((err, post) => {
+        if (err) return res.json(err);
+
+        return res.json(post);
+      });
+  },
+];

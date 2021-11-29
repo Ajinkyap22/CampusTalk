@@ -113,3 +113,52 @@ it("Gets all posts", (done) => {
       return done();
     });
 });
+
+// update a post
+it("Edits a post", (done) => {
+  request
+    .put(`/api/forums/${forumId}/posts/update/${postId}`)
+    .set("Authorization", `Bearer ${token}`)
+    .send({
+      title: "Updated title",
+      text: "Updated text",
+      anonymous: false,
+    })
+    .expect("Content-Type", /json/)
+    .expect(200)
+    .end((err, res) => {
+      if (err) return done(err);
+
+      expect(res.body).toMatchObject({
+        title: "Updated title",
+        text: "Updated text",
+        forum: forumId,
+        anonymous: false,
+        file: expect.stringMatching(/file/),
+      });
+
+      return done();
+    });
+});
+
+// delete a post
+it("delete a post", (done) => {
+  request
+    .delete(`/api/forums/${forumId}/posts/delete/${postId}`)
+    .set("Authorization", `Bearer ${token}`)
+    .expect("Content-Type", /json/)
+    .expect(200)
+    .end((err, res) => {
+      if (err) return done(err);
+
+      expect(res.body).toMatchObject({
+        title: "Updated title",
+        text: "Updated text",
+        forum: forumId,
+        anonymous: false,
+        file: expect.stringMatching(/file/),
+      });
+
+      return done();
+    });
+});

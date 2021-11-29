@@ -19,6 +19,9 @@ router.post(
 );
 
 // delete a post
-router.delete("/delete/:postId/", verifyToken, postController.delete_post);
+router.delete("/delete/:postId", verifyToken, postController.delete_post);
+
+// update a post
+router.put("/update/:postId", postController.update_post);
 
 module.exports = router;
