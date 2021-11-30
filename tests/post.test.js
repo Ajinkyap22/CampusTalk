@@ -141,6 +141,59 @@ it("Edits a post", (done) => {
     });
 });
 
+// upvotes a post
+it("Upvotes a post", (done) => {
+  request
+    .put(`/api/forums/${forumId}/posts/upvote/${postId}`)
+    .set("Authorization", `Bearer ${token}`)
+    .send({
+      id,
+    })
+    .expect("Content-Type", /json/)
+    .expect(200)
+    .end((err, res) => {
+      if (err) return done(err);
+
+      expect(res.body).toMatchObject({
+        title: "Updated title",
+        text: "Updated text",
+        forum: forumId,
+        anonymous: false,
+        file: expect.stringMatching(/file/),
+        upvotes: expect.arrayContaining([id]),
+      });
+
+      return done();
+    });
+});
+
+// downvotes a post
+it("downvotes a post", (done) => {
+  request
+    .put(`/api/forums/${forumId}/posts/downvote/${postId}`)
+    .set("Authorization", `Bearer ${token}`)
+    .send({
+      id,
+    })
+    .expect("Content-Type", /json/)
+    .expect(200)
+    .end((err, res) => {
+      if (err) return done(err);
+
+      expect(res.body).toMatchObject({
+        title: "Updated title",
+        text: "Updated text",
+        forum: forumId,
+        anonymous: false,
+        file: expect.stringMatching(/file/),
+        downvotes: expect.arrayContaining([id]),
+        upvotes: expect.arrayContaining([]),
+      });
+
+      return done();
+    });
+});
+
 // delete a post
 it("delete a post", (done) => {
   request

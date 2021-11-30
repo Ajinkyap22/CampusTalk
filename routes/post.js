@@ -24,4 +24,10 @@ router.delete("/delete/:postId", verifyToken, postController.delete_post);
 // update a post
 router.put("/update/:postId", postController.update_post);
 
+// upvotes a post
+router.put("/upvote/:postId", postController.upvote_post);
+
+// downvotes a post
+router.put("/downvote/:postId", postController.downvote_post);
+
 module.exports = router;

@@ -93,3 +93,47 @@ exports.update_post = [
       });
   },
 ];
+
+// upvote a post
+exports.upvote_post = function (req, res) {
+  Post.findByIdAndUpdate(
+    req.params.postId,
+    {
+      $push: {
+        upvotes: req.body.id,
+      },
+      $pull: {
+        downvotes: req.body.id,
+      },
+    },
+    { new: true }
+  )
+    .populate("author")
+    .exec((err, post) => {
+      if (err) return res.json(err);
+
+      return res.json(post);
+    });
+};
+
+// downvote a post
+exports.downvote_post = function (req, res) {
+  Post.findByIdAndUpdate(
+    req.params.postId,
+    {
+      $push: {
+        downvotes: req.body.id,
+      },
+      $pull: {
+        upvotes: req.body.id,
+      },
+    },
+    { new: true }
+  )
+    .populate("author")
+    .exec((err, post) => {
+      if (err) return res.json(err);
+
+      return res.json(post);
+    });
+};

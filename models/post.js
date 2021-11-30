@@ -9,8 +9,8 @@ const PostSchema = new Schema({
   author: { type: Schema.Types.ObjectId, ref: "User", required: true },
   forum: { type: Schema.Types.ObjectId, ref: "Forum", required: true },
   comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
-  upvotes: { type: Number, defautl: 0 },
-  downvotes: { type: Number, defautl: 0 },
+  upvotes: [{ type: Schema.Types.ObjectId, ref: "User" }],
+  downvotes: [{ type: Schema.Types.ObjectId, ref: "User" }],
   pinned: { type: Boolean, default: false },
   timestamp: { type: Date },
 });
