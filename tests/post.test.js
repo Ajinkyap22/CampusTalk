@@ -155,11 +155,6 @@ it("Upvotes a post", (done) => {
       if (err) return done(err);
 
       expect(res.body).toMatchObject({
-        title: "Updated title",
-        text: "Updated text",
-        forum: forumId,
-        anonymous: false,
-        file: expect.stringMatching(/file/),
         upvotes: expect.arrayContaining([id]),
       });
 
@@ -181,13 +176,44 @@ it("downvotes a post", (done) => {
       if (err) return done(err);
 
       expect(res.body).toMatchObject({
-        title: "Updated title",
-        text: "Updated text",
-        forum: forumId,
-        anonymous: false,
-        file: expect.stringMatching(/file/),
         downvotes: expect.arrayContaining([id]),
         upvotes: expect.arrayContaining([]),
+      });
+
+      return done();
+    });
+});
+
+// pin a post
+it("pins a post", (done) => {
+  request
+    .put(`/api/forums/${forumId}/posts/pin/${postId}`)
+    .set("Authorization", `Bearer ${token}`)
+    .expect("Content-Type", /json/)
+    .expect(200)
+    .end((err, res) => {
+      if (err) return done(err);
+
+      expect(res.body).toMatchObject({
+        pinned: true,
+      });
+
+      return done();
+    });
+});
+
+// unpin a post
+it("pins a post", (done) => {
+  request
+    .put(`/api/forums/${forumId}/posts/unpin/${postId}`)
+    .set("Authorization", `Bearer ${token}`)
+    .expect("Content-Type", /json/)
+    .expect(200)
+    .end((err, res) => {
+      if (err) return done(err);
+
+      expect(res.body).toMatchObject({
+        pinned: false,
       });
 
       return done();

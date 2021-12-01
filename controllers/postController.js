@@ -1,5 +1,3 @@
-const Forum = require("../models/forum");
-const User = require("../models/user");
 const Post = require("../models/post");
 const { body, validationResult } = require("express-validator");
 
@@ -126,6 +124,44 @@ exports.downvote_post = function (req, res) {
       },
       $pull: {
         upvotes: req.body.id,
+      },
+    },
+    { new: true }
+  )
+    .populate("author")
+    .exec((err, post) => {
+      if (err) return res.json(err);
+
+      return res.json(post);
+    });
+};
+
+// pin a post
+exports.pin_post = function (req, res) {
+  Post.findByIdAndUpdate(
+    req.params.postId,
+    {
+      $set: {
+        pinned: true,
+      },
+    },
+    { new: true }
+  )
+    .populate("author")
+    .exec((err, post) => {
+      if (err) return res.json(err);
+
+      return res.json(post);
+    });
+};
+
+// unpin a post
+exports.unpin_post = function (req, res) {
+  Post.findByIdAndUpdate(
+    req.params.postId,
+    {
+      $set: {
+        pinned: false,
       },
     },
     { new: true }
