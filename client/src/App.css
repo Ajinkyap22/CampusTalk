@@ -1,0 +1,18 @@
+.App {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.bg-greek-vase {
+  background-image: url("./assets/greek-vase.png");
+  background-repeat: repeat;
+}
+
+.bg-picture {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url("./assets/bg-picture.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0.9;
+}
