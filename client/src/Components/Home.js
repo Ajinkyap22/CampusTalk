@@ -1,20 +1,44 @@
 import Navbar from "./Navbar";
 import Hero from "../assets/Hero.png";
 import Carousel from "./Carousel";
+import Accordion from "./Accordion";
+import { useState } from "react";
 
 const data1 = [
   "CampusTalk is a platform for institutes to host asynchronous online discussion forums where students can interact with their peers and teachers regarding academic and non academic activities in their institute.",
-  "CampusTalk provides forum’s based on Commuinty Question Answering (CQA) system where members can start a conversation with other members in the form of posts.",
+  "CampusTalk provides forum's based on Commuinty Question Answering (CQA) system where members can start a conversation with other members in the form of posts.",
   "CampusTalk forums enable members to voluntarily read and respond to posts in their own time through multiple means such as upvotes, downvotes and replies, with an optional anonymous environment.",
 ];
 
 const data2 = [
-  "In today’s fast growing world, there is a lot of information being thrown at students and it can be overwhelming and confusing at times, especially for new or introverted students.",
+  "In today's fast growing world, there is a lot of information being thrown at students and it can be overwhelming and confusing at times, especially for new or introverted students.",
   "Students go through a large amount of academic and non-academic activities throughout the year; therefore lack of information or inaccurate information can lead to many complications.",
-  "CampusTalk provides platform for students to ask for any information related to their institute’s academic and non-academic activities which will be provided by their peers and teachers.",
+  "CampusTalk provides platform for students to ask for any information related to their institute's academic and non-academic activities which will be provided by their peers and teachers.",
+];
+
+const faqData = [
+  {
+    question: "Frequently Asked Question 1",
+    answer: "FAQ Answer 1",
+  },
+  {
+    question: "Frequently Asked Question 2",
+    answer: "FAQ Answer 2",
+  },
+  {
+    question: "Frequently Asked Question 3",
+    answer: "FAQ Answer 3",
+  },
 ];
 
 function Home() {
+  const [currentFaq, setCurrentFaq] = useState(-1);
+
+  const handleFaq = (index) => {
+    if (index === currentFaq) setCurrentFaq(-1);
+    else setCurrentFaq(index);
+  };
+
   return (
     <div className="h-full bg-greek-vase">
       <Navbar />
@@ -122,27 +146,24 @@ function Home() {
       </section>
 
       {/* How it works */}
-      <div className="relative h-full text-center mt-60">
-        <div class="shape">
+      <div className="relative text-center mt-20">
+        <div className="shape flex flex-col">
           <svg
-            data-name="Layer 1"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 700 120"
-            preserveAspectRatio="none"
             fill="#0278E4"
           >
-            <path
-              d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z"
-              class="shape-fill"
-            ></path>
+            <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z"></path>
           </svg>
 
-          <div className="bg-primary py-5 text-white">
-            <div className="mx-20 bg-light border-2 border-light rounded-xl">
-              <h1 className="text-4xl  p-5">How does it work?</h1>
+          <div className="bg-primary py-5 border border-primary text-white">
+            <div className="mx-5 lg:mx-20 bg-light border-2 border-light rounded-xl 2xl:mx-40 2xl:p-5">
+              <h1 className="text-2xl md:text-3xl lg:text-4xl p-5 2xl:text-5xl 2xl:p-10">
+                How does it work?
+              </h1>
 
-              <div className="grid grid-cols-5 justify-items-center mt-5 p-7">
-                <div className="flex flex-col items-center">
+              <div className="flex flex-col md:grid md:grid-cols-5 jmd:ustify-items-center mt-5 md:p-5 lg:p-7 2xl:p-12">
+                <div className="mb-8 mx-4 md:my-0 md:mx-0 flex flex-col items-center">
                   {/* icon */}
                   <svg
                     width="64"
@@ -150,6 +171,7 @@ function Home() {
                     viewBox="0 0 64 57"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
+                    className="p-1 lg:p-0"
                   >
                     <path
                       d="M52 1.88892H12C6.479 1.88892 2 5.86847 2 10.7778V46.3334C2 51.2427 6.479 55.2222 12 55.2222H52C57.523 55.2222 62 51.2427 62 46.3334V10.7778C62 5.86847 57.523 1.88892 52 1.88892ZM57 40.7031C57.0003 41.6759 56.7849 42.6392 56.3663 43.5379C55.9477 44.4367 55.334 45.2534 54.5603 45.9413C53.7866 46.6292 52.868 47.1749 51.857 47.5472C50.846 47.9195 49.7623 48.1111 48.668 48.1111H15.334C13.1237 48.1111 11.0039 47.3307 9.44097 45.9414C7.87804 44.5521 7 42.6679 7 40.7031V11.0747C7 9.10997 7.87804 7.22572 9.44097 5.83645C11.0039 4.44718 13.1237 3.66669 15.334 3.66669H48.668C49.7623 3.66669 50.846 3.85832 51.857 4.23063C52.868 4.60294 53.7866 5.14863 54.5603 5.83655C55.334 6.52447 55.9477 7.34114 56.3663 8.23991C56.7849 9.13868 57.0003 10.1019 57 11.0747V40.7031Z"
@@ -162,12 +184,12 @@ function Home() {
                   </svg>
 
                   {/* title */}
-                  <p className="my-6 text-2xl">
+                  <p className="my-6 lg:my-8 text-base lg:text-2xl 2xl:text-4xl">
                     Sign up and join your institute’s forum
                   </p>
 
                   {/* description */}
-                  <p className="text-base">
+                  <p className="text-xs lg:text-base 2xl:text-2xl">
                     After signing up, select your institute from the list to
                     join it’s forum or create one if it’s not in the list.
                   </p>
@@ -179,18 +201,18 @@ function Home() {
                   viewBox="0 0 93 41"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
-                  className="self-center"
+                  className="self-center hidden md:block md:mx-auto"
                 >
                   <path
                     d="M85.2501 18.8229L58.1251 4.09314V12.2763C11.8072 12.2763 6.46356 28.1157 7.75006 36.8259C9.69531 32.4315 10.5982 25.3694 58.1251 25.3694V33.5526L85.2501 18.8229Z"
                     stroke="white"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                 </svg>
 
-                <div className="flex flex-col items-center">
+                <div className="my-8 mx-4 md:my-0 md:mx-0 flex flex-col items-center">
                   {/* icon */}
                   <svg
                     width="64"
@@ -198,6 +220,7 @@ function Home() {
                     viewBox="0 0 64 57"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
+                    className="p-1 lg:p-0"
                   >
                     <path
                       d="M52 1.88892H12C6.479 1.88892 2 5.86847 2 10.7778V46.3334C2 51.2427 6.479 55.2222 12 55.2222H52C57.523 55.2222 62 51.2427 62 46.3334V10.7778C62 5.86847 57.523 1.88892 52 1.88892ZM57 40.7031C57.0003 41.6759 56.7849 42.6392 56.3663 43.5379C55.9477 44.4367 55.334 45.2534 54.5603 45.9413C53.7866 46.6292 52.868 47.1749 51.857 47.5472C50.846 47.9195 49.7623 48.1111 48.668 48.1111H15.334C13.1237 48.1111 11.0039 47.3307 9.44097 45.9414C7.87804 44.5521 7 42.6679 7 40.7031V11.0747C7 9.10997 7.87804 7.22572 9.44097 5.83645C11.0039 4.44718 13.1237 3.66669 15.334 3.66669H48.668C49.7623 3.66669 50.846 3.85832 51.857 4.23063C52.868 4.60294 53.7866 5.14863 54.5603 5.83655C55.334 6.52447 55.9477 7.34114 56.3663 8.23991C56.7849 9.13868 57.0003 10.1019 57 11.0747V40.7031Z"
@@ -210,10 +233,12 @@ function Home() {
                   </svg>
 
                   {/* title */}
-                  <p className="my-8 text-2xl">Read and create posts</p>
+                  <p className="my-6 lg:my-8 text-base lg:text-2xl 2xl:text-4xl">
+                    Read and create posts
+                  </p>
 
                   {/* description */}
-                  <p className="text-base">
+                  <p className="text-xs lg:text-base 2xl:text-2xl">
                     Read posts created by other members & create posts with an
                     optional annonymous environment.
                   </p>
@@ -225,18 +250,18 @@ function Home() {
                   viewBox="0 0 93 41"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
-                  className="self-center"
+                  className="self-center hidden md:block md:mx-auto"
                 >
                   <path
                     d="M85.2501 18.8229L58.1251 4.09314V12.2763C11.8072 12.2763 6.46356 28.1157 7.75006 36.8259C9.69531 32.4315 10.5982 25.3694 58.1251 25.3694V33.5526L85.2501 18.8229Z"
                     stroke="white"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                 </svg>
 
-                <div className="flex flex-col items-center">
+                <div className="my-8 mx-4 md:my-0 md:mx-0 flex flex-col items-center">
                   {/* icon */}
                   <svg
                     width="64"
@@ -244,6 +269,7 @@ function Home() {
                     viewBox="0 0 64 58"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
+                    className="p-1 lg:p-0"
                   >
                     <path
                       d="M52 2.66675H12C6.479 2.66675 2 6.6463 2 11.5556V47.1112C2 52.0205 6.479 56.0001 12 56.0001H52C57.523 56.0001 62 52.0205 62 47.1112V11.5556C62 6.6463 57.523 2.66675 52 2.66675ZM57 41.481C57.0003 42.4537 56.7849 43.417 56.3663 44.3158C55.9477 45.2145 55.334 46.0312 54.5603 46.7191C53.7866 47.407 52.868 47.9527 51.857 48.325C50.846 48.6973 49.7623 48.889 48.668 48.889H15.334C13.1237 48.889 11.0039 48.1085 9.44097 46.7192C7.87804 45.3299 7 43.4457 7 41.481V11.8525C7 9.8878 7.87804 8.00355 9.44097 6.61428C11.0039 5.22501 13.1237 4.44453 15.334 4.44453H48.668C49.7623 4.44453 50.846 4.63615 51.857 5.00846C52.868 5.38077 53.7866 5.92647 54.5603 6.61439C55.334 7.30231 55.9477 8.11897 56.3663 9.01774C56.7849 9.91651 57.0003 10.8798 57 11.8525V41.481Z"
@@ -256,25 +282,44 @@ function Home() {
                   </svg>
 
                   {/* title */}
-                  <p className="my-8 text-2xl">
+                  <p className="my-6 lg:my-8 text-base lg:text-2xl 2xl:text-4xl">
                     Read and send responses to posts
                   </p>
 
                   {/* description */}
-                  <p className="text-base">
+                  <p className="text-xs lg:text-base 2xl:text-2xl">
                     Respond to posts with information/resources and read
                     responses posts by other members.
                   </p>
                 </div>
               </div>
 
-              <button className="bg-white rounded-full p-6 my-5 font-bold text-primary">
+              <button className="bg-white rounded-full p-3 md:p-5 text-sm md:text-base my-5 font-bold text-primary 2xl:text-2xl 2xl:my-10">
                 Sign up now &#8594;
               </button>
             </div>
           </div>
         </div>
       </div>
+
+      {/* FAQ */}
+      <section className="bg-primary py-20 text-white">
+        <h1 className="text-5xl text-center">FAQ</h1>
+
+        <div className="mx-6 p-6">
+          {faqData.map((faq, i) => (
+            <div key={i}>
+              <Accordion
+                open={currentFaq === i ? true : false}
+                handleFaq={handleFaq}
+                index={i}
+                data={faq}
+              />
+              <hr />
+            </div>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }
