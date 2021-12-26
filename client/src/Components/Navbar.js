@@ -7,7 +7,7 @@ function Navbar() {
   }
 
   return (
-    <nav className="w-full flex flex-wrap bg-white py-2 2xl:py-4 shadow-md justify-between md:justify-around items-center">
+    <nav className="fixed top-0 z-10 w-full flex flex-wrap bg-white py-2 2xl:py-4 shadow-md justify-between md:justify-around items-center">
       {/* logo */}
       <div className="ml-4 lg:mr-40">
         <svg

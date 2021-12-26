@@ -2,7 +2,6 @@ import Navbar from "./Navbar";
 import Hero from "../assets/Hero.png";
 import Carousel from "./Carousel";
 import Accordion from "./Accordion";
-import { useState } from "react";
 
 const data1 = [
   "CampusTalk is a platform for institutes to host asynchronous online discussion forums where students can interact with their peers and teachers regarding academic and non academic activities in their institute.",
@@ -16,38 +15,16 @@ const data2 = [
   "CampusTalk provides platform for students to ask for any information related to their institute's academic and non-academic activities which will be provided by their peers and teachers.",
 ];
 
-const faqData = [
-  {
-    question: "Frequently Asked Question 1",
-    answer: "FAQ Answer 1",
-  },
-  {
-    question: "Frequently Asked Question 2",
-    answer: "FAQ Answer 2",
-  },
-  {
-    question: "Frequently Asked Question 3",
-    answer: "FAQ Answer 3",
-  },
-];
-
 function Home() {
-  const [currentFaq, setCurrentFaq] = useState(-1);
-
-  const handleFaq = (index) => {
-    if (index === currentFaq) setCurrentFaq(-1);
-    else setCurrentFaq(index);
-  };
-
   return (
     <div className="h-full bg-greek-vase">
       <Navbar />
 
       {/* Hero section */}
-      <section className="m-3 mt-5 flex flex-col p-3 md:py-12">
+      <section className="m-3 mt-16 md:mt-10 flex flex-col p-3 py-5 md:py-20 2xl:py-20">
         <div className="flex items-center justify-around md:p-2">
           <div>
-            <p className="uppercase text-secondary font-bold text-[.45rem] tracking-wider md:text-sm md:tracking-widest 2xl:text-lg">
+            <p className="uppercase text-secondary font-bold text-[.45rem] tracking-wider md:text-xs md:tracking-widest 2xl:text-lg">
               A tool to help you socialize and learn
             </p>
             <p className="font-[1000] text-2xl md:text-5xl lg:text-6xl 2xl:text-8xl leading-10 md:leading-normal lg:leading-normal 2xl:leading-normal">
@@ -76,7 +53,7 @@ function Home() {
               />
             </svg>
 
-            <button className="bg-primary self-start text-white p-2 px-3 2xl:p-3 2xl:px-4 mt-3 md:mt-5 text-xs md:text-base xl:text-lg 2xl:text-2xl rounded-full">
+            <button className="bg-primary self-start text-white p-2 px-3 2xl:p-3 2xl:px-5 mt-3 md:mt-5 text-xs md:text-base xl:text-lg 2xl:text-3xl rounded-full">
               Get Started
             </button>
           </div>
@@ -90,7 +67,10 @@ function Home() {
       </section>
 
       {/* About section */}
-      <section className="bg-picture text-center text-white mt-20 p-2 2xl:p-4">
+      <section
+        className="bg-picture text-center text-white mt-20 p-2 2xl:p-4"
+        id="about"
+      >
         <h1 className="font-bold text-xl md:text-3xl 2xl:text-5xl 2xl:pt-14 pt-8">
           So, what is CampusTalk anyway?
         </h1>
@@ -146,7 +126,7 @@ function Home() {
       </section>
 
       {/* How it works */}
-      <div className="relative text-center mt-20">
+      <div className="relative text-center mt-20" id="working">
         <div className="shape flex flex-col">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -294,7 +274,7 @@ function Home() {
                 </div>
               </div>
 
-              <button className="bg-white rounded-full p-3 md:p-5 text-sm md:text-base my-5 font-bold text-primary 2xl:text-2xl 2xl:my-10">
+              <button className="bg-white rounded-full p-3 md:p-4 text-sm md:text-base my-5 font-bold text-primary 2xl:text-2xl 2xl:my-10">
                 Sign up now &#8594;
               </button>
             </div>
@@ -303,22 +283,12 @@ function Home() {
       </div>
 
       {/* FAQ */}
-      <section className="bg-primary py-20 text-white">
-        <h1 className="text-5xl text-center">FAQ</h1>
+      <section className="bg-primary py-20 text-white" id="faq">
+        <h1 className="text-2xl px-2 leading-normal md:leading-normal md:text-5xl text-center">
+          Frequently Asked Questions (FAQ)
+        </h1>
 
-        <div className="mx-6 p-6">
-          {faqData.map((faq, i) => (
-            <div key={i}>
-              <Accordion
-                open={currentFaq === i ? true : false}
-                handleFaq={handleFaq}
-                index={i}
-                data={faq}
-              />
-              <hr />
-            </div>
-          ))}
-        </div>
+        <Accordion />
       </section>
     </div>
   );
