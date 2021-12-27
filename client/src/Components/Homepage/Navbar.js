@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { NavLink } from "react-router-dom";
 
 function Navbar() {
   const menuRef = useRef();
@@ -92,9 +93,13 @@ function Navbar() {
         <a className="mx-5 2xl:text-lg" href="#faq">
           FAQ
         </a>
-        <button className="mx-5 2xl:text-lg bg-white text-primary font-bold shadow-md py-2 px-4 rounded-full">
+        <NavLink
+          exact
+          to="/login"
+          className="mx-5 2xl:text-lg bg-white text-primary font-bold shadow-md py-2 px-4 rounded-full"
+        >
           Log in
-        </button>
+        </NavLink>
       </div>
 
       {/* hamburger button */}

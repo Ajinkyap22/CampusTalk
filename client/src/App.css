@@ -17,6 +17,11 @@
   opacity: 0.9;
 }
 
+.bg-bubble {
+  background-image: url("./assets/double-bubble.png");
+  background-repeat: repeat;
+}
+
 .shape {
   position: relative;
   bottom: 0;
@@ -24,4 +29,25 @@
   width: 100%;
   overflow: hidden;
   line-height: 0;
+}
+
+.or {
+  display: flex;
+  align-items: center;
+}
+
+.or::before {
+  content: "";
+  flex: 0 1 100%;
+  border-bottom: 1px solid rgb(184, 196, 194);
+  margin: 0px 10px;
+  transform: translateY(-50%);
+}
+
+.or::after {
+  content: "";
+  flex: 0 1 100%;
+  border-bottom: 1px solid rgb(184, 196, 194);
+  margin: 0px 10px;
+  transform: translateY(-50%);
 }

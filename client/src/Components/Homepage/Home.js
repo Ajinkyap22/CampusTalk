@@ -1,7 +1,8 @@
 import Navbar from "./Navbar";
-import Hero from "../assets/Hero.png";
+import Hero from "../../assets/Hero.png";
 import Carousel from "./Carousel";
 import Accordion from "./Accordion";
+import { NavLink } from "react-router-dom";
 
 const data1 = [
   "CampusTalk is a platform for institutes to host asynchronous online discussion forums where students can interact with their peers and teachers regarding academic and non academic activities in their institute.",
@@ -23,7 +24,7 @@ function Home() {
       {/* Hero section */}
       <section className="m-3 mt-16 md:mt-10 flex flex-col p-3 py-5 md:py-20 2xl:py-20">
         <div className="flex items-center justify-around md:p-2">
-          <div>
+          <div className="flex flex-col justify-between">
             <p className="uppercase text-secondary font-bold text-[.45rem] tracking-wider md:text-xs md:tracking-widest 2xl:text-lg">
               A tool to help you socialize and learn
             </p>
@@ -36,6 +37,7 @@ function Home() {
             <p className="font-[1000] text-2xl md:text-5xl lg:text-6xl 2xl:text-8xl leading-10 md:leading-normal lg:leading-normal 2xl:leading-normal">
               easy
             </p>
+
             <svg
               width="140"
               height="31"
@@ -53,9 +55,13 @@ function Home() {
               />
             </svg>
 
-            <button className="bg-primary self-start text-white p-2 px-3 2xl:p-3 2xl:px-5 mt-3 md:mt-5 text-xs md:text-base xl:text-lg 2xl:text-3xl rounded-full">
+            <NavLink
+              exact
+              to="/signup"
+              className="bg-primary self-start text-white p-2 md:px-3 2xl:p-3 2xl:px-5 mt-3 md:mt-5 text-xs md:text-base xl:text-lg 2xl:text-3xl rounded-full"
+            >
               Get Started
-            </button>
+            </NavLink>
           </div>
 
           <img
@@ -275,7 +281,9 @@ function Home() {
               </div>
 
               <button className="bg-white rounded-full p-3 md:p-4 text-sm md:text-base my-5 font-bold text-primary 2xl:text-2xl 2xl:my-10">
-                Sign up now &#8594;
+                <NavLink exact to="signup">
+                  Sign up now &#8594;
+                </NavLink>
               </button>
             </div>
           </div>
@@ -291,6 +299,8 @@ function Home() {
         <Accordion />
       </section>
     </div>
+
+    // TODO - Add contact us button after creating mail
   );
 }
 
