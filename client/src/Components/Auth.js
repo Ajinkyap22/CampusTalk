@@ -26,7 +26,7 @@ function Auth({ type, title }) {
         width="250"
         height="100"
         viewBox="0 0 220 52"
-        className="mr-6 mt-3"
+        className="mr-6 md:mt-3 w-1/2 md:w-auto 2xl:w-full 2xl:mt-10"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -92,28 +92,28 @@ function Auth({ type, title }) {
         />
       </svg>
 
-      <p className="tracking-widest text-center text-sm text-[#342F2F] font-extralight mt-3">
+      <p className="tracking-widest text-center text-xs md:text-sm 2xl:text-base text-[#342F2F] font-extralight md:mt-3 2xl:mt-6">
         YOUR COLLEGE LIFE MADE EASY
       </p>
 
       {/* form box */}
-      <section className="bg-white rounded justify-center shadow-md md:w-1/2 lg:w-[40%] 2xl:w-1/3 my-20 mb-14">
+      <section className="bg-white rounded justify-center shadow-md w-[90%] md:w-2/3 lg:w-[40%] 2xl:w-1/3 my-14 md:my-20 2xl:my-28 mb-20 md:mb-14">
         <div
           className={
             active === "login"
-              ? "absolute md:left-[42%] lg:left-[45%] top-[20%] 2xl:left-[47.5%]"
-              : "absolute left-[45%] top-[18%]"
+              ? "absolute left-[36%] xsm:left-[38%] msm:left-[42%] msm:top-[19%] md:left-[42%] lg:left-[45%] lg:top-[20%] 2xl:left-[47.5%] top-[20%] 2xl:top-[25%]"
+              : "absolute left-[36%] xsm:left-[38%] top-[17%] msm:left-[42%] md:left-[42%] md:top-[18%] lg:left-[45%] 2xl:left-[47.5%] 2xl:top-[23%]"
           }
         >
-          <img src={hat} className="w-auto h-24" alt="" />
+          <img src={hat} className="w-auto h-16 md:h-24" alt="" />
         </div>
 
-        <div className="text-center mt-16">
+        <div className="text-center mt-10 md:mt-16">
           <button
             className={
               active === "signup"
-                ? "p-3 mx-2 border-2 rounded-t-lg border-b-0 text-primary"
-                : "p-3 mx-2"
+                ? "p-2 md:p-3 mx-2 border-2 rounded-t-lg text-sm md:text-base 2xl:text-lg border-b-0 text-primary"
+                : "p-2 md:p-3 mx-2 text-sm md:text-base 2xl:text-lg"
             }
             onClick={toggleActive}
           >
@@ -123,8 +123,8 @@ function Auth({ type, title }) {
           <button
             className={
               active === "login"
-                ? "p-3 mx-2 border-2 rounded-t-lg border-b-0 text-primary"
-                : "p-3 mx-2 "
+                ? "p-2 md:p-3 mx-2 border-2 rounded-t-lg text-sm md:text-base 2xl:text-lg border-b-0 text-primary"
+                : "p-2 md:p-3 mx-2 text-sm md:text-base 2xl:text-lg"
             }
             onClick={toggleActive}
           >
@@ -133,7 +133,7 @@ function Auth({ type, title }) {
         </div>
         <hr />
 
-        <div className="flex justify-center mt-8">
+        <div className="flex justify-center mt-6 md:mt-8">
           <GoogleButton
             onClick={() => {
               console.log("Google button clicked");
@@ -141,59 +141,76 @@ function Auth({ type, title }) {
           />
         </div>
 
-        <div className="or w-full mt-5 px-6">
-          <span className="text-center">OR</span>
+        <div className="or w-full mt-5 2xl:mt-6 px-4 md:px-6">
+          <span className="text-center text-sm md:text-base 2xl:text-lg">
+            OR
+          </span>
         </div>
 
-        <form action="" className="px-10 py-3">
+        <form action="" className="px-6 md:px-10 py-3">
           {/* Email */}
           <div className="my-3">
-            <label htmlFor="email">
+            <label htmlFor="email" className="text-sm md:text-base 2xl:text-lg">
               Email <span className="text-red-600">*</span>
             </label>
             <input
               type="email"
               name="email"
               placeholder="Enter your email address"
-              className="mt-2 block w-full px-3 py-2 border-2 border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400 
-              focus:outline-none focus:border-sky-500 invalid:border-red-500 invalid:text-red-600"
+              className="mt-2 block w-full px-3 py-1.5 md:py-2 border-2 border-gray-300 rounded-md text-sm 2xl:text-base shadow-sm placeholder-gray-400 
+              focus:outline-none focus:border-sky-500 invalid:border-red-500"
+              minLength={3}
             />
           </div>
 
           {/* Password */}
-          <div className="my-6">
-            <label htmlFor="password">
+          <div className="my-5 md:my-6">
+            <label
+              htmlFor="password"
+              className="text-sm md:text-base 2xl:text-lg"
+            >
               Password <span className="text-red-600">*</span>
             </label>
             <input
               type="password"
               name="password"
               placeholder="Minimum 8 characters"
-              className="mt-2 block w-full px-3 py-2 border-2 border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400 
-              focus:outline-none focus:border-sky-500 invalid:border-red-500 invalid:text-red-600"
+              className="mt-2 block w-full px-3 py-1.5 md:py-2 border-2 border-gray-300 rounded-md text-sm 2xl:text-lg shadow-sm placeholder-gray-400 
+              focus:outline-none focus:border-sky-500 invalid:border-red-500"
+              minLength={8}
             />
           </div>
 
           {/* Confirm password */}
-          <div className="my-6" hidden={active === "login" ? true : false}>
-            <label htmlFor="confirmPassword">
+          <div
+            className="my-5 md:my-6"
+            hidden={active === "login" ? true : false}
+          >
+            <label
+              htmlFor="confirmPassword"
+              className="text-sm md:text-base 2xl:text-lg"
+            >
               Confirm Password <span className="text-red-600">*</span>
             </label>
             <input
               type="password"
               name="confirmPassword"
               placeholder="Retype your password"
-              className="mt-2 block w-full px-3 py-2 border-2 border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400 
-              focus:outline-none focus:border-sky-500 invalid:border-red-500 invalid:text-red-600"
+              className="mt-2 block w-full px-3 py-1.5 md:py-2 border-2 border-gray-300 rounded-md text-sm 2xl:text-lg shadow-sm placeholder-gray-400 
+              focus:outline-none focus:border-sky-500 invalid:border-red-500"
+              minLength={8}
             />
           </div>
 
           {/* Submit */}
           <div className="my-8">
-            <button className="px-3 py-2 mr-2 bg-primary text-white rounded-lg">
+            <button className="px-2 md:px-3 py-2 mr-1 md:mr-2 text-sm md:text-base 2xl:text-lg bg-primary text-white rounded">
               {active === "signup" ? "Sign Up" : "Log in"}
             </button>
-            <Link to="/" className="px-3 py-2 ml-2 text-[#818181]">
+            <Link
+              to="/"
+              className="px-2 md:px-3 text-sm md:text-base 2xl:text-lg py-2 ml-1 md:ml-2 text-[#818181]"
+            >
               Go Back
             </Link>
           </div>
