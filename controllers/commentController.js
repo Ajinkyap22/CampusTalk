@@ -99,3 +99,12 @@ exports.edit_comment = [
       });
   },
 ];
+
+// delete a comment
+exports.delete_comment = function (req, res) {
+  Comment.findByIdAndRemove(req.params.commentId, function (err, post) {
+    if (err) return res.json(err);
+
+    return res.json(post);
+  });
+};

@@ -3,6 +3,7 @@ import Home from "./Components/Homepage/Home";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Auth from "./Components/Auth";
 import { useState } from "react";
+import Join from "./Components/Join";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -27,6 +28,9 @@ function App() {
             path="/signup"
             render={() => <Auth type={"signup"} setUser={setUser} />}
           />
+
+          {/* Join Forum */}
+          <Route exact path="/join-forum" render={() => <Join />} />
         </Switch>
       </Router>
     </div>

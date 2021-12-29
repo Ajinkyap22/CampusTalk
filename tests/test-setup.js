@@ -33,7 +33,7 @@ module.exports = {
     // connect to monoose
     beforeAll(async () => {
       const url = `mongodb://127.0.0.1/${dbName}`;
-      await mongoose.connect(url, { useNewUrlParser: true });
+      mongoose.connect(url, { useNewUrlParser: true });
       await seedDB();
     });
 

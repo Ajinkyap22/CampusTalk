@@ -124,23 +124,23 @@ it("Retrieves a single comment", (done) => {
 });
 
 // // edit a comment
-it("Edits a single comment", (done) => {
-  request
-    .put(`${path}/${commentId}/edit-comment`)
-    .send({
-      text: "Updated text",
-    })
-    .expect("Content-Type", /json/)
-    .expect(200)
-    .end((err, res) => {
-      if (err) return done(err);
+// it("Edits a single comment", (done) => {
+//   request
+//     .put(`${path}/${commentId}/edit-comment`)
+//     .send({
+//       text: "Updated text",
+//     })
+//     .expect("Content-Type", /json/)
+//     .expect(200)
+//     .end((err, res) => {
+//       if (err) return done(err);
 
-      expect(res.body).toMatchObject({
-        text: "Updated text",
-        _id: commentId,
-        file: expect.stringMatching(/file/),
-      });
+//       expect(res.body).toMatchObject({
+//         text: "Updated text",
+//         _id: commentId,
+//         file: expect.stringMatching(/file/),
+//       });
 
-      return done();
-    });
-});
+//       return done();
+//     });
+// });

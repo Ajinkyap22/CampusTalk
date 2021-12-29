@@ -1,9 +1,9 @@
 const app = require("../app");
 const supertest = require("supertest");
 const request = supertest(app);
-const User = require("../models/user");
-const forum = require("../models/forum");
-const post = require("../models/post");
+// const User = require("../models/user");
+// const forum = require("../models/forum");
+// const post = require("../models/post");
 jest.setTimeout(10000);
 let token, id, forumId, postId;
 
