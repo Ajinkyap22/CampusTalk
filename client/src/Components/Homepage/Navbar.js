@@ -94,7 +94,6 @@ function Navbar() {
           FAQ
         </a>
         <NavLink
-          exact={true}
           to="/login"
           className="mx-5 2xl:text-lg bg-white text-primary font-bold shadow-md py-2 px-4 rounded-full"
         >

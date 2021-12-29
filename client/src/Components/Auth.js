@@ -1,23 +1,109 @@
 import { useEffect, useState } from "react";
 import hat from "../assets/graduate.png";
 import GoogleButton from "react-google-button";
-import { Link } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
+import axios from "axios";
+import GoogleLogin from "react-google-login";
 
-// TODOS
-// Increase/decrease fonts accoridng to screen size
-// handle mobile styles
-// Add login functionality
+// TODO : fix text issues
+// Add a dummy page for redirect
 
-function Auth({ type, title }) {
+function Auth({ type, setUser, ...props }) {
   const [active, setActive] = useState(type);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const [status, setStatus] = useState(0);
+
+  useEffect(() => {
+    let newTitle =
+      active === "login" ? "Login | CampusTalk" : "Sign Up | CampusTalk";
+    document.title = newTitle || "Sign in | CampusTalk";
+  }, [active]);
 
   const toggleActive = () => {
     active === "login" ? setActive("signup") : setActive("login");
   };
 
-  useEffect(() => {
-    document.title = title || "Sign in | CampusTalk";
-  }, [title]);
+  const handleLogin = async (googleData) => {
+    const body = JSON.stringify({
+      token: googleData.tokenId,
+    });
+
+    const headers = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    axios
+      .post("/api/users/google", body, headers)
+      .then((res) => {
+        localStorage.setItem("user", JSON.stringify(res.data));
+        setUser(res.data.user);
+        props.history.push("/");
+      })
+      .catch((err) => {
+        if (err.response?.status === 401) {
+          setError(err.response.data.message);
+        } else {
+          console.error(err);
+          console.log(err.response);
+        }
+      });
+  };
+
+  const loginHandler = () => {
+    axios
+      .post("/api/users/login", { email, password })
+      .then((res) => {
+        localStorage.setItem("user", JSON.stringify(res.data));
+        setUser(res.data.user);
+        props.history.push("/");
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          setError(err.response.data.message);
+          setStatus(401);
+        } else {
+          console.error(err);
+        }
+      });
+  };
+
+  const signupHandler = () => {
+    axios
+      .post("/api/users/signup", {
+        email,
+        password,
+        confirmPassword,
+      })
+      .then(() => {
+        props.history.push("/");
+      })
+      .catch((err) => {
+        if (err.response?.status === 409) {
+          setError(err.response.data.error);
+          setStatus(409);
+        } else if (err.response?.status === 401) {
+          setError(err.response.data.error);
+          setStatus(401);
+        } else {
+          console.error(err);
+        }
+      });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (active === "login") {
+      loginHandler();
+    } else {
+      signupHandler();
+    }
+  };
 
   return (
     <div className="w-full bg-bubble flex relative flex-col items-center">
@@ -102,7 +188,7 @@ function Auth({ type, title }) {
           className={
             active === "login"
               ? "absolute left-[36%] xsm:left-[38%] msm:left-[42%] msm:top-[19%] md:left-[42%] lg:left-[45%] lg:top-[20%] 2xl:left-[47.5%] top-[20%] 2xl:top-[25%]"
-              : "absolute left-[36%] xsm:left-[38%] top-[17%] msm:left-[42%] md:left-[42%] md:top-[18%] lg:left-[45%] 2xl:left-[47.5%] 2xl:top-[23%]"
+              : "absolute left-[36%] xsm:left-[38%] top-[17%] msm:left-[42%] md:left-[42%] md:top-[18%] lg:left-[45%] lg:top-[19%] 2xl:left-[47.5%] 2xl:top-[23%]"
           }
         >
           <img src={hat} className="w-auto h-16 md:h-24" alt="" />
@@ -134,10 +220,18 @@ function Auth({ type, title }) {
         <hr />
 
         <div className="flex justify-center mt-6 md:mt-8">
-          <GoogleButton
-            onClick={() => {
-              console.log("Google button clicked");
-            }}
+          <GoogleLogin
+            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+            render={(renderProps) => (
+              <GoogleButton
+                onClick={renderProps.onClick}
+                disabled={renderProps.disabled}
+              />
+            )}
+            buttonText="Sign in with Google"
+            onSuccess={handleLogin}
+            onFailure={handleLogin}
+            cookiePolicy={"single_host_origin"}
           />
         </div>
 
@@ -147,7 +241,7 @@ function Auth({ type, title }) {
           </span>
         </div>
 
-        <form action="" className="px-6 md:px-10 py-3">
+        <form className="px-6 md:px-10 py-3" onSubmit={handleSubmit}>
           {/* Email */}
           <div className="my-3">
             <label htmlFor="email" className="text-sm md:text-base 2xl:text-lg">
@@ -156,11 +250,19 @@ function Auth({ type, title }) {
             <input
               type="email"
               name="email"
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email address"
               className="mt-2 block w-full px-3 py-1.5 md:py-2 border-2 border-gray-300 rounded-md text-sm 2xl:text-base shadow-sm placeholder-gray-400 
-              focus:outline-none focus:border-sky-500 invalid:border-red-500"
+              focus:outline-none focus:border-sky-500"
               minLength={3}
+              required
             />
+            <p
+              className="mt-3 text-sm text-red-600"
+              hidden={active === "signup" && status === 409 ? false : true}
+            >
+              Email already exists
+            </p>
           </div>
 
           {/* Password */}
@@ -174,11 +276,19 @@ function Auth({ type, title }) {
             <input
               type="password"
               name="password"
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="Minimum 8 characters"
               className="mt-2 block w-full px-3 py-1.5 md:py-2 border-2 border-gray-300 rounded-md text-sm 2xl:text-lg shadow-sm placeholder-gray-400 
-              focus:outline-none focus:border-sky-500 invalid:border-red-500"
+              focus:outline-none focus:border-sky-500"
               minLength={8}
+              required
             />
+            <p
+              className="mt-3 text-sm text-red-600"
+              hidden={active === "login" && status === 401 ? false : true}
+            >
+              Invalid Email or Password.
+            </p>
           </div>
 
           {/* Confirm password */}
@@ -195,15 +305,31 @@ function Auth({ type, title }) {
             <input
               type="password"
               name="confirmPassword"
+              onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="Retype your password"
               className="mt-2 block w-full px-3 py-1.5 md:py-2 border-2 border-gray-300 rounded-md text-sm 2xl:text-lg shadow-sm placeholder-gray-400 
-              focus:outline-none focus:border-sky-500 invalid:border-red-500"
+              focus:outline-none focus:border-sky-500"
               minLength={8}
+              required={active === "signup" ? true : false}
             />
+            <p
+              className="mt-3 text-sm text-red-600"
+              hidden={status === 401 ? false : true}
+            >
+              Confirmed Password must be the same as password
+            </p>
           </div>
 
+          <Link
+            to="/"
+            className="text-xs text-primary"
+            hidden={active === "login" ? false : true}
+          >
+            Forgot Password?
+          </Link>
+
           {/* Submit */}
-          <div className="my-8">
+          <div className="my-6">
             <button className="px-2 md:px-3 py-2 mr-1 md:mr-2 text-sm md:text-base 2xl:text-lg bg-primary text-white rounded">
               {active === "signup" ? "Sign Up" : "Log in"}
             </button>
@@ -220,4 +346,4 @@ function Auth({ type, title }) {
   );
 }
 
-export default Auth;
+export default withRouter(Auth);

@@ -56,7 +56,6 @@ function Home() {
             </svg>
 
             <NavLink
-              exact
               to="/signup"
               className="bg-primary self-start text-white p-2 md:px-3 2xl:p-3 2xl:px-5 mt-3 md:mt-5 text-xs md:text-base xl:text-lg 2xl:text-3xl rounded-full"
             >
@@ -281,9 +280,7 @@ function Home() {
               </div>
 
               <button className="bg-white rounded-full p-3 md:p-4 text-sm md:text-base my-5 font-bold text-primary 2xl:text-2xl 2xl:my-10">
-                <NavLink exact to="signup">
-                  Sign up now &#8594;
-                </NavLink>
+                <NavLink to="signup">Sign up now &#8594;</NavLink>
               </button>
             </div>
           </div>

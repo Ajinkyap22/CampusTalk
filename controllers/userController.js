@@ -4,6 +4,8 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { body, validationResult } = require("express-validator");
 const User = require("../models/user");
+const { OAuth2Client } = require("google-auth-library");
+const client = new OAuth2Client(process.env.CLIENT_ID);
 
 // get users
 exports.users_get = function (req, res, next) {
@@ -135,6 +137,8 @@ exports.google = async function (req, res) {
     { upsert: true },
     function (err, user) {
       if (err) res.json(err);
+
+      console.log(user);
 
       jwt.sign(
         { _id: user._id, email: user.email },
