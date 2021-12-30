@@ -108,3 +108,25 @@ exports.delete_comment = function (req, res) {
     return res.json(post);
   });
 };
+
+// Upvote a comment
+exports.upvote_comment = function (req, res) {
+  Comment.findByIdAndUpdate(
+    req.params.commentId,
+    {
+      $push: {
+        upvotes: req.body.id,
+      },
+      $pull: {
+        downvotes: req.body.id,
+      },
+    },
+    { new: true }
+  )
+    .populate("author")
+    .exec((err, comment) => {
+      if (err) return res.json(err);
+
+      return res.json(comment);
+    });
+};
