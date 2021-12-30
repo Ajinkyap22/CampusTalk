@@ -29,7 +29,7 @@
 
 ## Features
 
-- Create or Join Forum of your institute
+- Create or join Forum of your institute
 - Create posts in anonymous or public mode.
 - Upvote, Downvote, Comment on posts.
 - Moderators to ensure discipline in forums.
