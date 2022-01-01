@@ -80,8 +80,6 @@ exports.edit_comment = [
 
     if (!errors.isEmpty()) return res.json({ errros: errors.array() });
 
-    const file = req.file ? req.file.filename : "";
-
     Comment.findByIdAndUpdate(
       req.params.commentId,
       {
@@ -119,6 +117,66 @@ exports.upvote_comment = function (req, res) {
       },
       $pull: {
         downvotes: req.body.id,
+      },
+    },
+    { new: true }
+  )
+    .populate("author")
+    .exec((err, comment) => {
+      if (err) return res.json(err);
+
+      return res.json(comment);
+    });
+};
+
+// downvote a comment
+exports.downvote_comment = function (req, res) {
+  Comment.findByIdAndUpdate(
+    req.params.commentId,
+    {
+      $pull: {
+        upvotes: req.body.id,
+      },
+      $push: {
+        downvotes: req.body.id,
+      },
+    },
+    { new: true }
+  )
+    .populate("author")
+    .exec((err, comment) => {
+      if (err) return res.json(err);
+
+      return res.json(comment);
+    });
+};
+
+// pin a comment
+exports.pin_comment = function (req, res) {
+  Comment.findByIdAndUpdate(
+    req.params.commentId,
+    {
+      $set: {
+        pinned: true,
+      },
+    },
+    { new: true }
+  )
+    .populate("author")
+    .exec((err, comment) => {
+      if (err) return res.json(err);
+
+      return res.json(comment);
+    });
+};
+
+// unpin a comment
+exports.unpin_comment = function (req, res) {
+  Comment.findByIdAndUpdate(
+    req.params.commentId,
+    {
+      $set: {
+        pinned: false,
       },
     },
     { new: true }

@@ -25,7 +25,27 @@ router.put(
   commentController.edit_comment
 );
 
+// upvote a comment
+router.put("/:commentId/upvote", verifyToken, commentController.upvote_comment);
+
+// downvote a comment
+router.put(
+  "/:commentId/downvote",
+  verifyToken,
+  commentController.downvote_comment
+);
+
+// pin a comment
+router.put("/:commentId/pin", verifyToken, commentController.pin_comment);
+
+// unpin a comment
+router.put("/:commentId/unpin", verifyToken, commentController.unpin_comment);
+
 // Delete a comment
-router.delete(':commentId/delete-comment', verifyToken, commentController.delete_comment);
+router.delete(
+  "/:commentId/delete-comment",
+  verifyToken,
+  commentController.delete_comment
+);
 
 module.exports = router;

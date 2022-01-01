@@ -14,11 +14,11 @@ const commentRouter = require("./routes/comment");
 const app = express();
 
 // Set up mongoose
-const mongoose = require("mongoose");
-const mongoDB = process.env.MONGO_URL;
-mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "MongoDB connection error"));
+// const mongoose = require("mongoose");
+// const mongoDB = process.env.MONGO_URL;
+// mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
+// const db = mongoose.connection;
+// db.on("error", console.error.bind(console, "MongoDB connection error"));
 
 app.use(cors());
 app.use(logger("dev"));

@@ -127,9 +127,108 @@ it("Retrieves a single comment", (done) => {
 it("Edits a single comment", (done) => {
   request
     .put(`${path}/${commentId}/edit-comment`)
+    .set("Authorization", `Bearer ${token}`)
     .send({
       text: "Updated text",
     })
+    .expect("Content-Type", /json/)
+    .expect(200)
+    .end((err, res) => {
+      if (err) return done(err);
+
+      expect(res.body).toMatchObject({
+        text: "Updated text",
+        _id: commentId,
+        file: expect.stringMatching(/file/),
+      });
+
+      return done();
+    });
+});
+
+// upvote comment
+it("Upvotes a comment", (done) => {
+  request
+    .put(`${path}/${commentId}/upvote`)
+    .set("Authorization", `Bearer ${token}`)
+    .send({
+      id,
+    })
+    .expect("Content-Type", /json/)
+    .expect(200)
+    .end((err, res) => {
+      if (err) return done(err);
+
+      expect(res.body).toMatchObject({
+        upvotes: expect.arrayContaining([id]),
+      });
+
+      return done();
+    });
+});
+
+// dwonvote comment
+it("Downvotes a comment", (done) => {
+  request
+    .put(`${path}/${commentId}/downvote`)
+    .set("Authorization", `Bearer ${token}`)
+    .send({
+      id,
+    })
+    .expect("Content-Type", /json/)
+    .expect(200)
+    .end((err, res) => {
+      if (err) return done(err);
+
+      expect(res.body).toMatchObject({
+        downvotes: expect.arrayContaining([id]),
+      });
+
+      return done();
+    });
+});
+
+// pin a comment
+it("Pins a comment", (done) => {
+  request
+    .put(`${path}/${commentId}/pin`)
+    .set("Authorization", `Bearer ${token}`)
+    .expect("Content-Type", /json/)
+    .expect(200)
+    .end((err, res) => {
+      if (err) return done(err);
+
+      expect(res.body).toMatchObject({
+        pinned: true,
+      });
+
+      return done();
+    });
+});
+
+// unpin a comment
+it("Unpins a comment", (done) => {
+  request
+    .put(`${path}/${commentId}/unpin`)
+    .set("Authorization", `Bearer ${token}`)
+    .expect("Content-Type", /json/)
+    .expect(200)
+    .end((err, res) => {
+      if (err) return done(err);
+
+      expect(res.body).toMatchObject({
+        pinned: false,
+      });
+
+      return done();
+    });
+});
+
+// delete comment
+it("Deletes a comment", (done) => {
+  request
+    .delete(`${path}/${commentId}/delete-comment`)
+    .set("Authorization", `Bearer ${token}`)
     .expect("Content-Type", /json/)
     .expect(200)
     .end((err, res) => {
