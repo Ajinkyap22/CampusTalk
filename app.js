@@ -10,6 +10,7 @@ const usersRouter = require("./routes/users");
 const forumRouter = require("./routes/forum");
 const postRouter = require("./routes/post");
 const commentRouter = require("./routes/comment");
+const replyRouter = require("./routes/reply");
 
 const app = express();
 
@@ -31,5 +32,6 @@ app.use("/api/users", usersRouter);
 app.use("/api/forums", forumRouter);
 app.use("/api/forums/:id/posts", postRouter);
 app.use("/api/forums/:id/posts/:id/comments", commentRouter);
+app.use("/api/forums/:id/posts/:id/comments/:id/replies", replyRouter);
 
 module.exports = app;

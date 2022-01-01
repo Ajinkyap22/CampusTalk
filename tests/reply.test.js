@@ -2,17 +2,18 @@ const app = require("../app");
 const supertest = require("supertest");
 const request = supertest(app);
 jest.setTimeout(10000);
-let token, id, forumId, postId, commentId, path;
+let token, id, forumId, postId, commentId, replyId, path;
 
 const { setUpDB } = require("./test-setup");
 
 setUpDB("forum");
 
+// create user
 beforeAll((done) => {
   request
     .post("/api/users/signup")
     .send({
-      email: "demo@gmail.com",
+      email: "demo1@gmail.com",
       password: "demo1234",
       confirmPassword: "demo1234",
     })
@@ -26,6 +27,7 @@ beforeAll((done) => {
     });
 });
 
+// create forums
 beforeAll((done) => {
   request.get("/api/forums/").end((err, res) => {
     if (err) return done(err);
@@ -36,6 +38,7 @@ beforeAll((done) => {
   });
 });
 
+// create post
 beforeAll((done) => {
   request
     .post(`/api/forums/${forumId}/posts/create-post`)
@@ -49,16 +52,15 @@ beforeAll((done) => {
       if (err) return done(err);
 
       postId = res.body._id;
-      path = `/api/forums/${forumId}/posts/${postId}/comments`;
 
       return done();
     });
 });
 
 // create comment
-it("Create a comment", (done) => {
+beforeAll((done) => {
   request
-    .post(`${path}/create-comment`)
+    .post(`/api/forums/${forumId}/posts/${postId}/comments/create-comment`)
     .set("Authorization", `Bearer ${token}`)
     .attach("file", "./public/images/logo.png")
     .field("text", "Test text")
@@ -70,18 +72,40 @@ it("Create a comment", (done) => {
       if (err) return done(err);
 
       commentId = res.body.comment._id;
+      path = `/api/forums/${forumId}/posts/${postId}/comments/${commentId}/replies`;
 
-      expect(res.body.comment).toMatchObject({
+      return done();
+    });
+});
+
+// create reply
+it("Creates a reply", (done) => {
+  request
+    .post(`${path}/create-reply`)
+    .set("Authorization", `Bearer ${token}`)
+    .attach("file", "./public/images/logo.png")
+    .field("text", "Test text")
+    .field("authorId", id)
+    .field("commentId", commentId)
+    .expect("Content-Type", /json/)
+    .expect(200)
+    .end((err, res) => {
+      if (err) return done(err);
+
+      replyId = res.body.reply._id;
+
+      expect(res.body.reply).toMatchObject({
         text: "Test text",
         file: expect.stringMatching(/file/),
+        _id: replyId,
       });
 
       return done();
     });
 });
 
-// get all comments
-it("Retrieves all comments", (done) => {
+// get all replies
+it("Retrieves all replies", (done) => {
   request
     .get(`${path}/`)
     .expect("Content-Type", /json/)
@@ -93,7 +117,7 @@ it("Retrieves all comments", (done) => {
         expect.arrayContaining([
           expect.objectContaining({
             text: "Test text",
-            _id: commentId,
+            _id: replyId,
             file: expect.stringMatching(/file/),
           }),
         ])
@@ -103,10 +127,10 @@ it("Retrieves all comments", (done) => {
     });
 });
 
-// get single comment
-it("Retrieves a single comment", (done) => {
+// retrieve single reply
+it("Retrieves a single reply", (done) => {
   request
-    .get(`${path}/${commentId}`)
+    .get(`${path}/${replyId}`)
     .expect("Content-Type", /json/)
     .expect(200)
     .end((err, res) => {
@@ -114,7 +138,7 @@ it("Retrieves a single comment", (done) => {
 
       expect(res.body).toMatchObject({
         text: "Test text",
-        _id: commentId,
+        _id: replyId,
         file: expect.stringMatching(/file/),
       });
 
@@ -122,10 +146,10 @@ it("Retrieves a single comment", (done) => {
     });
 });
 
-// edit a comment
-it("Edits a single comment", (done) => {
+// edit a reply
+it("Edits a single reply", (done) => {
   request
-    .put(`${path}/${commentId}/edit-comment`)
+    .put(`${path}/${replyId}/edit-reply`)
     .set("Authorization", `Bearer ${token}`)
     .send({
       text: "Updated text",
@@ -137,7 +161,7 @@ it("Edits a single comment", (done) => {
 
       expect(res.body).toMatchObject({
         text: "Updated text",
-        _id: commentId,
+        _id: replyId,
         file: expect.stringMatching(/file/),
       });
 
@@ -145,10 +169,10 @@ it("Edits a single comment", (done) => {
     });
 });
 
-// upvote comment
-it("Upvotes a comment", (done) => {
+// upvote reply
+it("Upvotes a reply", (done) => {
   request
-    .put(`${path}/${commentId}/upvote`)
+    .put(`${path}/${replyId}/upvote`)
     .set("Authorization", `Bearer ${token}`)
     .send({
       id,
@@ -166,10 +190,10 @@ it("Upvotes a comment", (done) => {
     });
 });
 
-// dwonvote comment
-it("Downvotes a comment", (done) => {
+// downvote reply
+it("Downvotes a reply", (done) => {
   request
-    .put(`${path}/${commentId}/downvote`)
+    .put(`${path}/${replyId}/downvote`)
     .set("Authorization", `Bearer ${token}`)
     .send({
       id,
@@ -187,46 +211,10 @@ it("Downvotes a comment", (done) => {
     });
 });
 
-// pin a comment
-it("Pins a comment", (done) => {
+// delete reply
+it("Deletes a reply", (done) => {
   request
-    .put(`${path}/${commentId}/pin`)
-    .set("Authorization", `Bearer ${token}`)
-    .expect("Content-Type", /json/)
-    .expect(200)
-    .end((err, res) => {
-      if (err) return done(err);
-
-      expect(res.body).toMatchObject({
-        pinned: true,
-      });
-
-      return done();
-    });
-});
-
-// unpin a comment
-it("Unpins a comment", (done) => {
-  request
-    .put(`${path}/${commentId}/unpin`)
-    .set("Authorization", `Bearer ${token}`)
-    .expect("Content-Type", /json/)
-    .expect(200)
-    .end((err, res) => {
-      if (err) return done(err);
-
-      expect(res.body).toMatchObject({
-        pinned: false,
-      });
-
-      return done();
-    });
-});
-
-// delete comment
-it("Deletes a comment", (done) => {
-  request
-    .delete(`${path}/${commentId}/delete-comment`)
+    .delete(`${path}/${replyId}/delete-reply`)
     .set("Authorization", `Bearer ${token}`)
     .expect("Content-Type", /json/)
     .expect(200)
@@ -235,7 +223,7 @@ it("Deletes a comment", (done) => {
 
       expect(res.body).toMatchObject({
         text: "Updated text",
-        _id: commentId,
+        _id: replyId,
         file: expect.stringMatching(/file/),
       });
 
