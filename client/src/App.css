@@ -51,3 +51,113 @@
   margin: 0px 10px;
   transform: translateY(-50%);
 }
+
+.slide-in-right {
+  animation: slide-in-right 0.5s;
+}
+
+.slide-in-left {
+  animation: slide-in-left 0.5s;
+}
+
+.slide-out-left {
+  animation: slide-out-left 0.5s forwards;
+}
+
+.slide-out-right {
+  animation: slide-out-right 0.5s forwards;
+}
+
+@keyframes slide-in-left {
+  0% {
+    transform: translateX(100%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-right {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-out-left {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes slide-out-right {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Position and sizing of burger button */
+.bm-burger-button {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  right: 25px;
+  top: 22px;
+}
+
+/* Color/shape of burger icon bars */
+.bm-burger-bars {
+  background: #0278e4;
+}
+
+/* Color/shape of close button cross */
+.bm-cross {
+  background: white;
+}
+
+.bm-menu-wrap {
+  position: fixed;
+  height: 100%;
+}
+
+/* General sidebar styles */
+.bm-menu {
+  background: #0278e4;
+  padding: 2.5rem 1.5rem 0;
+  font-size: 1.15rem;
+}
+
+/* Wrapper for item list */
+.bm-item-list {
+  color: white;
+  padding: 0.8em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Individual item */
+.bm-item {
+  display: inline-block;
+}
+
+/* Styling of overlay */
+.bm-overlay {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.overlay {
+  background: rgba(0, 0, 0, 0.3);
+}

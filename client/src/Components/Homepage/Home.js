@@ -57,7 +57,7 @@ function Home() {
 
             <NavLink
               to="/signup"
-              className="bg-primary self-start text-white p-2 md:px-3 2xl:p-3 2xl:px-5 mt-3 md:mt-5 text-xs md:text-base xl:text-lg 2xl:text-3xl rounded-full"
+              className="bg-primary hover:bg-blue-700 self-start text-white p-2 md:px-3 2xl:p-3 2xl:px-5 mt-3 md:mt-5 text-xs md:text-base xl:text-lg 2xl:text-3xl rounded-full"
             >
               Get Started
             </NavLink>
@@ -89,7 +89,7 @@ function Home() {
           </div>
 
           <div className="border-2 rounded my-4 border-white p-4 py-10 leading-relaxed tracking-wide 2xl:p-8 2xl:py-12">
-            CampusTalk provides forum’s based on Commuinty Question Answering
+            CampusTalk provides forum's based on Commuinty Question Answering
             (CQA) system where members can start a conversation with other
             members in the form of posts.
           </div>
@@ -111,7 +111,7 @@ function Home() {
 
         <div className="hidden lg:grid lg:gap-x-20 lg:grid-cols-3 p-10 mt-2 2xl:gap-x-40 2xl:px-28 2xl:text-2xl">
           <div className="border-2 rounded my-4 border-white p-4 py-10 leading-relaxed tracking-wide 2xl:p-8 2xl:py-12">
-            In today’s fast growing world, there is a lot of information being
+            In today's fast growing world, there is a lot of information being
             thrown at students and it can be overwhelming and confusing at
             times, especially for new or introverted students.
           </div>
@@ -124,7 +124,7 @@ function Home() {
 
           <div className="border-2 rounded my-4 border-white p-4 py-10 leading-relaxed tracking-wide 2xl:p-8 2xl:py-12">
             CampusTalk provides platform for students to ask for any information
-            related to their institute’s academic and non-academic activities
+            related to their institute's academic and non-academic activities
             which will be provided by their peers and teachers.
           </div>
         </div>
@@ -170,13 +170,13 @@ function Home() {
 
                   {/* title */}
                   <p className="my-6 lg:my-8 text-base lg:text-2xl 2xl:text-4xl">
-                    Sign up and join your institute’s forum
+                    Sign up and join your institute's forum
                   </p>
 
                   {/* description */}
                   <p className="text-xs lg:text-base 2xl:text-2xl">
                     After signing up, select your institute from the list to
-                    join it’s forum or create one if it’s not in the list.
+                    join it's forum or create one if it's not in the list.
                   </p>
                 </div>
 
@@ -279,7 +279,7 @@ function Home() {
                 </div>
               </div>
 
-              <button className="bg-white rounded-full p-3 md:p-4 text-sm md:text-base my-5 font-bold text-primary 2xl:text-2xl 2xl:my-10">
+              <button className="bg-white rounded-full p-3 md:p-4 text-sm md:text-base my-5 font-bold text-primary hover:scale-105 transition duration-150 2xl:text-2xl 2xl:my-10">
                 <NavLink to="signup">Sign up now &#8594;</NavLink>
               </button>
             </div>

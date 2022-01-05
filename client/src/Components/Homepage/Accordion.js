@@ -63,7 +63,7 @@ function Accordion() {
               </button>
             </div>
 
-            <div className="p-3" hidden={currentFaq === index ? false : true}>
+            <div className={currentFaq === index ? "p-3" : "p-3 hidden"}>
               <p className="text-sm mb-3 md:text-base 2xl:text-xl w-11/12">
                 {data.answer}
               </p>

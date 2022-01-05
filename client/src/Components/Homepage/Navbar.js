@@ -1,11 +1,16 @@
-import { useRef } from "react";
 import { NavLink } from "react-router-dom";
+import Menu from "react-burger-menu/lib/menus/slide";
+import { useState } from "react";
 
 function Navbar() {
-  const menuRef = useRef();
-  function toggleMenu() {
-    menuRef.current.classList.toggle("hidden");
-  }
+  const isMenuOpen = function (state) {
+    if (state.isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    return state.isOpen;
+  };
 
   return (
     <nav className="fixed top-0 z-10 w-full flex flex-wrap bg-white py-2 2xl:py-4 shadow-md justify-between md:justify-around items-center">
@@ -84,58 +89,51 @@ function Navbar() {
 
       {/* Desktop Menu */}
       <div className="hidden lg:ml-32 md:block md:px-3">
-        <a className="mx-5 2xl:text-lg" href="#about">
+        <a
+          className="mx-5 2xl:text-lg hover:underline hover:underline-offset-8"
+          href="#about"
+        >
           About
         </a>
-        <a className="mx-5 2xl:text-lg" href="#working">
+        <a
+          className="mx-5 2xl:text-lg hover:underline hover:underline-offset-8"
+          href="#working"
+        >
           How it works
         </a>
-        <a className="mx-5 2xl:text-lg" href="#faq">
+        <a
+          className="mx-5 2xl:text-lg hover:underline hover:underline-offset-8"
+          href="#faq"
+        >
           FAQ
         </a>
         <NavLink
           to="/login"
-          className="mx-5 2xl:text-lg bg-white text-primary font-bold shadow-md py-2 px-4 rounded-full"
+          className="mx-5 2xl:text-lg bg-white text-primary hover:bg-primary hover:text-white font-bold shadow-md py-2 px-4 rounded-full"
         >
           Log in
         </NavLink>
       </div>
 
-      {/* hamburger button */}
-      <button className="md:hidden mr-4" onClick={(e) => toggleMenu(e)}>
-        <svg
-          width="30"
-          height="28"
-          viewBox="0 0 30 28"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            fillRule="evenodd"
-            clipRule="evenodd"
-            d="M4.6875 21C4.6875 20.7679 4.78627 20.5454 4.96209 20.3813C5.1379 20.2172 5.37636 20.125 5.625 20.125H24.375C24.6236 20.125 24.8621 20.2172 25.0379 20.3813C25.2137 20.5454 25.3125 20.7679 25.3125 21C25.3125 21.2321 25.2137 21.4546 25.0379 21.6187C24.8621 21.7828 24.6236 21.875 24.375 21.875H5.625C5.37636 21.875 5.1379 21.7828 4.96209 21.6187C4.78627 21.4546 4.6875 21.2321 4.6875 21ZM4.6875 14C4.6875 13.7679 4.78627 13.5454 4.96209 13.3813C5.1379 13.2172 5.37636 13.125 5.625 13.125H24.375C24.6236 13.125 24.8621 13.2172 25.0379 13.3813C25.2137 13.5454 25.3125 13.7679 25.3125 14C25.3125 14.2321 25.2137 14.4546 25.0379 14.6187C24.8621 14.7828 24.6236 14.875 24.375 14.875H5.625C5.37636 14.875 5.1379 14.7828 4.96209 14.6187C4.78627 14.4546 4.6875 14.2321 4.6875 14ZM4.6875 7C4.6875 6.76794 4.78627 6.54538 4.96209 6.38128C5.1379 6.21719 5.37636 6.125 5.625 6.125H24.375C24.6236 6.125 24.8621 6.21719 25.0379 6.38128C25.2137 6.54538 25.3125 6.76794 25.3125 7C25.3125 7.23206 25.2137 7.45462 25.0379 7.61872C24.8621 7.78281 24.6236 7.875 24.375 7.875H5.625C5.37636 7.875 5.1379 7.78281 4.96209 7.61872C4.78627 7.45462 4.6875 7.23206 4.6875 7Z"
-            fill="#0278E4"
-          />
-        </svg>
-      </button>
-
       {/* Mobile Menu */}
-      <div
-        ref={menuRef}
-        className="hidden md:hidden flex flex-col basis-full items-center"
-      >
-        <a className="my-3 border-b" href="#about">
-          About
-        </a>
-        <a className="my-3 border-b" href="#working">
-          How it works
-        </a>
-        <a className="my-3 border-b" href="#faq">
-          FAQ
-        </a>
-        <button className="my-3 border-b bg-white text-primary font-bold shadow-md py-2 px-4 rounded-full">
-          Log in
-        </button>
+      <div className="md:hidden absolute h-full">
+        <Menu right onStateChange={isMenuOpen}>
+          <a className="my-5 border-b" href="#about">
+            About
+          </a>
+          <a className="my-5 border-b" href="#working">
+            How it works
+          </a>
+          <a className="my-5 border-b" href="#faq">
+            FAQ
+          </a>
+          <NavLink
+            to="/login"
+            className="my-5 bg-white text-primary font-bold shadow-md py-2 px-4 rounded-full"
+          >
+            Log in
+          </NavLink>
+        </Menu>
       </div>
     </nav>
   );

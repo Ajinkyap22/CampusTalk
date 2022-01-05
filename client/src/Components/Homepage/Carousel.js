@@ -1,22 +1,53 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import Swipe from "react-easy-swipe";
 
+// null
+// if null in next add slideoutleft
+
+// if null in prev add slideoutleft
+
 function Carousel({ data }) {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [direction, setDirection] = useState(null);
+  const slideRef = useRef();
 
   const nextSlide = () => {
-    let newSlide = currentSlide === data.length - 1 ? 0 : currentSlide + 1;
-    setCurrentSlide(newSlide);
+    slideRef.current.classList.add("slide-out-left");
+
+    setTimeout(() => {
+      let newSlide = currentSlide === data.length - 1 ? 0 : currentSlide + 1;
+      setDirection("slide-in-left");
+      setCurrentSlide(newSlide);
+    }, 100);
   };
 
   const prevSlide = () => {
-    let newSlide = currentSlide === 0 ? data.length - 1 : currentSlide - 1;
-    setCurrentSlide(newSlide);
+    slideRef.current.classList.add("slide-out-right");
+
+    setTimeout(() => {
+      let newSlide = currentSlide === 0 ? data.length - 1 : currentSlide - 1;
+      setDirection("slide-in-right");
+      setCurrentSlide(newSlide);
+    }, 100);
   };
 
   const changeSlide = (index) => {
-    setCurrentSlide(index);
+    if (currentSlide === index) return;
+
+    if (currentSlide > index) {
+      slideRef.current.classList.add(`slide-out-right`);
+      setTimeout(() => {
+        setDirection("slide-in-right");
+        setCurrentSlide(index);
+      }, 100);
+    } else {
+      slideRef.current.classList.add(`slide-out-left`);
+      setTimeout(() => {
+        setCurrentSlide(index);
+        setDirection("slide-in-left");
+      }, 100);
+    }
   };
 
   return (
@@ -30,11 +61,14 @@ function Carousel({ data }) {
         {data.map((content, index) => {
           return (
             <div
+              ref={index === currentSlide ? slideRef : null}
               key={index}
               className={
                 index === currentSlide
-                  ? "block first-letter border-2 rounded m-10 border-white p-4 py-8 md:py-10"
-                  : "hidden"
+                  ? `block first-letter border-2 rounded m-10 border-white p-4 py-8 md:py-10 ${
+                      direction || "slide-in-left"
+                    }`
+                  : "hidden first-letter border-2 rounded m-10 border-white p-4 py-8 md:py-10"
               }
             >
               {content}

@@ -183,7 +183,7 @@ function Auth({ type, setUser, ...props }) {
       </p>
 
       {/* form box */}
-      <section className="bg-white rounded justify-center shadow-md w-[90%] md:w-2/3 lg:w-[40%] 2xl:w-1/3 my-14 md:my-20 2xl:my-28 mb-20 md:mb-14">
+      <section className="bg-white rounded justify-center shadow-lg w-[90%] md:w-2/3 lg:w-[40%] 2xl:w-1/3 my-14 md:my-20 2xl:my-28 mb-20 md:mb-14">
         <div
           className={
             active === "login"
@@ -330,7 +330,7 @@ function Auth({ type, setUser, ...props }) {
 
           {/* Submit */}
           <div className="my-6">
-            <button className="px-2 md:px-3 py-2 mr-1 md:mr-2 text-sm md:text-base 2xl:text-lg bg-primary text-white rounded">
+            <button className="px-2 md:px-3 py-2 mr-1 md:mr-2 text-sm md:text-base 2xl:text-lg bg-primary text-white rounded hover:bg-blue-700">
               {active === "signup" ? "Sign Up" : "Log in"}
             </button>
             <Link
