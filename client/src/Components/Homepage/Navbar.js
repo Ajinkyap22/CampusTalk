@@ -3,13 +3,16 @@ import Menu from "react-burger-menu/lib/menus/slide";
 import { useState } from "react";
 
 function Navbar() {
-  const isMenuOpen = function (state) {
-    if (state.isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
-    return state.isOpen;
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+    document.body.style.overflow = "hidden";
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    document.body.style.overflow = "auto";
   };
 
   return (
@@ -117,18 +120,24 @@ function Navbar() {
 
       {/* Mobile Menu */}
       <div className="md:hidden absolute h-full">
-        <Menu right onStateChange={isMenuOpen}>
-          <a className="my-5 border-b" href="#about">
+        <Menu
+          right
+          onOpen={handleOpen}
+          onClose={handleClose}
+          isOpen={open ? true : false}
+        >
+          <a className="my-5 border-b" onClick={handleClose} href="#about">
             About
           </a>
-          <a className="my-5 border-b" href="#working">
+          <a className="my-5 border-b" onClick={handleClose} href="#working">
             How it works
           </a>
-          <a className="my-5 border-b" href="#faq">
+          <a className="my-5 border-b" onClick={handleClose} href="#faq">
             FAQ
           </a>
           <NavLink
             to="/login"
+            onClick={handleClose}
             className="my-5 bg-white text-primary font-bold shadow-md py-2 px-4 rounded-full"
           >
             Log in
