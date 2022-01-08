@@ -1,9 +1,30 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
+import avatar from "../assets/avatar.png";
 
 function UserInfo({ setUser, user }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const inputRef = useRef();
+  const imageRef = useRef();
+
+  function handleImageUpload() {
+    inputRef.current.click();
+  }
+
+  function handlePreview(e) {
+    changePreview(e.target);
+  }
+
+  function changePreview(image) {
+    if (image.files && image.files[0]) {
+      imageRef.current.setAttribute(
+        "src",
+        window.URL.createObjectURL(image.files[0])
+      );
+    }
+  }
+
   return (
     <div className="w-full bg-bubble flex relative flex-col justify-center items-center">
       <section className="bg-white rounded shadow-lg p-5 w-[90%] md:w-2/3 lg:w-[40%] 2xl:w-1/3 my-14 md:my-20 2xl:my-28 mb-20 md:mb-14">
@@ -13,7 +34,26 @@ function UserInfo({ setUser, user }) {
 
         <form className="px-5 md:px-6 py-3">
           {/* picture */}
-          <div className="my-4"></div>
+          <div className="my-4">
+            <img
+              src={avatar}
+              alt="Profile pic upload"
+              className="rounded-full m-auto w-auto h-32 cursor-pointer border-4 border-gray-400 hover:scale-105 transition-all"
+              onClick={handleImageUpload}
+              title="Upload Profile Picture"
+              ref={imageRef}
+            />
+
+            <input
+              ref={inputRef}
+              type="file"
+              name="profile_picture"
+              placeholder="Profile picture"
+              capture
+              className="hidden"
+              onChange={handlePreview}
+            />
+          </div>
 
           {/* first name */}
           <div className="my-4">
