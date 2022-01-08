@@ -5,9 +5,6 @@ import { withRouter, Link } from "react-router-dom";
 import axios from "axios";
 import GoogleLogin from "react-google-login";
 
-// TODO : fix text issues
-// Add a dummy page for redirect
-
 function Auth({ type, setUser, ...props }) {
   const [active, setActive] = useState(type);
   const [email, setEmail] = useState("");
@@ -26,7 +23,7 @@ function Auth({ type, setUser, ...props }) {
     active === "login" ? setActive("signup") : setActive("login");
   };
 
-  const handleLogin = async (googleData) => {
+  const handleSignIn = async (googleData) => {
     const body = JSON.stringify({
       token: googleData.tokenId,
     });
@@ -79,7 +76,12 @@ function Auth({ type, setUser, ...props }) {
         password,
         confirmPassword,
       })
-      .then(() => {
+      .then((res) => {
+        localStorage.setItem(
+          "user",
+          JSON.stringify({ token: res.data.token, user: res.data.user })
+        );
+        setUser(res.data.user);
         props.history.push("/join-forum");
       })
       .catch((err) => {
@@ -229,8 +231,8 @@ function Auth({ type, setUser, ...props }) {
               />
             )}
             buttonText="Sign in with Google"
-            onSuccess={handleLogin}
-            onFailure={handleLogin}
+            onSuccess={handleSignIn}
+            onFailure={handleSignIn}
             cookiePolicy={"single_host_origin"}
           />
         </div>

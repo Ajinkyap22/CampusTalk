@@ -134,11 +134,9 @@ exports.google = async function (req, res) {
   User.findOneAndUpdate(
     { email },
     { firstName: given_name, lastName: family_name, email, picture },
-    { upsert: true },
+    { upsert: true, new: true },
     function (err, user) {
       if (err) res.json(err);
-
-      if (!user) return;
 
       jwt.sign(
         { _id: user._id, email: user.email },
@@ -148,7 +146,12 @@ exports.google = async function (req, res) {
           if (err) return res.status(400).json(err);
           return res.json({
             token: token,
-            user: { _id: user._id, email: user.email },
+            user: {
+              _id: user._id,
+              email: user.email,
+              firstName: user.firstName,
+              lastName: user.lastName,
+            },
           });
         }
       );
