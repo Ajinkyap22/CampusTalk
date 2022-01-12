@@ -34,7 +34,13 @@ function App() {
           <Route
             exact
             path="/user-info"
-            render={() => <UserInfo user={user} setUser={setUser} />}
+            render={() => (
+              <UserInfo
+                user={user}
+                setUser={setUser}
+                title={"User Profile | CampusTalk"}
+              />
+            )}
           />
 
           {/* Join Forum */}

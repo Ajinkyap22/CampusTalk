@@ -36,7 +36,7 @@ exports.login_post = function (req, res) {
         if (err) return res.status(400).json(err);
         res.json({
           token: token,
-          user: { _id: user._id, email: user.email },
+          user,
         });
       }
     );
@@ -208,7 +208,7 @@ exports.profile = [
           firstName: req.body.firstName,
           lastName: req.body.lastName,
           email: req.body.email,
-          picture: req.file.filename || req.body.picture || "",
+          picture: req.file?.filename || req.body.picture || "",
         },
       },
       { new: true },

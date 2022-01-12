@@ -39,14 +39,13 @@ function Auth({ type, setUser, ...props }) {
       .then((res) => {
         localStorage.setItem("user", JSON.stringify(res.data));
         setUser(res.data.user);
-        props.history.push("/join-forum");
+        props.history.push("/user-info");
       })
       .catch((err) => {
         if (err.response?.status === 401) {
           setError(err.response.data.message);
         } else {
           console.error(err);
-          console.log(err.response);
         }
       });
   };
@@ -57,7 +56,12 @@ function Auth({ type, setUser, ...props }) {
       .then((res) => {
         localStorage.setItem("user", JSON.stringify(res.data));
         setUser(res.data.user);
-        props.history.push("/join-forum");
+
+        if (res.data.user.firstName) {
+          props.history.push("/join-forum");
+        } else {
+          props.history.push("/user-info");
+        }
       })
       .catch((err) => {
         if (err.response.status === 401) {
@@ -82,7 +86,7 @@ function Auth({ type, setUser, ...props }) {
           JSON.stringify({ token: res.data.token, user: res.data.user })
         );
         setUser(res.data.user);
-        props.history.push("/join-forum");
+        props.history.push("/user-info");
       })
       .catch((err) => {
         if (err.response?.status === 409) {
