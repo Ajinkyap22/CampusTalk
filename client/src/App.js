@@ -3,7 +3,7 @@ import Home from "./Components/Homepage/Home";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Auth from "./Components/Auth";
 import { useState } from "react";
-import UserInfo from "./Components/UserInfo";
+import UserInfo from "./Components/User Info/UserInfo";
 import Join from "./Components/Join";
 
 function App() {

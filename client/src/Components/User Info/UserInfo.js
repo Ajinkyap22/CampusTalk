@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
-import avatar from "../assets/avatar.png";
-import Toast from "./Toast";
+import avatar from "../../assets/avatar.png";
+import Toast from "../Toast";
 import ProfileModal from "./ProfileModal";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
@@ -17,7 +17,10 @@ function UserInfo({ setUser, user, title, ...props }) {
   const cropRef = useRef();
   const modalRef = useRef();
 
-  // TODO - Suggestions for input fileds on mobile not appearing properly
+  // redirect back to login if there is no user
+  useEffect(() => {
+    if (!user) props.history.push("/login");
+  }, [user, props.history]);
 
   // Update page title
   useEffect(() => {

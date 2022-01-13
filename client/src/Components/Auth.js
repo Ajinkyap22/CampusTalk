@@ -39,7 +39,7 @@ function Auth({ type, setUser, ...props }) {
       .then((res) => {
         localStorage.setItem("user", JSON.stringify(res.data));
         setUser(res.data.user);
-        props.history.push("/user-info");
+        props.history.push("/join-forum");
       })
       .catch((err) => {
         if (err.response?.status === 401) {
