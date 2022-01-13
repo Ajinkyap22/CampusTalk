@@ -5,24 +5,26 @@ import ProfileModal from "./ProfileModal";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 
-// current issues
-// modal does not open when same image is selected
-
 function UserInfo({ setUser, user, title, ...props }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [picture, setPicture] = useState(avatar);
+  const [error, setError] = useState("");
   const inputRef = useRef();
   const imageRef = useRef();
   const cropRef = useRef();
   const modalRef = useRef();
 
+  // TODO - Suggestions for input fileds on mobile not appearing properly
+
+  // Update page title
   useEffect(() => {
     document.title = title || "User Profile | CampusTalk";
   }, [title]);
 
+  // check if user already has an name & picture
   useEffect(() => {
     if (user?.firstName) setFirstName(user.firstName);
     if (user?.lastName) setLastName(user.lastName);
@@ -34,11 +36,19 @@ function UserInfo({ setUser, user, title, ...props }) {
   }
 
   function handlePreview(e) {
-    changePreview(e.target);
+    const isImage = validateFileType(e.target);
 
-    modalRef.current.classList.add("z-10");
+    if (isImage) {
+      changePreview(e.target);
 
-    setShowModal(true);
+      modalRef.current.classList.add("z-10");
+
+      setShowModal(true);
+
+      setError("");
+    } else {
+      setError("Invalid file format. Please provide an Image.");
+    }
   }
 
   function changePreview(image) {
@@ -47,6 +57,18 @@ function UserInfo({ setUser, user, title, ...props }) {
         "src",
         window.URL.createObjectURL(image.files[0])
       );
+    }
+  }
+
+  function validateFileType(file) {
+    var fileName = file.value;
+    var idxDot = fileName.lastIndexOf(".") + 1;
+    var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+
+    if (extFile === "jpg" || extFile === "jpeg" || extFile === "png") {
+      return true;
+    } else {
+      return false;
     }
   }
 
@@ -73,13 +95,14 @@ function UserInfo({ setUser, user, title, ...props }) {
       })
       .catch((err) => {
         console.error(err);
+        setError(err.response || err);
       });
   }
 
   return (
     <div className="w-full h-full bg-bubble flex relative flex-col justify-center items-center">
-      <section className="bg-white rounded shadow-lg p-5 w-[90%] md:w-2/3 lg:w-[40%] 2xl:w-1/3 my-14 md:my-20 2xl:my-28 mb-20 md:mb-14">
-        <h1 className="text-primary text-center text-2xl">
+      <section className="bg-white rounded shadow-lg p-2 md:p-5 w-[90%] md:w-2/3 lg:w-[40%] 2xl:w-1/3 my-14 md:my-20 2xl:my-28 mb-20 md:mb-14">
+        <h1 className="text-primary text-center text-xl pt-2 md:text-2xl">
           Tell us a bit about yourself
         </h1>
 
@@ -136,6 +159,13 @@ function UserInfo({ setUser, user, title, ...props }) {
             />
           </div>
 
+          <p
+            className="text-sm text-red-600 text-center"
+            hidden={error ? false : true}
+          >
+            {error}
+          </p>
+
           {/* first name */}
           <div className="my-4">
             <label
@@ -177,8 +207,8 @@ function UserInfo({ setUser, user, title, ...props }) {
           </div>
 
           {/* Submit */}
-          <div className="my-4 mt-8 float-right ">
-            <button className="px-2 md:px-3 py-2 mr-1  text-sm md:text-base 2xl:text-lg bg-primary text-white rounded hover:bg-blue-700">
+          <div className="my-4 md:mt-8 float-right ">
+            <button className="px-2 md:px-3 py-2 mr-1 text-sm md:text-base 2xl:text-lg bg-primary text-white rounded hover:bg-blue-700">
               Next
             </button>
           </div>

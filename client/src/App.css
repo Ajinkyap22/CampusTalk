@@ -161,3 +161,9 @@
 .overlay {
   background: rgba(0, 0, 0, 0.3);
 }
+
+.editor canvas {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+}

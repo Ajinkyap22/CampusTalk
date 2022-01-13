@@ -39,7 +39,7 @@ function ProfileModal({
   return (
     <div
       ref={modalRef}
-      className="absolute bg-white rounded shadow-lg pb-5 z-10 w-[90%] md:w-[70%] lg:w-[50%] 2xl:w-[40%] my-14 md:my-20 2xl:my-28 mb-20 md:mb-14"
+      className="absolute bg-white rounded shadow-lg pb-5 z-10 w-[95%] xsm:w-[90%] md:w-[70%] lg:w-[50%] 2xl:w-[40%] my-14 md:my-20 2xl:my-28 mb-20 md:mb-14"
       hidden={showModal ? false : true}
     >
       <h1 className="text-primary text-xl p-4 align-middle">
@@ -63,7 +63,7 @@ function ProfileModal({
         </svg>
       </button>
 
-      <div className="w-full bg-black">
+      <div className="w-full editor bg-black">
         <AvatarEditor
           image={imageRef.current?.getAttribute("src")}
           ref={cropRef}

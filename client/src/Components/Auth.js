@@ -267,7 +267,7 @@ function Auth({ type, setUser, ...props }) {
               className="mt-3 text-sm text-red-600"
               hidden={active === "signup" && status === 409 ? false : true}
             >
-              Email already exists
+              Email is already in use.
             </p>
           </div>
 
