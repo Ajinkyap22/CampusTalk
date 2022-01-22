@@ -1,17 +1,19 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import hat from "../assets/graduate.png";
 import GoogleButton from "react-google-button";
 import { withRouter, Link } from "react-router-dom";
 import axios from "axios";
 import GoogleLogin from "react-google-login";
+import { UserContext } from "../UserContext";
 
-function Auth({ type, setUser, ...props }) {
+function Auth({ type, ...props }) {
   const [active, setActive] = useState(type);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [status, setStatus] = useState(0);
+  const [setUser] = useContext(UserContext)[1];
 
   useEffect(() => {
     let newTitle =

@@ -1,11 +1,12 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import avatar from "../../assets/avatar.png";
 import Toast from "../Toast";
 import ProfileModal from "./ProfileModal";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
+import { UserContext } from "../../UserContext";
 
-function UserInfo({ setUser, user, title, ...props }) {
+function UserInfo({ title, ...props }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [showModal, setShowModal] = useState(false);
@@ -16,6 +17,7 @@ function UserInfo({ setUser, user, title, ...props }) {
   const imageRef = useRef();
   const cropRef = useRef();
   const modalRef = useRef();
+  const [user, setUser] = useContext(UserContext);
 
   // redirect back to login if there is no user
   useEffect(() => {

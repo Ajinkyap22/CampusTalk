@@ -170,9 +170,13 @@
 
 table {
   border-collapse: separate;
-  border-spacing: 0 2rem;
+  border-spacing: 0 1.2rem;
 }
 
 tbody tr {
   background: #cfe2ff;
+}
+
+td {
+  border-bottom: 1rem solid white;
 }
