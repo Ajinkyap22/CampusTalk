@@ -13,7 +13,7 @@ function Auth({ type, ...props }) {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [status, setStatus] = useState(0);
-  const [setUser] = useContext(UserContext)[1];
+  const [user, setUser] = useContext(UserContext);
 
   useEffect(() => {
     let newTitle =

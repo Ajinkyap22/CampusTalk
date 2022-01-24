@@ -7,7 +7,11 @@ function ListItem({ forum }) {
 
   const joinForum = (forumId) => {
     let headers = {
-      Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(localStorage.getItem("user")).token
+        }`,
+      },
     };
 
     let body = {

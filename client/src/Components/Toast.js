@@ -8,7 +8,7 @@ function Toast({ text, show }) {
       toastRef.current.classList.remove("hidden");
 
       setTimeout(() => {
-        toastRef.current.classList.add("hidden");
+        toastRef.current?.classList.add("hidden");
       }, 3000);
     }
   }, [show]);

@@ -88,7 +88,11 @@ function UserInfo({ title, ...props }) {
     formData.append("email", user.email);
 
     let headers = {
-      Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(localStorage.getItem("user")).token
+        }`,
+      },
     };
 
     axios

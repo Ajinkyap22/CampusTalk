@@ -3,6 +3,7 @@ const router = express.Router();
 const userController = require("../controllers/userController");
 const passport = require("passport");
 const upload = require("../config/multer");
+const verifyToken = require("../config/verifyToken");
 
 // GET all users
 router.get("/", userController.users_get);
@@ -23,6 +24,11 @@ router.post("/google", userController.google);
 router.delete("/delete/:id", userController.delete_user);
 
 // user profile info
-router.put("/profile/:id", upload.single("picture"), userController.profile);
+router.put(
+  "/profile/:id",
+  upload.single("picture"),
+  verifyToken,
+  userController.profile
+);
 
 module.exports = router;

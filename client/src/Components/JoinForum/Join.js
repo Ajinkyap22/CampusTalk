@@ -22,8 +22,6 @@ function Join() {
       });
   }, []);
 
-  function joinForum() {}
-
   return (
     <div className="flex justify-center items-center w-full h-full">
       {loading ? (
@@ -38,7 +36,7 @@ function Join() {
           </h2>
 
           <section className="bg-white rounded shadow-lg w-[90%] md:w-[60%] 2xl:w-1/3 my-10 mb-20">
-            <ForumList forums={forums} joinForum={joinForum} />
+            <ForumList forums={forums} />
 
             <p
               className="text-center w-1/2 m-auto pt-10 pb-5"
