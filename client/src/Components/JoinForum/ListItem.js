@@ -1,32 +1,30 @@
-import { useContext } from "react";
-import { UserContext } from "../../UserContext";
-import axios from "axios";
+import { useEffect, useState } from "react";
 
-function ListItem({ forum }) {
-  const [user] = useContext(UserContext);
+function ListItem({ forum, joinList, setJoinList }) {
+  const [joined, setJoined] = useState(false);
 
-  const joinForum = (forumId) => {
-    let headers = {
-      headers: {
-        Authorization: `Bearer ${
-          JSON.parse(localStorage.getItem("user")).token
-        }`,
-      },
-    };
+  useEffect(() => {
+    console.log(joinList);
+  }, [joinList]);
 
-    let body = {
-      id: user._id,
-    };
+  const handleJoin = (forumId) => {
+    setJoinList((joinList) => [...joinList, forumId]);
+  };
 
-    axios
-      .post(`/api/forums/${forumId}/join`, body, headers)
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err.response);
-        console.error(err);
-      });
+  const handleCancel = (forumId) => {
+    setJoinList((joinList) => joinList.filter((id) => id !== forumId));
+  };
+
+  const actionHandler = (e, forumId) => {
+    if (joined) {
+      e.target.classList.remove("requested");
+      handleCancel(forumId);
+      setJoined(false);
+    } else {
+      e.target.classList.add("requested");
+      handleJoin(forumId);
+      setJoined(true);
+    }
   };
 
   return (
@@ -35,10 +33,10 @@ function ListItem({ forum }) {
       <td>{forum.members.length}</td>
       <td>
         <button
-          onClick={() => joinForum(forum._id)}
-          className="px-5 py-1.5 m-2 text-sm md:text-base 2xl:text-lg bg-primary text-white rounded-full hover:bg-blue-700"
+          onClick={(e) => actionHandler(e, forum._id)}
+          className="px-3 py-1.5 my-2 text-sm md:text-base 2xl:text-lg bg-primary border border-primary text-white rounded-full hover:bg-blue-700"
         >
-          Join
+          {joined ? "Cancel" : "Join"}
         </button>
       </td>
     </tr>
