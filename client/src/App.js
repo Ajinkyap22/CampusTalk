@@ -5,6 +5,7 @@ import Auth from "./Components/Auth";
 import UserInfo from "./Components/User Info/UserInfo";
 import { Join } from "./Components/JoinForum/Join";
 import { UserProvider } from "./UserContext";
+import CreateForum from "./Components/Create Forum/Create";
 
 function App() {
   return (
@@ -34,6 +35,9 @@ function App() {
 
             {/* Join Forum */}
             <Route exact path="/join-forum" render={() => <Join />} />
+
+            {/* Create forum */}
+            <Route exact path="/create-forum" render={() => <CreateForum />} />
           </Switch>
         </Router>
       </UserProvider>

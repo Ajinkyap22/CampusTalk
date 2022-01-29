@@ -3,7 +3,7 @@ import axios from "axios";
 import Loading from "../Loading";
 import ForumList from "./ForumList";
 import { UserContext } from "../../UserContext";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 const JoinContext = React.createContext();
 
@@ -107,7 +107,7 @@ function JoinForum(props) {
               </p>
 
               <button className="px-3 py-1.5 mt-5 text-sm xl:text-base 2xl:text-lg text-primary bg-white border border-primary rounded-full hover:bg-primary hover:text-white">
-                Create Forum
+                <Link to="/create-forum">Create Forum</Link>
               </button>
             </div>
           </section>
