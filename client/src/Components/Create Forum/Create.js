@@ -1,11 +1,14 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 function CreateForum() {
+  const [checked, setChecked] = useState(false);
   // TODO apply similar font styles to join page too
+
   return (
-    <main className="w-full bg-bubble h-screen flex flex-col justify-center items-center">
+    <main className="w-full bg-bubble h-full overflow-auto flex flex-col justify-center items-center m-0">
       {/* form */}
-      <section className="bg-white rounded shadow-lg w-[90%] md:w-2/3 xl:w-1/2 mt-20 mb-20 2xl:my-8">
+      <section className="bg-white rounded shadow-lg w-[90%] md:w-2/3 xl:w-1/2 2xl:w-1/3 mt-20 mb-10 inline-block 2xl:my-8">
         {/* title */}
         <h1 className="text-center font-bold mb-1 lg:mb-2 mt-5 lg:mt-8 text-primary text-xl lg:text-2xl 2xl:text-3xl">
           Create Your Institute's Forum
@@ -75,8 +78,30 @@ function CreateForum() {
             />
           </div>
 
+          {/* checkbox */}
+          <div className="my-4 relative">
+            <input
+              type="checkbox"
+              name="consent"
+              id="consent"
+              className="cursor-pointer"
+              value={false}
+              onChange={() => setChecked(!checked)}
+              required
+            />
+            <label
+              htmlFor="consent"
+              className="text-xs mx-2 relative bottom-[0.1rem]"
+              value="yes"
+            >
+              I understand that this information will be used for the institute
+              verification process. Inaccurate information will result in the
+              deletion of the created forum.
+            </label>
+          </div>
+
           {/* Submit */}
-          <div className="my-4 md:my-5 float-right ">
+          <div className="my-4 md:my-5 float-right">
             <Link
               to="join-forum"
               className="px-2 md:px-3 py-2 mx-2 text-sm md:text-base 2xl:text-lg text-secondary"
