@@ -10,6 +10,9 @@ module.exports = {
       spacing: {
         128: "32rem",
       },
+      fontSize: {
+        xsm: ".6rem",
+      },
     },
     screens: {
       xsm: "400px",

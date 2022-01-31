@@ -34,10 +34,18 @@ function App() {
             />
 
             {/* Join Forum */}
-            <Route exact path="/join-forum" render={() => <Join />} />
+            <Route
+              exact
+              path="/join-forum"
+              render={() => <Join title={"Join Forum | CampusTalk"} />}
+            />
 
             {/* Create forum */}
-            <Route exact path="/create-forum" render={() => <CreateForum />} />
+            <Route
+              exact
+              path="/create-forum"
+              render={() => <CreateForum title={"Create Forum | CampusTalk"} />}
+            />
           </Switch>
         </Router>
       </UserProvider>

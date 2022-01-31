@@ -7,11 +7,15 @@ import { Link, withRouter } from "react-router-dom";
 
 const JoinContext = React.createContext();
 
-function JoinForum(props) {
+function JoinForum({ title, ...props }) {
   const [forums, setForums] = useState([]);
   const [loading, setLoading] = useState(true);
   const [joinList, setJoinList] = useState([]);
   const [user] = useContext(UserContext);
+
+  useEffect(() => {
+    document.title = title || "Join Forum | CampusTalk";
+  }, [title]);
 
   useEffect(() => {
     axios
