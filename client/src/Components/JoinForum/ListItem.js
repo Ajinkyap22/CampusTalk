@@ -1,13 +1,9 @@
-import { useEffect, useState, useContext } from "react";
+import { useState, useContext } from "react";
 import { JoinContext } from "./Join";
 
 function ListItem({ forum }) {
   const [joined, setJoined] = useState(false);
   const [joinList, setJoinList] = useContext(JoinContext);
-
-  useEffect(() => {
-    console.log(joinList);
-  }, [joinList]);
 
   const handleJoin = (forumId) => {
     setJoinList((joinList) => [...joinList, forumId]);

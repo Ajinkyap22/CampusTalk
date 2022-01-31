@@ -219,6 +219,7 @@ exports.make_moderator = function (req, res) {
     {
       $push: {
         moderators: req.body.id,
+        members: req.body.id,
       },
     },
     { new: true }

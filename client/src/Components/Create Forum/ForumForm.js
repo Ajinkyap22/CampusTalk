@@ -1,10 +1,20 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
+import { UserContext } from "../../UserContext";
 
-function ForumForm() {
+// TODO check if forum already exists before creating
+
+let headers = {
+  headers: {
+    Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+  },
+};
+
+function ForumForm(props) {
   const [checked, setChecked] = useState(false);
+  const [user] = useContext(UserContext);
 
   const [formData, setFormData] = useState({
     forumName: "",
@@ -22,8 +32,40 @@ function ForumForm() {
     }));
   };
 
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    axios
+      .post(`/api/forums/create-forum`, formData, headers)
+      .then((res) => {
+        // redirect
+        props.history.push("/");
+        // make moderator
+        makeModerator(res.data._id);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  function makeModerator(forumId) {
+    if (!user) return;
+
+    let body = { id: user._id };
+
+    axios
+      .post(`/api/forums/${forumId}/moderators/make`, body, headers)
+      .then((res) => {
+        // set forums
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
   return (
-    <form className="px-5 md:px-8 py-2">
+    <form className="px-5 md:px-8 py-2" onSubmit={handleSubmit}>
       {/* forum name */}
       <div className="my-4 lg:my-6 2xl:my-8">
         <label htmlFor="forumName" className="text-xs lg:text-sm 2xl:text-lg">
@@ -63,7 +105,7 @@ function ForumForm() {
         </label>
         <input
           onChange={handleChange}
-          type="text"
+          type="url"
           name="website"
           placeholder="Your institute's official website"
           className="mt-2 block w-full px-3 py-1.5 border border-gray-300 bg-[#f6f6f6] placeholder-[#818181] rounded-md text-xs lg:text-sm 2xl:text-base shadow-sm 

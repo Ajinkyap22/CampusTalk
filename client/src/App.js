@@ -6,8 +6,12 @@ import UserInfo from "./Components/User Info/UserInfo";
 import { Join } from "./Components/JoinForum/Join";
 import { UserProvider } from "./UserContext";
 import CreateForum from "./Components/Create Forum/Create";
+import { useState } from "react";
+import Forum from "./Components/Forum/Forum";
 
 function App() {
+  const [forums, setForums] = useState([]);
+
   return (
     <div className="App">
       <UserProvider>
@@ -46,6 +50,18 @@ function App() {
               path="/create-forum"
               render={() => <CreateForum title={"Create Forum | CampusTalk"} />}
             />
+
+            {/* forum page */}
+            {forums.map((forum, i) => (
+              <Route
+                exact
+                path={`/forums/${forum._id}`}
+                key={i}
+                render={() => (
+                  <Forum title={`${forum.forumName} | CampusTalk`} />
+                )}
+              />
+            ))}
           </Switch>
         </Router>
       </UserProvider>
