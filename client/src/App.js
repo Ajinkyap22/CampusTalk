@@ -8,6 +8,7 @@ import { UserProvider } from "./UserContext";
 import CreateForum from "./Components/Create Forum/Create";
 import { useState } from "react";
 import Forum from "./Components/Forum/Forum";
+import Login from "./Components/Auth/Login";
 
 function App() {
   const [forums, setForums] = useState([]);
@@ -21,7 +22,11 @@ function App() {
             <Route exact path="/" render={() => <Home />} />
 
             {/* Login */}
-            <Route exact path="/login" render={() => <Auth type={"login"} />} />
+            <Route
+              exact
+              path="/login"
+              render={() => <Login title="Log in | CampusTalk" />}
+            />
 
             {/* Signup */}
             <Route
