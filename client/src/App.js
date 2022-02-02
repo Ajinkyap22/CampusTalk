@@ -9,6 +9,7 @@ import CreateForum from "./Components/Create Forum/Create";
 import { useState } from "react";
 import Forum from "./Components/Forum/Forum";
 import Login from "./Components/Auth/Login";
+import Signup from "./Components/Auth/Signup";
 
 function App() {
   const [forums, setForums] = useState([]);
@@ -32,7 +33,7 @@ function App() {
             <Route
               exact
               path="/signup"
-              render={() => <Auth type={"signup"} />}
+              render={() => <Signup title={"Sign up | CampusTalk"} />}
             />
 
             {/* User info page*/}

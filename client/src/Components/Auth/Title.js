@@ -1,12 +1,12 @@
 function Title() {
   return (
-    <section>
+    <section className="flex flex-col justify-center">
       {/* title */}
       <svg
-        width="250"
+        width="240"
         height="100"
         viewBox="0 0 220 52"
-        className="mr-6 md:mt-3 w-1/2 md:w-auto 2xl:w-full 2xl:mt-10"
+        className="mr-6 md:mt-2 w-auto h-1/2 md:h-2/3 md:w-auto xl:h-auto 2xl:w-full 2xl:mt-10"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -72,7 +72,7 @@ function Title() {
         />
       </svg>
 
-      <p className="tracking-widest text-center text-xs md:text-sm 2xl:text-base text-[#342F2F] font-extralight md:mt-2 2xl:mt-6">
+      <p className="tracking-widest text-center text-xsm md:text-sm 2xl:text-base text-[#342F2F] font-extralight 2xl:mt-2">
         YOUR COLLEGE LIFE MADE EASY
       </p>
     </section>

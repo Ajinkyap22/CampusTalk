@@ -1,5 +1,4 @@
 import Title from "./Title";
-import hat from "../../assets/graduate.png";
 import GoogleLogin from "react-google-login";
 import axios from "axios";
 import { UserContext } from "../../UserContext";
@@ -69,14 +68,14 @@ function Login({ title, ...props }) {
   };
 
   return (
-    <main className="w-full bg-bubble flex relative flex-col items-center">
+    <main className="w-full bg-bubble flex relative h-full overflow-auto flex-col xl:justify-center items-center">
       <Title />
 
       {/* form box */}
-      <section className="bg-white rounded justify-center shadow-lg w-[90%] md:w-2/3 lg:w-[40%] 2xl:w-1/3 my-14 2xl:my-28 mb-20 md:mb-14">
-        <div className="absolute left-[36%] xsm:left-[38%] msm:left-[42%] msm:top-[19%] md:left-[42%] lg:left-[45%] lg:top-[20%] 2xl:left-[47.5%] top-[20%] 2xl:top-[25%]">
-          <img src={hat} className="w-auto h-16 md:h-20" alt="" />
-        </div>
+      <section className="bg-white rounded justify-center shadow-lg w-[90%] md:w-2/3 lg:w-[40%] 2xl:w-[30%] md:my-2 lg:my-5 xl:my-8">
+        <h1 className="text-lg md:text-xl lg:text-2xl text-primary text-center mt-4">
+          Log in to CampusTalk
+        </h1>
 
         <div className="flex justify-center mt-6">
           <GoogleLogin
@@ -93,7 +92,7 @@ function Login({ title, ...props }) {
           <span className="text-center text-sm 2xl:text-lg">OR</span>
         </div>
 
-        <form className="px-6 md:px-10 py-3" onSubmit={loginHandler}>
+        <form className="px-5 md:px-10 py-3" onSubmit={loginHandler}>
           {/* Email */}
           <div className="my-3">
             <label htmlFor="email" className="text-xs lg:text-sm 2xl:text-lg">
@@ -138,13 +137,19 @@ function Login({ title, ...props }) {
           </div>
 
           {/* Submit */}
-          <div className="my-6 mt-8 flex justify-between items-center">
-            <div>
-              <Link to="/signup" className="text-xs text-primary block mb-3">
+          <div className="my-4 mt-6 md:my-6 md:mt-8 flex justify-between items-center">
+            <div className="mt-2 md:mt-0">
+              <Link
+                to="/signup"
+                className="text-xsm md:text-xs text-primary block mb-1 md:mb-2 lg:mb-3"
+              >
                 Don't have an account?
               </Link>
 
-              <Link to="/" className="text-xs text-primary block mt-3">
+              <Link
+                to="/"
+                className="text-xsm md:text-xs text-primary block mt-1 md:mt-2 lg:mt-3"
+              >
                 Forgot Password?
               </Link>
             </div>
@@ -152,11 +157,11 @@ function Login({ title, ...props }) {
             <div className="mt-3">
               <Link
                 to="/"
-                className="px-2 md:px-3 text-sm lg:text-base 2xl:text-lg py-1.5 lg:py-2 mr-1 text-[#818181]"
+                className="px-2 md:px-3 text-xs md:text-sm lg:text-base 2xl:text-lg py-1.5 lg:py-2 mr-1 text-[#818181]"
               >
                 Go Back
               </Link>
-              <button className="px-2 md:px-3 py-1.5 lg:py-2 ml-1 text-sm lg:text-base 2xl:text-lg bg-primary text-white rounded hover:bg-blue-700">
+              <button className="px-2 md:px-3 py-1.5 lg:py-2 ml-1 text-xs md:text-sm lg:text-base 2xl:text-lg bg-primary text-white rounded hover:bg-blue-700">
                 Log in
               </button>
             </div>
