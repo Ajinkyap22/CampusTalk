@@ -5,6 +5,8 @@ import { UserContext } from "../../UserContext";
 import { useContext, useEffect, useState } from "react";
 import { withRouter, Link } from "react-router-dom";
 import GoogleButton from "./GoogleButton";
+import FormControl from "./FormControl";
+import ActionButtons from "./ActionButtons";
 
 function Signup({ title, ...props }) {
   const [user, setUser] = useContext(UserContext);
@@ -44,23 +46,27 @@ function Signup({ title, ...props }) {
       });
   };
 
-  const loginHandler = (e) => {
+  const signupHandler = (e) => {
     e.preventDefault();
 
     axios
-      .post("/api/users/login", { email, password })
+      .post("/api/users/signup", {
+        email,
+        password,
+        confirmPassword,
+      })
       .then((res) => {
-        localStorage.setItem("user", JSON.stringify(res.data));
+        localStorage.setItem(
+          "user",
+          JSON.stringify({ token: res.data.token, user: res.data.user })
+        );
         setUser(res.data.user);
-
-        if (res.data.user.firstName) {
-          props.history.push("/join-forum");
-        } else {
-          props.history.push("/user-info");
-        }
+        props.history.push("/user-info");
       })
       .catch((err) => {
-        if (err.response.status === 401) {
+        if (err.response?.status === 409) {
+          setStatus(409);
+        } else if (err.response?.status === 401) {
           setStatus(401);
         } else {
           console.error(err);
@@ -69,7 +75,7 @@ function Signup({ title, ...props }) {
   };
 
   return (
-    <main className="w-full bg-bubble flex relative h-full overflow-auto flex-col xl:justify-center items-center">
+    <main className="w-full bg-bubble flex relative h-full overflow-auto flex-col 2xl:justify-center items-center">
       <Title />
 
       {/* form box */}
@@ -78,6 +84,7 @@ function Signup({ title, ...props }) {
           Create Your Account
         </h1>
 
+        {/* sign in */}
         <div className="flex justify-center mt-6">
           <GoogleLogin
             clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
@@ -89,80 +96,60 @@ function Signup({ title, ...props }) {
           />
         </div>
 
+        {/* or */}
         <div className="or w-full mt-5 2xl:mt-6 px-4 md:px-6">
           <span className="text-center text-sm 2xl:text-lg">OR</span>
         </div>
 
-        <form className="px-5 md:px-10 py-3" onSubmit={loginHandler}>
+        {/* form */}
+        <form className="px-5 md:px-10 py-2" onSubmit={signupHandler}>
           {/* Email */}
-          <div className="my-3">
-            <label htmlFor="email" className="text-xs lg:text-sm 2xl:text-lg">
-              Email <span className="text-red-600">*</span>
-            </label>
-            <input
-              type="email"
-              name="email"
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email address"
-              className="mt-2 block w-full px-3 py-1.5 border border-gray-300 bg-[#f6f6f6] rounded-md text-xs lg:text-sm 2xl:text-base shadow-sm placeholder-[#818181] 
-              focus:outline-none focus:border-sky-500"
-              minLength={3}
-              required
-            />
+          <FormControl
+            type="email"
+            name="email"
+            placeholder="Enter your email address"
+            label="Email"
+            minLength={3}
+            required={true}
+            status={status}
+            callback={(value) => setEmail(value)}
+          />
 
-            <p
-              className="mt-3 text-sm text-red-600"
-              hidden={status === 409 ? false : true}
-            >
-              Email is already in use.
-            </p>
-          </div>
+          <p
+            className="mt-3 text-sm text-red-600"
+            hidden={status === 409 ? false : true}
+          >
+            Email is already in use.
+          </p>
 
           {/* Password */}
-          <div className="my-4 md:my-5">
-            <label
-              htmlFor="password"
-              className="text-xs lg:text-sm 2xl:text-lg"
-            >
-              Password <span className="text-red-600">*</span>
-            </label>
-            <input
-              type="password"
-              name="password"
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Minimum 8 characters"
-              className="mt-2 block w-full px-3 py-1.5 border border-gray-300 bg-[#f6f6f6] rounded-md text-xs lg:text-sm 2xl:text-base shadow-sm placeholder-[#818181] 
-              focus:outline-none focus:border-sky-500"
-              minLength={8}
-              required
-            />
-          </div>
+          <FormControl
+            type="password"
+            name="password"
+            placeholder="Minimum 8 characters"
+            label="Password"
+            minLength={8}
+            required={true}
+            callback={(value) => setPassword(value)}
+          />
 
           {/* Confirm password */}
-          <div className="my-4 md:my-5">
-            <label
-              htmlFor="confirmPassword"
-              className="text-xs lg:text-sm 2xl:text-lg"
-            >
-              Confirm Password <span className="text-red-600">*</span>
-            </label>
-            <input
-              type="password"
-              name="confirmPassword"
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              placeholder="Retype your password"
-              className="mt-2 block w-full px-3 py-1.5 border border-gray-300 bg-[#f6f6f6] rounded-md text-xs lg:text-sm 2xl:text-base shadow-sm placeholder-[#818181] 
-              focus:outline-none focus:border-sky-500"
-              minLength={8}
-              required
-            />
-            <p
-              className="mt-3 text-sm text-red-600"
-              hidden={status === 401 ? false : true}
-            >
-              Confirmed Password must be the same as password
-            </p>
-          </div>
+          <FormControl
+            type="password"
+            name="confirmPassword"
+            placeholder="Minimum 8 characters"
+            label="Confirm Password"
+            minLength={8}
+            required={true}
+            callback={(value) => setConfirmPassword(value)}
+          />
+
+          <p
+            className="mt-3 text-sm text-red-600"
+            hidden={status === 401 ? false : true}
+          >
+            Confirmed Password must be the same as password
+          </p>
 
           {/* Submit */}
           <div className="my-4 mt-6 md:my-6 md:mt-8 flex justify-between items-center">
@@ -182,17 +169,8 @@ function Signup({ title, ...props }) {
               </Link>
             </div>
 
-            <div className="mt-3">
-              <Link
-                to="/"
-                className="px-2 md:px-3 text-xs md:text-sm lg:text-base 2xl:text-lg py-1.5 lg:py-2 mr-1 text-[#818181]"
-              >
-                Go Back
-              </Link>
-              <button className="px-2 md:px-3 py-1.5 lg:py-2 ml-1 text-xs md:text-sm lg:text-base 2xl:text-lg bg-primary text-white rounded hover:bg-blue-700">
-                Sign up
-              </button>
-            </div>
+            {/* Action buttons */}
+            <ActionButtons path="/" action="Sign up" />
           </div>
         </form>
       </section>
