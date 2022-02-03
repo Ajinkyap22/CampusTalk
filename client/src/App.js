@@ -1,7 +1,6 @@
 import "./App.css";
 import Home from "./Components/Homepage/Home";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Auth from "./Components/Auth";
 import UserInfo from "./Components/User Info/UserInfo";
 import { Join } from "./Components/JoinForum/Join";
 import { UserProvider } from "./UserContext";

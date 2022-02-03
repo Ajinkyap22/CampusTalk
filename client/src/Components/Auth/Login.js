@@ -5,7 +5,8 @@ import { UserContext } from "../../UserContext";
 import { useContext, useEffect, useState } from "react";
 import { withRouter, Link } from "react-router-dom";
 import GoogleButton from "./GoogleButton";
-import FormControl from "./FormControl";
+import Input from "../FormControl/Input";
+import Password from "../FormControl/Password";
 import ActionButtons from "./ActionButtons";
 
 function Login({ title, ...props }) {
@@ -96,7 +97,7 @@ function Login({ title, ...props }) {
 
         <form className="px-5 md:px-10 py-2" onSubmit={loginHandler}>
           {/* Email */}
-          <FormControl
+          <Input
             type="email"
             name="email"
             placeholder="Enter your email address"
@@ -107,8 +108,7 @@ function Login({ title, ...props }) {
           />
 
           {/* Password */}
-          <FormControl
-            type="password"
+          <Password
             name="password"
             placeholder="Minimum 8 characters"
             label="Password"
