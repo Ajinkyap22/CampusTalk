@@ -15,10 +15,10 @@ function Toast({ text, show }) {
 
   return (
     <div
-      className="absolute bottom-5 right-10 flex items-center bg-green-500 border-l-4 border-green-700 py-2 px-3 shadow-md mb-2 hidden"
+      className="absolute top-5 md:top-auto md:bottom-5 md:right-10 2xl:bottom-10 2xl:right-20 flex items-center bg-white border-l-4 border-blue-700 py-2 px-3 shadow-md mb-2 hidden"
       ref={toastRef}
     >
-      <div className="text-green-500 rounded-full bg-white mr-3">
+      <div className="text-primary rounded-full bg-white mr-2">
         <svg
           width="26"
           height="26"
@@ -32,7 +32,7 @@ function Toast({ text, show }) {
           />
         </svg>
       </div>
-      <div className="text-white max-w-xs">{text}</div>
+      <div className="text-primar text-sm max-w-xs">{text}</div>
     </div>
   );
 }

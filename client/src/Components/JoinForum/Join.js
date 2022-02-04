@@ -71,13 +71,13 @@ function JoinForum({ title, ...props }) {
         <Loading />
       ) : (
         <div className="w-full bg-bubble flex relative flex-col justify-start items-center h-full">
-          <h1 className="font-bold mb-1 lg:mb-2 mt-5 lg:mt-10 text-primary text-xl xl:mt-10 lg:text-2xl xl:text-3xl 2xl:text-4xl">
+          <h1 className="font-bold mb-1 mt-5 lg:mt-10 text-primary text-xl xl:mt-10 lg:text-2xl xl:text-3xl 2xl:text-4xl">
             Join Forum
           </h1>
-          <h2 className="my-1 text-sm md:text-base lg:my-2 text-primary xl:text-xl 2xl:text-2xl">
+          <h2 className="my-1 text-sm lg:my-2 text-primary lg:text-base 2xl:text-2xl">
             Select your institute's forum to join
           </h2>
-          <p className="w-full px-4 md:px-0 md:w-2/3 lg:w-1/2 2xl:w-1/3 mx-auto my-3 text-center text-sm xl:text-base 2xl:my-5 2xl:text-base">
+          <p className="w-full px-4 md:px-0 md:w-2/3 lg:w-1/2 2xl:w-1/3 mx-auto my-3 text-center text-xs lg:text-sm 2xl:my-5 2xl:text-base">
             You can join upto 3 forums. You will become a member of the forum
             once the moderators of the forums accept your request.
           </p>

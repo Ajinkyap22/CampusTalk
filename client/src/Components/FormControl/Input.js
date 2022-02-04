@@ -5,6 +5,7 @@ function Input({
   label,
   callback,
   minLength = 0,
+  value = "",
   required,
 }) {
   return (
@@ -22,6 +23,7 @@ function Input({
         placeholder={placeholder}
         className="mt-2 block w-full px-3 py-1.5 border border-gray-300 bg-[#f6f6f6] rounded-md text-xs lg:text-sm 2xl:text-base shadow-sm placeholder-[#818181] 
               focus:outline-none focus:border-sky-500"
+        value={value}
         minLength={minLength}
         required={required}
       />

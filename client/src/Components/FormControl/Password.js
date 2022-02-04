@@ -35,7 +35,7 @@ function Password({
 
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        className="h-4 w-auto absolute right-0 mr-3 top-[61%]"
+        className="h-4 w-auto absolute right-0 mr-3 top-[61.5%] 2xl:top-[62%]"
         viewBox="0 0 20 20"
         fill="#626262"
         hidden={showPassword ? true : false}
@@ -51,7 +51,7 @@ function Password({
 
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        className="h-4 w-auto absolute right-0 mr-3 top-[61%]"
+        className="h-4 w-auto absolute right-0 mr-3 top-[61.5%] 2xl:top-[62%]"
         viewBox="0 0 20 20"
         fill="#626262"
         hidden={showPassword ? false : true}

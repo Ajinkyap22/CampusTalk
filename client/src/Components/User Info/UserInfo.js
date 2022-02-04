@@ -5,6 +5,7 @@ import ProfileModal from "./ProfileModal";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 import { UserContext } from "../../UserContext";
+import Input from "../FormControl/Input";
 
 function UserInfo({ title, ...props }) {
   const [firstName, setFirstName] = useState("");
@@ -21,7 +22,7 @@ function UserInfo({ title, ...props }) {
 
   // redirect back to login if there is no user
   useEffect(() => {
-    if (!user) props.history.push("/login");
+    // if (!user) props.history.push("/login");
   }, [user, props.history]);
 
   // Update page title
@@ -112,7 +113,7 @@ function UserInfo({ title, ...props }) {
     <div className="w-full h-full bg-bubble flex relative flex-col justify-center items-center">
       <section className="bg-white rounded shadow-lg p-2 md:p-5 w-[90%] md:w-2/3 lg:w-[40%] 2xl:w-1/3 my-14 md:my-20 2xl:my-28 mb-20 md:mb-14">
         <h1 className="text-primary text-center text-xl pt-2 md:text-2xl">
-          Tell us a bit about yourself
+          Tell us a bit about yourself!
         </h1>
 
         <form
@@ -176,48 +177,30 @@ function UserInfo({ title, ...props }) {
           </p>
 
           {/* first name */}
-          <div className="my-4">
-            <label
-              htmlFor="firstName"
-              className="text-sm md:text-base 2xl:text-lg"
-            >
-              First Name <span className="text-red-600">*</span>
-            </label>
-            <input
-              type="text"
-              name="firstName"
-              onChange={(e) => setFirstName(e.target.value)}
-              placeholder="Enter your first name"
-              className="mt-2 block w-full px-3 py-1.5 md:py-2 border-2 border-gray-300 bg-[#f6f6f6] placeholder-[#818181] rounded-md text-sm 2xl:text-base shadow-sm 
-              focus:outline-none focus:border-sky-500 focus:bg-white"
-              value={firstName || ""}
-              required
-            />
-          </div>
+          <Input
+            name="firstName"
+            label="First Name"
+            type="text"
+            callback={(value) => setFirstName(value)}
+            placeholder="Enter your first name"
+            value={firstName}
+            required={true}
+          />
 
           {/* last name */}
-          <div className="my-4">
-            <label
-              htmlFor="lastName"
-              className="text-sm md:text-base 2xl:text-lg"
-            >
-              Last Name <span className="text-red-600">*</span>
-            </label>
-            <input
-              type="text"
-              name="lastName"
-              onChange={(e) => setLastName(e.target.value)}
-              placeholder="Enter your last name"
-              className="mt-2 block w-full px-3 py-1.5 md:py-2 border-2 border-gray-300 bg-[#f6f6f6] placeholder-[#818181] rounded-md text-sm 2xl:text-base shadow-sm 
-              focus:outline-none focus:border-sky-500 focus:bg-white"
-              value={lastName || ""}
-              required
-            />
-          </div>
+          <Input
+            name="lastName"
+            label="Last Name"
+            type="text"
+            callback={(value) => setLastName(value)}
+            placeholder="Enter your last name"
+            value={lastName}
+            required={true}
+          />
 
           {/* Submit */}
-          <div className="my-4 md:mt-8 float-right ">
-            <button className="px-2 md:px-3 py-2 mr-1 text-sm md:text-base 2xl:text-lg bg-primary text-white rounded hover:bg-blue-700">
+          <div className="my-4 md:mt-6 float-right">
+            <button className="px-2 md:px-3 py-1.5 mr-1 text-sm md:text-base 2xl:text-lg bg-primary text-white rounded hover:bg-blue-700">
               Next
             </button>
           </div>
@@ -237,9 +220,13 @@ function UserInfo({ title, ...props }) {
 
       {/* overlay */}
       <div
-        className="absolute w-full h-full bg-[rgba(0,0,0,0.5)]"
+        className={`absolute w-full ${
+          showModal ? "flex" : ""
+        } justify-center items-center h-full bg-[rgba(0,0,0,0.7)]`}
         hidden={showModal ? false : true}
-      ></div>
+      >
+        <h1 className="text-2xl text-white tracking-wide pulse">Saving...</h1>
+      </div>
 
       {/* toast notification */}
       <Toast text="Profile Picture Saved" show={showToast ? true : false} />
