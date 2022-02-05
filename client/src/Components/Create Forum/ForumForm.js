@@ -1,10 +1,10 @@
-import { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 import { UserContext } from "../../UserContext";
-
-// TODO check if forum already exists before creating
+import Input from "../FormControl/Input";
+import ActionButtons from "../FormControl/ActionButtons";
+import { ForumContext } from "../../ForumContext";
 
 let headers = {
   headers: {
@@ -15,6 +15,12 @@ let headers = {
 function ForumForm(props) {
   const [checked, setChecked] = useState(false);
   const [user] = useContext(UserContext);
+  const [forums, setForums] = useContext(ForumContext);
+  const [status, setStatus] = useState(0);
+
+  useEffect(() => {
+    console.log(forums);
+  }, [forums]);
 
   const [formData, setFormData] = useState({
     forumName: "",
@@ -38,13 +44,14 @@ function ForumForm(props) {
     axios
       .post(`/api/forums/create-forum`, formData, headers)
       .then((res) => {
-        // redirect
-        props.history.push("/");
-        // make moderator
         makeModerator(res.data._id);
+        // make moderator
+        setForums((forums) => [...forums, res.data]);
+        // redirect
+        props.history.push(`forums/${res.data._id}`);
       })
       .catch((err) => {
-        console.error(err);
+        setStatus(err?.response?.status || 0);
       });
   }
 
@@ -55,10 +62,7 @@ function ForumForm(props) {
 
     axios
       .post(`/api/forums/${forumId}/moderators/make`, body, headers)
-      .then((res) => {
-        // set forums
-        console.log(res.data);
-      })
+      .then((res) => {})
       .catch((err) => {
         console.error(err);
       });
@@ -67,71 +71,59 @@ function ForumForm(props) {
   return (
     <form className="px-5 md:px-8 py-2" onSubmit={handleSubmit}>
       {/* forum name */}
-      <div className="my-4 lg:my-6 2xl:my-8">
-        <label htmlFor="forumName" className="text-xs lg:text-sm 2xl:text-lg">
-          Institute's Name <span className="text-red-600">*</span>
-        </label>
-        <input
-          onChange={handleChange}
-          type="text"
-          name="forumName"
-          placeholder="Your institute's official name"
-          className="mt-2 block w-full px-3 py-1.5 border border-gray-300 bg-[#f6f6f6] placeholder-[#818181] rounded-md text-xs lg:text-sm 2xl:text-base shadow-sm 
-              focus:outline-none focus:border-sky-500 focus:bg-white"
-          required
-        />
-      </div>
+      <Input
+        type="text"
+        name="forumName"
+        label="Institute's Name"
+        callback={(e) => handleChange(e)}
+        placeholder="Your institute's official name"
+        required={true}
+        setState={false}
+      />
 
       {/* address */}
-      <div className="my-4 lg:my-6 2xl:my-8">
-        <label htmlFor="address" className="text-xs lg:text-sm 2xl:text-lg">
-          Institute's Address <span className="text-red-600">*</span>
-        </label>
-        <input
-          onChange={handleChange}
-          type="text"
-          name="address"
-          placeholder="Your institute's address"
-          className="mt-2 block w-full px-3 py-1.5 border border-gray-300 bg-[#f6f6f6] placeholder-[#818181] rounded-md text-xs lg:text-sm 2xl:text-base shadow-sm 
-              focus:outline-none focus:border-sky-500 focus:bg-white"
-          required
-        />
-      </div>
+      <Input
+        type="text"
+        name="address"
+        label="Institute's Address"
+        callback={(e) => handleChange(e)}
+        placeholder="Your institute's address"
+        required={true}
+        setState={false}
+      />
 
       {/* website */}
-      <div className="my-4 lg:my-6 2xl:my-8">
-        <label htmlFor="website" className="text-xs lg:text-sm 2xl:text-lg">
-          Institute's Website<span className="text-red-600">*</span>
-        </label>
-        <input
-          onChange={handleChange}
-          type="url"
-          name="website"
-          placeholder="Your institute's official website"
-          className="mt-2 block w-full px-3 py-1.5 border border-gray-300 bg-[#f6f6f6] placeholder-[#818181] rounded-md text-xs lg:text-sm 2xl:text-base shadow-sm 
-              focus:outline-none focus:border-sky-500 focus:bg-white"
-          required
-        />
-      </div>
+      <Input
+        type="text"
+        name="website"
+        label="Institute's Website"
+        callback={(e) => handleChange(e)}
+        placeholder="Your institute's official website"
+        required={true}
+        setState={false}
+      />
 
       {/* email */}
-      <div className="my-4 lg:my-6 2xl:my-8">
-        <label htmlFor="email" className="text-xs lg:text-sm 2xl:text-lg">
-          Institute's email <span className="text-red-600">*</span>
-        </label>
-        <input
-          onChange={handleChange}
-          type="email"
-          name="email"
-          placeholder="Your institute's official email id"
-          className="mt-2 block w-full px-3 py-1.5 border border-gray-300 bg-[#f6f6f6] placeholder-[#818181] rounded-md text-xs lg:text-sm 2xl:text-base shadow-sm 
-              focus:outline-none focus:border-sky-500 focus:bg-white"
-          required
-        />
-      </div>
+      <Input
+        type="email"
+        name="email"
+        label="Institute's email"
+        callback={(e) => handleChange(e)}
+        placeholder="Your institute's official email id"
+        required={true}
+        setState={false}
+      />
+
+      <p
+        className="mt-3 text-sm text-red-600"
+        hidden={status === 409 ? false : true}
+      >
+        A forum with the same email address or website already exists. Please
+        make sure your institute's forum doesn't already exist.
+      </p>
 
       {/* checkbox */}
-      <div className="mt-6 md:my-4 relative 2xl:mt-6">
+      <div className="mt-6 relative">
         <input
           type="checkbox"
           name="consent"
@@ -153,17 +145,11 @@ function ForumForm(props) {
       </div>
 
       {/* Submit */}
-      <div className="my-4 md:my-5 2xl:my-6 float-right">
-        <Link
-          to="join-forum"
-          className="px-2 md:px-3 py-1.5 lg:py-2 mx-2 text-sm lg:text-base 2xl:text-lg text-secondary"
-        >
-          Cancel
-        </Link>
-        <button className="px-2 md:px-3 py-1.5 lg:py-2 mx-1 text-sm lg:text-base 2xl:text-lg bg-primary text-white rounded hover:bg-blue-700">
-          Next
-        </button>
-      </div>
+      <ActionButtons
+        path="join-forum"
+        action="Next"
+        classes="my-4 md:my-5 2xl:my-6 float-right"
+      />
     </form>
   );
 }

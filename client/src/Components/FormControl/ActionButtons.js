@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 
-function ActionButtons({ path, action }) {
+function ActionButtons({ path, action, classes = "" }) {
   return (
-    <div className="mt-3">
+    <div className={classes || "mt-3"}>
       <Link
         to={path}
         className="px-2 md:px-3 text-xs md:text-sm lg:text-base 2xl:text-lg py-1.5 lg:py-2 mr-1 text-[#818181]"

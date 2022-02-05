@@ -5,13 +5,14 @@ import UserInfo from "./Components/User Info/UserInfo";
 import { Join } from "./Components/JoinForum/Join";
 import { UserProvider } from "./UserContext";
 import CreateForum from "./Components/Create Forum/Create";
-import { useState } from "react";
 import Forum from "./Components/Forum/Forum";
 import Login from "./Components/Auth/Login";
 import Signup from "./Components/Auth/Signup";
+import { ForumContext } from "./ForumContext";
+import { useContext } from "react";
 
 function App() {
-  const [forums, setForums] = useState([]);
+  const [forums] = useContext(ForumContext);
 
   return (
     <div className="App">

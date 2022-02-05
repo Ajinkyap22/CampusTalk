@@ -7,7 +7,7 @@ import { withRouter, Link } from "react-router-dom";
 import GoogleButton from "./GoogleButton";
 import Input from "../FormControl/Input";
 import Password from "../FormControl/Password";
-import ActionButtons from "./ActionButtons";
+import ActionButtons from "../FormControl/ActionButtons";
 
 function Login({ title, ...props }) {
   const [user, setUser] = useContext(UserContext);

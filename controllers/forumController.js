@@ -35,10 +35,22 @@ exports.create_forum = [
     .isLength({ min: 3 }),
 
   // process request
-  (req, res) => {
+  async (req, res) => {
     const errors = validationResult(req.body);
 
     if (!errors.isEmpty()) return res.json({ errros: errors.array() });
+
+    // check if forum with the similar email or website exists
+    const forumExists = await Forum.find({
+      $or: [{ email: req.body.email }, { website: req.body.website }],
+    });
+
+    if (forumExists.length > 0) {
+      return res.status(409).json({
+        error:
+          "A forum with the email address or website you provided with already exists. Please make sure your institute's forum doesn't already exist.",
+      });
+    }
 
     Forum.create(
       {
@@ -46,7 +58,6 @@ exports.create_forum = [
         address: req.body.address,
         website: req.body.website,
         email: req.body.email,
-        // moderator: [req.body.id]
       },
       (err, forum) => {
         if (err) return res.json(err);
