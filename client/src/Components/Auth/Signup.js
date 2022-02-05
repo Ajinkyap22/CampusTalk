@@ -80,7 +80,7 @@ function Signup({ title, ...props }) {
       <Title />
 
       {/* form box */}
-      <section className="bg-white rounded justify-center shadow-lg w-[90%] md:w-2/3 lg:w-[40%] 2xl:w-[30%] md:my-2 lg:my-5 xl:my-8">
+      <section className="bg-white rounded justify-center shadow-base w-[90%] md:w-2/3 lg:w-[40%] 2xl:w-[30%] md:my-2 lg:my-5 xl:my-8">
         <h1 className="text-lg md:text-xl lg:text-2xl text-primary text-center mt-4">
           Create Your Account
         </h1>

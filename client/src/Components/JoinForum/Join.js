@@ -66,7 +66,7 @@ function JoinForum({ title, ...props }) {
   };
 
   return (
-    <div className="flex justify-center items-center w-full h-screen">
+    <div className="flex justify-center items-center w-full overflow-auto">
       {loading ? (
         <Loading />
       ) : (
@@ -82,7 +82,7 @@ function JoinForum({ title, ...props }) {
             once the moderators of the forums accept your request.
           </p>
 
-          <section className="bg-white rounded shadow-lg w-[90%] md:w-2/3 xl:w-1/2 my-5 mb-20 text-center 2xl:my-8">
+          <section className="bg-white rounded shadow-base w-[90%] md:w-2/3 xl:w-1/2 my-5 mb-20 text-center 2xl:my-8">
             <JoinContext.Provider value={[joinList, setJoinList]}>
               <ForumList forums={forums} />
             </JoinContext.Provider>

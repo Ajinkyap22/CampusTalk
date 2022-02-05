@@ -111,7 +111,7 @@ function UserInfo({ title, ...props }) {
 
   return (
     <div className="w-full h-full bg-bubble flex relative flex-col justify-center items-center">
-      <section className="bg-white rounded shadow-lg p-2 md:p-5 w-[90%] md:w-2/3 lg:w-[40%] 2xl:w-1/3 my-14 md:my-20 2xl:my-28 mb-20 md:mb-14">
+      <section className="bg-white rounded shadow-base p-2 md:p-5 w-[90%] md:w-2/3 lg:w-[40%] 2xl:w-1/3 my-14 md:my-20 2xl:my-28 mb-20 md:mb-14">
         <h1 className="text-primary text-center text-xl pt-2 md:text-2xl">
           Tell us a bit about yourself!
         </h1>
