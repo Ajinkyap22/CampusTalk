@@ -4,6 +4,7 @@ import Loading from "../Loading";
 import ForumList from "./ForumList";
 import { UserContext } from "../../UserContext";
 import { Link, withRouter } from "react-router-dom";
+import AlertModal from "../AlertModal";
 
 const JoinContext = React.createContext();
 
@@ -12,6 +13,7 @@ function JoinForum({ title, ...props }) {
   const [loading, setLoading] = useState(true);
   const [joinList, setJoinList] = useState([]);
   const [user] = useContext(UserContext);
+  const [showAlert, setShowAlert] = useState(false);
 
   useEffect(() => {
     document.title = title || "Join Forum | CampusTalk";
@@ -58,6 +60,7 @@ function JoinForum({ title, ...props }) {
         .then((res) => {
           console.log(res.data);
         })
+
         .catch((err) => {
           console.log(err.response);
           console.error(err);
@@ -66,7 +69,11 @@ function JoinForum({ title, ...props }) {
   };
 
   return (
-    <div className="flex justify-center items-center w-full overflow-auto">
+    <div
+      className={`flex justify-center items-center w-full relative ${
+        showAlert ? "h-full" : "overflow-auto"
+      }`}
+    >
       {loading ? (
         <Loading />
       ) : (
@@ -84,7 +91,7 @@ function JoinForum({ title, ...props }) {
 
           <section className="bg-white rounded shadow-base w-[90%] md:w-2/3 xl:w-1/2 my-5 mb-20 text-center 2xl:my-8">
             <JoinContext.Provider value={[joinList, setJoinList]}>
-              <ForumList forums={forums} />
+              <ForumList forums={forums} setShowAlert={setShowAlert} />
             </JoinContext.Provider>
 
             <button
@@ -115,6 +122,20 @@ function JoinForum({ title, ...props }) {
               </button>
             </div>
           </section>
+
+          <div
+            className={`absolute w-full h-full ${
+              showAlert ? "flex" : ""
+            } justify-center items-center bg-[rgba(0,0,0,0.7)]`}
+            hidden={showAlert ? false : true}
+          >
+            <AlertModal
+              text="You cannot join more than 3 forums."
+              subtext="This limit is used to prevent you from missing any important updates by ensuring that your feed does not get overpopulated with posts from too many forums."
+              showAlert={showAlert}
+              setShowAlert={setShowAlert}
+            />
+          </div>
         </div>
       )}
     </div>

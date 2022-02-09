@@ -1,6 +1,6 @@
 import ListItem from "./ListItem";
 
-function ForumList({ forums }) {
+function ForumList({ forums, setShowAlert }) {
   return (
     <table className="table-fixed w-full" hidden={forums ? false : true}>
       <thead>
@@ -16,7 +16,7 @@ function ForumList({ forums }) {
 
       <tbody>
         {forums.map((forum, i) => (
-          <ListItem forum={forum} key={i} />
+          <ListItem forum={forum} key={i} setShowAlert={setShowAlert} />
         ))}
       </tbody>
     </table>

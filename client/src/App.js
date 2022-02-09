@@ -15,7 +15,7 @@ function App() {
   const [forums] = useContext(ForumContext);
 
   return (
-    <div className="App">
+    <div className="App relative">
       <UserProvider>
         <Router>
           <Switch>

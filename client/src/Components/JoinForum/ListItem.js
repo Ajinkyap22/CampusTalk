@@ -1,15 +1,26 @@
 import { useState, useContext } from "react";
 import { JoinContext } from "./Join";
 
-function ListItem({ forum }) {
+function ListItem({ forum, setShowAlert }) {
   const [joined, setJoined] = useState(false);
   const [joinList, setJoinList] = useContext(JoinContext);
 
   const handleJoin = (forumId) => {
+    // limit join requests to 3 & show an alert modal if the user has already joined 3 forums
+    if (joinList.length >= 3) {
+      // set the alert modal to show
+      setShowAlert(true);
+      // hide overflow
+      document.body.style.overflow = "hidden";
+      return;
+    }
+
+    setJoined(true);
     setJoinList((joinList) => [...joinList, forumId]);
   };
 
   const handleCancel = (forumId) => {
+    setJoined(false);
     setJoinList((joinList) => joinList.filter((id) => id !== forumId));
   };
 
@@ -17,11 +28,9 @@ function ListItem({ forum }) {
     if (joined) {
       e.target.classList.remove("requested");
       handleCancel(forumId);
-      setJoined(false);
     } else {
       e.target.classList.add("requested");
       handleJoin(forumId);
-      setJoined(true);
     }
   };
 
