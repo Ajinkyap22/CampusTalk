@@ -10,6 +10,7 @@ import Login from "./Components/Auth/Login";
 import Signup from "./Components/Auth/Signup";
 import { ForumContext } from "./ForumContext";
 import { useContext } from "react";
+import Feed from "./Components/Feed/Feed";
 
 function App() {
   const [forums] = useContext(ForumContext);
@@ -55,6 +56,13 @@ function App() {
               exact
               path="/create-forum"
               render={() => <CreateForum title={"Create Forum | CampusTalk"} />}
+            />
+
+            {/* Feed */}
+            <Route
+              exact
+              path="/feed"
+              render={() => <Feed title={"Feed | CampusTalk"} />}
             />
 
             {/* forum page */}
