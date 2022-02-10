@@ -44,7 +44,6 @@ beforeAll((done) => {
     .post(`/api/forums/${forumId}/posts/create-post`)
     .set("Authorization", `Bearer ${token}`)
     .attach("file", "./public/images/logo.png")
-    .field("title", "Test title")
     .field("text", "Test text")
     .field("authorId", id)
     .field("forumId", forumId)

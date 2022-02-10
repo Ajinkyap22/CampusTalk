@@ -21,36 +21,25 @@ exports.get_post = function (req, res) {
   });
 };
 
-// create post
-exports.create_post = [
-  // sanitize and validate fields
-  body("Title", "Title cannot be empty.").trim().isLength({ min: 1 }),
+exports.create_post = function (req, res) {
+  Post.create(
+    {
+      text: req.body.text || "",
+      file: req.file.filename || req.body.file || "",
+      anonymous: req.body.anonymous || false,
+      author: req.body.authorId,
+      forum: req.body.forumId,
+      important: req.body.important || false,
+    },
+    async (err, post) => {
+      if (err) return res.json(err);
 
-  // process request
-  (req, res) => {
-    const errors = validationResult(req.body);
+      const newPost = await Post.populate(post, { path: "author" });
 
-    if (!errors.isEmpty()) return res.json({ errros: errors.array() });
-
-    Post.create(
-      {
-        title: req.body.title,
-        text: req.body.text || "",
-        file: req.file.filename || req.body.file || "",
-        anonymous: req.body.anonymous || false,
-        author: req.body.authorId,
-        forum: req.body.forumId,
-      },
-      async (err, post) => {
-        if (err) return res.json(err);
-
-        const newPost = await Post.populate(post, { path: "author" });
-
-        return res.json(newPost);
-      }
-    );
-  },
-];
+      return res.json(newPost);
+    }
+  );
+};
 
 // delete a post
 exports.delete_post = function (req, res) {
@@ -61,36 +50,24 @@ exports.delete_post = function (req, res) {
   });
 };
 
-// update a post
-exports.update_post = [
-  // sanitize and validate fields
-  body("Title", "Title cannot be empty.").trim().isLength({ min: 1 }),
-
-  // process request
-  (req, res) => {
-    const errors = validationResult(req.body);
-
-    if (!errors.isEmpty()) return res.json({ errros: errors.array() });
-
-    Post.findByIdAndUpdate(
-      req.params.postId,
-      {
-        $set: {
-          title: req.body.title,
-          text: req.body.text || "",
-          anonymous: req.body.anonymous || false,
-        },
+exports.update_post = function (req, res) {
+  Post.findByIdAndUpdate(
+    req.params.postId,
+    {
+      $set: {
+        text: req.body.text || "",
+        anonymous: req.body.anonymous || false,
       },
-      { new: true }
-    )
-      .populate("author")
-      .exec((err, post) => {
-        if (err) return res.json(err);
+    },
+    { new: true }
+  )
+    .populate("author")
+    .exec((err, post) => {
+      if (err) return res.json(err);
 
-        return res.json(post);
-      });
-  },
-];
+      return res.json(post);
+    });
+};
 
 // upvote a post
 exports.upvote_post = function (req, res) {

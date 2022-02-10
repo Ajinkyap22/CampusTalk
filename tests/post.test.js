@@ -45,11 +45,11 @@ it("Creates a post", (done) => {
     .post(`/api/forums/${forumId}/posts/create-post`)
     .set("Authorization", `Bearer ${token}`)
     .attach("file", "./public/images/logo.png")
-    .field("title", "Test title")
     .field("text", "Test text")
     .field("authorId", id)
     .field("forumId", forumId)
     .field("anonymous", true)
+    .field("important", true)
     .expect("Content-Type", /json/)
     .expect(200)
     .end((err, res) => {
@@ -58,10 +58,10 @@ it("Creates a post", (done) => {
       postId = res.body._id;
 
       expect(res.body).toMatchObject({
-        title: "Test title",
         text: "Test text",
         forum: forumId,
         anonymous: true,
+        important: true,
         file: expect.stringMatching(/file/),
       });
 
@@ -81,7 +81,6 @@ it("Gets all posts", (done) => {
       expect(res.body).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
-            title: "Test title",
             text: "Test text",
             forum: forumId,
             anonymous: true,
@@ -103,7 +102,6 @@ it("Gets all posts", (done) => {
       if (err) return done(err);
 
       expect(res.body).toMatchObject({
-        title: "Test title",
         text: "Test text",
         forum: forumId,
         anonymous: true,
@@ -120,9 +118,9 @@ it("Edits a post", (done) => {
     .put(`/api/forums/${forumId}/posts/update/${postId}`)
     .set("Authorization", `Bearer ${token}`)
     .send({
-      title: "Updated title",
       text: "Updated text",
       anonymous: false,
+      important: false,
     })
     .expect("Content-Type", /json/)
     .expect(200)
@@ -130,10 +128,10 @@ it("Edits a post", (done) => {
       if (err) return done(err);
 
       expect(res.body).toMatchObject({
-        title: "Updated title",
         text: "Updated text",
         forum: forumId,
         anonymous: false,
+        important: false,
         file: expect.stringMatching(/file/),
       });
 
@@ -231,7 +229,6 @@ it("delete a post", (done) => {
       if (err) return done(err);
 
       expect(res.body).toMatchObject({
-        title: "Updated title",
         text: "Updated text",
         forum: forumId,
         anonymous: false,
