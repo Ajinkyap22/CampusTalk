@@ -11,6 +11,7 @@ import Signup from "./Components/Auth/Signup";
 import { ForumContext } from "./ForumContext";
 import { useContext } from "react";
 import Feed from "./Components/Feed/Feed";
+import { TabProvider } from "./TabContext";
 
 function App() {
   const [forums] = useContext(ForumContext);
@@ -59,23 +60,25 @@ function App() {
             />
 
             {/* Feed */}
-            <Route
-              exact
-              path="/feed"
-              render={() => <Feed title={"Feed | CampusTalk"} />}
-            />
-
-            {/* forum page */}
-            {forums.map((forum, i) => (
+            <TabProvider>
               <Route
                 exact
-                path={`/forums/${forum._id}`}
-                key={i}
-                render={() => (
-                  <Forum title={`${forum.forumName} | CampusTalk`} />
-                )}
+                path="/feed"
+                render={() => <Feed title={"Feed | CampusTalk"} />}
               />
-            ))}
+
+              {/* forum page */}
+              {forums.map((forum, i) => (
+                <Route
+                  exact
+                  path={`/forums/${forum._id}`}
+                  key={i}
+                  render={() => (
+                    <Forum title={`${forum.forumName} | CampusTalk`} />
+                  )}
+                />
+              ))}
+            </TabProvider>
           </Switch>
         </Router>
       </UserProvider>

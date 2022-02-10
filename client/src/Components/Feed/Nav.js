@@ -1,9 +1,18 @@
 import { NavLink } from "react-router-dom";
 import Logo from "../Logo";
+import { useContext } from "react";
+import { TabContext } from "../../TabContext";
 
 function Nav() {
+  const [activeTab, setActiveTab] = useContext(TabContext);
+
+  // switch tab on button click
+  const handleClick = (tab) => {
+    setActiveTab(tab);
+  };
+
   return (
-    <nav className="fixed top-0 z-10 w-full flex bg-white pt-2 shadow-md justify-between md:justify-around items-center">
+    <nav className="sticky top-0 z-10 w-full flex bg-white pt-2 shadow-md justify-between md:justify-around items-center">
       {/* logo */}
       <div className="mb-2">
         <Logo width="120" height="40" />
@@ -13,14 +22,35 @@ function Nav() {
       <div className="">
         <NavLink
           to={"/feed"}
-          className="mx-4 text-sm py-3 border-b-[3px] px-2 border-primary text-primary"
+          onClick={() => handleClick("feed")}
+          className={`mx-4 text-sm py-3 px-2 ${
+            activeTab === "feed"
+              ? "border-b-[3px] border-primary text-primary"
+              : ""
+          }`}
         >
           Feed
         </NavLink>
-        <NavLink to={"/chat"} className="mx-4 text-sm p-2">
+        <NavLink
+          to={"/chat"}
+          onClick={() => handleClick("chats")}
+          className={`mx-4 text-sm py-3 px-2 ${
+            activeTab === "chats"
+              ? "border-b-[3px] border-primary text-primary"
+              : ""
+          }`}
+        >
           Chats
         </NavLink>
-        <NavLink to={"/forums"} className="mx-4 text-sm p-2">
+        <NavLink
+          to={"/forums"}
+          onClick={() => handleClick("forums")}
+          className={`mx-4 text-sm py-3 px-2 ${
+            activeTab === "forums"
+              ? "border-b-[3px] border-primary text-primary"
+              : ""
+          }`}
+        >
           Forums
         </NavLink>
       </div>

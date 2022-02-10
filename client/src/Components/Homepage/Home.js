@@ -3,8 +3,13 @@ import Accordion from "./Accordion";
 import { NavLink } from "react-router-dom";
 import About from "./About";
 import Hero from "./Hero";
+import { useEffect } from "react";
 
 function Home() {
+  useEffect(() => {
+    document.title = "CampusTalk - Your College Life Made Easy!";
+  }, []);
+
   return (
     <div className="h-full bg-greek-vase">
       <Navbar />
