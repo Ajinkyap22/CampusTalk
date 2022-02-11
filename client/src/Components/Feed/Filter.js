@@ -4,9 +4,9 @@ function Filter({ activeFilter, setActiveFilter }) {
   }
 
   return (
-    <div className="bg-white shadow-base">
+    <div className="bg-white shadow-base flex justify-between items-center">
       {/* filter label */}
-      <p className="inline p-3 px-3 text-sm bg-[#f3f3f3]">
+      <p className="inline p-3 text-sm bg-[#f3f3f3]">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="20"
@@ -22,7 +22,7 @@ function Filter({ activeFilter, setActiveFilter }) {
       {/* latest */}
       <button
         onClick={() => switchActiveFilter("latest")}
-        className="p-3 px-2.5 ml-3 text-sm"
+        className="p-3 text-sm"
       >
         <span
           className={`${
@@ -48,7 +48,7 @@ function Filter({ activeFilter, setActiveFilter }) {
       {/* important */}
       <button
         onClick={() => switchActiveFilter("important")}
-        className="p-3 px-2.5 text-sm"
+        className="p-3 text-sm"
       >
         <span
           className={`${
@@ -72,10 +72,7 @@ function Filter({ activeFilter, setActiveFilter }) {
       </button>
 
       {/* top */}
-      <button
-        onClick={() => switchActiveFilter("top")}
-        className="p-3 px-2.5 text-sm"
-      >
+      <button onClick={() => switchActiveFilter("top")} className="p-3 text-sm">
         <span
           className={`${
             activeFilter === "top" ? "bg-[#E2EEFF] text-primary" : ""
@@ -101,7 +98,7 @@ function Filter({ activeFilter, setActiveFilter }) {
       </button>
 
       {/* day */}
-      <button className="p-3 px-2.5 mr-3 text-sm">
+      <button className="p-3 text-sm">
         <span className="bg-[#E2EEFF] text-primary p-1 px-2 rounded-xl">
           Today{" "}
           <svg
@@ -112,7 +109,7 @@ function Filter({ activeFilter, setActiveFilter }) {
             viewBox="0 0 16 16"
           >
             <path
-              fill-rule="evenodd"
+              fillRule="evenodd"
               d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
             />
           </svg>

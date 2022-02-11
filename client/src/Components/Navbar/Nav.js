@@ -1,10 +1,14 @@
 import { NavLink } from "react-router-dom";
 import Logo from "../Logo";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { TabContext } from "../../TabContext";
+import Dropdown from "./Dropdown";
 
 function Nav() {
   const [activeTab, setActiveTab] = useContext(TabContext);
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  // TODO - hide dropdown on document click
 
   // switch tab on button click
   const handleClick = (tab) => {
@@ -70,7 +74,10 @@ function Nav() {
         </button>
 
         {/* profile */}
-        <button className="w-14 h-auto">
+        <button
+          className="w-14 h-auto"
+          onClick={() => setShowDropdown(!showDropdown)}
+        >
           {/* avatar */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -104,6 +111,9 @@ function Nav() {
           </svg>
         </button>
       </div>
+
+      {/*dropdown  */}
+      <Dropdown showDropdown={showDropdown} setShowDropdown={setShowDropdown} />
     </nav>
   );
 }

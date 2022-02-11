@@ -5,6 +5,7 @@ const { body, validationResult } = require("express-validator");
 exports.posts = function (req, res) {
   Post.find()
     .populate("author")
+    .populate("forum")
     .exec((err, posts) => {
       if (err) return res.json(err);
 
