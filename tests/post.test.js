@@ -82,7 +82,6 @@ it("Gets all posts", (done) => {
         expect.arrayContaining([
           expect.objectContaining({
             text: "Test text",
-            forum: forumId,
             anonymous: true,
             file: expect.stringMatching(/file/),
           }),

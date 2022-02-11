@@ -33,7 +33,7 @@ function JoinForum({ title, ...props }) {
 
   const handleNext = () => {
     // redirect to the next page
-    props.history.push("/");
+    props.history.push("/feed");
     // send all the join requests
     sendRequests();
   };
@@ -57,9 +57,7 @@ function JoinForum({ title, ...props }) {
 
       axios
         .post(`/api/forums/${forumId}/join`, body, headers)
-        .then((res) => {
-          console.log(res.data);
-        })
+        .then((res) => {})
 
         .catch((err) => {
           console.log(err.response);
@@ -77,7 +75,11 @@ function JoinForum({ title, ...props }) {
       {loading ? (
         <Loading />
       ) : (
-        <div className="w-full bg-bubble flex relative flex-col justify-start items-center h-full">
+        <div
+          className={`w-full bg-bubble flex relative flex-col justify-start items-center h-full ${
+            showAlert ? "overflow-hidden" : ""
+          }`}
+        >
           <h1 className="font-bold mb-1 mt-5 lg:mt-10 text-primary text-xl xl:mt-10 lg:text-2xl xl:text-3xl 2xl:text-4xl">
             Join Forum
           </h1>

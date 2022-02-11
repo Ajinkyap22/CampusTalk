@@ -26,7 +26,7 @@ exports.create_post = function (req, res) {
   Post.create(
     {
       text: req.body.text || "",
-      file: req.file.filename || req.body.file || "",
+      file: req.file?.filename || req.body.file || "",
       anonymous: req.body.anonymous || false,
       author: req.body.authorId,
       forum: req.body.forumId,
@@ -58,6 +58,7 @@ exports.update_post = function (req, res) {
       $set: {
         text: req.body.text || "",
         anonymous: req.body.anonymous || false,
+        important: req.body.important || false,
       },
     },
     { new: true }

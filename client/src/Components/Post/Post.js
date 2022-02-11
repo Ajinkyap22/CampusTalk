@@ -10,13 +10,14 @@ function Post({ post }) {
         forum={post.forum}
         timestamp={post.timestamp}
         anonymous={post.anonymous}
+        important={post.important}
       />
 
       {/* caption */}
       <p className="m-2 my-3 px-2 text-sm">{post.text}</p>
 
       {/* image */}
-      <div className="mt-2 bg-black">
+      <div className="mt-2 bg-black" hidden={post.file ? false : true}>
         <img
           src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=773&q=80"
           alt=""

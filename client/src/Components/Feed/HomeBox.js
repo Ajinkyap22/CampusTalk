@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function HomeBox() {
   return (
     <div className="bg-white shadow-base max-w-sm mt-8">
@@ -31,9 +33,12 @@ function HomeBox() {
           Create Post
         </button>
 
-        <button className="w-1/2 mx-auto block py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-primary bg-white text-primary rounded-full hover:bg-primary hover:text-white">
+        <Link
+          to="/create-forum"
+          className="w-1/2 mx-auto text-center block py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-primary bg-white text-primary rounded-full hover:bg-primary hover:text-white"
+        >
           Create Forum
-        </button>
+        </Link>
       </div>
     </div>
   );

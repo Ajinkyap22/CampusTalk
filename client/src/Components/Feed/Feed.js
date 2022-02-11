@@ -12,10 +12,9 @@ function Feed() {
   useEffect(() => {
     // fetch all posts
     axios
-      .get("/api/forums/61d021d0efe0870d38c657a2/posts")
+      .get("/api/forums/62067ce47911a04b1fd71495/posts")
       .then((res) => {
         setPosts(res.data);
-        console.log(res.data);
       })
       .catch((err) => {
         console.log(err.response);
@@ -34,6 +33,8 @@ function Feed() {
           <Filter
             activeFilter={activeFilter}
             setActiveFilter={setActiveFilter}
+            posts={posts}
+            setPosts={setPosts}
           />
 
           {/* posts */}

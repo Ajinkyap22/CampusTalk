@@ -55,14 +55,16 @@ function Login({ title, ...props }) {
         localStorage.setItem("user", JSON.stringify(res.data));
         setUser(res.data.user);
 
-        if (res.data.user.firstName) {
+        if (res.data.user.forums.length > 0) {
+          props.history.push("/feed");
+        } else if (res.data.user.firstName) {
           props.history.push("/join-forum");
         } else {
           props.history.push("/user-info");
         }
       })
       .catch((err) => {
-        if (err.response.status === 401) {
+        if (err?.response?.status === 401) {
           setStatus(401);
         } else {
           console.error(err);

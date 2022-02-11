@@ -1,10 +1,57 @@
-function Filter({ activeFilter, setActiveFilter }) {
+import { useEffect, useState } from "react";
+
+function Filter({ activeFilter, setActiveFilter, posts, setPosts }) {
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [showDay, setShowDay] = useState(false);
+
+  // useEffect(() => {
+  //   console.log(posts);
+  // }, [posts]);
+
   function switchActiveFilter(filter) {
     setActiveFilter(filter);
+
+    if (filter === "latest") {
+      setPosts(sortByDate(posts));
+    } else if (filter === "top") {
+      setPosts(sortByUpvotes(posts));
+    } else if (filter === "important") {
+      setPosts(filterImportant(posts));
+    }
+  }
+
+  function handleDropdown() {
+    setShowDropdown(!showDropdown);
+  }
+
+  function toggleDay() {
+    switchActiveFilter("top");
+    setShowDay(true);
+  }
+
+  // sort posts by number of upvotes in descending order
+  function sortByUpvotes(posts) {
+    return posts.sort((a, b) => {
+      return b.upvotes.length - a.upvotes.length;
+    });
+  }
+
+  // sort postsby date in descending order
+  function sortByDate(posts) {
+    return posts.sort((a, b) => {
+      return new Date(b.timeStamp) - new Date(a.timeStamp);
+    });
+  }
+
+  // filter posts where important is true
+  function filterImportant(posts) {
+    return posts.filter((post) => {
+      return post.important;
+    });
   }
 
   return (
-    <div className="bg-white shadow-base flex justify-between items-center">
+    <div className="bg-white relative shadow-base flex justify-between items-center">
       {/* filter label */}
       <p className="inline p-3 text-sm bg-[#f3f3f3]">
         <svg
@@ -72,7 +119,7 @@ function Filter({ activeFilter, setActiveFilter }) {
       </button>
 
       {/* top */}
-      <button onClick={() => switchActiveFilter("top")} className="p-3 text-sm">
+      <button onClick={toggleDay} className="p-3 text-sm">
         <span
           className={`${
             activeFilter === "top" ? "bg-[#E2EEFF] text-primary" : ""
@@ -98,7 +145,10 @@ function Filter({ activeFilter, setActiveFilter }) {
       </button>
 
       {/* day */}
-      <button className="p-3 text-sm">
+      <button
+        className={showDay ? "p-3 text-sm visible" : "p-3 text-sm invisible"}
+        onClick={handleDropdown}
+      >
         <span className="bg-[#E2EEFF] text-primary p-1 px-2 rounded-xl">
           Today{" "}
           <svg
@@ -115,6 +165,30 @@ function Filter({ activeFilter, setActiveFilter }) {
           </svg>
         </span>
       </button>
+
+      <div
+        className="absolute bg-white shadow-base p-2 top-10 right-0 z-10 rounded"
+        hidden={showDropdown ? false : true}
+      >
+        <ul>
+          {/* profile */}
+          <li className="p-2 text-sm">
+            <button>Today</button>
+          </li>
+          <hr />
+
+          {/* settings */}
+          <li className="p-2 text-sm">
+            <button>This Week</button>
+          </li>
+          <hr />
+
+          {/* logout */}
+          <li className="p-2 text-sm">
+            <button>This Month</button>
+          </li>
+        </ul>
+      </div>
     </div>
   );
 }

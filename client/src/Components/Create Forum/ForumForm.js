@@ -18,10 +18,6 @@ function ForumForm(props) {
   const [forums, setForums] = useContext(ForumContext);
   const [status, setStatus] = useState(0);
 
-  useEffect(() => {
-    console.log(forums);
-  }, [forums]);
-
   const [formData, setFormData] = useState({
     forumName: "",
     address: "",
@@ -48,7 +44,8 @@ function ForumForm(props) {
         // make moderator
         setForums((forums) => [...forums, res.data]);
         // redirect
-        props.history.push(`forums/${res.data._id}`);
+        // props.history.push(`forums/${res.data._id}`);
+        props.history.push(`/feed`);
       })
       .catch((err) => {
         setStatus(err?.response?.status || 0);

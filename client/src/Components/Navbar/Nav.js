@@ -3,10 +3,12 @@ import Logo from "../Logo";
 import { useContext, useState } from "react";
 import { TabContext } from "../../TabContext";
 import Dropdown from "./Dropdown";
+import { UserContext } from "../../UserContext";
 
 function Nav() {
   const [activeTab, setActiveTab] = useContext(TabContext);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [user, setUser] = useContext(UserContext);
 
   // TODO - hide dropdown on document click
 
