@@ -62,7 +62,7 @@ function Nav() {
       </div>
 
       {/* user section */}
-      <div>
+      <div className="flex items-center">
         {/* notifications */}
         <button className="w-5 h-auto">
           <svg
@@ -77,28 +77,36 @@ function Nav() {
 
         {/* profile */}
         <button
-          className="w-14 h-auto"
+          className="mx-1.5"
           onClick={() => setShowDropdown(!showDropdown)}
         >
           {/* avatar */}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            fill="#818181"
-            className="inline ml-2 mr-1 align-baseline"
-            viewBox="0 0 16 16"
-          >
-            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-            <path
-              fillRule="evenodd"
-              d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
+          {user && user.picture ? (
+            <img
+              src={`http://localhost:3000/uploads/${user.picture}`}
+              alt=""
+              className="rounded-full inline h-6 w-auto ml-1"
             />
-          </svg>
+          ) : (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="21"
+              fill="#818181"
+              className="inline ml-2 mr-1 align-middle"
+              viewBox="0 0 16 16"
+            >
+              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+              <path
+                fillRule="evenodd"
+                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
+              />
+            </svg>
+          )}
 
           {/* dropdown */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="inline align-text-top"
+            className="inline align-middle mx-1"
             width="14"
             fill="none"
             viewBox="0 0 24 24"

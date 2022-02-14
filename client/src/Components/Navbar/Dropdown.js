@@ -1,9 +1,27 @@
 import { NavLink } from "react-router-dom";
 import { UserContext } from "../../UserContext";
-import { useContext } from "react";
+import { useContext, useRef, useEffect } from "react";
+
+function useOutsideAlerter(ref, setShowDropdown) {
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (ref.current && !ref.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+    }
+    // Bind the event listener
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [ref]);
+}
 
 function Dropdown({ showDropdown, setShowDropdown }) {
   const [user, setUser] = useContext(UserContext);
+  const wrapperRef = useRef(null);
+  useOutsideAlerter(wrapperRef, setShowDropdown);
 
   function handleClick() {
     setShowDropdown(!showDropdown);
@@ -19,6 +37,7 @@ function Dropdown({ showDropdown, setShowDropdown }) {
     <div
       className="absolute bg-white shadow-base p-2 top-14 right-32 rounded"
       hidden={showDropdown ? false : true}
+      ref={wrapperRef}
     >
       <ul>
         {/* profile */}

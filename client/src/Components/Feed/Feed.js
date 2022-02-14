@@ -1,25 +1,35 @@
 import Nav from "../Navbar/Nav";
 import Filter from "./Filter";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import HomeBox from "./HomeBox";
 import axios from "axios";
 import Post from "../Post/Post";
+import { UserContext } from "../../UserContext";
 
 function Feed() {
   const [activeFilter, setActiveFilter] = useState("latest");
   const [posts, setPosts] = useState([]);
+  const [user] = useContext(UserContext);
 
   useEffect(() => {
-    // fetch all posts
-    axios
-      .get("/api/forums/62067ce47911a04b1fd71495/posts")
-      .then((res) => {
-        setPosts(res.data);
-      })
-      .catch((err) => {
-        console.log(err.response);
-        console.error(err);
+    if (user) {
+      user.forums.forEach((forum) => {
+        axios.get(`/api/forums/${forum.id}/posts`).then((res) => {
+          setPosts([...posts, ...res.data]);
+        });
       });
+    } else {
+      // for testing purposes
+      axios
+        .get("/api/forums/62067ce47911a04b1fd71495/posts")
+        .then((res) => {
+          setPosts(res.data);
+        })
+        .catch((err) => {
+          console.log(err.response);
+          console.error(err);
+        });
+    }
   }, []);
 
   return (

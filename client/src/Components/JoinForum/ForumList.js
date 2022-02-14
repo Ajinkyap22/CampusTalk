@@ -3,7 +3,7 @@ import { UserContext } from "../../UserContext";
 import { useContext } from "react";
 
 function ForumList({ forums, setShowAlert }) {
-  const [user, setUser] = useContext(UserContext);
+  const [user] = useContext(UserContext);
 
   return (
     <table className="table-fixed w-full" hidden={forums.length ? false : true}>
