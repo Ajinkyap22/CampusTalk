@@ -98,6 +98,7 @@ function JoinForum({ title, ...props }) {
 
             <button
               onClick={handleNext}
+              hidden={forums.length ? false : true}
               className="bg-primary px-5 py-1.5 text-sm lg:text-sm xl:text-base 2xl:py-2 mb-4 text-white rounded-full hover:bg-blue-700 2xl:text-lg"
             >
               Next
@@ -105,16 +106,19 @@ function JoinForum({ title, ...props }) {
 
             <hr />
 
-            <p
-              className="text-center w-1/2 m-auto pt-10 pb-5 2xl:text-lg"
-              hidden={forums ? true : false}
-            >
-              Looks like we couldn't find any forums for you, why don't you
-              create one?
-            </p>
-
             <div className="my-4 mb-10 w-2/3 md:w-1/2 2xl:w-1/3 mx-auto text-center">
-              <p className="text-secondary text-sm lg:text-base 2xl:text-lg">
+              <p
+                className="text-center text-secondary m-auto pt-10 pb-5 2xl:text-lg"
+                hidden={forums.length ? true : false}
+              >
+                Looks like we couldn't find any forums for you, why don't you
+                create one?
+              </p>
+
+              <p
+                className="text-secondary text-sm lg:text-base 2xl:text-lg"
+                hidden={forums.length ? false : true}
+              >
                 Can't find your institute in ths list? Just create your
                 institute's forum!
               </p>

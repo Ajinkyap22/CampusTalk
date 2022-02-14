@@ -34,14 +34,24 @@ function ForumForm(props) {
     }));
   };
 
+  function checkUrl(e) {
+    let string = e.target.value;
+
+    if (!string.match(/^https?:/) && string.length) {
+      string = "https://" + string;
+
+      e.target.value = string;
+    }
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
 
     axios
       .post(`/api/forums/create-forum`, formData, headers)
       .then((res) => {
-        makeModerator(res.data._id);
         // make moderator
+        makeModerator(res.data._id);
         setForums((forums) => [...forums, res.data]);
         // redirect
         // props.history.push(`forums/${res.data._id}`);
@@ -90,15 +100,22 @@ function ForumForm(props) {
       />
 
       {/* website */}
-      <Input
-        type="text"
-        name="website"
-        label="Institute's Website"
-        callback={(e) => handleChange(e)}
-        placeholder="Your institute's official website"
-        required={true}
-        setState={false}
-      />
+      <div className="my-4 relative">
+        <label htmlFor="website" className="text-xs lg:text-sm 2xl:text-lg">
+          Institute's Website
+          <span className="text-red-600">*</span>
+        </label>
+        <input
+          type="url"
+          name="website"
+          onChange={handleChange}
+          placeholder="Your institute's official website"
+          className="mt-2 block w-full px-3 py-1.5 border border-gray-300 bg-[#f6f6f6] rounded-md text-xs lg:text-sm 2xl:text-base shadow-sm placeholder-[#818181] 
+              focus:outline-none focus:border-sky-500"
+          required
+          onBlur={checkUrl}
+        />
+      </div>
 
       {/* email */}
       <Input
