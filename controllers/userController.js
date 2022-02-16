@@ -34,10 +34,17 @@ exports.login_post = function (req, res) {
       { expiresIn: "1d" },
       (err, token) => {
         if (err) return res.status(400).json(err);
-        res.json({
-          token: token,
-          user,
-        });
+
+        User.findById(user._id)
+          .populate("forums")
+          .exec((err, user) => {
+            if (err) return res.json(err);
+
+            res.json({
+              token: token,
+              user,
+            });
+          });
       }
     );
   })(req, res);
@@ -96,14 +103,25 @@ exports.signup_post = [
           (err, token) => {
             if (err) return next(err);
 
-            return res.status(200).json({
-              token,
-              user: {
-                _id: user._id,
-                email: user.email,
-              },
-              message: "Signup successful",
-            });
+            User.findById(user._id)
+              .populate("forums")
+              .exec((err, user) => {
+                if (err) return res.json(err);
+
+                return res.json({
+                  token: token,
+                  user,
+                });
+              });
+
+            // return res.status(200).json({
+            //   token,
+            //   user: {
+            //     _id: user._id,
+            //     email: user.email,
+            //   },
+            //   message: "Signup successful",
+            // });
           }
         );
       });
@@ -144,15 +162,27 @@ exports.google = async function (req, res) {
         { expiresIn: "10m" },
         (err, token) => {
           if (err) return res.status(400).json(err);
-          return res.json({
-            token: token,
-            user: {
-              _id: user._id,
-              email: user.email,
-              firstName: user.firstName,
-              lastName: user.lastName,
-            },
-          });
+
+          User.findById(user._id)
+            .populate("forums")
+            .exec((err, user) => {
+              if (err) return res.json(err);
+
+              return res.json({
+                token: token,
+                user,
+              });
+            });
+
+          // return res.json({
+          //   token: token,
+          //   user: {
+          //     _id: user._id,
+          //     email: user.email,
+          //     firstName: user.firstName,
+          //     lastName: user.lastName,
+          //   },
+          // });
         }
       );
     }

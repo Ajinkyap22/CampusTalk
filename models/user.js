@@ -9,7 +9,7 @@ const UserSchema = new Schema({
   picture: { type: String },
   posts: { type: Array, default: [] },
   comments: { type: Array, default: [] },
-  forums: { type: Array, default: [] },
+  forums: [{ type: Schema.Types.ObjectId, ref: "Forum" }],
   timestamp: { type: Date, default: Date.now },
 });
 

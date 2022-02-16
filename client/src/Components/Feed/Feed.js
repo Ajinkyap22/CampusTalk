@@ -5,11 +5,16 @@ import HomeBox from "./HomeBox";
 import axios from "axios";
 import Post from "../Post/Post";
 import { UserContext } from "../../UserContext";
+import ForumBox from "./ForumBox";
 
-function Feed() {
+function Feed({ title }) {
   const [activeFilter, setActiveFilter] = useState("latest");
   const [posts, setPosts] = useState([]);
   const [user] = useContext(UserContext);
+
+  useEffect(() => {
+    document.title = title || "Feed | CampusTalk";
+  }, [title]);
 
   useEffect(() => {
     if (user) {
@@ -53,8 +58,13 @@ function Feed() {
           ))}
         </div>
 
-        {/* home info box */}
-        <HomeBox />
+        <div className="mt-8">
+          {/* home info box */}
+          <HomeBox />
+
+          {/* forums joined box */}
+          <ForumBox user={user} />
+        </div>
       </section>
     </main>
   );
