@@ -6,8 +6,10 @@ import axios from "axios";
 import Post from "../Post/Post";
 import { UserContext } from "../../UserContext";
 import ForumBox from "./ForumBox";
+import { TabContext } from "../../TabContext";
 
 function Feed({ title }) {
+  const [activeTab, setActiveTab] = useContext(TabContext);
   const [activeFilter, setActiveFilter] = useState("latest");
   const [posts, setPosts] = useState([]);
   const [user] = useContext(UserContext);
@@ -15,6 +17,10 @@ function Feed({ title }) {
   useEffect(() => {
     document.title = title || "Feed | CampusTalk";
   }, [title]);
+
+  useEffect(() => {
+    setActiveTab("feed");
+  }, [activeTab]);
 
   useEffect(() => {
     if (user) {
@@ -31,7 +37,6 @@ function Feed({ title }) {
           setPosts(res.data);
         })
         .catch((err) => {
-          console.log(err.response);
           console.error(err);
         });
     }

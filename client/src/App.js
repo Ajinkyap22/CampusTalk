@@ -5,7 +5,8 @@ import UserInfo from "./Components/User Info/UserInfo";
 import { Join } from "./Components/JoinForum/Join";
 import { UserProvider } from "./UserContext";
 import CreateForum from "./Components/Create Forum/Create";
-import Forum from "./Components/Forum/Forum";
+import Forums from "./Components/Forum/Forums";
+import Forum from "././Components/Forum/Forum";
 import Login from "./Components/Auth/Login";
 import Signup from "./Components/Auth/Signup";
 import { ForumContext } from "./ForumContext";
@@ -67,6 +68,13 @@ function App() {
                 render={() => <Feed title={"Feed | CampusTalk"} />}
               />
 
+              {/* Forums */}
+              <Route
+                exact
+                path="/forums"
+                render={() => <Forums title={"Forums | CampusTalk"} />}
+              />
+
               {/* forum page */}
               {forums.map((forum, i) => (
                 <Route
@@ -74,7 +82,10 @@ function App() {
                   path={`/forums/${forum._id}`}
                   key={i}
                   render={() => (
-                    <Forum title={`${forum.forumName} | CampusTalk`} />
+                    <Forum
+                      title={`${forum.forumName} | CampusTalk`}
+                      forum={forum}
+                    />
                   )}
                 />
               ))}
