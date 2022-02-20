@@ -146,10 +146,17 @@ function Filter({ activeFilter, setActiveFilter, posts, setPosts }) {
 
       {/* day */}
       <button
-        className={showDay ? "p-3 text-sm visible" : "p-3 text-sm invisible"}
         onClick={handleDropdown}
+        disabled={activeFilter === "top" ? false : true}
+        className="p-3 text-sm"
       >
-        <span className="bg-[#E2EEFF] text-primary p-1 px-2 rounded-xl">
+        <span
+          className={`${
+            activeFilter === "top"
+              ? "bg-[#E2EEFF] text-primary"
+              : "bg-[#ccc] text-[#666]"
+          } p-1 px-2 rounded-xl`}
+        >
           Today{" "}
           <svg
             xmlns="http://www.w3.org/2000/svg"

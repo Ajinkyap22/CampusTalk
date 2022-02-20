@@ -3,7 +3,7 @@ import PostActions from "./PostActions";
 
 function Post({ post }) {
   return (
-    <div className="bg-white shadow-base py-2 mt-8 w-[90%]">
+    <div className="bg-white shadow-base py-2 mt-8 w-full">
       {/* user info */}
       <PostInfo
         author={post.author}
@@ -17,11 +17,14 @@ function Post({ post }) {
       <p className="m-2 my-3 px-2 text-sm">{post.text}</p>
 
       {/* image */}
-      <div className="mt-2 bg-black" hidden={post.file ? false : true}>
+      <div
+        className="mt-2 mx-auto bg-black max-w-fit"
+        hidden={post.file ? false : true}
+      >
         <img
           src={`http://localhost:3000/uploads/${post.file}`}
           alt=""
-          className="mx-auto"
+          className="mx-auto w-full"
         />
       </div>
 

@@ -46,9 +46,9 @@ function Feed({ title }) {
     <main className="w-full min-h-full overflow-auto bg-[#F0F2F5]">
       <Nav />
 
-      <section className="flex justify-between items-start md:w-[70%] mx-auto h-full">
+      <section className="flex justify-between md:w-[70%] mx-auto h-full">
         {/* posts and filters */}
-        <div className="flex flex-col items-center my-8 h-full">
+        <div className="flex flex-col items-center my-8 h-full col-start-1 col-span-2">
           {/* filters */}
           <Filter
             activeFilter={activeFilter}
