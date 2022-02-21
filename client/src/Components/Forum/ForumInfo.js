@@ -3,10 +3,12 @@ import moment from "moment";
 
 function ForumInfo({ forum }) {
   return (
-    <div className="bg-white shadow-base max-w-sm pb-2">
+    <div className="bg-white shadow-base max-w-[22rem] pb-1">
       {/* title */}
-      <div className="w-full bg-primary p-3 py-2">
-        <LogoCropped />
+      <div className="flex items-center w-full bg-primary p-3 py-2">
+        <div className="mr-1">
+          <LogoCropped />
+        </div>
         <p className="text-white text-lg inline"> {forum.forumName}</p>
       </div>
 
@@ -31,7 +33,7 @@ function ForumInfo({ forum }) {
       </div>
 
       {/* stats */}
-      <div className="p-3 border-b border-[#cfcdcd] text-center px-24">
+      <div className="p-3 py-2 border-b border-[#cfcdcd] text-center px-24">
         <div className="flex justify-center items-center">
           {/* members */}
           <div className="flex flex-col items-center px-2">
@@ -54,11 +56,11 @@ function ForumInfo({ forum }) {
 
       {/* buttons */}
       <div>
-        <button className="mx-auto w-1/2 block p-2 py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-primary bg-primary text-white rounded-full hover:bg-white hover:text-primary">
+        <button className="mx-auto w-1/2 block p-2 py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-primary bg-primary text-white rounded-full hover:bg-blue-700">
           Create Post
         </button>
 
-        <button className="mx-auto w-1/2 block text-centr p-2 py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-primary bg-white text-primary rounded-full hover:bg-primary hover:text-white">
+        <button className="mx-auto w-1/2 block text-centr p-2 py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-red-500 bg-white text-red-500 rounded-full hover:bg-red-500 hover:text-white">
           Leave Forum
         </button>
       </div>

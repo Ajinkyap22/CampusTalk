@@ -2,7 +2,7 @@ import moment from "moment";
 
 function PostInfo({ author, forum, timestamp, anonymous, important }) {
   return (
-    <div className="flex my-1 px-2 w-full relative">
+    <div className="flex my-1 px-2 w-full max-w-[32rem] relative">
       {/* user profile pic */}
       {anonymous || !author.picture ? (
         <svg
@@ -26,9 +26,9 @@ function PostInfo({ author, forum, timestamp, anonymous, important }) {
         />
       )}
 
-      <div>
+      <div className="mx-1">
         {/* user name */}
-        <span className="mx-1 text-sm">
+        <span className="text-sm">
           {anonymous ? " Anonymous" : `${author.firstName} ${author.lastName}`}
         </span>
 
@@ -48,9 +48,7 @@ function PostInfo({ author, forum, timestamp, anonymous, important }) {
         <span className="mx-1 text-sm">{forum.forumName}</span>
 
         {/* date */}
-        <p className="mx-1 text-xs text-secondary">
-          {moment(timestamp).fromNow()}
-        </p>
+        <p className="text-xs text-secondary">{moment(timestamp).fromNow()}</p>
       </div>
 
       {/* important */}

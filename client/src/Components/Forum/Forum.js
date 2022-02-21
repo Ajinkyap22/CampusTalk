@@ -6,6 +6,7 @@ import axios from "axios";
 import Filter from "../Feed/Filter";
 import Post from "../Post/Post";
 import ForumInfo from "./ForumInfo";
+import Rules from "./Rules";
 
 function Forum({ forum, title }) {
   const [activeTab, setActiveTab] = useContext(TabContext);
@@ -51,6 +52,9 @@ function Forum({ forum, title }) {
         <div className="mt-8">
           {/* forum info */}
           <ForumInfo forum={forum} />
+
+          {/* rules */}
+          <Rules rules={forum.rules} />
         </div>
       </section>
     </main>
