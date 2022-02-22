@@ -5,7 +5,7 @@ function Rules({ rules }) {
       hidden={rules.length ? false : true}
     >
       {/* title */}
-      <div className="w-full bg-primary p-3 py-2">
+      <div className="w-full bg-primary-light p-3 py-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="30"

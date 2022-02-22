@@ -35,7 +35,7 @@ function Feed({ title }) {
       axios
         .get("/api/forums/62067ce47911a04b1fd71495/posts")
         .then((res) => {
-          setPosts(res.data);
+          setPosts([...res.data, ...res.data, ...res.data]);
         })
         .catch((err) => {
           console.error(err);
@@ -47,7 +47,7 @@ function Feed({ title }) {
     <main className="w-full min-h-full overflow-auto bg-[#F0F2F5]">
       <Nav />
 
-      <section className="flex justify-around md:w-full mx-auto h-full">
+      <section className="flex justify-evenly md:w-full mx-auto h-full">
         {/* faq */}
         <FAQ />
 

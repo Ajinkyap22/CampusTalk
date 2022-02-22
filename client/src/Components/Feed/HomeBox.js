@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 
 function HomeBox() {
   return (
-    <div className="bg-white shadow-base max-w-sm pb-2">
+    <div className="bg-white shadow-base max-w-[21rem] pb-2">
       {/* title */}
-      <div className="w-full bg-primary p-3 py-2">
+      <div className="w-full bg-primary-light p-3 py-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="25"
@@ -25,13 +25,13 @@ function HomeBox() {
 
       {/* buttons */}
       <div className="">
-        <button className="w-1/2 mx-auto block py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-primary bg-primary text-white rounded-full hover:bg-white hover:text-primary">
+        <button className="w-1/2 mx-auto block py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-primary bg-primary-light text-white rounded-full hover:bg-blue-700">
           Create Post
         </button>
 
         <Link
           to="/create-forum"
-          className="w-1/2 mx-auto text-center block py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-primary bg-white text-primary rounded-full hover:bg-primary hover:text-white"
+          className="w-1/2 mx-auto text-center block py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-primary bg-white text-primary rounded-full hover:bg-primary-light hover:text-white"
         >
           Create Forum
         </Link>

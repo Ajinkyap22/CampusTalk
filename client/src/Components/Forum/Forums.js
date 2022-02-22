@@ -43,7 +43,9 @@ function Forums({ title }) {
       <div className="my-5 mt-8 text-center">
         <button
           className={`p-3 shadow text-sm rounded-l ${
-            forumsTab === "userForums" ? "bg-[#0f8cff] text-white" : "bg-white"
+            forumsTab === "userForums"
+              ? "bg-primary-light text-white"
+              : "bg-white"
           }`}
           onClick={toggleTab}
         >
@@ -51,7 +53,9 @@ function Forums({ title }) {
         </button>
         <button
           className={`p-3 shadow text-sm rounded-r ${
-            forumsTab === "allForums" ? "bg-[#0f8cff] text-white" : "bg-white"
+            forumsTab === "allForums"
+              ? "bg-primary-light text-white"
+              : "bg-white"
           }`}
           onClick={toggleTab}
         >

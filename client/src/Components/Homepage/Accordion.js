@@ -16,7 +16,7 @@ const faqData = [
   },
 
   {
-    question: "How do I post annonymously?",
+    question: "How do I post anonymously?",
     answer: "FAQ Answer 4",
   },
 

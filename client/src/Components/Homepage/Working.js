@@ -102,7 +102,7 @@ function Working() {
                 {/* description */}
                 <p className="text-xs lg:text-base 2xl:text-2xl">
                   Read posts created by other members & create posts with an
-                  optional annonymous environment.
+                  optional anonymous environment.
                 </p>
               </div>
 

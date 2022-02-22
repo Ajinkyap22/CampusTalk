@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 
 function ForumBox({ user }) {
   return (
-    <div className="bg-white shadow-base max-w-sm my-4 mt-8">
+    <div className="bg-white shadow-base max-w-[21rem] my-4 mt-8">
       {/* title */}
-      <div className="w-full bg-primary p-3 py-2">
+      <div className="w-full bg-primary-light p-3 py-2">
         <LogoCropped width="40" />
 
         <p className="text-white inline"> Your Forums</p>

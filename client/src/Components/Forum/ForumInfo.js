@@ -5,7 +5,7 @@ function ForumInfo({ forum }) {
   return (
     <div className="bg-white shadow-base max-w-[22rem] pb-1">
       {/* title */}
-      <div className="flex items-center w-full bg-primary p-3 py-2">
+      <div className="flex items-center w-full bg-primary-light p-3 py-2">
         <div className="mr-1">
           <LogoCropped />
         </div>
