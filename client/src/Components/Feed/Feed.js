@@ -7,6 +7,7 @@ import Post from "../Post/Post";
 import { UserContext } from "../../UserContext";
 import ForumBox from "./ForumBox";
 import { TabContext } from "../../TabContext";
+import FAQ from "./FAQ";
 
 function Feed({ title }) {
   const [activeTab, setActiveTab] = useContext(TabContext);
@@ -46,7 +47,10 @@ function Feed({ title }) {
     <main className="w-full min-h-full overflow-auto bg-[#F0F2F5]">
       <Nav />
 
-      <section className="flex justify-between md:w-[70%] mx-auto h-full">
+      <section className="flex justify-around md:w-full mx-auto h-full">
+        {/* faq */}
+        <FAQ />
+
         {/* posts and filters */}
         <div className="flex flex-col items-center my-8 h-full col-start-1 col-span-2">
           {/* filters */}
