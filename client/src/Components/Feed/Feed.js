@@ -35,7 +35,7 @@ function Feed({ title }) {
       axios
         .get("/api/forums/62067ce47911a04b1fd71495/posts")
         .then((res) => {
-          setPosts([...res.data, ...res.data, ...res.data]);
+          setPosts([...res.data]);
         })
         .catch((err) => {
           console.error(err);

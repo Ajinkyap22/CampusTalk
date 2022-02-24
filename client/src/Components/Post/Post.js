@@ -29,7 +29,13 @@ function Post({ post }) {
       </div>
 
       {/* actions */}
-      <PostActions upvotes={post.upvotes} comments={post.comments} />
+      <PostActions
+        id={post._id}
+        forumId={post.forum._id}
+        upvotes={post.upvotes}
+        downvotes={post.downvotes}
+        comments={post.comments}
+      />
     </div>
   );
 }

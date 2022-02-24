@@ -1,36 +1,132 @@
-function PostActions({ upvotes, comments }) {
+import { UserContext } from "../../UserContext";
+import axios from "axios";
+import { useContext, useState, useEffect } from "react";
+
+let headers = {
+  headers: {
+    Authorization: `Bearer ${JSON.parse(localStorage.getItem("user"))?.token}`,
+  },
+};
+
+function PostActions({ id, forumId, upvotes, downvotes, comments }) {
+  const [user] = useContext(UserContext);
+  const [upvoted, setUpvoted] = useState(false);
+  const [downvoted, setDownvoted] = useState(false);
+  const [upvotesLength, setUpvotesLength] = useState(upvotes.length);
+  const [downvotesLength, setDownvotesLength] = useState(downvotes.length);
+
+  useEffect(() => {
+    // check if post is upvoted
+    if (user) {
+      setUpvoted(upvotes.includes(user._id));
+      setDownvoted(downvotes.includes(user._id));
+    }
+  }, []);
+
+  function handleUpvote() {
+    if (!user) return;
+
+    if (upvoted) {
+      setUpvoted(false);
+      setUpvotesLength(upvotesLength - 1);
+    } else {
+      axios
+        .put(
+          `/api/forums/${forumId}/posts/upvote/${id}`,
+          {
+            id: user._id,
+          },
+          headers
+        )
+        .then((res) => {
+          setUpvoted(true);
+          setDownvoted(false);
+          if (downvoted) {
+            setDownvotesLength(downvotesLength - 1);
+          }
+          setUpvotesLength(upvotesLength + 1);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  }
+
+  function handleDownvote() {
+    if (!user) return;
+
+    if (downvoted) {
+      setDownvoted(false);
+      setDownvotesLength(downvotesLength - 1);
+    } else {
+      axios
+        .put(
+          `/api/forums/${forumId}/posts/downvote/${id}`,
+          {
+            id: user._id,
+          },
+          headers
+        )
+        .then((res) => {
+          setDownvoted(true);
+          setUpvoted(false);
+          if (upvoted) {
+            setUpvotesLength(upvotesLength - 1);
+          }
+          setDownvotesLength(downvotesLength + 1);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  }
+
   return (
     <div className="w-full flex justify-between py-1 items-center pr-2 border-t">
       {/* upvotes */}
-      <button className="m-2">
-        <svg
-          width="20"
-          viewBox="0 0 20 20"
-          fill="none"
-          className="inline mx-1"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M10.6507 1.97919C10.3332 1.58335 9.66657 1.58335 9.34907 1.97919L2.6824 10.3125C2.5846 10.4352 2.52338 10.583 2.50576 10.7389C2.48815 10.8948 2.51485 11.0525 2.58282 11.1939C2.65078 11.3353 2.75724 11.4546 2.88998 11.5383C3.02271 11.6219 3.17635 11.6664 3.33324 11.6667H6.66657V17.5C6.66657 17.721 6.75437 17.933 6.91065 18.0893C7.06693 18.2456 7.27889 18.3334 7.4999 18.3334H12.4999C12.7209 18.3334 12.9329 18.2456 13.0892 18.0893C13.2454 17.933 13.3332 17.721 13.3332 17.5V11.6667H16.6666C16.8235 11.6664 16.9771 11.6219 17.1098 11.5383C17.2426 11.4546 17.349 11.3353 17.417 11.1939C17.485 11.0525 17.5117 10.8948 17.494 10.7389C17.4764 10.583 17.4152 10.4352 17.3174 10.3125L10.6507 1.97919ZM12.4999 10H11.6666V16.6667H8.33324V10H5.0674L9.9999 3.83419L14.9324 10H12.4999Z"
-            fill="#484848"
-          />
-        </svg>
+      <div className="m-2">
+        <button onClick={handleUpvote}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            fill={upvoted ? "#0F8CFF" : "#484848"}
+            className="inline mx-1"
+            viewBox="0 0 256 256"
+          >
+            <rect width="256" height="256" fill="none"></rect>
+            <path
+              d="M32,120l96-96,96,96H176v88a8,8,0,0,1-8,8H88a8,8,0,0,1-8-8V120Z"
+              fill={upvoted ? "#0F8CFF" : "none"}
+              stroke={upvoted ? "#0F8CFF" : "#484848"}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="16"
+            ></path>
+          </svg>
+        </button>
 
-        <span className="text-sm">{upvotes.length}</span>
+        <span className="text-sm w-10">{upvotesLength - downvotesLength}</span>
 
-        <svg
-          width="20"
-          viewBox="0 0 20 20"
-          fill="none"
-          className="inline mx-1"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M9.34926 18.0208C9.66676 18.4166 10.3334 18.4166 10.6509 18.0208L17.3176 9.68748C17.4154 9.56481 17.4766 9.41704 17.4942 9.26114C17.5119 9.10524 17.4851 8.94754 17.4172 8.80613C17.3492 8.66473 17.2428 8.54535 17.11 8.46172C16.9773 8.37809 16.8237 8.33358 16.6668 8.33331H13.3334L13.3334 2.49998C13.3334 2.27896 13.2456 2.067 13.0894 1.91072C12.9331 1.75444 12.7211 1.66665 12.5001 1.66665L7.5001 1.66665C7.27908 1.66665 7.06712 1.75444 6.91084 1.91072C6.75456 2.067 6.66676 2.27896 6.66676 2.49998L6.66676 8.33331L3.33343 8.33331C3.17654 8.33358 3.02291 8.37809 2.89017 8.46172C2.75743 8.54535 2.65097 8.66473 2.58301 8.80613C2.51505 8.94754 2.48834 9.10524 2.50596 9.26114C2.52357 9.41704 2.58479 9.56481 2.6826 9.68748L9.34926 18.0208ZM7.5001 9.99998H8.33343L8.33343 3.33331H11.6668L11.6668 9.99998L14.9326 9.99998L10.0001 16.1658L5.0676 9.99998H7.5001Z"
-            fill="#484848"
-          />
-        </svg>
-      </button>
+        <button onClick={handleDownvote}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            fill={downvoted ? "red" : "#484848"}
+            className="inline mx-1"
+            viewBox="0 0 256 256"
+          >
+            <rect width="256" height="256" fill="none"></rect>
+            <path
+              d="M32,136l96,96,96-96H176V48a8,8,0,0,0-8-8H88a8,8,0,0,0-8,8v88Z"
+              fill={downvoted ? "red" : "none"}
+              stroke={downvoted ? "red" : "#484848"}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="16"
+            ></path>
+          </svg>
+        </button>
+      </div>
 
       {/* comment */}
       <button className="m-2">
