@@ -14,7 +14,7 @@ let headers = {
 
 function ForumForm(props) {
   const [checked, setChecked] = useState(false);
-  const [user] = useContext(UserContext);
+  const [user, setUser] = useContext(UserContext);
   const [forums, setForums] = useContext(ForumContext);
   const [status, setStatus] = useState(0);
 
@@ -52,10 +52,11 @@ function ForumForm(props) {
       .then((res) => {
         // make moderator
         makeModerator(res.data._id);
+        // add forum to user's forums
         setForums((forums) => [...forums, res.data]);
         // redirect
         // props.history.push(`forums/${res.data._id}`);
-        props.history.push(`/feed`);
+        props.history.push(`/forums/${res.data._id}`);
       })
       .catch((err) => {
         setStatus(err?.response?.status || 0);
@@ -69,7 +70,9 @@ function ForumForm(props) {
 
     axios
       .post(`/api/forums/${forumId}/moderators/make`, body, headers)
-      .then((res) => {})
+      .then((res) => {
+        setUser((user) => ({ ...user, forums: [...user.forums, res.data] }));
+      })
       .catch((err) => {
         console.error(err);
       });

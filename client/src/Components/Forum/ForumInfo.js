@@ -16,15 +16,18 @@ function ForumInfo({ forum }) {
       <div className="p-2 border-b border-[#cfcdcd] px-3">
         <p className="text-xs p-1">
           <span className="underline underline-offset-1">Website: </span>
-          <a href={forum.website} className="text-primary px-2">
+          <a
+            href={forum.website}
+            target="_blank"
+            rel="noreferrer"
+            className="text-primary px-2 hover:underline"
+          >
             {forum.website}
           </a>
         </p>
         <p className="text-xs p-1">
           <span className="underline underline-offset-1">Email: </span>
-          <a href={forum.website} className="text-primary px-6">
-            {forum.email}
-          </a>
+          <span className="text-primary px-6">{forum.email}</span>
         </p>
         <p className="text-xs p-1">
           <span className="underline underline-offset-1">Address: </span>

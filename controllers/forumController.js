@@ -266,7 +266,7 @@ exports.make_moderator = function (req, res) {
         (err, user) => {
           if (err) return res.json(err);
 
-          return res.json(forum.moderators);
+          return res.json(forum);
         }
       );
     });

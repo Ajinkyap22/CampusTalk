@@ -13,6 +13,7 @@ import { ForumContext } from "./ForumContext";
 import { useContext } from "react";
 import Feed from "./Components/Feed/Feed";
 import { TabProvider } from "./TabContext";
+import { PostProvider } from "./PostContext";
 
 function App() {
   const [forums] = useContext(ForumContext);
@@ -62,33 +63,35 @@ function App() {
 
             {/* Feed */}
             <TabProvider>
-              <Route
-                exact
-                path="/feed"
-                render={() => <Feed title={"Feed | CampusTalk"} />}
-              />
-
-              {/* Forums */}
-              <Route
-                exact
-                path="/forums"
-                render={() => <Forums title={"Forums | CampusTalk"} />}
-              />
-
-              {/* forum page */}
-              {forums.map((forum, i) => (
+              <PostProvider>
                 <Route
                   exact
-                  path={`/forums/${forum._id}`}
-                  key={i}
-                  render={() => (
-                    <Forum
-                      title={`${forum.forumName} | CampusTalk`}
-                      forum={forum}
-                    />
-                  )}
+                  path="/feed"
+                  render={() => <Feed title={"Feed | CampusTalk"} />}
                 />
-              ))}
+
+                {/* Forums */}
+                <Route
+                  exact
+                  path="/forums"
+                  render={() => <Forums title={"Forums | CampusTalk"} />}
+                />
+
+                {/* forum page */}
+                {forums.map((forum, i) => (
+                  <Route
+                    exact
+                    path={`/forums/${forum._id}`}
+                    key={i}
+                    render={() => (
+                      <Forum
+                        title={`${forum.forumName} | CampusTalk`}
+                        forum={forum}
+                      />
+                    )}
+                  />
+                ))}
+              </PostProvider>
             </TabProvider>
           </Switch>
         </Router>

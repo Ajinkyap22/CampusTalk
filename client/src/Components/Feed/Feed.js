@@ -2,17 +2,19 @@ import Nav from "../Navbar/Nav";
 import Filter from "./Filter";
 import { useEffect, useState, useContext } from "react";
 import HomeBox from "./HomeBox";
-import axios from "axios";
 import Post from "../Post/Post";
 import { UserContext } from "../../UserContext";
 import ForumBox from "./ForumBox";
 import { TabContext } from "../../TabContext";
 import FAQ from "./FAQ";
+import { PostContext } from "../../PostContext";
+import { Link } from "react-router-dom";
+import LogoCropped from "../LogoCropped";
 
 function Feed({ title }) {
   const [activeTab, setActiveTab] = useContext(TabContext);
   const [activeFilter, setActiveFilter] = useState("latest");
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useContext(PostContext);
   const [user] = useContext(UserContext);
 
   useEffect(() => {
@@ -22,26 +24,6 @@ function Feed({ title }) {
   useEffect(() => {
     setActiveTab("feed");
   }, [activeTab]);
-
-  useEffect(() => {
-    if (user) {
-      user.forums.forEach((forum) => {
-        axios.get(`/api/forums/${forum.id}/posts`).then((res) => {
-          setPosts([...posts, ...res.data]);
-        });
-      });
-    } else {
-      // for testing purposes
-      axios
-        .get("/api/forums/62067ce47911a04b1fd71495/posts")
-        .then((res) => {
-          setPosts([...res.data]);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    }
-  }, []);
 
   return (
     <main className="w-full min-h-full overflow-auto bg-[#F0F2F5]">
@@ -62,9 +44,36 @@ function Feed({ title }) {
           />
 
           {/* posts */}
-          {posts.map((post) => (
-            <Post key={post._id} post={post} />
+          {posts.map((post, i) => (
+            <Post key={i} post={post} />
           ))}
+
+          <div
+            hidden={posts.length ? true : false}
+            className="my-12 text-gray-700 text-center"
+          >
+            {/* logo */}
+            <LogoCropped color="rgba(98, 98, 98, 0.9)" width="75" />
+
+            {/* text */}
+            <p className="w-2/3 mx-auto my-4">
+              Your feed is empty, why not{" "}
+              <Link
+                to="/create-post"
+                className="text-primary underline underline-offset-1"
+              >
+                {" "}
+                create a post{" "}
+              </Link>{" "}
+              or{" "}
+              <Link
+                to="/forums"
+                className="text-primary underline underline-offset-1"
+              >
+                join more forums?
+              </Link>
+            </p>
+          </div>
         </div>
 
         <div className="mt-8">

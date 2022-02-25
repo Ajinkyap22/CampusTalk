@@ -1,6 +1,7 @@
 import { UserContext } from "../../UserContext";
 import axios from "axios";
 import { useContext, useState, useEffect } from "react";
+import { PostContext } from "../../PostContext";
 
 let headers = {
   headers: {
@@ -14,21 +15,34 @@ function PostActions({ id, forumId, upvotes, downvotes, comments }) {
   const [downvoted, setDownvoted] = useState(false);
   const [upvotesLength, setUpvotesLength] = useState(upvotes.length);
   const [downvotesLength, setDownvotesLength] = useState(downvotes.length);
+  const [posts, setPosts] = useContext(PostContext);
 
   useEffect(() => {
+    if (!user) return;
     // check if post is upvoted
-    if (user) {
-      setUpvoted(upvotes.includes(user._id));
-      setDownvoted(downvotes.includes(user._id));
-    }
-  }, []);
+    if (upvotes.some((id) => id === user._id)) setUpvoted(true);
+    // check if post is downvoted
+    if (downvotes.some((id) => id === user._id)) setDownvoted(true);
+  }, [user, upvotes, downvotes]);
 
   function handleUpvote() {
     if (!user) return;
 
     if (upvoted) {
-      setUpvoted(false);
-      setUpvotesLength(upvotesLength - 1);
+      axios
+        .put(
+          `/api/forums/${forumId}/posts/unupvote/${id}`,
+          { id: user._id },
+          headers
+        )
+        .then((res) => {
+          updatePosts(res.data);
+          setUpvoted(false);
+          setUpvotesLength(upvotesLength - 1);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     } else {
       axios
         .put(
@@ -39,6 +53,7 @@ function PostActions({ id, forumId, upvotes, downvotes, comments }) {
           headers
         )
         .then((res) => {
+          updatePosts(res.data);
           setUpvoted(true);
           setDownvoted(false);
           if (downvoted) {
@@ -56,8 +71,20 @@ function PostActions({ id, forumId, upvotes, downvotes, comments }) {
     if (!user) return;
 
     if (downvoted) {
-      setDownvoted(false);
-      setDownvotesLength(downvotesLength - 1);
+      axios
+        .put(
+          `/api/forums/${forumId}/posts/undownvote/${id}`,
+          { id: user._id },
+          headers
+        )
+        .then((res) => {
+          updatePosts(res.data);
+          setDownvoted(false);
+          setDownvotesLength(downvotesLength - 1);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     } else {
       axios
         .put(
@@ -68,6 +95,7 @@ function PostActions({ id, forumId, upvotes, downvotes, comments }) {
           headers
         )
         .then((res) => {
+          updatePosts(res.data);
           setDownvoted(true);
           setUpvoted(false);
           if (upvoted) {
@@ -79,6 +107,12 @@ function PostActions({ id, forumId, upvotes, downvotes, comments }) {
           console.error(err);
         });
     }
+  }
+
+  function updatePosts(data) {
+    setPosts((prevState) =>
+      prevState.map((post) => (data._id === post._id ? data : post))
+    );
   }
 
   return (
@@ -105,7 +139,7 @@ function PostActions({ id, forumId, upvotes, downvotes, comments }) {
           </svg>
         </button>
 
-        <span className="text-sm w-10">{upvotesLength - downvotesLength}</span>
+        <span className="text-sm">{upvotesLength - downvotesLength}</span>
 
         <button onClick={handleDownvote}>
           <svg

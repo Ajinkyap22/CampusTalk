@@ -1,4 +1,5 @@
 import moment from "moment";
+import { Link } from "react-router-dom";
 
 function PostInfo({ author, forum, timestamp, anonymous, important }) {
   return (
@@ -45,7 +46,12 @@ function PostInfo({ author, forum, timestamp, anonymous, important }) {
         </svg>
 
         {/* forum name */}
-        <span className="mx-1 text-sm">{forum.forumName}</span>
+        <Link
+          to={`/forums/${forum._id}/`}
+          className="mx-1 text-sm hover:underline"
+        >
+          {forum.forumName}
+        </Link>
 
         {/* date */}
         <p className="text-xs text-secondary">{moment(timestamp).fromNow()}</p>

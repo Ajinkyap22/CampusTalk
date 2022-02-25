@@ -76,9 +76,7 @@ exports.upvote_post = function (req, res) {
   Post.findByIdAndUpdate(
     req.params.postId,
     {
-      $push: {
-        upvotes: req.body.id,
-      },
+      $push: { upvotes: req.body.id },
       $pull: {
         downvotes: req.body.id,
       },
@@ -86,6 +84,25 @@ exports.upvote_post = function (req, res) {
     { new: true }
   )
     .populate("author")
+    .populate("forum")
+    .exec((err, post) => {
+      if (err) return res.json(err);
+
+      return res.json(post);
+    });
+};
+
+// unupvote a post
+exports.unupvote_post = function (req, res) {
+  Post.findByIdAndUpdate(
+    req.params.postId,
+    {
+      $pull: { upvotes: req.body.id },
+    },
+    { new: true }
+  )
+    .populate("author")
+    .populate("forum")
     .exec((err, post) => {
       if (err) return res.json(err);
 
@@ -98,9 +115,7 @@ exports.downvote_post = function (req, res) {
   Post.findByIdAndUpdate(
     req.params.postId,
     {
-      $push: {
-        downvotes: req.body.id,
-      },
+      $addToSet: { downvotes: req.body.id },
       $pull: {
         upvotes: req.body.id,
       },
@@ -108,6 +123,26 @@ exports.downvote_post = function (req, res) {
     { new: true }
   )
     .populate("author")
+    .populate("forum")
+    .exec((err, post) => {
+      if (err) return res.json(err);
+
+      return res.json(post);
+    });
+};
+
+// undownvote a post
+exports.undownvote_post = function (req, res) {
+  Post.findByIdAndUpdate(
+    req.params.postId,
+    {
+      $pull: { downvotes: req.body.id },
+    },
+    { new: true }
+  )
+
+    .populate("author")
+    .populate("forum")
     .exec((err, post) => {
       if (err) return res.json(err);
 

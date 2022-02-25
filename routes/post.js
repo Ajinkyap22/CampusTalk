@@ -27,8 +27,14 @@ router.put("/update/:postId", verifyToken, postController.update_post);
 // upvotes a post
 router.put("/upvote/:postId", verifyToken, postController.upvote_post);
 
+// unupvotes a post
+router.put("/unupvote/:postId", verifyToken, postController.unupvote_post);
+
 // downvotes a post
 router.put("/downvote/:postId", verifyToken, postController.downvote_post);
+
+// undownvotes a post
+router.put("/undownvote/:postId", verifyToken, postController.undownvote_post);
 
 // pin a post
 router.put("/pin/:postId", verifyToken, postController.pin_post);
