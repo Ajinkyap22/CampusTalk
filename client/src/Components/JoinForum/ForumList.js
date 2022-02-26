@@ -1,6 +1,6 @@
-import ListItem from "./ListItem";
-import { UserContext } from "../../UserContext";
+import { UserContext } from "../../Contexts/UserContext";
 import { useContext } from "react";
+import ListItem from "./ListItem";
 
 function ForumList({ forums, setShowAlert }) {
   const [user] = useContext(UserContext);

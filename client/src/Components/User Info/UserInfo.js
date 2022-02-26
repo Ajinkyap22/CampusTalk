@@ -1,10 +1,10 @@
+import { withRouter } from "react-router-dom";
+import { UserContext } from "../../Contexts/UserContext";
 import { useState, useRef, useEffect, useContext } from "react";
+import axios from "axios";
 import avatar from "../../assets/avatar.png";
 import Toast from "../Toast";
 import ProfileModal from "./ProfileModal";
-import axios from "axios";
-import { withRouter } from "react-router-dom";
-import { UserContext } from "../../UserContext";
 import Input from "../FormControl/Input";
 
 function UserInfo({ title, ...props }) {

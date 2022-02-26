@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useContext } from "react";
+import { UserContext } from "../../Contexts/UserContext";
+import { Link, withRouter } from "react-router-dom";
 import axios from "axios";
 import Loading from "../Loading";
 import ForumList from "./ForumList";
-import { UserContext } from "../../UserContext";
-import { Link, withRouter } from "react-router-dom";
 import AlertModal from "../AlertModal";
 
 const JoinContext = React.createContext();

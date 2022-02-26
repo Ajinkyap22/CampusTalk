@@ -1,19 +1,21 @@
 import "./App.css";
-import Home from "./Components/Homepage/Home";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import UserInfo from "./Components/User Info/UserInfo";
+import { useContext } from "react";
+
 import { Join } from "./Components/JoinForum/Join";
-import { UserProvider } from "./UserContext";
+import Home from "./Components/Homepage/Home";
+import UserInfo from "./Components/User Info/UserInfo";
 import CreateForum from "./Components/Create Forum/Create";
 import Forums from "./Components/Forum/Forums";
 import Forum from "././Components/Forum/Forum";
 import Login from "./Components/Auth/Login";
 import Signup from "./Components/Auth/Signup";
-import { ForumContext } from "./ForumContext";
-import { useContext } from "react";
 import Feed from "./Components/Feed/Feed";
-import { TabProvider } from "./TabContext";
-import { PostProvider } from "./PostContext";
+
+import { ForumContext } from "./Contexts/ForumContext";
+import { UserProvider } from "./Contexts/UserContext";
+import { TabProvider } from "./Contexts/TabContext";
+import { PostProvider } from "./Contexts/PostContext";
 
 function App() {
   const [forums] = useContext(ForumContext);

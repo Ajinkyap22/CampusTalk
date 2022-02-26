@@ -1,14 +1,14 @@
+import { UserContext } from "../../Contexts/UserContext";
+import { TabContext } from "../../Contexts/TabContext";
+import { PostContext } from "../../Contexts/PostContext";
+import { useEffect, useState, useContext } from "react";
+import { Link } from "react-router-dom";
 import Nav from "../Navbar/Nav";
 import Filter from "./Filter";
-import { useEffect, useState, useContext } from "react";
 import HomeBox from "./HomeBox";
 import Post from "../Post/Post";
-import { UserContext } from "../../UserContext";
 import ForumBox from "./ForumBox";
-import { TabContext } from "../../TabContext";
 import FAQ from "./FAQ";
-import { PostContext } from "../../PostContext";
-import { Link } from "react-router-dom";
 import LogoCropped from "../LogoCropped";
 
 function Feed({ title }) {

@@ -1,9 +1,8 @@
-import { useEffect, useContext } from "react";
-import Nav from "../Navbar/Nav";
-import { TabContext } from "../../TabContext";
-import { UserContext } from "../../UserContext";
-import { useState } from "react";
+import { TabContext } from "../../Contexts/TabContext";
+import { UserContext } from "../../Contexts/UserContext";
+import { useEffect, useContext, useState } from "react";
 import axios from "axios";
+import Nav from "../Navbar/Nav";
 import List from "./List";
 
 function Forums({ title }) {
@@ -62,7 +61,9 @@ function Forums({ title }) {
         </button>
       </div>
 
-      <List forums={forumsTab === "allForums" ? forums : user.forums} />
+      <List
+        forums={forumsTab === "userForums" && user ? user.forums : forums}
+      />
       {/* <List forums={forums} /> */}
     </main>
   );

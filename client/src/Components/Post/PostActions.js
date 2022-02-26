@@ -1,7 +1,7 @@
-import { UserContext } from "../../UserContext";
-import axios from "axios";
+import { UserContext } from "../../Contexts/UserContext";
+import { PostContext } from "../../Contexts/PostContext";
 import { useContext, useState, useEffect } from "react";
-import { PostContext } from "../../PostContext";
+import axios from "axios";
 
 let headers = {
   headers: {
@@ -116,9 +116,9 @@ function PostActions({ id, forumId, upvotes, downvotes, comments }) {
   }
 
   return (
-    <div className="w-full flex justify-between py-1 items-center pr-2 border-t">
+    <div className="w-full grid grid-cols-3 grid-flow-col py-1 px-2 border-t">
       {/* upvotes */}
-      <div className="m-2">
+      <div className="my-2 inline">
         <button onClick={handleUpvote}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -163,7 +163,7 @@ function PostActions({ id, forumId, upvotes, downvotes, comments }) {
       </div>
 
       {/* comment */}
-      <button className="m-2">
+      <button className="my-2 mr-4">
         <svg
           width="20"
           viewBox="0 0 20 20"
@@ -183,7 +183,7 @@ function PostActions({ id, forumId, upvotes, downvotes, comments }) {
       </button>
 
       {/* comment number */}
-      <button className="text-sm m-2 text-secondary">
+      <button className="text-sm my-2 text-right text-secondary">
         {comments.length} Comments
       </button>
     </div>

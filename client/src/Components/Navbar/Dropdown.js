@@ -1,5 +1,5 @@
+import { UserContext } from "../../Contexts/UserContext";
 import { NavLink } from "react-router-dom";
-import { UserContext } from "../../UserContext";
 import { useContext, useRef, useEffect } from "react";
 
 function useOutsideAlerter(ref, setShowDropdown) {

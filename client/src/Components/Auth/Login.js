@@ -1,9 +1,9 @@
-import Title from "./Title";
-import GoogleLogin from "react-google-login";
-import axios from "axios";
-import { UserContext } from "../../UserContext";
+import { UserContext } from "../../Contexts/UserContext";
 import { useContext, useEffect, useState } from "react";
 import { withRouter, Link } from "react-router-dom";
+import GoogleLogin from "react-google-login";
+import axios from "axios";
+import Title from "./Title";
 import GoogleButton from "./GoogleButton";
 import Input from "../FormControl/Input";
 import Password from "../FormControl/Password";

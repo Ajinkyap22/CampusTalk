@@ -1,10 +1,10 @@
-import { useState, useContext, useEffect } from "react";
-import axios from "axios";
+import { ForumContext } from "../../Contexts/ForumContext";
+import { UserContext } from "../../Contexts/UserContext";
+import { useState, useContext } from "react";
 import { withRouter } from "react-router-dom";
-import { UserContext } from "../../UserContext";
+import axios from "axios";
 import Input from "../FormControl/Input";
 import ActionButtons from "../FormControl/ActionButtons";
-import { ForumContext } from "../../ForumContext";
 
 let headers = {
   headers: {

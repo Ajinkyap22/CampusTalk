@@ -1,9 +1,9 @@
+import { UserContext } from "../../Contexts/UserContext";
+import { TabContext } from "../../Contexts/TabContext";
 import { NavLink } from "react-router-dom";
-import Logo from "../Logo";
 import { useContext, useState } from "react";
-import { TabContext } from "../../TabContext";
 import Dropdown from "./Dropdown";
-import { UserContext } from "../../UserContext";
+import Logo from "../Logo";
 
 function Nav() {
   const [activeTab, setActiveTab] = useContext(TabContext);
