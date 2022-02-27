@@ -4,11 +4,13 @@ const { body, validationResult } = require("express-validator");
 
 // get all forums
 exports.forums = function (req, res) {
-  Forum.find().exec((err, forums) => {
-    if (err) return res.json(err);
+  Forum.find()
+    .populate("members")
+    .exec((err, forums) => {
+      if (err) return res.json(err);
 
-    return res.json(forums);
-  });
+      return res.json(forums);
+    });
 };
 
 // get single forum

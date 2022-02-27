@@ -28,6 +28,7 @@ function Rules({ rules }) {
             className={`${
               rules[i + 1] ? "border-b border-[#cfcfcf]" : ""
             } py-3`}
+            key={i}
           >
             <p className="px-3 text-sm">
               {i + 1}. {rule}

@@ -7,11 +7,14 @@ import Filter from "../Feed/Filter";
 import Post from "../Post/Post";
 import ForumInfo from "./ForumInfo";
 import Rules from "./Rules";
+import TabToggle from "./TabToggle";
+import Members from "./Members";
 
 function Forum({ forum, title }) {
   const [activeTab, setActiveTab] = useContext(TabContext);
   const [activeFilter, setActiveFilter] = useState("latest");
   const [posts, setPosts] = useState([]);
+  const [tab, setTab] = useState("posts");
 
   useEffect(() => {
     document.title = title || `${forum.forumName} | CampusTalk`;
@@ -34,19 +37,28 @@ function Forum({ forum, title }) {
 
       <section className="flex justify-between items-start md:w-[70%] mx-auto h-full">
         {/* posts and filters */}
-        <div className="grid grid-cols-1 justify-items-stretch items-center my-8 h-full">
-          {/* filters */}
-          <Filter
-            activeFilter={activeFilter}
-            setActiveFilter={setActiveFilter}
-            posts={posts}
-            setPosts={setPosts}
-          />
+        <div className="grid grid-cols-1 items-center my-8 h-full">
+          {/* tab */}
+          <TabToggle tab={tab} setTab={setTab} />
 
-          {/* posts */}
-          {posts.map((post) => (
-            <Post key={post._id} post={post} />
-          ))}
+          {tab === "posts" ? (
+            <div>
+              {/* filters */}
+              <Filter
+                activeFilter={activeFilter}
+                setActiveFilter={setActiveFilter}
+                posts={posts}
+                setPosts={setPosts}
+              />
+
+              {/* posts */}
+              {posts.map((post) => (
+                <Post key={post._id} post={post} />
+              ))}
+            </div>
+          ) : (
+            <Members members={forum.members} />
+          )}
         </div>
 
         <div className="mt-8">
