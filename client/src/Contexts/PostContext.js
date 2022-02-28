@@ -17,17 +17,18 @@ export function PostProvider({ children }) {
           setPosts((posts) => [...posts, ...res.data]);
         });
       });
-    } else {
-      // for testing purposes
-      axios
-        .get("/api/forums/62067ce47911a04b1fd71495/posts")
-        .then((res) => {
-          setPosts([...res.data]);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
     }
+    // } else {
+    //   // for testing purposes
+    //   axios
+    //     .get("/api/forums/62067ce47911a04b1fd71495/posts")
+    //     .then((res) => {
+    //       setPosts([...res.data]);
+    //     })
+    //     .catch((err) => {
+    //       console.error(err);
+    //     });
+    // }
   }, [user]);
 
   return (

@@ -3,9 +3,12 @@ const { body, validationResult } = require("express-validator");
 
 // get all posts
 exports.posts = function (req, res) {
+  // sort by date
+
   Post.find()
     .populate("author")
     .populate("forum")
+    .sort({ timestamp: -1 })
     .exec((err, posts) => {
       if (err) return res.json(err);
 

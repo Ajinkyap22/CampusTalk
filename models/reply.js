@@ -7,7 +7,7 @@ const ReplySchema = new Schema({
   upvotes: [{ type: Schema.Types.ObjectId, ref: "User" }],
   downvotes: [{ type: Schema.Types.ObjectId, ref: "User" }],
   author: { type: Schema.Types.ObjectId, required: true },
-  timestamp: { type: Date },
+  timestamp: { type: Date,  default: Date.now },
 });
 
 module.exports = mongoose.model("Reply", ReplySchema);

@@ -37,7 +37,7 @@ function Forum({ forum, title }) {
 
       <section className="flex justify-between items-start md:w-[70%] mx-auto h-full">
         {/* posts and filters */}
-        <div className="grid grid-cols-1 items-center my-8 h-full">
+        <div className="grid grid-cols-1 items-center max-w-[32rem] my-8 h-full">
           {/* tab */}
           <TabToggle tab={tab} setTab={setTab} />
 

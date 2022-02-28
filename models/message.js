@@ -6,7 +6,7 @@ const MessageSchema = new Schema({
   file: { type: String },
   sender: { type: Schema.Types.ObjectId, required: true },
   receiver: { type: Schema.Types.ObjectId, required: true },
-  timestamp: { type: Date },
+  timestamp: { type: Date, default: Date.now },
 });
 
 module.exports = mongoose.model("Message", MessageSchema);
