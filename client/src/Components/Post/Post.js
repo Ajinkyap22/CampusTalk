@@ -1,9 +1,12 @@
 import PostInfo from "./PostInfo";
 import PostActions from "./PostActions";
 
-function Post({ post }) {
+function Post({ post, activeFilter }) {
   return (
-    <div className="bg-white shadow-base py-2 mt-8 w-full">
+    <div
+      className="bg-white shadow-base py-2 mt-8 w-full"
+      hidden={activeFilter === "important" && !post.important}
+    >
       {/* user info */}
       <PostInfo
         author={post.author}

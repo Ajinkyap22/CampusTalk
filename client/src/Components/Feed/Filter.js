@@ -1,12 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 function Filter({ activeFilter, setActiveFilter, posts, setPosts }) {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showDay, setShowDay] = useState(false);
-
-  // useEffect(() => {
-  //   console.log(posts);
-  // }, [posts]);
+  const [dateRange, setDateRange] = useState("Today");
 
   function switchActiveFilter(filter) {
     setActiveFilter(filter);
@@ -15,8 +12,6 @@ function Filter({ activeFilter, setActiveFilter, posts, setPosts }) {
       setPosts(sortByDate(posts));
     } else if (filter === "top") {
       setPosts(sortByUpvotes(posts));
-    } else if (filter === "important") {
-      setPosts(filterImportant(posts));
     }
   }
 
@@ -30,28 +25,25 @@ function Filter({ activeFilter, setActiveFilter, posts, setPosts }) {
   }
 
   // sort posts by number of upvotes in descending order
-  function sortByUpvotes(posts) {
+  function sortByUpvotes(posts, range) {
     return posts.sort((a, b) => {
       return b.upvotes.length - a.upvotes.length;
     });
   }
 
-  // sort postsby date in descending order
+  // sort posts by date in descending order
   function sortByDate(posts) {
-    return posts.sort((a, b) => {
-      return new Date(b.timeStamp) - new Date(a.timeStamp);
-    });
+    return posts.sort((a, b) => -a.timestamp.localeCompare(b.timestamp));
   }
 
-  // filter posts where important is true
-  function filterImportant(posts) {
-    return posts.filter((post) => {
-      return post.important;
-    });
+  function handleDay(range) {
+    setDateRange(range);
+    setShowDropdown(false);
+    sortByUpvotes(posts, range);
   }
 
   return (
-    <div className="bg-white relative shadow-base flex justify-between items-center">
+    <div className="bg-white relative shadow-base flex justify-between items-center w-full">
       {/* filter label */}
       <p className="inline p-3 text-sm bg-[#f3f3f3]">
         <svg
@@ -69,7 +61,7 @@ function Filter({ activeFilter, setActiveFilter, posts, setPosts }) {
       {/* latest */}
       <button
         onClick={() => switchActiveFilter("latest")}
-        className="p-3 text-sm"
+        className="p-2 text-sm"
       >
         <span
           className={`${
@@ -95,7 +87,7 @@ function Filter({ activeFilter, setActiveFilter, posts, setPosts }) {
       {/* important */}
       <button
         onClick={() => switchActiveFilter("important")}
-        className="p-3 text-sm"
+        className="p-2 text-sm"
       >
         <span
           className={`${
@@ -119,7 +111,7 @@ function Filter({ activeFilter, setActiveFilter, posts, setPosts }) {
       </button>
 
       {/* top */}
-      <button onClick={toggleDay} className="p-3 text-sm">
+      <button onClick={toggleDay} className="p-2 text-sm">
         <span
           className={`${
             activeFilter === "top" ? "bg-[#E2EEFF] text-primary" : ""
@@ -148,7 +140,7 @@ function Filter({ activeFilter, setActiveFilter, posts, setPosts }) {
       <button
         onClick={handleDropdown}
         disabled={activeFilter === "top" ? false : true}
-        className="p-3 text-sm"
+        className="p-2 text-sm"
       >
         <span
           className={`${
@@ -157,7 +149,7 @@ function Filter({ activeFilter, setActiveFilter, posts, setPosts }) {
               : "bg-[#ccc] text-[#666]"
           } p-1 px-2 rounded-xl`}
         >
-          Today{" "}
+          {dateRange}{" "}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="15"
@@ -178,20 +170,36 @@ function Filter({ activeFilter, setActiveFilter, posts, setPosts }) {
         hidden={showDropdown ? false : true}
       >
         <ul>
-          {/* profile */}
-          <li className="p-2 text-sm">
+          <li
+            className={`p-2 text-sm  ${
+              dateRange === "Today" ? "bg-[#E2EEFF] text-primary rounded" : ""
+            }`}
+            onClick={() => handleDay("Today")}
+          >
             <button>Today</button>
           </li>
           <hr />
 
-          {/* settings */}
-          <li className="p-2 text-sm">
+          <li
+            className={`p-2 text-sm  ${
+              dateRange === "This Week"
+                ? "tbg-[#E2EEFF] ext-primary rounded"
+                : ""
+            }`}
+            onClick={() => handleDay("This Week")}
+          >
             <button>This Week</button>
           </li>
           <hr />
 
-          {/* logout */}
-          <li className="p-2 text-sm">
+          <li
+            className={`p-2 text-sm  ${
+              dateRange === "This Month"
+                ? "bg-[#E2EEFF] text-primary rounded"
+                : ""
+            }`}
+            onClick={() => handleDay("This Month")}
+          >
             <button>This Month</button>
           </li>
         </ul>

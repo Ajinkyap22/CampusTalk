@@ -45,9 +45,10 @@ function Feed({ title }) {
 
           {/* posts */}
           {posts.map((post, i) => (
-            <Post key={i} post={post} />
+            <Post key={i} post={post} activeFilter={activeFilter} />
           ))}
 
+          {/* if feed is empty */}
           <div
             hidden={posts.length ? true : false}
             className="my-12 text-gray-700 text-center"

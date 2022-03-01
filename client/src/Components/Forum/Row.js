@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 
 function Row({ forum }) {
-  console.log(forum);
   return (
     <tr className="text-center text-sm py-4">
       <td className="text-xs pl-3 lg:text-sm 2xl:text-lg">{forum.forumName}</td>

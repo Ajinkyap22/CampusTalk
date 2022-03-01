@@ -300,12 +300,12 @@ exports.user_feed_posts = function (req, res) {
   Forum.find({ members: req.params.id })
     // populate author & forum fields of posts
     .populate({ path: "posts", populate: { path: "author forum" } })
+    // sort by date newest first
     .exec((err, forums) => {
       if (err) return res.json(err);
 
       // get all posts from user forums
       forums.forEach((forum) => {
-        console.log(forum);
         posts.push(...forum.posts);
       });
 
