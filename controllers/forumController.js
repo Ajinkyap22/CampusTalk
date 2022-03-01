@@ -292,3 +292,23 @@ exports.dismiss_moderator = function (req, res) {
       return res.json(forum.moderators);
     });
 };
+
+// get all the posts of a forum that user is a member of
+exports.user_feed_posts = function (req, res) {
+  // get all user forums
+  const posts = [];
+  Forum.find({ members: req.params.id })
+    // populate author & forum fields of posts
+    .populate({ path: "posts", populate: { path: "author forum" } })
+    .exec((err, forums) => {
+      if (err) return res.json(err);
+
+      // get all posts from user forums
+      forums.forEach((forum) => {
+        console.log(forum);
+        posts.push(...forum.posts);
+      });
+
+      return res.json(posts);
+    });
+};

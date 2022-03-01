@@ -1,4 +1,5 @@
 const Post = require("../models/post");
+const Forum = require("../models/forum");
 const { body, validationResult } = require("express-validator");
 
 // get all posts
@@ -40,7 +41,20 @@ exports.create_post = function (req, res) {
 
       const newPost = await Post.populate(post, { path: "author" });
 
-      return res.json(newPost);
+      // update forum
+      Forum.findByIdAndUpdate(
+        req.body.forumId,
+        {
+          $push: {
+            posts: post._id,
+          },
+        },
+        { new: true }
+      ).exec((err) => {
+        if (err) return res.json(err);
+
+        return res.json(newPost);
+      });
     }
   );
 };

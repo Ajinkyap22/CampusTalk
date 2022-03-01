@@ -56,4 +56,7 @@ router.post(
   forumController.dismiss_moderator
 );
 
+// get all posts from user's forums
+router.get("/userPosts/:id", forumController.user_feed_posts);
+
 module.exports = router;

@@ -46,7 +46,7 @@ function ForumInfo({ forum }) {
 
           {/* posts */}
           <div className="flex flex-col items-center px-2">
-            <span>{forum.posts.length}</span>
+            <span>{forum.posts.length || 2}</span>
             <span className="text-sm">Posts</span>
           </div>
         </div>
