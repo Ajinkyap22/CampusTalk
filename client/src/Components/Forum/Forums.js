@@ -63,8 +63,8 @@ function Forums({ title }) {
 
       <List
         forums={forumsTab === "userForums" && user ? user.forums : forums}
+        forumsTab={forumsTab}
       />
-      {/* <List forums={forums} /> */}
     </main>
   );
 }

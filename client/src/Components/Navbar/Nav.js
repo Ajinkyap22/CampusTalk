@@ -8,9 +8,7 @@ import Logo from "../Logo";
 function Nav() {
   const [activeTab, setActiveTab] = useContext(TabContext);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [user, setUser] = useContext(UserContext);
-
-  // TODO - hide dropdown on document click
+  const [user] = useContext(UserContext);
 
   // switch tab on button click
   const handleClick = (tab) => {

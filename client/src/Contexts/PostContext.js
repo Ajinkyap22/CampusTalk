@@ -14,7 +14,6 @@ export function PostProvider({ children }) {
       axios
         .get(`/api/forums/userPosts/${user._id}`)
         .then((res) => {
-          console.log(res.data);
           setPosts(res.data);
         })
         .catch((err) => {

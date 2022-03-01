@@ -85,8 +85,8 @@ function UserInfo({ title, ...props }) {
 
     formData.append("firstName", firstName);
     formData.append("lastName", lastName);
-    formData.append("picture", picture);
     formData.append("email", user.email);
+    picture !== avatar && formData.append("picture", picture);
 
     let headers = {
       headers: {
