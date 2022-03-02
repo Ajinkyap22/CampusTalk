@@ -49,6 +49,10 @@ function LeaveModal({ forumName, forumId, showModal, setShowModal, ...props }) {
       });
   }
 
+  function handleClose() {
+    setShowModal(false);
+  }
+
   return (
     <div
       className="absolute bg-white top-[35vh] rounded text-center py-2 shadow-base z-10 w-[80%] xsm:w-[70%] md:w-[50%] lg:w-[30%] 2xl:w-[25%]"
@@ -68,12 +72,21 @@ function LeaveModal({ forumName, forumId, showModal, setShowModal, ...props }) {
 
       <p className="p-4">Are you sure you want to leave {forumName}?</p>
 
-      <button
-        className="bg-red-500 text-sm px-4 py-2 text-white rounded mb-4"
-        onClick={leaveForum}
-      >
-        Leave Forum
-      </button>
+      <div>
+        <button
+          className="border border-primary font-bold text-primary text-sm px-4 py-2 text-white rounded mx-2 mb-4 hover:bg-primary hover:text-white"
+          onClick={handleClose}
+        >
+          Cancel
+        </button>
+
+        <button
+          className="border border-red-500 bg-red-500 text-sm px-4 py-2 text-white rounded mx-2 mb-4 hover:bg-red-600"
+          onClick={leaveForum}
+        >
+          Leave Forum
+        </button>
+      </div>
     </div>
   );
 }

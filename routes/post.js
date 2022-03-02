@@ -1,5 +1,5 @@
 const express = require("express");
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 const postController = require("../controllers/postController");
 const upload = require("../config/multer");
 const verifyToken = require("../config/verifyToken");

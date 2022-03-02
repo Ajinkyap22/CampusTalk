@@ -12,6 +12,7 @@ import Rules from "./Rules";
 import TabToggle from "./TabToggle";
 import Members from "./Members";
 import LeaveModal from "./LeaveModal";
+import LogoCropped from "../LogoCropped";
 
 function Forum({ forum, title }) {
   const [activeTab, setActiveTab] = useContext(TabContext);
@@ -47,7 +48,7 @@ function Forum({ forum, title }) {
   }, [showModal]);
 
   return (
-    <main className="w-full min-h-full overflow-auto flex flex-col justify-center items-center bg-[#F0F2F5] relative">
+    <main className="w-full min-h-full flex flex-col items-center overflow-auto bg-[#F0F2F5] relative">
       <Nav />
 
       {/* forum content */}
@@ -81,6 +82,16 @@ function Forum({ forum, title }) {
                       range={dateRange}
                     />
                   ))}
+
+                  {/* if there are no posts */}
+                  {posts.length === 0 && (
+                    <div className="text-center my-6">
+                      <LogoCropped color="rgba(98,98,98,0.9)" width="80" />
+                      <p className="text-gray-600 my-4">
+                        No posts yet. Be the first to post!
+                      </p>
+                    </div>
+                  )}
                 </div>
               ) : (
                 <Members members={forum.members} />

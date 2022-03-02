@@ -1,15 +1,14 @@
 const Post = require("../models/post");
 const Forum = require("../models/forum");
-const { body, validationResult } = require("express-validator");
 
 // get all posts
 exports.posts = function (req, res) {
-  // sort by date
-
-  Post.find()
+  // find posts by forum & sort by date
+  console.log(req.params);
+  Post.find({ forum: req.params.id })
+    .sort({ timestamp: -1 })
     .populate("author")
     .populate("forum")
-    .sort({ timestamp: -1 })
     .exec((err, posts) => {
       if (err) return res.json(err);
 

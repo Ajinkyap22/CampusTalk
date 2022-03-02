@@ -203,7 +203,7 @@ exports.join_forum = function (req, res) {
         (err, user) => {
           if (err) return res.json(err);
 
-          return res.json(forum.members);
+          return res.json(forum);
         }
       );
     });

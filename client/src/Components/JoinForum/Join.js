@@ -12,7 +12,7 @@ function JoinForum({ title, ...props }) {
   const [forums, setForums] = useState([]);
   const [loading, setLoading] = useState(true);
   const [joinList, setJoinList] = useState([]);
-  const [user] = useContext(UserContext);
+  const [user, setUser] = useContext(UserContext);
   const [showAlert, setShowAlert] = useState(false);
 
   useEffect(() => {
@@ -41,29 +41,34 @@ function JoinForum({ title, ...props }) {
   const sendRequests = () => {
     if (!joinList.length) return;
 
+    let headers = {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(localStorage.getItem("user")).token
+        }`,
+      },
+    };
+
+    let body = {
+      id: user._id,
+    };
+
+    let userForums = [];
+
     // send join requests to each selected forum after confirming rather than sending on selection & then cancelling
     joinList.forEach((forumId) => {
-      let headers = {
-        headers: {
-          Authorization: `Bearer ${
-            JSON.parse(localStorage.getItem("user")).token
-          }`,
-        },
-      };
-
-      let body = {
-        id: user._id,
-      };
-
       axios
         .post(`/api/forums/${forumId}/join`, body, headers)
-        .then((res) => {})
-
+        .then((res) => {
+          // add forum to users forums
+          userForums.push(res.data);
+        })
         .catch((err) => {
-          console.log(err.response);
           console.error(err);
         });
     });
+
+    setUser({ ...user, forums: userForums });
   };
 
   return (
