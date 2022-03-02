@@ -5,7 +5,7 @@ import LogoCropped from "../LogoCropped";
 import moment from "moment";
 import axios from "axios";
 
-function ForumInfo({ forum, ...props }) {
+function ForumInfo({ forum, showModal, setShowModal, ...props }) {
   const [user, setUser] = useContext(UserContext);
 
   function joinForum() {
@@ -33,10 +33,14 @@ function ForumInfo({ forum, ...props }) {
       });
   }
 
+  function toggleModal() {
+    setShowModal(!showModal);
+  }
+
   return (
-    <div className="bg-white shadow-base max-w-[22rem] pb-1">
+    <div className="bg-white shadow-base max-w-[22rem] pb-1 rounded">
       {/* title */}
-      <div className="flex items-center w-full bg-primary-light p-3 py-2">
+      <div className="flex items-center w-full bg-primary-light p-3 py-2  rounded-t">
         <div className="mr-1">
           <LogoCropped />
         </div>
@@ -100,7 +104,10 @@ function ForumInfo({ forum, ...props }) {
             Create Post
           </button>
 
-          <button className="mx-auto w-1/2 block text-centr p-2 py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-red-500 bg-white text-red-500 rounded-full hover:bg-red-500 hover:text-white">
+          <button
+            onClick={toggleModal}
+            className="mx-auto w-1/2 block text-centr p-2 py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-red-500 bg-white text-red-500 rounded-full hover:bg-red-500 hover:text-white"
+          >
             Leave Forum
           </button>
         </div>

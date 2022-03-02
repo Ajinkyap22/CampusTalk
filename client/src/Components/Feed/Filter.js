@@ -47,7 +47,7 @@ function Filter({
   }
 
   return (
-    <div className="bg-white relative shadow-base flex justify-between items-center w-full">
+    <div className="bg-white relative shadow-base flex justify-between items-center w-full rounded">
       {/* filter label */}
       <p className="inline p-3 text-sm bg-[#f3f3f3]">
         <svg

@@ -1,5 +1,6 @@
 import { TabContext } from "../../Contexts/TabContext";
 import { UserContext } from "../../Contexts/UserContext";
+import { PostContext } from "../../Contexts/PostContext";
 import { useEffect, useContext } from "react";
 import { useState } from "react";
 import axios from "axios";
@@ -10,13 +11,16 @@ import ForumInfo from "./ForumInfo";
 import Rules from "./Rules";
 import TabToggle from "./TabToggle";
 import Members from "./Members";
+import LeaveModal from "./LeaveModal";
 
 function Forum({ forum, title }) {
   const [activeTab, setActiveTab] = useContext(TabContext);
   const [user] = useContext(UserContext);
   const [activeFilter, setActiveFilter] = useState("latest");
-  const [posts, setPosts] = useState([]);
+  const [dateRange, setDateRange] = useState("Today");
+  const [posts, setPosts] = useContext(PostContext);
   const [tab, setTab] = useState("posts");
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     document.title = title || `${forum.forumName} | CampusTalk`;
@@ -33,10 +37,20 @@ function Forum({ forum, title }) {
     });
   }, []);
 
+  useEffect(() => {
+    // hiden overflow when modal is open
+    if (showModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "visible";
+    }
+  }, [showModal]);
+
   return (
-    <main className="w-full min-h-full overflow-auto bg-[#F0F2F5]">
+    <main className="w-full min-h-full overflow-auto flex flex-col justify-center items-center bg-[#F0F2F5] relative">
       <Nav />
 
+      {/* forum content */}
       <section className="flex justify-between items-start md:w-[70%] mx-auto h-full">
         <div className="grid grid-cols-1 items-center max-w-[32rem] my-8 h-full">
           {/* tab */}
@@ -54,11 +68,18 @@ function Forum({ forum, title }) {
                     setActiveFilter={setActiveFilter}
                     posts={posts}
                     setPosts={setPosts}
+                    dateRange={dateRange}
+                    setDateRange={setDateRange}
                   />
 
                   {/* posts */}
                   {posts.map((post) => (
-                    <Post key={post._id} post={post} />
+                    <Post
+                      key={post._id}
+                      post={post}
+                      activeFilter={activeFilter}
+                      range={dateRange}
+                    />
                   ))}
                 </div>
               ) : (
@@ -92,12 +113,30 @@ function Forum({ forum, title }) {
 
         <div className="mt-8">
           {/* forum info */}
-          <ForumInfo forum={forum} />
+          <ForumInfo
+            forum={forum}
+            showModal={showModal}
+            setShowModal={setShowModal}
+          />
 
           {/* rules */}
           <Rules rules={forum.rules} />
         </div>
       </section>
+
+      {/* leave forum warning modal */}
+      <LeaveModal
+        forumName={forum.forumName}
+        showModal={showModal}
+        setShowModal={setShowModal}
+        forumId={forum._id}
+      />
+
+      {/* overlay */}
+      <div
+        className="w-full h-full absolute bg-[rgba(0,0,0,0.7)]"
+        hidden={!showModal}
+      ></div>
     </main>
   );
 }

@@ -6,7 +6,6 @@ function Post({ post, activeFilter, range = "Today" }) {
   const [showPost, setShowPost] = useState(true);
   useEffect(() => {
     if (activeFilter !== "top") return;
-    console.log(range);
     const now = new Date();
     const postDate = new Date(post.timestamp);
     const diff = now - postDate;
@@ -32,7 +31,10 @@ function Post({ post, activeFilter, range = "Today" }) {
   }, [activeFilter]);
 
   return (
-    <div className="bg-white shadow-base py-2 mt-8 w-full" hidden={!showPost}>
+    <div
+      className="bg-white shadow-base py-2 mt-8 w-full rounded"
+      hidden={!showPost}
+    >
       {/* user info */}
       <PostInfo
         author={post.author}

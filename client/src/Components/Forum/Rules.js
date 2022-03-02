@@ -1,11 +1,11 @@
 function Rules({ rules }) {
   return (
     <div
-      className="bg-white shadow-base max-w-[22rem] pb-2 my-8"
+      className="bg-white shadow-base max-w-[22rem] pb-2 my-8 rounded"
       hidden={rules.length ? false : true}
     >
       {/* title */}
-      <div className="w-full bg-primary-light p-3 py-2">
+      <div className="w-full bg-primary-light p-3 py-2 rounded-t">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="30"

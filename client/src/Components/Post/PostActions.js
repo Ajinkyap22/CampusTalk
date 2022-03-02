@@ -55,8 +55,6 @@ function PostActions({ id, forumId, upvotes, downvotes, comments }) {
           updatePosts(res.data);
           setUpvoted(true);
           setDownvoted(false);
-          if (downvoted) {
-          }
         })
         .catch((err) => {
           console.error(err);
@@ -94,8 +92,6 @@ function PostActions({ id, forumId, upvotes, downvotes, comments }) {
           updatePosts(res.data);
           setDownvoted(true);
           setUpvoted(false);
-          if (upvoted) {
-          }
         })
         .catch((err) => {
           console.error(err);

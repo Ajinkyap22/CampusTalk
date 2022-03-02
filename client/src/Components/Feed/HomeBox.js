@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 
 function HomeBox() {
   return (
-    <div className="bg-white shadow-base max-w-[21rem] pb-2">
+    <div className="bg-white shadow-base max-w-[21rem] pb-2 rounded">
       {/* title */}
-      <div className="w-full bg-primary-light p-3 py-2">
+      <div className="w-full bg-primary-light p-3 py-2 rounded-t">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="25"

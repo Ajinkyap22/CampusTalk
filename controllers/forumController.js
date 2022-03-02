@@ -235,7 +235,21 @@ exports.remove_member = function (req, res) {
     .exec((err, forum) => {
       if (err) return res.json(err);
 
-      return res.json(forum.members);
+      // remove forum from user's joined forums
+      User.findByIdAndUpdate(
+        req.body.id,
+        {
+          $pull: {
+            forums: forum._id,
+          },
+        },
+        { new: true },
+        (err, user) => {
+          if (err) return res.json(err);
+
+          return res.json(forum.members);
+        }
+      );
     });
 };
 
