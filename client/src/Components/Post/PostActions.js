@@ -13,16 +13,16 @@ function PostActions({ id, forumId, upvotes, downvotes, comments }) {
   const [user] = useContext(UserContext);
   const [upvoted, setUpvoted] = useState(false);
   const [downvoted, setDownvoted] = useState(false);
-  const [upvotesLength, setUpvotesLength] = useState(upvotes.length);
-  const [downvotesLength, setDownvotesLength] = useState(downvotes.length);
   const [posts, setPosts] = useContext(PostContext);
 
   useEffect(() => {
     if (!user) return;
     // check if post is upvoted
-    if (upvotes.some((id) => id === user._id)) setUpvoted(true);
+    upvotes.indexOf(user._id) !== -1 ? setUpvoted(true) : setUpvoted(false);
     // check if post is downvoted
-    if (downvotes.some((id) => id === user._id)) setDownvoted(true);
+    downvotes.indexOf(user._id) !== -1
+      ? setDownvoted(true)
+      : setDownvoted(false);
   }, [user, upvotes, downvotes]);
 
   function handleUpvote() {
@@ -38,7 +38,6 @@ function PostActions({ id, forumId, upvotes, downvotes, comments }) {
         .then((res) => {
           updatePosts(res.data);
           setUpvoted(false);
-          setUpvotesLength(upvotesLength - 1);
         })
         .catch((err) => {
           console.error(err);
@@ -57,9 +56,7 @@ function PostActions({ id, forumId, upvotes, downvotes, comments }) {
           setUpvoted(true);
           setDownvoted(false);
           if (downvoted) {
-            setDownvotesLength(downvotesLength - 1);
           }
-          setUpvotesLength(upvotesLength + 1);
         })
         .catch((err) => {
           console.error(err);
@@ -80,7 +77,6 @@ function PostActions({ id, forumId, upvotes, downvotes, comments }) {
         .then((res) => {
           updatePosts(res.data);
           setDownvoted(false);
-          setDownvotesLength(downvotesLength - 1);
         })
         .catch((err) => {
           console.error(err);
@@ -99,9 +95,7 @@ function PostActions({ id, forumId, upvotes, downvotes, comments }) {
           setDownvoted(true);
           setUpvoted(false);
           if (upvoted) {
-            setUpvotesLength(upvotesLength - 1);
           }
-          setDownvotesLength(downvotesLength + 1);
         })
         .catch((err) => {
           console.error(err);
@@ -139,7 +133,7 @@ function PostActions({ id, forumId, upvotes, downvotes, comments }) {
           </svg>
         </button>
 
-        <span className="text-sm">{upvotesLength - downvotesLength}</span>
+        <span className="text-sm">{upvotes.length - downvotes.length}</span>
 
         <button onClick={handleDownvote}>
           <svg

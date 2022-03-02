@@ -1,9 +1,15 @@
 import { useState } from "react";
 
-function Filter({ activeFilter, setActiveFilter, posts, setPosts }) {
+function Filter({
+  activeFilter,
+  setActiveFilter,
+  posts,
+  setPosts,
+  dateRange = "Today",
+  setDateRange,
+}) {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showDay, setShowDay] = useState(false);
-  const [dateRange, setDateRange] = useState("Today");
 
   function switchActiveFilter(filter) {
     setActiveFilter(filter);
@@ -25,10 +31,8 @@ function Filter({ activeFilter, setActiveFilter, posts, setPosts }) {
   }
 
   // sort posts by number of upvotes in descending order
-  function sortByUpvotes(posts, range) {
-    return posts.sort((a, b) => {
-      return b.upvotes.length - a.upvotes.length;
-    });
+  function sortByUpvotes(posts) {
+    return posts.sort((a, b) => b.upvotes.length - a.upvotes.length);
   }
 
   // sort posts by date in descending order
@@ -39,7 +43,7 @@ function Filter({ activeFilter, setActiveFilter, posts, setPosts }) {
   function handleDay(range) {
     setDateRange(range);
     setShowDropdown(false);
-    sortByUpvotes(posts, range);
+    sortByUpvotes(posts);
   }
 
   return (

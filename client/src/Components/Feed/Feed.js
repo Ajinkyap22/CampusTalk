@@ -14,6 +14,7 @@ import LogoCropped from "../LogoCropped";
 function Feed({ title }) {
   const [activeTab, setActiveTab] = useContext(TabContext);
   const [activeFilter, setActiveFilter] = useState("latest");
+  const [dateRange, setDateRange] = useState("Today");
   const [posts, setPosts] = useContext(PostContext);
   const [user] = useContext(UserContext);
 
@@ -41,11 +42,18 @@ function Feed({ title }) {
             setActiveFilter={setActiveFilter}
             posts={posts}
             setPosts={setPosts}
+            dateRange={dateRange}
+            setDateRange={setDateRange}
           />
 
           {/* posts */}
           {posts.map((post, i) => (
-            <Post key={i} post={post} activeFilter={activeFilter} />
+            <Post
+              key={i}
+              post={post}
+              activeFilter={activeFilter}
+              range={dateRange}
+            />
           ))}
 
           {/* if feed is empty */}

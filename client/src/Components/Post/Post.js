@@ -1,12 +1,38 @@
+import { useEffect, useState } from "react";
 import PostInfo from "./PostInfo";
 import PostActions from "./PostActions";
 
-function Post({ post, activeFilter }) {
+function Post({ post, activeFilter, range = "Today" }) {
+  const [showPost, setShowPost] = useState(true);
+  useEffect(() => {
+    if (activeFilter !== "top") return;
+    console.log(range);
+    const now = new Date();
+    const postDate = new Date(post.timestamp);
+    const diff = now - postDate;
+    const diffDays = Math.ceil(diff / (1000 * 3600 * 24));
+
+    // if range is today, show post if it's within the last 24 hours
+    if (range === "Today") {
+      setShowPost(diffDays <= 1);
+      // if range is This week, show post if it's within the last 7 days
+    } else if (range === "This week") {
+      setShowPost(diffDays <= 7);
+    } else if (range === "This month") {
+      setShowPost(diffDays <= 30);
+    } else {
+      setShowPost(true);
+    }
+  }, [activeFilter, range, post.timestamp]);
+
+  useEffect(() => {
+    if (activeFilter === "important" && !post.important) setShowPost(false);
+
+    if (activeFilter === "latest") setShowPost(true);
+  }, [activeFilter]);
+
   return (
-    <div
-      className="bg-white shadow-base py-2 mt-8 w-full"
-      hidden={activeFilter === "important" && !post.important}
-    >
+    <div className="bg-white shadow-base py-2 mt-8 w-full" hidden={!showPost}>
       {/* user info */}
       <PostInfo
         author={post.author}
