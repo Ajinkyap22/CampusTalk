@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const PostSchema = new Schema({
   text: { type: String },
-  file: { type: String },
+  file: [{ type: String }],
   anonymous: { type: Boolean, default: false },
   author: { type: Schema.Types.ObjectId, ref: "User", required: true },
   forum: { type: Schema.Types.ObjectId, ref: "Forum", required: true },

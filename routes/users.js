@@ -1,8 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/userController");
-const passport = require("passport");
-const upload = require("../config/multer");
+const { upload } = require("../config/multer");
 const verifyToken = require("../config/verifyToken");
 
 // GET all users

@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const replyController = require("../controllers/replyController");
-const upload = require("../config/multer");
+const { upload } = require("../config/multer");
 const verifyToken = require("../config/verifyToken");
 
 // create a reply

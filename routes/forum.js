@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const forumController = require("../controllers/forumController");
 const verifyToken = require("../config/verifyToken");
-const upload = require("../config/multer");
+const { upload } = require("../config/multer");
 
 // GET all forums
 router.get("/", forumController.forums);

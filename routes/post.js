@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router({ mergeParams: true });
 const postController = require("../controllers/postController");
-const upload = require("../config/multer");
+const { upload, uploadDocs, uploadVideos } = require("../config/multer");
 const verifyToken = require("../config/verifyToken");
 
 // get all posts
@@ -10,12 +10,28 @@ router.get("/", postController.posts);
 // get single post
 router.get("/:id", postController.get_post);
 
-// create post
+// create post for image Uploads
 router.post(
   "/create-post",
   verifyToken,
-  upload.single("file"),
+  upload.array("file", 12),
   postController.create_post
+);
+
+// create post for doc
+router.post(
+  "/create-doc-post",
+  verifyToken,
+  uploadDocs.single("file"),
+  postController.create_doc_post
+);
+
+// create post for videos
+router.post(
+  "/create-vid-post",
+  verifyToken,
+  uploadVideos.single("file"),
+  postController.create_doc_post
 );
 
 // delete a post
