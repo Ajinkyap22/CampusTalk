@@ -53,7 +53,7 @@ function Post({ post, activeFilter, range = "Today" }) {
         hidden={post.file ? false : true}
       >
         <img
-          src={`http://localhost:3000/uploads/${post.file}`}
+          src={`http://localhost:3000/uploads/images/${post.file}`}
           alt=""
           className="mx-auto w-full"
         />

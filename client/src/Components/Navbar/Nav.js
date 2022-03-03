@@ -81,7 +81,7 @@ function Nav() {
           {/* avatar */}
           {user && user.picture ? (
             <img
-              src={`http://localhost:3000/uploads/${user.picture}`}
+              src={`http://localhost:3000/uploads/images/${user.picture}`}
               alt=""
               className="rounded-full inline h-6 w-auto ml-1"
             />

@@ -11,6 +11,7 @@ import Forum from "././Components/Forum/Forum";
 import Login from "./Components/Auth/Login";
 import Signup from "./Components/Auth/Signup";
 import Feed from "./Components/Feed/Feed";
+import CreatePost from "./Components/Create Post/CreatePost";
 
 import { ForumContext } from "./Contexts/ForumContext";
 import { UserProvider } from "./Contexts/UserContext";
@@ -61,6 +62,13 @@ function App() {
               exact
               path="/create-forum"
               render={() => <CreateForum title={"Create Forum | CampusTalk"} />}
+            />
+
+            {/* Create post */}
+            <Route
+              exact
+              path="/create-post"
+              render={() => <CreatePost title={"Create Post | CampusTalk"} />}
             />
 
             {/* Feed */}

@@ -21,7 +21,7 @@ function PostInfo({ author, forum, timestamp, anonymous, important }) {
         </svg>
       ) : (
         <img
-          src={`http://localhost:3000/uploads/${author.picture}`}
+          src={`http://localhost:3000/uploads/images/${author.picture}`}
           alt=""
           className="rounded-full inline h-10 mx-1"
         />
