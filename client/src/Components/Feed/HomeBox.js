@@ -25,9 +25,12 @@ function HomeBox() {
 
       {/* buttons */}
       <div className="">
-        <button className="w-1/2 mx-auto block py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-primary bg-primary-light text-white rounded-full hover:bg-blue-700">
+        <Link
+          to="/create-post"
+          className="w-1/2 mx-auto text-center block py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-primary bg-primary-light text-white rounded-full hover:bg-blue-700"
+        >
           Create Post
-        </button>
+        </Link>
 
         <Link
           to="/create-forum"
