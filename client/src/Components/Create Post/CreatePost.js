@@ -11,7 +11,7 @@ function CreatePost({ title }) {
   const [important, setImportant] = useState(false);
   const [formData, setFormData] = useState({
     text: "",
-    file: "",
+    file: null,
     anonymous: false,
     author: user._id,
     forum: "",
@@ -42,7 +42,14 @@ function CreatePost({ title }) {
         />
 
         {/* form */}
-        <PostForm />
+        <PostForm
+          formData={formData}
+          setFormData={setFormData}
+          mode={mode}
+          important={important}
+          forum={forum}
+          user={user}
+        />
       </div>
     </main>
   );
