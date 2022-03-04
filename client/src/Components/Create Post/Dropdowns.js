@@ -43,9 +43,8 @@ function Dropdowns({ forums, setForum, setMode }) {
           onChange={handleModeChange}
           className="block appearance-none text-sm w-full bg-white shadow-base px-4 py-2 pr-8 rounded shadow focus:outline-none cursor-pointer focus:shadow-outline"
         >
-          <option>Select a Posting Mode</option>
-          <option value="public">Public</option>
-          <option value="anonymous">Anonymous</option>
+          <option value="public">Public Mode</option>
+          <option value="anonymous">Anonymous Mode</option>
         </select>
         <svg
           xmlns="http://www.w3.org/2000/svg"

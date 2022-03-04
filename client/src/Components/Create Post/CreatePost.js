@@ -14,7 +14,7 @@ function CreatePost({ title }) {
     file: null,
     anonymous: false,
     author: user._id,
-    forum: "",
+    forum: null,
     important: false,
   });
 
@@ -30,7 +30,7 @@ function CreatePost({ title }) {
       <Dropdowns forums={user.forums} setForum={setForum} setMode={setMode} />
 
       {/* post info */}
-      <div className="bg-white shadow-base rounded-lg relative min-w-[30rem]">
+      <div className="bg-white shadow-base rounded relative w-[30rem]">
         {/* user profile picture & name */}
         <AuthorInfo
           picture={user.picture}
