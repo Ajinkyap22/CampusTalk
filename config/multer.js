@@ -70,7 +70,7 @@ const uploadDocs = multer({
 });
 
 const uploadVideos = multer({
-  storage: storageDocs,
+  storage: storageVideos,
   limits: { fileSize: 50000000 },
   fileFilter: function (req, file, cb) {
     // check file extensio

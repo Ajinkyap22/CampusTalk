@@ -104,13 +104,39 @@ function PostForm({
     formData.append("important", important);
     formData.append("forumId", forum);
     formData.append("authorId", user._id);
-    formData.append("file", file);
+    // if file is an array, add each file to formData
+    if (file instanceof Array) {
+      file.forEach((file) => {
+        formData.append("file", file);
+      });
+    } else {
+      formData.append("file", file);
+    }
 
     // if fileType is image or null
     if (fileType === "image" || !fileType) {
       axios
         .post(`/api/forums/${forum}/posts/create-post`, formData, headers)
         .then((res) => {
+          onSuccess(res.data);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    } else if (fileType === "video") {
+      axios
+        .post(`/api/forums/${forum}/posts/create-vid-post`, formData, headers)
+        .then((res) => {
+          onSuccess(res.data);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    } else if (fileType === "doc") {
+      axios
+        .post(`/api/forums/${forum}/posts/create-doc-post`, formData, headers)
+        .then((res) => {
+          console.log(res.data);
           onSuccess(res.data);
         })
         .catch((err) => {

@@ -91,6 +91,7 @@ function PostInfo({ postId, author, forum, timestamp, anonymous, important }) {
           setShowOptions={setShowOptions}
           author={author}
           postId={postId}
+          forum={forum}
         />
 
         {/* date */}

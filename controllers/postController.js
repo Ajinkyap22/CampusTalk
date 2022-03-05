@@ -122,7 +122,33 @@ exports.delete_post = function (req, res) {
   Post.findByIdAndRemove(req.params.postId, function (err, post) {
     if (err) return res.json(err);
 
-    return res.json(post);
+    // update forum
+    Forum.findByIdAndUpdate(
+      post.forum,
+      {
+        $pull: {
+          posts: post._id,
+        },
+      },
+      { new: true }
+    ).exec((err) => {
+      if (err) return res.json(err);
+
+      // update user posts
+      User.findByIdAndUpdate(
+        post.author,
+        {
+          $pull: {
+            posts: post._id,
+          },
+        },
+        { new: true }
+      ).exec((err) => {
+        if (err) return res.json(err);
+
+        return res.json(post);
+      });
+    });
   });
 };
 

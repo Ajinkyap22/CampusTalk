@@ -1,5 +1,7 @@
 import { useEffect, useRef, useContext, useState } from "react";
 import { UserContext } from "../../Contexts/UserContext";
+import { ForumContext } from "../../Contexts/ForumContext";
+import { PostContext } from "../../Contexts/PostContext";
 import axios from "axios";
 
 function useOutsideAlerter(ref, setShowDropdown) {
@@ -18,10 +20,12 @@ function useOutsideAlerter(ref, setShowDropdown) {
   }, [ref]);
 }
 
-function Options({ postId, showOptions, setShowOptions, author }) {
+function Options({ postId, forum, showOptions, setShowOptions, author }) {
   const wrapperRef = useRef(null);
-  const [user] = useContext(UserContext);
+  const [user, setUser] = useContext(UserContext);
   const [isAuthor, setIsAuthor] = useState(false);
+  const [forums, setForums] = useContext(ForumContext);
+  const [posts, setPosts] = useContext(PostContext);
   useOutsideAlerter(wrapperRef, setShowOptions);
 
   useEffect(() => {
@@ -33,7 +37,41 @@ function Options({ postId, showOptions, setShowOptions, author }) {
     }
   }, [user, author]);
 
-  function deletePost() {}
+  function deletePost() {
+    let headers = {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(localStorage.getItem("user")).token
+        }`,
+      },
+    };
+
+    axios
+      .delete(`/api/forums/${forum._id}/posts/delete/${postId}`, headers)
+      .then(() => {
+        // remove post from forum posts
+        let newForumPosts = forum.posts.filter((post) => post._id !== postId);
+
+        setForums((prev) =>
+          prev.map((f) =>
+            f._id === forum._id ? { ...f, posts: newForumPosts } : f
+          )
+        );
+
+        // remove post from user posts
+        let newUserPosts = user.posts.filter((post) => post._id !== postId);
+
+        setUser((prev) => ({ ...prev, posts: newUserPosts }));
+
+        // remove post from posts
+        setPosts(posts.filter((post) => post._id !== postId));
+
+        setShowOptions(false);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
 
   return (
     <div
