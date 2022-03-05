@@ -1,9 +1,9 @@
 function HiddenInputs({
-  formData,
-  setFormData,
+  setFile,
   imageInput,
   videoInput,
   docInput,
+  setFileType,
 }) {
   function handleImageFileChange(e) {
     // get all files
@@ -27,7 +27,7 @@ function HiddenInputs({
         alert("Please select an image file");
 
         // set formData.file to null
-        setFormData({ ...formData, file: null });
+        setFile(null);
 
         // reset the input
         imageInput.current.value = "";
@@ -49,7 +49,7 @@ function HiddenInputs({
       alert("Total file size must be less than 50mb");
 
       // set formData.file to null
-      setFormData({ ...formData, file: null });
+      setFile(null);
 
       // reset the input
       imageInput.current.value = "";
@@ -58,10 +58,9 @@ function HiddenInputs({
     }
 
     // set the formData
-    setFormData({
-      ...formData,
-      file: images,
-    });
+    setFile(images);
+
+    setFileType("image");
   }
 
   function handleVideoFileChange(e) {
@@ -74,7 +73,7 @@ function HiddenInputs({
       alert("File size must be less than 50mb");
 
       // set formData.file to null
-      setFormData({ ...formData, file: null });
+      setFile(null);
 
       // reset the input
       videoInput.current.value = "";
@@ -85,19 +84,15 @@ function HiddenInputs({
     // check if the file is a video
     if (file.type.match("video.*")) {
       // set the formData
-      setFormData({
-        ...formData,
-        file: file,
-      });
+      setFile(file);
+
+      setFileType("video");
     } else {
       // alert the user that the file is not a video
       alert("Please select a video file");
 
       // set the formData
-      setFormData({
-        ...formData,
-        file: null,
-      });
+      setFile(null);
 
       // reset the input
       videoInput.current.value = "";
@@ -114,7 +109,7 @@ function HiddenInputs({
       alert("File size must be less than 10mb");
 
       // set formData.file to null
-      setFormData({ ...formData, file: null });
+      setFile(null);
 
       // reset the input
       docInput.current.value = "";
@@ -141,19 +136,15 @@ function HiddenInputs({
       file.type.match("text/csv")
     ) {
       // set the formData
-      setFormData({
-        ...formData,
-        file: file,
-      });
+      setFile(file);
+
+      setFileType("doc");
     } else {
       // alert the user that the file is not a doc
       alert("Please select a doc file");
 
       // set the formData
-      setFormData({
-        ...formData,
-        file: null,
-      });
+      setFile();
 
       // reset the input
       docInput.current.value = "";

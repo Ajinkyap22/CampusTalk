@@ -19,7 +19,7 @@ import { TabProvider } from "./Contexts/TabContext";
 import { PostProvider } from "./Contexts/PostContext";
 
 function App() {
-  const [forums] = useContext(ForumContext);
+  const [forums, setForums] = useContext(ForumContext);
 
   return (
     <div className="App relative">
@@ -54,7 +54,13 @@ function App() {
             <Route
               exact
               path="/join-forum"
-              render={() => <Join title={"Join Forum | CampusTalk"} />}
+              render={() => (
+                <Join
+                  title={"Join Forum | CampusTalk"}
+                  forums={forums}
+                  setForums={setForums}
+                />
+              )}
             />
 
             {/* Create forum */}
@@ -62,13 +68,6 @@ function App() {
               exact
               path="/create-forum"
               render={() => <CreateForum title={"Create Forum | CampusTalk"} />}
-            />
-
-            {/* Create post */}
-            <Route
-              exact
-              path="/create-post"
-              render={() => <CreatePost title={"Create Post | CampusTalk"} />}
             />
 
             {/* Feed */}
@@ -101,6 +100,15 @@ function App() {
                     )}
                   />
                 ))}
+
+                {/* Create post */}
+                <Route
+                  exact
+                  path="/create-post"
+                  render={() => (
+                    <CreatePost title={"Create Post | CampusTalk"} />
+                  )}
+                />
               </PostProvider>
             </TabProvider>
           </Switch>

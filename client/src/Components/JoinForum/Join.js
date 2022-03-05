@@ -8,8 +8,7 @@ import AlertModal from "../AlertModal";
 
 const JoinContext = React.createContext();
 
-function JoinForum({ title, ...props }) {
-  const [forums, setForums] = useState([]);
+function JoinForum({ title, forums, setForums, ...props }) {
   const [loading, setLoading] = useState(true);
   const [joinList, setJoinList] = useState([]);
   const [user, setUser] = useContext(UserContext);
@@ -54,6 +53,7 @@ function JoinForum({ title, ...props }) {
     };
 
     let userForums = [];
+    let forumsData = [...forums];
 
     // send join requests to each selected forum after confirming rather than sending on selection & then cancelling
     joinList.forEach((forumId) => {
@@ -62,6 +62,14 @@ function JoinForum({ title, ...props }) {
         .then((res) => {
           // add forum to users forums
           userForums.push(res.data);
+
+          // push user in forum's mebers array
+          forumsData.map((forum) => {
+            if (forum._id === forumId) {
+              forum.members.push(user);
+            }
+            return forum;
+          });
         })
         .catch((err) => {
           console.error(err);
@@ -69,6 +77,7 @@ function JoinForum({ title, ...props }) {
     });
 
     setUser({ ...user, forums: userForums });
+    setForums(forumsData);
   };
 
   return (

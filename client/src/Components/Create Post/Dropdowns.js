@@ -1,10 +1,10 @@
-function Dropdowns({ forums, setForum, setMode }) {
+function Dropdowns({ forums, setForum, setAnonymous }) {
   function handleForumChange(e) {
     setForum(e.target.value);
   }
 
   function handleModeChange(e) {
-    setMode(e.target.value);
+    setAnonymous(e.target.value === "anonymous");
   }
 
   return (
@@ -17,7 +17,7 @@ function Dropdowns({ forums, setForum, setMode }) {
         >
           <option>Select a Forum</option>
           {forums.map((forum, i) => (
-            <option key={i} value={forum.forumName}>
+            <option key={i} value={forum._id}>
               {forum.forumName}
             </option>
           ))}

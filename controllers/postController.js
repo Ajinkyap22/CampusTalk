@@ -1,10 +1,10 @@
 const Post = require("../models/post");
 const Forum = require("../models/forum");
+const User = require("../models/user");
 
 // get all posts
 exports.posts = function (req, res) {
   // find posts by forum & sort by date
-  console.log(req.params);
   Post.find({ forum: req.params.id })
     .sort({ timestamp: -1 })
     .populate("author")
@@ -28,7 +28,7 @@ exports.get_post = function (req, res) {
 exports.create_post = function (req, res) {
   const files = [];
 
-  if (req.files.length) {
+  if (req.files?.length) {
     // push the filename field from each member of req.files array to files array
     req.files.forEach((file) => {
       files.push(file.filename);
@@ -47,7 +47,10 @@ exports.create_post = function (req, res) {
     async (err, post) => {
       if (err) return res.json(err);
 
-      const newPost = await Post.populate(post, { path: "author" });
+      // populate author & forum fields of the post
+      let newPost = await Post.populate(post, { path: "author" });
+
+      newPost = await Post.populate(post, { path: "forum" });
 
       // update forum
       Forum.findByIdAndUpdate(
@@ -61,7 +64,20 @@ exports.create_post = function (req, res) {
       ).exec((err) => {
         if (err) return res.json(err);
 
-        return res.json(newPost);
+        // update user posts
+        User.findByIdAndUpdate(
+          req.body.authorId,
+          {
+            $push: {
+              posts: post._id,
+            },
+          },
+          { new: true }
+        ).exec((err) => {
+          if (err) return res.json(err);
+
+          return res.json(newPost);
+        });
       });
     }
   );

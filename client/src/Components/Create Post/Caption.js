@@ -1,11 +1,11 @@
-function Caption({ formData, setFormData }) {
+function Caption({ setText }) {
   function handleKeyDown(e) {
     e.target.style.height = "inherit";
     e.target.style.height = `${e.target.scrollHeight}px`;
   }
 
   function handleTextInput(e) {
-    setFormData({ ...formData, text: e.target.value });
+    setText(e.target.value);
   }
 
   return (

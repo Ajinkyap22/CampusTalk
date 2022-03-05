@@ -7,16 +7,10 @@ import PostForm from "./PostForm";
 function CreatePost({ title }) {
   const [user, setUser] = useContext(UserContext);
   const [forum, setForum] = useState(null);
-  const [mode, setMode] = useState("public");
+  const [file, setFile] = useState(null);
+  const [text, setText] = useState("");
+  const [anonymous, setAnonymous] = useState(false);
   const [important, setImportant] = useState(false);
-  const [formData, setFormData] = useState({
-    text: "",
-    file: null,
-    anonymous: false,
-    author: user._id,
-    forum: null,
-    important: false,
-  });
 
   useEffect(() => {
     document.title = title || "Create Post | CampusTalk";
@@ -27,7 +21,11 @@ function CreatePost({ title }) {
       <h1 className="text-primary text-2xl mt-4">Create a Post</h1>
 
       {/* dropdowns */}
-      <Dropdowns forums={user.forums} setForum={setForum} setMode={setMode} />
+      <Dropdowns
+        forums={user.forums}
+        setForum={setForum}
+        setAnonymous={setAnonymous}
+      />
 
       {/* post info */}
       <div className="bg-white shadow-base rounded relative w-[30rem]">
@@ -35,20 +33,25 @@ function CreatePost({ title }) {
         <AuthorInfo
           picture={user.picture}
           firstName={user.firstName}
+          anonymous={anonymous}
           lastName={user.lastName}
-          mode={mode}
           important={important}
           setImportant={setImportant}
         />
 
         {/* form */}
         <PostForm
-          formData={formData}
-          setFormData={setFormData}
-          mode={mode}
+          anonymous={anonymous}
+          setAnonymous={setAnonymous}
           important={important}
+          setImportant={setImportant}
           forum={forum}
           user={user}
+          setUser={setUser}
+          file={file}
+          setFile={setFile}
+          text={text}
+          setText={setText}
         />
       </div>
     </main>

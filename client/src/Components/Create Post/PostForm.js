@@ -1,24 +1,47 @@
+import { ForumContext } from "../../Contexts/ForumContext";
+import { PostContext } from "../../Contexts/PostContext";
 import { Link } from "react-router-dom";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useContext } from "react";
+import { withRouter } from "react-router-dom";
 import FilePreview from "./FilePreview";
 import Caption from "./Caption";
 import HiddenInputs from "./HiddenInputs";
 import InputButtons from "./InputButtons";
+import axios from "axios";
 
-function PostForm({ formData, setFormData, mode, important, forum, user }) {
+function PostForm({
+  anonymous,
+  setAnonymous,
+  important,
+  setImportant,
+  forum,
+  user,
+  setUser,
+  file,
+  setFile,
+  text,
+  setText,
+  ...props
+}) {
   // refs for image input, video input & doc input
   const imageInput = useRef(null);
   const videoInput = useRef(null);
   const docInput = useRef(null);
+
   const imageButton = useRef(null);
   const videoButton = useRef(null);
   const docButton = useRef(null);
+
   const [disabled, setDisabled] = useState(false);
   const [enablePost, setEnablePost] = useState(false);
+  const [fileType, setFileType] = useState(null);
+
+  const [forums, setForums] = useContext(ForumContext);
+  const [posts, setPosts] = useContext(PostContext);
 
   useEffect(() => {
     // if there is a file in the formdata
-    if (formData.file && (formData.file.length > 0 || formData.file.name)) {
+    if (file && (file.length > 0 || file.name)) {
       // disable all input buttons
       imageButton.current.disabled = true;
       videoButton.current.disabled = true;
@@ -38,26 +61,24 @@ function PostForm({ formData, setFormData, mode, important, forum, user }) {
       videoInput.current.disabled = false;
       docInput.current.disabled = false;
       setDisabled(false);
+      setFileType(null);
     }
-  }, [formData.file]);
+  }, [file]);
 
   useEffect(() => {
     // set enablepost to true if there is at least a text or a file, a forum, a mode and an author
-    if ((formData.text || formData.file) && forum && mode && user) {
+    if ((text || file) && forum && user) {
       setEnablePost(true);
     }
-  }, [formData, forum, mode, user]);
+  }, [file, text, forum, user]);
 
   function handleRemoveFile(e, index) {
     // if index is not defined, setFormData.file to null
     if (!index && index !== 0) {
-      setFormData({ ...formData, file: null });
+      setFile(null);
     } else {
       // remove the file at the index
-      setFormData({
-        ...formData,
-        file: formData.file.filter((file, i) => i !== index),
-      });
+      setFile(file.filter((file, i) => i !== index));
     }
 
     // reset the input
@@ -66,26 +87,102 @@ function PostForm({ formData, setFormData, mode, important, forum, user }) {
     docInput.current.value = "";
   }
 
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    let headers = {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(localStorage.getItem("user")).token
+        }`,
+      },
+    };
+
+    const formData = new FormData();
+    formData.append("text", text);
+    formData.append("anonymous", anonymous);
+    formData.append("important", important);
+    formData.append("forumId", forum);
+    formData.append("authorId", user._id);
+    formData.append("file", file);
+
+    // if fileType is image or null
+    if (fileType === "image" || !fileType) {
+      axios
+        .post(`/api/forums/${forum}/posts/create-post`, formData, headers)
+        .then((res) => {
+          onSuccess(res.data);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  }
+
+  function onSuccess(res) {
+    // reset form data
+    setFile(null);
+    setText("");
+    setFileType(null);
+    setDisabled(false);
+    setEnablePost(false);
+    setAnonymous(false);
+    setImportant(false);
+
+    // reset file type
+    setFileType(null);
+
+    // redirect to feed
+    props.history.push("/feed");
+
+    // add post to user's posts
+    setUser({
+      ...user,
+      posts: [...user.posts, res],
+    });
+
+    const newForums = forums.map((forum) => {
+      if (forum._id === res.forum._id) {
+        return {
+          ...forum,
+          posts: [...forum.posts, res],
+        };
+      } else {
+        return forum;
+      }
+    });
+
+    // add post to forum's posts
+    setForums(newForums);
+
+    // add post to posts
+    setPosts([...posts, res]);
+  }
+
   return (
-    <form className="py-2 pt-1" encType="multipart/form-data">
+    <form
+      className="py-2 pt-1"
+      encType="multipart/form-data"
+      onSubmit={handleSubmit}
+    >
       {/* caption input */}
-      <Caption formData={formData} setFormData={setFormData} />
+      <Caption setText={setText} />
 
       {/* hidden inputs */}
       <HiddenInputs
-        formData={formData}
-        setFormData={setFormData}
+        setFile={setFile}
         imageInput={imageInput}
         videoInput={videoInput}
         docInput={docInput}
+        setFileType={setFileType}
       />
 
       {/* names of the uploaded files with a cross button to remove them*/}
       <div className="flex flex-wrap">
         {/* if formData.file is an array map over it*/}
-        {formData.file &&
-          Array.isArray(formData.file) &&
-          formData.file.map((file, index) => (
+        {file &&
+          Array.isArray(file) &&
+          file.map((file, index) => (
             <FilePreview
               file={file}
               handleRemoveFile={handleRemoveFile}
@@ -95,14 +192,9 @@ function PostForm({ formData, setFormData, mode, important, forum, user }) {
           ))}
 
         {/* if formData.file is not an array but is not null */}
-        {formData.file &&
-          !Array.isArray(formData.file) &&
-          formData.file !== null && (
-            <FilePreview
-              file={formData.file}
-              handleRemoveFile={handleRemoveFile}
-            />
-          )}
+        {file && !Array.isArray(file) && file !== null && (
+          <FilePreview file={file} handleRemoveFile={handleRemoveFile} />
+        )}
       </div>
 
       {/* 3 input options */}
@@ -141,4 +233,4 @@ function PostForm({ formData, setFormData, mode, important, forum, user }) {
   );
 }
 
-export default PostForm;
+export default withRouter(PostForm);

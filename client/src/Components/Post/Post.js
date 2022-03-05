@@ -37,6 +37,7 @@ function Post({ post, activeFilter, range = "Today" }) {
     >
       {/* user info */}
       <PostInfo
+        postId={post._id}
         author={post.author}
         forum={post.forum}
         timestamp={post.timestamp}
@@ -48,16 +49,15 @@ function Post({ post, activeFilter, range = "Today" }) {
       <p className="m-2 my-3 px-2 text-sm">{post.text}</p>
 
       {/* image */}
-      <div
-        className="mt-2 mx-auto bg-black max-w-fit"
-        hidden={post.file ? false : true}
-      >
-        <img
-          src={`http://localhost:3000/uploads/images/${post.file}`}
-          alt=""
-          className="mx-auto w-full"
-        />
-      </div>
+      {(post.file || post.file.length) && (
+        <div className="mt-2 mx-auto bg-black max-w-fit">
+          <img
+            src={`http://localhost:3000/uploads/images/${post.file}`}
+            alt=""
+            className="mx-auto w-full"
+          />
+        </div>
+      )}
 
       {/* actions */}
       <PostActions

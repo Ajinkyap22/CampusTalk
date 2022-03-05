@@ -2,17 +2,18 @@ function AuthorInfo({
   picture,
   firstName,
   lastName,
-  mode,
+  anonymous,
   important = false,
   setImportant,
 }) {
   function handleImportant() {
+    // set formData.important to the opposite of important
     setImportant(!important);
   }
 
   return (
     <div className="flex items-center px-2 pt-2.5 relative">
-      {mode === "anonymous" || !picture ? (
+      {anonymous || !picture ? (
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="38"
@@ -35,7 +36,7 @@ function AuthorInfo({
       )}
 
       <span className="text-sm mx-1">
-        {mode === "public" ? `${firstName} ${lastName}` : "Anonymous"}
+        {!anonymous ? `${firstName} ${lastName}` : "Anonymous"}
       </span>
 
       <button
