@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import PostInfo from "./PostInfo";
 import PostActions from "./PostActions";
+import File from "./File";
 
 function Post({ post, activeFilter, range = "Today" }) {
   const [showPost, setShowPost] = useState(true);
@@ -50,36 +50,7 @@ function Post({ post, activeFilter, range = "Today" }) {
       <p className="m-2 my-3 px-2 text-sm">{post.text}</p>
 
       {/* image */}
-      {(post.file || post.file.length) && (
-        <div className="relative mt-2 mx-auto bg-black max-w-fit">
-          <AiOutlineLeft
-            // onClick={prevSlide}
-            className="absolute left-0 text-3xl top-[40%] bg-[rgba(0,0,0,0.5)] rounded text-white cursor-pointer"
-            hidden={post.file.length === 1}
-          />
-          {/* for each file */}
-          {post.file.map(
-            (file, i) =>
-              // if it is an image or gif
-              (file.endsWith(".jpg") ||
-                file.endsWith(".jpeg") ||
-                file.endsWith(".png") ||
-                file.endsWith(".gif")) && (
-                <img
-                  src={`http://localhost:3000/uploads/images/${file}`}
-                  key={i}
-                  alt=""
-                  className="mx-auto w-full"
-                />
-              )
-          )}
-          <AiOutlineRight
-            // onClick={nextSlide}
-            className="absolute right-0 top-[40%] bg-[rgba(0,0,0,0.5)] rounded text-3xl inset-y-1/2 text-white cursor-pointer"
-            hidden={post.file.length === 1}
-          />
-        </div>
-      )}
+      {post.file.length ? <File files={post.file} /> : null}
 
       {/* actions */}
       <PostActions

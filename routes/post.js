@@ -14,7 +14,7 @@ router.get("/:id", postController.get_post);
 router.post(
   "/create-post",
   verifyToken,
-  upload.array("file", 12),
+  upload.array("file", 10),
   postController.create_post
 );
 

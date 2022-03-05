@@ -37,7 +37,7 @@ function HiddenInputs({
       }
 
       // if the array has more than 12 files
-      if (images.length > 12) {
+      if (images.length > 10) {
         // remove the last file
         images.pop();
       }

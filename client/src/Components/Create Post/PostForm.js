@@ -21,6 +21,8 @@ function PostForm({
   setFile,
   text,
   setText,
+  progress,
+  setProgress,
   ...props
 }) {
   // refs for image input, video input & doc input
@@ -96,6 +98,9 @@ function PostForm({
           JSON.parse(localStorage.getItem("user")).token
         }`,
       },
+      onUploadProgress: (data) => {
+        setProgress(Math.round((100 * data.loaded) / data.total));
+      },
     };
 
     const formData = new FormData();
@@ -118,10 +123,12 @@ function PostForm({
       axios
         .post(`/api/forums/${forum}/posts/create-post`, formData, headers)
         .then((res) => {
+          console.log(res.data);
           onSuccess(res.data);
         })
         .catch((err) => {
           console.error(err);
+          console.log(err.response);
         });
     } else if (fileType === "video") {
       axios
@@ -136,7 +143,6 @@ function PostForm({
       axios
         .post(`/api/forums/${forum}/posts/create-doc-post`, formData, headers)
         .then((res) => {
-          console.log(res.data);
           onSuccess(res.data);
         })
         .catch((err) => {

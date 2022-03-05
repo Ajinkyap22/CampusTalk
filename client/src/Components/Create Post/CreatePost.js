@@ -3,6 +3,7 @@ import { useEffect, useContext, useState } from "react";
 import AuthorInfo from "./AuthorInfo";
 import Dropdowns from "./Dropdowns";
 import PostForm from "./PostForm";
+import ProgressBar from "./ProgressBar";
 
 function CreatePost({ title }) {
   const [user, setUser] = useContext(UserContext);
@@ -11,6 +12,7 @@ function CreatePost({ title }) {
   const [text, setText] = useState("");
   const [anonymous, setAnonymous] = useState(false);
   const [important, setImportant] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     document.title = title || "Create Post | CampusTalk";
@@ -52,8 +54,13 @@ function CreatePost({ title }) {
           setFile={setFile}
           text={text}
           setText={setText}
+          progress={progress}
+          setProgress={setProgress}
         />
       </div>
+
+      {/* progress bar to show upload progress */}
+      <ProgressBar progress={progress} />
     </main>
   );
 }
