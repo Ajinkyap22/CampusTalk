@@ -74,7 +74,11 @@ function PostInfo({ postId, author, forum, timestamp, anonymous, important }) {
         </Link>
 
         {/* post options */}
-        <button className="absolute top-0 right-0" onClick={toggleOptions}>
+        <button
+          className="absolute top-0 right-0"
+          onClick={toggleOptions}
+          title="Options"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="14"

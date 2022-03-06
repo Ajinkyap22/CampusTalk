@@ -1,9 +1,22 @@
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { useState } from "react";
+import { Document, Page, pdfjs } from "react-pdf";
 import Swipe from "react-easy-swipe";
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+
+const options = {
+  cMapUrl: "cmaps/",
+  cMapPacked: true,
+};
 
 function File({ files }) {
   const [currentFile, setCurrentFile] = useState(0);
+  const [numPages, setNumPages] = useState(null);
+  const [pageNumber, setPageNumber] = useState(1);
+
+  function onDocumentLoadSuccess({ numPages }) {
+    setNumPages(numPages);
+  }
 
   function handleClick(direction) {
     if (direction === "left") {
@@ -16,7 +29,7 @@ function File({ files }) {
   }
 
   return (
-    <div className="flex items-center relative mt-2 mx-auto bg-black max-w-fit mx-auto">
+    <div className="flex items-center relative mt-2 mx-auto bg-black max-w-fit">
       <AiOutlineLeft
         onClick={handleClick.bind(this, "left")}
         className="absolute left-0 text-3xl top-[40%] bg-[rgba(0,0,0,0.5)] rounded text-white cursor-pointer"
@@ -30,7 +43,7 @@ function File({ files }) {
         {files.map(
           (file, i) =>
             // if it is an image or gif
-            (file.endsWith(".jpg") ||
+            ((file.endsWith(".jpg") ||
               file.endsWith(".jpeg") ||
               file.endsWith(".png") ||
               file.endsWith(".gif")) && (
@@ -41,7 +54,31 @@ function File({ files }) {
                 className="mx-auto w-full h-full object-cover"
                 hidden={i !== currentFile}
               />
-            )
+            )) ||
+            // if file is a video
+            (file.endsWith(".mp4") && (
+              <video
+                src={`http://localhost:3000/uploads/videos/${file}`}
+                key={i}
+                alt=""
+                className="mx-auto w-full h-full object-cover"
+                hidden={i !== currentFile}
+                // show controls
+                controls
+              />
+            )) ||
+            // if file is a document
+            (file.endsWith(".pdf") && (
+              <Document
+                file={`http://localhost:3000/uploads/docs/${file}`}
+                onLoadSuccess={onDocumentLoadSuccess}
+                options={options}
+                key={i}
+                hidden={i !== currentFile}
+              >
+                <Page pageNumber={pageNumber} />
+              </Document>
+            ))
         )}
       </Swipe>
       <AiOutlineRight

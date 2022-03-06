@@ -76,7 +76,7 @@ function Options({ postId, forum, showOptions, setShowOptions, author }) {
   return (
     <div
       ref={wrapperRef}
-      className="absolute bg-white shadow-base p-1.5 top-7 right-0 rounded"
+      className="absolute bg-white shadow-base p-1.5 top-7 right-0 rounded z-10"
       hidden={!showOptions}
     >
       <ul>

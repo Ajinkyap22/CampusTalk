@@ -103,6 +103,8 @@ function PostForm({
       },
     };
 
+    setEnablePost(false);
+
     const formData = new FormData();
     formData.append("text", text);
     formData.append("anonymous", anonymous);
@@ -123,7 +125,6 @@ function PostForm({
       axios
         .post(`/api/forums/${forum}/posts/create-post`, formData, headers)
         .then((res) => {
-          console.log(res.data);
           onSuccess(res.data);
         })
         .catch((err) => {
@@ -156,10 +157,10 @@ function PostForm({
     setFile(null);
     setText("");
     setFileType(null);
-    setDisabled(false);
     setEnablePost(false);
     setAnonymous(false);
     setImportant(false);
+    setDisabled(false);
 
     // reset file type
     setFileType(null);
@@ -261,6 +262,15 @@ function PostForm({
           Post
         </button>
       </div>
+
+      {/* overlay */}
+      <div
+        className={
+          progress > 0
+            ? "fixed top-0 left-0 bottom-0 right-0 bg-white opacity-50"
+            : "hidden"
+        }
+      ></div>
     </form>
   );
 }

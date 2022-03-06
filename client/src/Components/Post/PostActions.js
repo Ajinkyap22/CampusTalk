@@ -109,7 +109,7 @@ function PostActions({ id, forumId, upvotes, downvotes, comments }) {
     <div className="w-full grid grid-cols-3 grid-flow-col py-1 px-2 border-t">
       {/* upvotes */}
       <div className="my-2 inline">
-        <button onClick={handleUpvote}>
+        <button onClick={handleUpvote} title="Upvote Post">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -131,7 +131,7 @@ function PostActions({ id, forumId, upvotes, downvotes, comments }) {
 
         <span className="text-sm">{upvotes.length - downvotes.length}</span>
 
-        <button onClick={handleDownvote}>
+        <button onClick={handleDownvote} title="Upvote Post">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -153,7 +153,7 @@ function PostActions({ id, forumId, upvotes, downvotes, comments }) {
       </div>
 
       {/* comment */}
-      <button className="my-2 mr-4">
+      <button className="my-2 mr-4" title="Post a comment">
         <svg
           width="20"
           viewBox="0 0 20 20"
@@ -173,7 +173,10 @@ function PostActions({ id, forumId, upvotes, downvotes, comments }) {
       </button>
 
       {/* comment number */}
-      <button className="text-sm my-2 text-right text-secondary">
+      <button
+        className="text-sm my-2 text-right text-secondary"
+        title="See Comments"
+      >
         {comments.length} Comments
       </button>
     </div>
