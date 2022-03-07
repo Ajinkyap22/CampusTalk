@@ -1,5 +1,5 @@
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import Swipe from "react-easy-swipe";
 import "./File.css";
@@ -10,11 +10,20 @@ const options = {
   cMapPacked: true,
 };
 
-function File({ files }) {
+function File({ files, onPostClick }) {
   const [currentFile, setCurrentFile] = useState(0);
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [isPDF, setIsPDF] = useState(false);
+
+  useEffect(() => {
+    // check if the file is a pdf
+    if (files[currentFile].type === "application/pdf") {
+      setIsPDF(true);
+    } else {
+      setIsPDF(false);
+    }
+  }, []);
 
   function onDocumentLoadSuccess({ numPages }) {
     setNumPages(numPages);
@@ -36,10 +45,13 @@ function File({ files }) {
   }
 
   return (
-    <div className="flex items-center relative mt-2 mx-auto bg-black max-w-fit">
+    <div
+      className="flex items-center relative mt-2 mx-auto bg-black max-w-fit"
+      onClick={onPostClick}
+    >
       <AiOutlineLeft
         onClick={handleClick.bind(this, "left")}
-        className="absolute left-0 text-3xl top-[40%] bg-[rgba(0,0,0,0.5)] rounded text-white cursor-pointer"
+        className="absolute left-0 text-3xl top-[45%] bg-[rgba(0,0,0,0.5)] rounded text-white cursor-pointer"
         hidden={files.length === 1 || currentFile === 0}
       />
       <Swipe
@@ -101,7 +113,7 @@ function File({ files }) {
       </Swipe>
       <AiOutlineRight
         onClick={handleClick.bind(this, "right")}
-        className="absolute right-0 top-[40%] bg-[rgba(0,0,0,0.5)] rounded text-3xl inset-y-1/2 text-white cursor-pointer"
+        className="absolute right-0 top-[45%] bg-[rgba(0,0,0,0.5)] rounded text-3xl inset-y-1/2 text-white cursor-pointer"
         hidden={files.length === 1 || currentFile === files.length - 1}
       />
 
@@ -115,7 +127,7 @@ function File({ files }) {
 
       {/* show current page number on the bottom center */}
       <div
-        className="text-center text-sm bg-[rgba(0,0,0,0.7)] p-2 text-white absolute w-full bottom-0"
+        className="text-center text-sm bg-[rgba(0,0,0,0.7)] p-2.5 text-white absolute w-full bottom-0"
         hidden={!isPDF}
       >
         Page {pageNumber} out of {numPages}

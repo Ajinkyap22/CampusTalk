@@ -1,4 +1,4 @@
-function Dropdowns({ forums, setForum, setAnonymous }) {
+function Dropdowns({ forums, forum, setForum, anonymous, setAnonymous }) {
   function handleForumChange(e) {
     setForum(e.target.value);
   }
@@ -16,9 +16,9 @@ function Dropdowns({ forums, setForum, setAnonymous }) {
           className="block appearance-none text-sm w-full bg-white shadow-base px-4 py-2 pr-8 rounded shadow focus:outline-none cursor-pointer focus:shadow-outline"
         >
           <option>Select a Forum</option>
-          {forums.map((forum, i) => (
-            <option key={i} value={forum._id}>
-              {forum.forumName}
+          {forums.map((f, i) => (
+            <option key={i} value={f._id} selected={f._id === forum?._id}>
+              {f.forumName}
             </option>
           ))}
         </select>
@@ -43,8 +43,12 @@ function Dropdowns({ forums, setForum, setAnonymous }) {
           onChange={handleModeChange}
           className="block appearance-none text-sm w-full bg-white shadow-base px-4 py-2 pr-8 rounded shadow focus:outline-none cursor-pointer focus:shadow-outline"
         >
-          <option value="public">Public Mode</option>
-          <option value="anonymous">Anonymous Mode</option>
+          <option value="public" selected={!anonymous}>
+            Public Mode
+          </option>
+          <option value="anonymous" selected={anonymous}>
+            Anonymous Mode
+          </option>
         </select>
         <svg
           xmlns="http://www.w3.org/2000/svg"

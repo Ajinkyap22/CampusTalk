@@ -4,12 +4,14 @@ function HiddenInputs({
   videoInput,
   docInput,
   setFileType,
+  setOriginalFileNames,
 }) {
   function handleImageFileChange(e) {
     // get all files
     const files = e.target.files;
     // create an empty array
     const images = [];
+    const fileNames = [];
 
     let size = 0;
 
@@ -19,6 +21,7 @@ function HiddenInputs({
       if (files[i].type.match("image.*")) {
         // push the file to the array
         images.push(files[i]);
+        fileNames.push({ name: files[i].name, type: "image" });
 
         // add the file size to the size variable
         size += files[i].size;
@@ -40,6 +43,7 @@ function HiddenInputs({
       if (images.length > 10) {
         // remove the last file
         images.pop();
+        fileNames.pop();
       }
     }
 
@@ -59,6 +63,7 @@ function HiddenInputs({
 
     // set the formData
     setFile(images);
+    setOriginalFileNames(fileNames);
 
     setFileType("image");
   }
@@ -74,6 +79,7 @@ function HiddenInputs({
 
       // set formData.file to null
       setFile(null);
+      setOriginalFileNames([]);
 
       // reset the input
       videoInput.current.value = "";
@@ -85,6 +91,7 @@ function HiddenInputs({
     if (file.type.match("video.*")) {
       // set the formData
       setFile(file);
+      setOriginalFileNames([{ name: file.name, type: "video" }]);
 
       setFileType("video");
     } else {
@@ -93,6 +100,7 @@ function HiddenInputs({
 
       // set the formData
       setFile(null);
+      setOriginalFileNames([]);
 
       // reset the input
       videoInput.current.value = "";
@@ -110,6 +118,7 @@ function HiddenInputs({
 
       // set formData.file to null
       setFile(null);
+      setOriginalFileNames([]);
 
       // reset the input
       docInput.current.value = "";
@@ -137,6 +146,7 @@ function HiddenInputs({
     ) {
       // set the formData
       setFile(file);
+      setOriginalFileNames([{ name: file.name, type: file.type }]);
 
       setFileType("doc");
     } else {
@@ -144,7 +154,8 @@ function HiddenInputs({
       alert("Please select a doc file");
 
       // set the formData
-      setFile();
+      setFile(null);
+      setOriginalFileNames([]);
 
       // reset the input
       docInput.current.value = "";

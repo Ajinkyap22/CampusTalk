@@ -27,6 +27,7 @@ exports.get_post = function (req, res) {
 
 exports.create_post = function (req, res) {
   const files = [];
+  const fileNames = [];
 
   if (req.files?.length) {
     // push the filename field from each member of req.files array to files array
@@ -35,11 +36,18 @@ exports.create_post = function (req, res) {
     });
   }
 
+  if (req.body.originalFileNames) {
+    req.body.originalFileNames.forEach((originalFile) => {
+      fileNames.push(JSON.parse(originalFile));
+    });
+  }
+
   Post.create(
     {
       text: req.body.text || "",
       file: files,
       anonymous: req.body.anonymous || false,
+      originalFileNames: fileNames || [],
       author: req.body.authorId,
       forum: req.body.forumId,
       important: req.body.important || false,
@@ -85,11 +93,20 @@ exports.create_post = function (req, res) {
 
 // create post with a document or video
 exports.create_doc_post = function (req, res) {
+  const fileNames = [];
+
+  if (req.body.originalFileNames) {
+    req.body.originalFileNames.forEach((originalFile) => {
+      fileNames.push(JSON.parse(originalFile));
+    });
+  }
+
   Post.create(
     {
       text: req.body.text || "",
       file: req.file?.filename || req.body?.file || "",
       anonymous: req.body.anonymous || false,
+      originalFileNames: fileNames || [],
       author: req.body.authorId,
       forum: req.body.forumId,
       important: req.body.important || false,
@@ -153,12 +170,39 @@ exports.delete_post = function (req, res) {
 };
 
 exports.update_post = function (req, res) {
+  let fileNames = [];
+  let files;
+
+  // if req.body.file is an array
+  if (Array.isArray(req.body.file)) {
+    files = [...req.body.file];
+  } else {
+    files = [req.file.filename];
+  }
+
+  if (req.files?.length) {
+    // push the filename field from each member of req.files array to files array
+    req.files.forEach((file) => {
+      files.push(file.filename);
+    });
+  }
+
+  if (req.body.originalFileNames && Array.isArray(req.body.originalFileNames)) {
+    req.body.originalFileNames.forEach((originalFile) => {
+      fileNames.push(JSON.parse(originalFile));
+    });
+  } else if (req.body.originalFileNames) {
+    fileNames = [JSON.parse(req.body.originalFileNames)];
+  }
+
   Post.findByIdAndUpdate(
     req.params.postId,
     {
       $set: {
         text: req.body.text || "",
         anonymous: req.body.anonymous || false,
+        file: files || req.body.file || "",
+        originalFileNames: fileNames || [],
         important: req.body.important || false,
       },
     },

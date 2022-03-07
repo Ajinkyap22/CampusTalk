@@ -2,6 +2,7 @@ import { useEffect, useRef, useContext, useState } from "react";
 import { UserContext } from "../../Contexts/UserContext";
 import { ForumContext } from "../../Contexts/ForumContext";
 import { PostContext } from "../../Contexts/PostContext";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 function useOutsideAlerter(ref, setShowDropdown) {
@@ -82,7 +83,7 @@ function Options({ postId, forum, showOptions, setShowOptions, author }) {
       <ul>
         {/* edit post */}
         <li className="p-1.5 text-sm" hidden={!isAuthor}>
-          <button>
+          <Link to={`/forums/${forum._id}/posts/${postId}/edit-post`}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -97,7 +98,7 @@ function Options({ postId, forum, showOptions, setShowOptions, author }) {
               />
             </svg>
             Edit Post
-          </button>
+          </Link>
         </li>
         <hr hidden={!isAuthor} />
 

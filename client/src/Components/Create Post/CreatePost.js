@@ -1,11 +1,12 @@
 import { UserContext } from "../../Contexts/UserContext";
 import { useEffect, useContext, useState } from "react";
+import { withRouter } from "react-router-dom";
 import AuthorInfo from "./AuthorInfo";
 import Dropdowns from "./Dropdowns";
 import PostForm from "./PostForm";
 import ProgressBar from "./ProgressBar";
 
-function CreatePost({ title }) {
+function CreatePost({ title, post, ...props }) {
   const [user, setUser] = useContext(UserContext);
   const [forum, setForum] = useState(null);
   const [file, setFile] = useState(null);
@@ -13,10 +14,36 @@ function CreatePost({ title }) {
   const [anonymous, setAnonymous] = useState(false);
   const [important, setImportant] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [originalFileNames, setOriginalFileNames] = useState([]);
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
-    document.title = title || "Create Post | CampusTalk";
-  }, [title]);
+    // if post is undefined or null
+    if (!post) {
+      document.title = title || "Create Post | CampusTalk";
+    } else {
+      document.title = title || "Edit Post | CampusTalk";
+    }
+  }, [title, post]);
+
+  useEffect(() => {
+    // redirect to the previus page if there is no user or if the user is not the author of the post
+    if (!user || (post && post.author._id !== user._id)) {
+      props.history.goBack();
+    }
+  }, [user, post]);
+
+  useEffect(() => {
+    if (!post) return;
+
+    setForum(post.forum);
+    setText(post.text);
+    setAnonymous(post.anonymous);
+    setImportant(post.important);
+    setOriginalFileNames(post.originalFileNames);
+    setFile(post.file);
+    setIsEditing(true);
+  }, [post]);
 
   return (
     <main className="w-full h-full bg-[#F0F2F5] flex flex-col items-center p-4 text-center">
@@ -25,7 +52,9 @@ function CreatePost({ title }) {
       {/* dropdowns */}
       <Dropdowns
         forums={user.forums}
+        forum={post?.forum || forum}
         setForum={setForum}
+        anonymous={anonymous}
         setAnonymous={setAnonymous}
       />
 
@@ -56,6 +85,11 @@ function CreatePost({ title }) {
           setText={setText}
           progress={progress}
           setProgress={setProgress}
+          originalFileNames={originalFileNames}
+          setOriginalFileNames={setOriginalFileNames}
+          isEditing={isEditing}
+          setIsEditing={setIsEditing}
+          postId={post?._id}
         />
       </div>
 
@@ -65,4 +99,4 @@ function CreatePost({ title }) {
   );
 }
 
-export default CreatePost;
+export default withRouter(CreatePost);

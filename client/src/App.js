@@ -12,108 +12,130 @@ import Login from "./Components/Auth/Login";
 import Signup from "./Components/Auth/Signup";
 import Feed from "./Components/Feed/Feed";
 import CreatePost from "./Components/Create Post/CreatePost";
+import PostPage from "./Components/PostPage/PostPage";
 
 import { ForumContext } from "./Contexts/ForumContext";
-import { UserProvider } from "./Contexts/UserContext";
+import { PostContext } from "./Contexts/PostContext";
 import { TabProvider } from "./Contexts/TabContext";
-import { PostProvider } from "./Contexts/PostContext";
 
 function App() {
   const [forums, setForums] = useContext(ForumContext);
+  const [posts] = useContext(PostContext);
 
   return (
     <div className="App relative">
-      <UserProvider>
-        <Router>
-          <Switch>
-            {/* Homepage */}
-            <Route exact path="/" render={() => <Home />} />
+      <Router>
+        <Switch>
+          {/* Homepage */}
+          <Route exact path="/" render={() => <Home />} />
 
-            {/* Login */}
+          {/* Login */}
+          <Route
+            exact
+            path="/login"
+            render={() => <Login title="Log in | CampusTalk" />}
+          />
+
+          {/* Signup */}
+          <Route
+            exact
+            path="/signup"
+            render={() => <Signup title={"Sign up | CampusTalk"} />}
+          />
+
+          {/* User info page*/}
+          <Route
+            exact
+            path="/user-info"
+            render={() => <UserInfo title={"User Profile | CampusTalk"} />}
+          />
+
+          {/* Join Forum */}
+          <Route
+            exact
+            path="/join-forum"
+            render={() => (
+              <Join
+                title={"Join Forum | CampusTalk"}
+                forums={forums}
+                setForums={setForums}
+              />
+            )}
+          />
+
+          {/* Create forum */}
+          <Route
+            exact
+            path="/create-forum"
+            render={() => <CreateForum title={"Create Forum | CampusTalk"} />}
+          />
+
+          {/* Feed */}
+          <TabProvider>
             <Route
               exact
-              path="/login"
-              render={() => <Login title="Log in | CampusTalk" />}
+              path="/feed"
+              render={() => <Feed title={"Feed | CampusTalk"} />}
             />
 
-            {/* Signup */}
+            {/* Forums */}
             <Route
               exact
-              path="/signup"
-              render={() => <Signup title={"Sign up | CampusTalk"} />}
+              path="/forums"
+              render={() => <Forums title={"Forums | CampusTalk"} />}
             />
 
-            {/* User info page*/}
-            <Route
-              exact
-              path="/user-info"
-              render={() => <UserInfo title={"User Profile | CampusTalk"} />}
-            />
-
-            {/* Join Forum */}
-            <Route
-              exact
-              path="/join-forum"
-              render={() => (
-                <Join
-                  title={"Join Forum | CampusTalk"}
-                  forums={forums}
-                  setForums={setForums}
-                />
-              )}
-            />
-
-            {/* Create forum */}
-            <Route
-              exact
-              path="/create-forum"
-              render={() => <CreateForum title={"Create Forum | CampusTalk"} />}
-            />
-
-            {/* Feed */}
-            <TabProvider>
-              <PostProvider>
-                <Route
-                  exact
-                  path="/feed"
-                  render={() => <Feed title={"Feed | CampusTalk"} />}
-                />
-
-                {/* Forums */}
-                <Route
-                  exact
-                  path="/forums"
-                  render={() => <Forums title={"Forums | CampusTalk"} />}
-                />
-
-                {/* forum page */}
-                {forums.map((forum, i) => (
-                  <Route
-                    exact
-                    path={`/forums/${forum._id}`}
-                    key={i}
-                    render={() => (
-                      <Forum
-                        title={`${forum.forumName} | CampusTalk`}
-                        forum={forum}
-                      />
-                    )}
+            {/* forum page */}
+            {forums.map((forum, i) => (
+              <Route
+                exact
+                path={`/forums/${forum._id}`}
+                key={i}
+                render={() => (
+                  <Forum
+                    title={`${forum.forumName} | CampusTalk`}
+                    forum={forum}
                   />
-                ))}
+                )}
+              />
+            ))}
 
-                {/* Create post */}
-                <Route
-                  exact
-                  path="/create-post"
-                  render={() => (
-                    <CreatePost title={"Create Post | CampusTalk"} />
-                  )}
-                />
-              </PostProvider>
-            </TabProvider>
-          </Switch>
-        </Router>
-      </UserProvider>
+            {/* Create post */}
+            <Route
+              exact
+              path="/create-post"
+              render={() => <CreatePost title={"Create Post | CampusTalk"} />}
+            />
+
+            {/* edit post page for each post */}
+            {posts.map((post, i) => (
+              <Route
+                exact
+                path={`/forums/${post.forum._id}/posts/${post._id}/edit-post`}
+                key={i}
+                render={() => (
+                  <CreatePost title={`Edit Post | CampusTalk`} post={post} />
+                )}
+              />
+            ))}
+
+            {/* post page for each post */}
+            {posts.map((post, i) => (
+              <Route
+                exact
+                path={`/forums/${post.forum._id}/posts/${post._id}`}
+                key={i}
+                render={() => (
+                  <PostPage
+                    title={`${post.author.firstName}'s Post in ${post.forum.forumName} | CampusTalk`}
+                    post={post}
+                  />
+                )}
+              />
+            ))}
+          </TabProvider>
+        </Switch>
+      </Router>
     </div>
   );
 }

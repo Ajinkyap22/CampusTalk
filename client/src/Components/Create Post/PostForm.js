@@ -23,6 +23,11 @@ function PostForm({
   setText,
   progress,
   setProgress,
+  setOriginalFileNames,
+  originalFileNames,
+  isEditing,
+  setIsEditing,
+  postId,
   ...props
 }) {
   // refs for image input, video input & doc input
@@ -81,6 +86,8 @@ function PostForm({
     } else {
       // remove the file at the index
       setFile(file.filter((file, i) => i !== index));
+      // remove file name from originalFileNames
+      setOriginalFileNames(originalFileNames.filter((file, i) => i !== index));
     }
 
     // reset the input
@@ -109,7 +116,7 @@ function PostForm({
     formData.append("text", text);
     formData.append("anonymous", anonymous);
     formData.append("important", important);
-    formData.append("forumId", forum);
+    formData.append("forumId", forum._id);
     formData.append("authorId", user._id);
     // if file is an array, add each file to formData
     if (file instanceof Array) {
@@ -120,36 +127,12 @@ function PostForm({
       formData.append("file", file);
     }
 
+    originalFileNames.forEach((originalFile, i) => {
+      formData.append("originalFileNames", JSON.stringify(originalFile));
+    });
+
     // if fileType is image or null
-    if (fileType === "image" || !fileType) {
-      axios
-        .post(`/api/forums/${forum}/posts/create-post`, formData, headers)
-        .then((res) => {
-          onSuccess(res.data);
-        })
-        .catch((err) => {
-          console.error(err);
-          console.log(err.response);
-        });
-    } else if (fileType === "video") {
-      axios
-        .post(`/api/forums/${forum}/posts/create-vid-post`, formData, headers)
-        .then((res) => {
-          onSuccess(res.data);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    } else if (fileType === "doc") {
-      axios
-        .post(`/api/forums/${forum}/posts/create-doc-post`, formData, headers)
-        .then((res) => {
-          onSuccess(res.data);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    }
+    apiRequests(formData, headers);
   }
 
   function onSuccess(res) {
@@ -161,6 +144,7 @@ function PostForm({
     setAnonymous(false);
     setImportant(false);
     setDisabled(false);
+    setOriginalFileNames([]);
 
     // reset file type
     setFileType(null);
@@ -168,6 +152,16 @@ function PostForm({
     // redirect to feed
     props.history.push("/feed");
 
+    if (isEditing) {
+      onEditingSuccess(res);
+    } else {
+      onPostSuccess(res);
+    }
+
+    setIsEditing(false);
+  }
+
+  function onPostSuccess(res) {
     // add post to user's posts
     setUser({
       ...user,
@@ -192,6 +186,113 @@ function PostForm({
     setPosts([...posts, res]);
   }
 
+  function onEditingSuccess(res) {
+    // update post in user's posts
+    setUser({
+      ...user,
+      posts: user.posts.map((post) => {
+        if (post._id === res._id) {
+          return res;
+        } else {
+          return post;
+        }
+      }),
+    });
+
+    // update post in forum's posts
+    setForums(
+      forums.map((forum) => (forum._id === res.forum._id ? res.forum : forum))
+    );
+
+    // update post in posts
+    setPosts(posts.map((post) => (post._id === res._id ? res : post)));
+  }
+
+  function apiRequests(formData, headers) {
+    if (isEditing) {
+      // if fileType is image or null
+      if (fileType === "image" || !fileType) {
+        axios
+          .put(
+            `/api/forums/${forum._id}/posts/update/${postId}`,
+            formData,
+            headers
+          )
+          .then((res) => {
+            console.log(res.data);
+            onSuccess(res.data);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      } else if (fileType === "video") {
+        axios
+          .put(
+            `/api/forums/${forum._id}/posts/update-vid-post/${postId}`,
+            formData,
+            headers
+          )
+          .then((res) => {
+            onSuccess(res.data);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      } else if (fileType === "doc") {
+        axios
+          .put(
+            `/api/forums/${forum._id}/posts/update-doc-post/${postId}`,
+            formData,
+            headers
+          )
+          .then((res) => {
+            onSuccess(res.data);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      }
+    } else {
+      // if fileType is image or null
+      if (fileType === "image" || !fileType) {
+        axios
+          .post(`/api/forums/${forum._id}/posts/create-post`, formData, headers)
+          .then((res) => {
+            onSuccess(res.data);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      } else if (fileType === "video") {
+        axios
+          .post(
+            `/api/forums/${forum._id}/posts/create-vid-post`,
+            formData,
+            headers
+          )
+          .then((res) => {
+            onSuccess(res.data);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      } else if (fileType === "doc") {
+        axios
+          .post(
+            `/api/forums/${forum._id}/posts/create-doc-post`,
+            formData,
+            headers
+          )
+          .then((res) => {
+            onSuccess(res.data);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      }
+    }
+  }
+
   return (
     <form
       className="py-2 pt-1"
@@ -199,7 +300,7 @@ function PostForm({
       onSubmit={handleSubmit}
     >
       {/* caption input */}
-      <Caption setText={setText} />
+      <Caption setText={setText} text={text} />
 
       {/* hidden inputs */}
       <HiddenInputs
@@ -208,6 +309,7 @@ function PostForm({
         videoInput={videoInput}
         docInput={docInput}
         setFileType={setFileType}
+        setOriginalFileNames={setOriginalFileNames}
       />
 
       {/* names of the uploaded files with a cross button to remove them*/}
@@ -217,16 +319,19 @@ function PostForm({
           Array.isArray(file) &&
           file.map((file, index) => (
             <FilePreview
-              file={file}
               handleRemoveFile={handleRemoveFile}
               key={index}
               index={index}
+              originalFileName={originalFileNames[index]}
             />
           ))}
 
         {/* if formData.file is not an array but is not null */}
         {file && !Array.isArray(file) && file !== null && (
-          <FilePreview file={file} handleRemoveFile={handleRemoveFile} />
+          <FilePreview
+            handleRemoveFile={handleRemoveFile}
+            originalFileName={originalFileNames[0]}
+          />
         )}
       </div>
 
@@ -259,7 +364,7 @@ function PostForm({
               : "text-[#ffffff80] bg-[#818181] border border-[#818181] mx-1 p-1.5 px-4 rounded-full text-sm"
           }
         >
-          Post
+          {isEditing ? "Save" : "Post"}
         </button>
       </div>
 

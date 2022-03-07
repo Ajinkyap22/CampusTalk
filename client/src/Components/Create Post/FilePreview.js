@@ -1,10 +1,10 @@
-function FilePreview({ file, handleRemoveFile, index }) {
+function FilePreview({ handleRemoveFile, index, originalFileName }) {
   return (
     <div className="w-full border border-primary bg-[#f3f3f3] mx-4 my-1 mb-2 py-1 px-1.5">
       <div className="flex items-center justify-between">
         <div className="text-left">
           {/* svg icon based on file type */}
-          {file.type.match("image.*") ? (
+          {originalFileName.type.match("image.*") ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="fill-primary w-4 h-4 inline mr-1"
@@ -13,7 +13,7 @@ function FilePreview({ file, handleRemoveFile, index }) {
               <path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
               <path d="M14.002 13a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2V5A2 2 0 0 1 2 3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-1.998 2zM14 2H4a1 1 0 0 0-1 1h9.002a2 2 0 0 1 2 2v7A1 1 0 0 0 15 11V3a1 1 0 0 0-1-1zM2.002 4a1 1 0 0 0-1 1v8l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71a.5.5 0 0 1 .577-.094l1.777 1.947V5a1 1 0 0 0-1-1h-10z" />
             </svg>
-          ) : file.type.match("video.*") ? (
+          ) : originalFileName.type.match("video.*") ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -35,7 +35,9 @@ function FilePreview({ file, handleRemoveFile, index }) {
           )}
 
           {/* file name */}
-          <span className="text-sm text-primary pl-1">{file.name}</span>
+          <span className="text-sm text-primary pl-1">
+            {originalFileName.name}
+          </span>
         </div>
 
         <div className="flex justify-end">

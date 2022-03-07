@@ -1,4 +1,4 @@
-function Caption({ setText }) {
+function Caption({ text, setText }) {
   function handleKeyDown(e) {
     e.target.style.height = "inherit";
     e.target.style.height = `${e.target.scrollHeight}px`;
@@ -18,6 +18,7 @@ function Caption({ setText }) {
         placeholder="Write something..."
         onKeyDown={handleKeyDown}
         onChange={handleTextInput}
+        value={text}
       ></textarea>
     </div>
   );

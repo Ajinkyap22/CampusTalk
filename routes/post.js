@@ -38,7 +38,28 @@ router.post(
 router.delete("/delete/:postId", verifyToken, postController.delete_post);
 
 // update a post
-router.put("/update/:postId", verifyToken, postController.update_post);
+router.put(
+  "/update/:postId",
+  verifyToken,
+  upload.array("file", 10),
+  postController.update_post
+);
+
+// update doc post
+router.put(
+  "/update-doc-post/:postId",
+  verifyToken,
+  uploadDocs.single("file"),
+  postController.update_post
+);
+
+// update video post
+router.put(
+  "/update-vid-post/:postId",
+  verifyToken,
+  uploadVideos.single("file"),
+  postController.update_post
+);
 
 // upvotes a post
 router.put("/upvote/:postId", verifyToken, postController.upvote_post);

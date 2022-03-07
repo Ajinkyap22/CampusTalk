@@ -1,6 +1,7 @@
 import { UserContext } from "../../Contexts/UserContext";
 import { PostContext } from "../../Contexts/PostContext";
 import { useContext, useState, useEffect } from "react";
+import { withRouter } from "react-router-dom";
 import axios from "axios";
 
 let headers = {
@@ -9,7 +10,15 @@ let headers = {
   },
 };
 
-function PostActions({ id, forumId, upvotes, downvotes, comments }) {
+function PostActions({
+  id,
+  forumId,
+  upvotes,
+  downvotes,
+  comments,
+  onPostClick,
+  ...props
+}) {
   const [user] = useContext(UserContext);
   const [upvoted, setUpvoted] = useState(false);
   const [downvoted, setDownvoted] = useState(false);
@@ -153,7 +162,11 @@ function PostActions({ id, forumId, upvotes, downvotes, comments }) {
       </div>
 
       {/* comment */}
-      <button className="my-2 mr-4" title="Post a comment">
+      <button
+        className="my-2 mr-4"
+        title="Post a comment"
+        onClick={onPostClick}
+      >
         <svg
           width="20"
           viewBox="0 0 20 20"
@@ -176,6 +189,7 @@ function PostActions({ id, forumId, upvotes, downvotes, comments }) {
       <button
         className="text-sm my-2 text-right text-secondary"
         title="See Comments"
+        onClick={onPostClick}
       >
         {comments.length} Comments
       </button>
@@ -183,4 +197,4 @@ function PostActions({ id, forumId, upvotes, downvotes, comments }) {
   );
 }
 
-export default PostActions;
+export default withRouter(PostActions);

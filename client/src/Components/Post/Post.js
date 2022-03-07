@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import PostInfo from "./PostInfo";
 import PostActions from "./PostActions";
+import { withRouter } from "react-router-dom";
 import File from "./File";
 
-function Post({ post, activeFilter, range = "Today" }) {
+function Post({ post, activeFilter, range = "Today", ...props }) {
   const [showPost, setShowPost] = useState(true);
   useEffect(() => {
     if (activeFilter !== "top") return;
@@ -31,6 +32,10 @@ function Post({ post, activeFilter, range = "Today" }) {
     if (activeFilter === "latest") setShowPost(true);
   }, [activeFilter]);
 
+  function onPostClick() {
+    props.history.push(`/forums/${post.forum._id}/posts/${post._id}`);
+  }
+
   return (
     <div
       className="bg-white shadow-base py-2 mt-8 w-full rounded"
@@ -50,7 +55,9 @@ function Post({ post, activeFilter, range = "Today" }) {
       <p className="m-2 my-3 px-2 text-sm">{post.text}</p>
 
       {/* image */}
-      {post.file.length ? <File files={post.file} /> : null}
+      {post.file.length ? (
+        <File files={post.file} onPostClick={onPostClick} />
+      ) : null}
 
       {/* actions */}
       <PostActions
@@ -59,9 +66,10 @@ function Post({ post, activeFilter, range = "Today" }) {
         upvotes={post.upvotes}
         downvotes={post.downvotes}
         comments={post.comments}
+        onPostClick={onPostClick}
       />
     </div>
   );
 }
 
-export default Post;
+export default withRouter(Post);
