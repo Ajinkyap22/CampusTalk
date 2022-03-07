@@ -2,6 +2,7 @@ import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import Swipe from "react-easy-swipe";
+import "./File.css";
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const options = {
@@ -13,9 +14,15 @@ function File({ files }) {
   const [currentFile, setCurrentFile] = useState(0);
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
+  const [isPDF, setIsPDF] = useState(false);
 
   function onDocumentLoadSuccess({ numPages }) {
     setNumPages(numPages);
+    setIsPDF(true);
+  }
+
+  function changePage(diff) {
+    setPageNumber(pageNumber + diff);
   }
 
   function handleClick(direction) {
@@ -55,15 +62,16 @@ function File({ files }) {
                 hidden={i !== currentFile}
               />
             )) ||
-            // if file is a video
-            (file.endsWith(".mp4") && (
+            // if file is a .mp4 or .mkv or .mpeg-4
+            ((file.endsWith(".mp4") ||
+              file.endsWith(".mkv") ||
+              file.endsWith(".mpeg-4")) && (
               <video
                 src={`http://localhost:3000/uploads/videos/${file}`}
                 key={i}
                 alt=""
                 className="mx-auto w-full h-full object-cover"
                 hidden={i !== currentFile}
-                // show controls
                 controls
               />
             )) ||
@@ -76,7 +84,17 @@ function File({ files }) {
                 key={i}
                 hidden={i !== currentFile}
               >
-                <Page pageNumber={pageNumber} />
+                <AiOutlineLeft
+                  className="absolute left-0 text-4xl inset-y-1/2 bg-[rgba(0,0,0,0.5)] rounded text-white cursor-pointer z-10"
+                  hidden={pageNumber === 1}
+                  onClick={() => changePage(-1)}
+                />
+                <Page pageNumber={pageNumber} renderAnnotationLayer={false} />
+                <AiOutlineRight
+                  className="absolute right-0 text-4xl inset-y-1/2 bg-[rgba(0,0,0,0.5)] rounded text-white cursor-pointer z-10"
+                  hidden={pageNumber === numPages}
+                  onClick={() => changePage(1)}
+                />
               </Document>
             ))
         )}
@@ -93,6 +111,22 @@ function File({ files }) {
         className="text-sm bg-[rgba(10,10,10,0.5)] rounded p-1 px-2 text-white absolute top-1 right-1"
       >
         {currentFile + 1}/{files.length}
+      </span>
+
+      {/* show current page number on the bottom center */}
+      <div
+        className="text-center text-sm bg-[rgba(0,0,0,0.7)] p-2 text-white absolute w-full bottom-0"
+        hidden={!isPDF}
+      >
+        Page {pageNumber} out of {numPages}
+      </div>
+
+      {/* show current page number on the top-right */}
+      <span
+        className="text-sm bg-[rgba(10,10,10,0.5)] rounded p-1 px-2 text-white absolute top-1 right-1"
+        hidden={!isPDF}
+      >
+        {pageNumber}/{numPages}
       </span>
     </div>
   );
