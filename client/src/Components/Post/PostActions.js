@@ -1,7 +1,6 @@
 import { UserContext } from "../../Contexts/UserContext";
 import { PostContext } from "../../Contexts/PostContext";
 import { useContext, useState, useEffect } from "react";
-import { withRouter } from "react-router-dom";
 import axios from "axios";
 
 let headers = {
@@ -17,7 +16,7 @@ function PostActions({
   downvotes,
   comments,
   onPostClick,
-  ...props
+  showCommentButton = true,
 }) {
   const [user] = useContext(UserContext);
   const [upvoted, setUpvoted] = useState(false);
@@ -115,7 +114,11 @@ function PostActions({
   }
 
   return (
-    <div className="w-full grid grid-cols-3 grid-flow-col py-1 px-2 border-t">
+    <div
+      className={`w-full grid ${
+        showCommentButton ? "grid-cols-3 px-2" : "grid-cols-2 px-4"
+      } grid-flow-col py-1 border-t`}
+    >
       {/* upvotes */}
       <div className="my-2 inline">
         <button onClick={handleUpvote} title="Upvote Post">
@@ -166,6 +169,7 @@ function PostActions({
         className="my-2 mr-4"
         title="Post a comment"
         onClick={onPostClick}
+        hidden={!showCommentButton}
       >
         <svg
           width="20"
@@ -197,4 +201,4 @@ function PostActions({
   );
 }
 
-export default withRouter(PostActions);
+export default PostActions;

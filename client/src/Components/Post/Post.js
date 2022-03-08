@@ -32,7 +32,10 @@ function Post({ post, activeFilter, range = "Today", ...props }) {
     if (activeFilter === "latest") setShowPost(true);
   }, [activeFilter]);
 
-  function onPostClick() {
+  function onPostClick(e) {
+    // dont redirect if e.target contains a class with 'pageChange'
+    if (e.target.classList.contains("pageChange")) return;
+
     props.history.push(`/forums/${post.forum._id}/posts/${post._id}`);
   }
 
@@ -56,7 +59,11 @@ function Post({ post, activeFilter, range = "Today", ...props }) {
 
       {/* image */}
       {post.file.length ? (
-        <File files={post.file} onPostClick={onPostClick} />
+        <File
+          classes="flex items-center relative mt-2 mx-auto bg-black max-w-fit cursor-pointer"
+          files={post.file}
+          onPostClick={onPostClick}
+        />
       ) : null}
 
       {/* actions */}
