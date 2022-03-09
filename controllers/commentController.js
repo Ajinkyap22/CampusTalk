@@ -25,51 +25,49 @@ exports.get_comment = function (req, res) {
 };
 
 // create comment
-exports.create_comment = [
-  // sanitize and validate fields
-  body("text", "Text cannot be empty.").trim().isLength({ min: 1 }),
+exports.create_comment = function (req, res) {
+  const errors = validationResult(req.body);
 
-  // process request
-  (req, res) => {
-    const errors = validationResult(req.body);
+  if (!errors.isEmpty()) return res.json({ errros: errors.array() });
 
-    if (!errors.isEmpty()) return res.json({ errros: errors.array() });
+  const file = req.file ? req.file.filename : "";
+  const filename = req.body.originalFileName
+    ? JSON.parse(req.body.originalFileName)
+    : null;
 
-    const file = req.file ? req.file.filename : "";
+  Comment.create(
+    {
+      text: req.body.text || "",
+      file,
+      author: req.body.authorId,
+      originalFileName: filename,
+    },
+    async (err, comment) => {
+      if (err) return res.json(err);
 
-    Comment.create(
-      {
-        text: req.body.text,
-        file,
-        author: req.body.authorId,
-      },
-      async (err, comment) => {
-        if (err) return res.json(err);
+      const newComment = await Comment.populate(comment, { path: "author" });
 
-        const newComment = await Comment.populate(comment, { path: "author" });
-
-        Post.findByIdAndUpdate(
-          req.body.postId,
-          {
-            $push: {
-              comments: comment._id,
-            },
+      Post.findByIdAndUpdate(
+        req.body.commentId,
+        {
+          $push: {
+            comments: comment._id,
           },
-          { new: true }
-        )
-          .populate("author")
-          .populate("comments")
-          .exec((err, post) => {
-            if (err) return res.json(err);
+        },
+        { new: true }
+      )
+        .populate("author")
+        .populate("comments")
+        .exec((err, post) => {
+          if (err) return res.json(err);
 
-            console.log(post);
+          console.log(post);
 
-            return res.json({ comment: newComment, post });
-          });
-      }
-    );
-  },
-];
+          return res.json({ comment: newComment, post });
+        });
+    }
+  );
+};
 
 // Edit a comment
 exports.edit_comment = [
@@ -102,10 +100,27 @@ exports.edit_comment = [
 
 // delete a comment
 exports.delete_comment = function (req, res) {
-  Comment.findByIdAndRemove(req.params.commentId, function (err, post) {
+  Comment.findByIdAndRemove(req.params.commentId, function (err, comment) {
     if (err) return res.json(err);
 
-    return res.json(post);
+    // delete comment from post
+    Post.findByIdAndUpdate(
+      req.params.postId,
+      {
+        $pull: {
+          comments: req.params.commentId,
+        },
+      },
+      { new: true }
+    )
+      .populate("author")
+      .populate("comments")
+      .populate("forum")
+      .exec((err, post) => {
+        if (err) return res.json(err);
+
+        return res.json({ comment, post });
+      });
   });
 };
 
@@ -120,6 +135,23 @@ exports.upvote_comment = function (req, res) {
       $pull: {
         downvotes: req.body.id,
       },
+    },
+    { new: true }
+  )
+    .populate("author")
+    .exec((err, comment) => {
+      if (err) return res.json(err);
+
+      return res.json(comment);
+    });
+};
+
+// unupvote a comment
+exports.unupvote_comment = function (req, res) {
+  Comment.findByIdAndUpdate(
+    req.params.commentId,
+    {
+      $pull: { upvotes: req.body.id },
     },
     { new: true }
   )
@@ -146,6 +178,25 @@ exports.downvote_comment = function (req, res) {
     { new: true }
   )
     .populate("author")
+    .exec((err, comment) => {
+      if (err) return res.json(err);
+
+      return res.json(comment);
+    });
+};
+
+// undownvote a comment
+exports.undownvote_comment = function (req, res) {
+  Comment.findByIdAndUpdate(
+    req.params.commentId,
+    {
+      $pull: { downvotes: req.body.id },
+    },
+    { new: true }
+  )
+
+    .populate("author")
+    .populate("forum")
     .exec((err, comment) => {
       if (err) return res.json(err);
 

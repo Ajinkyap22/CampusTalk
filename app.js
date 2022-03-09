@@ -31,7 +31,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/api/users", usersRouter);
 app.use("/api/forums", forumRouter);
 app.use("/api/forums/:id/posts", postRouter);
-app.use("/api/forums/:id/posts/:id/comments", commentRouter);
+app.use("/api/forums/:forumId/posts/:postId/comments", commentRouter);
 app.use("/api/forums/:id/posts/:id/comments/:id/replies", replyRouter);
 
 module.exports = app;

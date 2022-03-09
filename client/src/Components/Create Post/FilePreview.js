@@ -1,6 +1,6 @@
-function FilePreview({ handleRemoveFile, index, originalFileName }) {
+function FilePreview({ handleRemoveFile, index, originalFileName, classes }) {
   return (
-    <div className="w-full border border-primary bg-[#f3f3f3] mx-4 my-1 mb-2 py-1 px-1.5">
+    <div className={classes}>
       <div className="flex items-center justify-between">
         <div className="text-left">
           {/* svg icon based on file type */}
@@ -40,7 +40,7 @@ function FilePreview({ handleRemoveFile, index, originalFileName }) {
           </span>
         </div>
 
-        <div className="flex justify-end">
+        <div className="flex justify-end px-1">
           <button
             onClick={(e) => handleRemoveFile(e, index)}
             type="button"

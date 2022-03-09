@@ -1,5 +1,5 @@
 const express = require("express");
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 const commentController = require("../controllers/commentController");
 const { upload, uploadVideos } = require("../config/multer");
 const verifyToken = require("../config/verifyToken");
@@ -20,7 +20,7 @@ router.post(
 
 // create video comment
 router.post(
-  "create-vid-comment",
+  "/create-vid-comment",
   uploadVideos.single("file"),
   verifyToken,
   commentController.create_comment
@@ -36,11 +36,25 @@ router.put(
 // upvote a comment
 router.put("/:commentId/upvote", verifyToken, commentController.upvote_comment);
 
+// unupvote a comment
+router.put(
+  "/unupvote/:commentId",
+  verifyToken,
+  commentController.unupvote_comment
+);
+
 // downvote a comment
 router.put(
   "/:commentId/downvote",
   verifyToken,
   commentController.downvote_comment
+);
+
+// undownvote a comment
+router.put(
+  "/undownvote/:commentId",
+  verifyToken,
+  commentController.undownvote_comment
 );
 
 // pin a comment

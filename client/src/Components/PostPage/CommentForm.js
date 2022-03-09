@@ -3,6 +3,7 @@ import { PostContext } from "../../Contexts/PostContext";
 import { useContext, useState, useRef, useEffect } from "react";
 import axios from "axios";
 import FileInputs from "./FileInputs";
+import FilePreview from "../Create Post/FilePreview";
 
 function CommentForm({ forumId, postId, comments, setComments }) {
   const [user, setUser] = useContext(UserContext);
@@ -59,7 +60,7 @@ function CommentForm({ forumId, postId, comments, setComments }) {
     }
   }, [file]);
 
-  function handleRemoveFile(e) {
+  function handleRemoveFile(e, index) {
     setFile(null);
     setOriginalFileName("");
 
@@ -79,7 +80,7 @@ function CommentForm({ forumId, postId, comments, setComments }) {
     formData.append("authorId", user._id);
     if (file) {
       formData.append("file", file);
-      formData.append("originalFileName", originalFileName);
+      formData.append("originalFileName", JSON.stringify(originalFileName));
     }
 
     setEnablePost(false);
@@ -104,8 +105,6 @@ function CommentForm({ forumId, postId, comments, setComments }) {
           headers
         )
         .then((res) => {
-          console.log(res.data);
-
           onPostSuccess(res.data);
         });
     } else if (fileType === "video") {
@@ -186,6 +185,7 @@ function CommentForm({ forumId, postId, comments, setComments }) {
           type="text"
           name="text"
           onChange={(e) => setText(e.target.value)}
+          value={text}
           placeholder="Write your comment"
           className="text-sm mx-1 p-1 border-b-2 border-gray-400 focus:outline-none"
         />
@@ -198,7 +198,21 @@ function CommentForm({ forumId, postId, comments, setComments }) {
           imageButton={imageButton}
           videoButton={videoButton}
           linkButton={linkButton}
+          setFile={setFile}
+          setFileType={setFileType}
+          setOriginalFileName={setOriginalFileName}
+          disabled={disabled}
         />
+
+        {/* file preview */}
+        {file && (
+          <FilePreview
+            handleRemoveFile={handleRemoveFile}
+            index={0}
+            originalFileName={originalFileName}
+            classes="border border-primary bg-[#f3f3f3] mt-2 ml-1 px-1.5"
+          />
+        )}
 
         {/* submit button */}
         <button

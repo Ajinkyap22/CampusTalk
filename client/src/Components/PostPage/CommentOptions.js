@@ -20,7 +20,16 @@ function useOutsideAlerter(ref, setShowDropdown) {
   }, [ref]);
 }
 
-function CommentOptions({ postId, showOptions, setShowOptions, author }) {
+function CommentOptions({
+  forumId,
+  postId,
+  commentId,
+  showOptions,
+  setShowOptions,
+  author,
+  comments,
+  setComments,
+}) {
   const wrapperRef = useRef(null);
   const [user, setUser] = useContext(UserContext);
   const [isAuthor, setIsAuthor] = useState(false);
@@ -34,6 +43,10 @@ function CommentOptions({ postId, showOptions, setShowOptions, author }) {
     } else {
       setIsAuthor(false);
     }
+
+    return () => {
+      setIsAuthor(false);
+    };
   }, [user, author]);
 
   function deleteComment() {
@@ -44,6 +57,34 @@ function CommentOptions({ postId, showOptions, setShowOptions, author }) {
         }`,
       },
     };
+
+    axios
+      .delete(
+        `/api/forums/${forumId}/posts/${postId}/comments/${commentId}/delete-comment`,
+        headers
+      )
+      .then((res) => {
+        // update user's comments
+        setUser({
+          ...user,
+          comments: user.comments.filter(
+            (comment) => comment._id !== commentId
+          ),
+        });
+
+        // updates posts
+        setPosts(
+          posts.map((post) => (post._id === postId ? res.data.post : post))
+        );
+
+        // update comments
+        setComments(comments.filter((comment) => comment._id !== commentId));
+
+        setShowOptions(false);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
   return (
@@ -76,7 +117,6 @@ function CommentOptions({ postId, showOptions, setShowOptions, author }) {
             Delete Post
           </button>
         </li>
-        <hr hidden={!isAuthor} />
       </ul>
     </div>
   );

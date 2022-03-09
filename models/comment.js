@@ -2,8 +2,9 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const CommentSchema = new Schema({
-  text: { type: String, maxlength: 5000, required: true },
+  text: { type: String, maxlength: 5000 },
   file: { type: String },
+  originalFileName: { type: Object },
   upvotes: [{ type: Schema.Types.ObjectId, ref: "User" }],
   downvotes: [{ type: Schema.Types.ObjectId, ref: "User" }],
   replies: [{ type: Schema.Types.ObjectId, ref: "Reply" }],

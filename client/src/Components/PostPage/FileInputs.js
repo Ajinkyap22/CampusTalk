@@ -5,10 +5,91 @@ function FileInputs({
   imageButton,
   videoButton,
   linkButton,
+  setFile,
+  setOriginalFileName,
+  setFileType,
+  disabled,
 }) {
   function handleFileInput(e, ref) {
     // trigger click on the ref
     ref.current.click();
+  }
+
+  function handleImageFileChange(e) {
+    const file = e.target.files[0];
+
+    // check if the file is an image
+    if (!file.type.match("image.*")) {
+      // if the file is not an image, alert the user
+      alert("Please select an image file");
+
+      // set formData.file to null
+      setFile(null);
+
+      // reset the input
+      imageInput.current.value = "";
+
+      // break the loop, we don't need to check the rest of the files
+      return;
+    }
+
+    // check if the size is greater than 10mb
+    if (file.size > 10485760) {
+      // alert the user
+      alert("File size must be less than 10mb");
+
+      setFile(null);
+
+      // reset the input
+      imageInput.current.value = "";
+
+      return;
+    }
+
+    // set the formData
+    setFile(file);
+    setOriginalFileName({ name: file.name, type: "image" });
+
+    setFileType("image");
+  }
+
+  function handleVideoFileChange(e) {
+    // get the file
+    const file = e.target.files[0];
+
+    // check if file size is greater than 50mb
+    if (file.size > 50485760) {
+      // alert the user
+      alert("File size must be less than 50mb");
+
+      // set formData.file to null
+      setFile(null);
+      setOriginalFileName(null);
+
+      // reset the input
+      videoInput.current.value = "";
+
+      return;
+    }
+
+    // check if the file is a video
+    if (!file.type.match("video.*")) {
+      // alert the user that the file is not a video
+      alert("Please select a video file");
+
+      // set the formData
+      setFile(null);
+      setOriginalFileName(null);
+    } else {
+      setFileType("video");
+
+      // set the formData
+      setFile(file);
+      setOriginalFileName({ name: file.name, type: "video" });
+
+      // reset the input
+      videoInput.current.value = "";
+    }
   }
 
   return (
@@ -23,7 +104,7 @@ function FileInputs({
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="18"
-          fill="#818181"
+          fill={disabled ? "#ababab" : "#818181"}
           className="inline"
           viewBox="0 0 16 16"
         >
@@ -43,7 +124,7 @@ function FileInputs({
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="18"
-          fill="#818181"
+          fill={disabled ? "#ababab" : "#818181"}
           className="inline"
           viewBox="0 0 16 16"
         >
@@ -65,7 +146,7 @@ function FileInputs({
           className="vertical-align-middle inline"
           fill="none"
           viewBox="0 0 24 24"
-          stroke="#818181"
+          stroke={disabled ? "#ababab" : "#818181"}
           strokeWidth={2}
         >
           <path
@@ -77,17 +158,17 @@ function FileInputs({
       </button>
 
       <input
-        // onChange={handleImageFileChange}
+        onChange={handleImageFileChange}
         ref={imageInput}
         type="file"
         name="file"
         accept="image/*"
-        multiple
         className="hidden"
         data-max-size="20971520"
       />
 
       <input
+        onChange={handleVideoFileChange}
         ref={videoInput}
         type="file"
         name="file"

@@ -41,7 +41,14 @@ function PostData({ post }) {
       {/* comments */}
       <div className="flex flex-col py-1">
         {comments.map((comment, i) => (
-          <Comment comment={comment} key={i} />
+          <Comment
+            comment={comment}
+            key={i}
+            forumId={post.forum._id}
+            postId={post._id}
+            comments={comments}
+            setComments={setComments}
+          />
         ))}
       </div>
 
