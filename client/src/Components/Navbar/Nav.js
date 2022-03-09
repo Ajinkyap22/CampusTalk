@@ -24,6 +24,7 @@ function Nav() {
 
       {/* Mid part */}
       <div className="">
+        {/* feed */}
         <NavLink
           to={"/feed"}
           onClick={() => handleClick("feed")}
@@ -35,7 +36,9 @@ function Nav() {
         >
           Feed
         </NavLink>
-        <NavLink
+
+        {/* chats */}
+        {/* <NavLink
           to={"/chat"}
           onClick={() => handleClick("chats")}
           className={`mx-4 text-sm py-3 px-2 ${
@@ -45,7 +48,9 @@ function Nav() {
           }`}
         >
           Chats
-        </NavLink>
+        </NavLink> */}
+
+        {/* forums */}
         <NavLink
           to={"/forums"}
           onClick={() => handleClick("forums")}

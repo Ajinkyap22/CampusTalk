@@ -312,8 +312,7 @@ exports.user_feed_posts = function (req, res) {
   // get all user forums
   const posts = [];
   Forum.find({ members: req.params.id })
-    // populate author, forum & comments field of posts & author filed of comments
-    .populate({ path: "posts", populate: { path: "author forum comments" } })
+    .populate({ path: "posts", populate: { path: "author forum" } })
     // sort by date newest first
     .exec((err, forums) => {
       if (err) return res.json(err);
