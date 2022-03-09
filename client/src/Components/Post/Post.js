@@ -6,6 +6,8 @@ import File from "./File";
 
 function Post({ post, activeFilter, range = "Today", ...props }) {
   const [showPost, setShowPost] = useState(true);
+  const [currentFile, setCurrentFile] = useState(0);
+
   useEffect(() => {
     if (activeFilter !== "top") return;
     const now = new Date();
@@ -63,6 +65,8 @@ function Post({ post, activeFilter, range = "Today", ...props }) {
           classes="flex items-center relative mt-2 mx-auto bg-black max-w-fit cursor-pointer"
           files={post.file}
           onPostClick={onPostClick}
+          currentFile={currentFile}
+          setCurrentFile={setCurrentFile}
         />
       ) : null}
 

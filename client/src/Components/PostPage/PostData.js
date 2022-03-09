@@ -14,6 +14,7 @@ function PostData({ post }) {
       axios
         .get(`/api/forums/${post.forum._id}/posts/${post._id}/comments`)
         .then((res) => {
+          // only keep the comments that in the post's comments array
           setComments(res.data);
         })
         .catch((err) => console.error(err));
@@ -48,6 +49,7 @@ function PostData({ post }) {
             postId={post._id}
             comments={comments}
             setComments={setComments}
+            moderators={post.forum.moderators}
           />
         ))}
       </div>

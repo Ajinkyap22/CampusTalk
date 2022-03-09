@@ -38,7 +38,7 @@ router.put("/:commentId/upvote", verifyToken, commentController.upvote_comment);
 
 // unupvote a comment
 router.put(
-  "/unupvote/:commentId",
+  "/:commentId/unupvote",
   verifyToken,
   commentController.unupvote_comment
 );
@@ -52,7 +52,7 @@ router.put(
 
 // undownvote a comment
 router.put(
-  "/undownvote/:commentId",
+  "/:commentId/undownvote",
   verifyToken,
   commentController.undownvote_comment
 );

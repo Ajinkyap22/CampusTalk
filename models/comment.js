@@ -9,6 +9,7 @@ const CommentSchema = new Schema({
   downvotes: [{ type: Schema.Types.ObjectId, ref: "User" }],
   replies: [{ type: Schema.Types.ObjectId, ref: "Reply" }],
   author: { type: Schema.Types.ObjectId, required: true, ref: "User" },
+  post: { type: Schema.Types.ObjectId, required: true, ref: "Post" },
   pinned: { type: Boolean, default: false },
   timestamp: { type: Date, default: Date.now },
 });

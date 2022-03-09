@@ -330,6 +330,7 @@ function PostForm({
           <FilePreview
             handleRemoveFile={handleRemoveFile}
             originalFileName={originalFileNames[0]}
+            classes="w-full border border-primary bg-[#f3f3f3] mx-4 my-1 mb-2 py-1 px-1.5"
           />
         )}
       </div>

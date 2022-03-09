@@ -27,6 +27,7 @@ function Options({ postId, forum, showOptions, setShowOptions, author }) {
   const [isAuthor, setIsAuthor] = useState(false);
   const [forums, setForums] = useContext(ForumContext);
   const [posts, setPosts] = useContext(PostContext);
+  const [isModerator, setIsModerator] = useState(false);
   useOutsideAlerter(wrapperRef, setShowOptions);
 
   useEffect(() => {
@@ -37,6 +38,14 @@ function Options({ postId, forum, showOptions, setShowOptions, author }) {
       setIsAuthor(false);
     }
   }, [user, author]);
+
+  useEffect(() => {
+    if (forum.moderators.includes(user._id)) {
+      setIsModerator(true);
+    } else {
+      setIsModerator(false);
+    }
+  }, [forum.moderators, user]);
 
   function deletePost() {
     let headers = {
@@ -103,7 +112,11 @@ function Options({ postId, forum, showOptions, setShowOptions, author }) {
         <hr hidden={!isAuthor} />
 
         {/* delete post */}
-        <li className="p-1.5 text-sm" hidden={!isAuthor} onClick={deletePost}>
+        <li
+          className="p-1.5 text-sm"
+          hidden={!isAuthor && !isModerator}
+          onClick={deletePost}
+        >
           <button>
             <svg
               xmlns="http://www.w3.org/2000/svg"

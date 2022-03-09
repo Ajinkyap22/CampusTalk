@@ -10,8 +10,14 @@ const options = {
   cMapPacked: true,
 };
 
-function File({ files, onPostClick, classes, fullScreen = false }) {
-  const [currentFile, setCurrentFile] = useState(0);
+function File({
+  files,
+  onPostClick,
+  classes,
+  fullScreen = false,
+  currentFile,
+  setCurrentFile,
+}) {
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [isPDF, setIsPDF] = useState(false);

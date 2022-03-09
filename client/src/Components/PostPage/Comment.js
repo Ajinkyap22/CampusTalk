@@ -1,12 +1,35 @@
-import { useState } from "react";
+import { UserContext } from "../../Contexts/UserContext";
+import { useState, useContext, useEffect } from "react";
 import CommentOptions from "./CommentOptions";
 import CommentFile from "./CommentFile";
 import CommentActions from "./CommentActions";
 
-function Comment({ comment, forumId, postId, comments, setComments }) {
+function Comment({
+  moderators,
+  comment,
+  forumId,
+  postId,
+  comments,
+  setComments,
+}) {
   const [upvoted, setUpvoted] = useState(false);
   const [downvoted, setDownvoted] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
+  const [isAuthor, setIsAuthor] = useState(false);
+  const [user, setUser] = useContext(UserContext);
+
+  useEffect(() => {
+    // check if author is the same as user
+    if (user && user._id === comment.author._id) {
+      setIsAuthor(true);
+    } else {
+      setIsAuthor(false);
+    }
+
+    return () => {
+      setIsAuthor(false);
+    };
+  }, [user, comment.author]);
 
   function toggleOptions() {
     setShowOptions(!showOptions);
@@ -50,6 +73,7 @@ function Comment({ comment, forumId, postId, comments, setComments }) {
             className="absolute top-1 right-3"
             title="Options"
             onClick={toggleOptions}
+            hidden={!isAuthor}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -71,6 +95,10 @@ function Comment({ comment, forumId, postId, comments, setComments }) {
             commentId={comment._id}
             comments={comments}
             setComments={setComments}
+            isAuthor={isAuthor}
+            user={user}
+            setUser={setUser}
+            moderators={moderators}
           />
         </div>
 
@@ -84,7 +112,7 @@ function Comment({ comment, forumId, postId, comments, setComments }) {
         />
 
         {/* actions */}
-        <CommentActions comment={comment} />
+        <CommentActions comment={comment} setComments={setComments} />
       </div>
     </div>
   );

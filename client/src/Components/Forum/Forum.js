@@ -94,7 +94,10 @@ function Forum({ forum, title }) {
                   )}
                 </div>
               ) : (
-                <Members members={forum.members} />
+                <Members
+                  members={forum.members}
+                  moderators={forum.moderators}
+                />
               )}
             </div>
           ) : (

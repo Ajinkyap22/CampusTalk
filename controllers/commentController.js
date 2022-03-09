@@ -4,7 +4,8 @@ const { body, validationResult } = require("express-validator");
 
 // get all comments
 exports.comments = function (req, res) {
-  Comment.find()
+  Comment.find({ post: req.params.postId })
+    .sort({ timestamp: -1 })
     .populate("author")
     .exec((err, comments) => {
       if (err) return res.json(err);
@@ -41,6 +42,7 @@ exports.create_comment = function (req, res) {
       file,
       author: req.body.authorId,
       originalFileName: filename,
+      post: req.body.postId,
     },
     async (err, comment) => {
       if (err) return res.json(err);
@@ -196,7 +198,6 @@ exports.undownvote_comment = function (req, res) {
   )
 
     .populate("author")
-    .populate("forum")
     .exec((err, comment) => {
       if (err) return res.json(err);
 

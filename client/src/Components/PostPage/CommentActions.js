@@ -32,7 +32,81 @@ function CommentActions({ comment, setComments, forumId, postId }) {
     };
 
     if (upvoted) {
+      axios
+        .put(
+          `/api/forums/${forumId}/posts/${postId}/comments/${comment._id}/unupvote`,
+          { id: user._id },
+          headers
+        )
+        .then((res) => {
+          updateComments(res.data);
+          setUpvoted(false);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     } else {
+      axios
+        .put(
+          `/api/forums/${forumId}/posts/${postId}/comments/${comment._id}/upvote`,
+          {
+            id: user._id,
+          },
+          headers
+        )
+        .then((res) => {
+          updateComments(res.data);
+          setUpvoted(true);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  }
+
+  function handleDownvote() {
+    if (!user) return;
+
+    let headers = {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(localStorage.getItem("user"))?.token
+        }`,
+      },
+    };
+
+    if (downvoted) {
+      axios
+        .put(
+          `/api/forums/${forumId}/posts/${postId}/comments/${comment._id}/undownvote`,
+          { id: user._id },
+          headers
+        )
+        .then((res) => {
+          console.log(res.data);
+          updateComments(res.data);
+          setDownvoted(false);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    } else {
+      axios
+        .put(
+          `/api/forums/${forumId}/posts/${postId}/comments/${comment._id}/downvote`,
+          {
+            id: user._id,
+          },
+          headers
+        )
+        .then((res) => {
+          console.log(res.data);
+          updateComments(res.data);
+          setDownvoted(true);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     }
   }
 
@@ -45,7 +119,7 @@ function CommentActions({ comment, setComments, forumId, postId }) {
   return (
     <div className="mx-2 inline">
       {/* upvote */}
-      <button title="Upvote Comment">
+      <button title="Upvote Comment" onClick={handleUpvote}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -70,7 +144,7 @@ function CommentActions({ comment, setComments, forumId, postId }) {
       </span>
 
       {/* downvote */}
-      <button title="Downvote Comment">
+      <button title="Downvote Comment" onClick={handleDownvote}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"

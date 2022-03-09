@@ -21,33 +21,31 @@ function useOutsideAlerter(ref, setShowDropdown) {
 }
 
 function CommentOptions({
+  moderators,
   forumId,
   postId,
   commentId,
   showOptions,
   setShowOptions,
-  author,
   comments,
   setComments,
+  isAuthor,
+  user,
+  setUser,
 }) {
   const wrapperRef = useRef(null);
-  const [user, setUser] = useContext(UserContext);
-  const [isAuthor, setIsAuthor] = useState(false);
   const [posts, setPosts] = useContext(PostContext);
+  const [isModerator, setIsModerator] = useState(false);
+
   useOutsideAlerter(wrapperRef, setShowOptions);
 
   useEffect(() => {
-    // check if author is the same as user
-    if (user && user._id === author._id) {
-      setIsAuthor(true);
+    if (moderators.includes(user._id)) {
+      setIsModerator(true);
     } else {
-      setIsAuthor(false);
+      setIsModerator(false);
     }
-
-    return () => {
-      setIsAuthor(false);
-    };
-  }, [user, author]);
+  }, [moderators, user]);
 
   function deleteComment() {
     let headers = {
@@ -97,7 +95,7 @@ function CommentOptions({
         {/* delete comment */}
         <li
           className="p-1.5 text-sm"
-          hidden={!isAuthor}
+          hidden={!isAuthor && !isModerator}
           onClick={deleteComment}
         >
           <button>
