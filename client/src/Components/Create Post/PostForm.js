@@ -116,7 +116,7 @@ function PostForm({
     formData.append("text", text);
     formData.append("anonymous", anonymous);
     formData.append("important", important);
-    formData.append("forumId", forum._id);
+    formData.append("forumId", forum._id || forum);
     formData.append("authorId", user._id);
     // if file is an array, add each file to formData
     if (file instanceof Array) {
@@ -131,7 +131,6 @@ function PostForm({
       formData.append("originalFileNames", JSON.stringify(originalFile));
     });
 
-    // if fileType is image or null
     apiRequests(formData, headers);
   }
 
@@ -219,7 +218,6 @@ function PostForm({
             headers
           )
           .then((res) => {
-            console.log(res.data);
             onSuccess(res.data);
           })
           .catch((err) => {
@@ -350,7 +348,7 @@ function PostForm({
       <div className="absolute right-3 bottom-2.5">
         <Link
           to="/feed"
-          className=" text-primary  border border-primary mx-1 p-1.5 px-4 rounded-full text-sm hover:bg-primary hover:text-white"
+          className=" text-primary border border-primary mx-1 p-1.5 px-4 rounded-full text-sm hover:bg-primary hover:text-white"
         >
           Cancel
         </Link>

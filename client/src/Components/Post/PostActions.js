@@ -143,7 +143,7 @@ function PostActions({
 
         <span className="text-sm">{upvotes.length - downvotes.length}</span>
 
-        <button onClick={handleDownvote} title="Upvote Post">
+        <button onClick={handleDownvote} title="Downvote Post">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"

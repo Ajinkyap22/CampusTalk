@@ -34,7 +34,6 @@ function PostInfo({ postId, author, forum, timestamp, anonymous, important }) {
           className="rounded-full inline h-10 mx-1"
         />
       )}
-
       <div className="mx-1 relative">
         {/* user name */}
         <span className="text-sm">

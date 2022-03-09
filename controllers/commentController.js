@@ -62,6 +62,8 @@ exports.create_comment = [
           .exec((err, post) => {
             if (err) return res.json(err);
 
+            console.log(post);
+
             return res.json({ comment: newComment, post });
           });
       }

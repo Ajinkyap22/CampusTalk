@@ -11,11 +11,11 @@ function CreatePost({ title, post, ...props }) {
   const [forum, setForum] = useState(null);
   const [file, setFile] = useState(null);
   const [text, setText] = useState("");
+  const [originalFileNames, setOriginalFileNames] = useState([]);
+  const [isEditing, setIsEditing] = useState(false);
   const [anonymous, setAnonymous] = useState(false);
   const [important, setImportant] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [originalFileNames, setOriginalFileNames] = useState([]);
-  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     // if post is undefined or null

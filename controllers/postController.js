@@ -9,6 +9,7 @@ exports.posts = function (req, res) {
     .sort({ timestamp: -1 })
     .populate("author")
     .populate("forum")
+    .populate("comments")
     .exec((err, posts) => {
       if (err) return res.json(err);
 
@@ -95,10 +96,10 @@ exports.create_post = function (req, res) {
 exports.create_doc_post = function (req, res) {
   const fileNames = [];
 
+  console.log(req.body);
+
   if (req.body.originalFileNames) {
-    req.body.originalFileNames.forEach((originalFile) => {
-      fileNames.push(JSON.parse(originalFile));
-    });
+    fileNames.push(JSON.parse(req.body.originalFileNames));
   }
 
   Post.create(
@@ -114,7 +115,8 @@ exports.create_doc_post = function (req, res) {
     async (err, post) => {
       if (err) return res.json(err);
 
-      const newPost = await Post.populate(post, { path: "author" });
+      let newPost = await Post.populate(post, { path: "author" });
+      newPost = await Post.populate(post, { path: "forum" });
 
       // update forum
       Forum.findByIdAndUpdate(
@@ -171,13 +173,11 @@ exports.delete_post = function (req, res) {
 
 exports.update_post = function (req, res) {
   let fileNames = [];
-  let files;
+  let files = [];
 
   // if req.body.file is an array
   if (Array.isArray(req.body.file)) {
     files = [...req.body.file];
-  } else {
-    files = [req.file.filename];
   }
 
   if (req.files?.length) {
@@ -195,16 +195,27 @@ exports.update_post = function (req, res) {
     fileNames = [JSON.parse(req.body.originalFileNames)];
   }
 
+  let set = {
+    text: req.body.text || "",
+    anonymous: req.body.anonymous || false,
+    originalFileNames: fileNames || [],
+    important: req.body.important || false,
+  };
+
+  console.log(req.body, req.file, req.files);
+
+  if (Array.isArray(req.body.file) || req.files?.length) {
+    set.file = files;
+  }
+
+  if (req.file) {
+    set.file = req.file.filename;
+  }
+
   Post.findByIdAndUpdate(
     req.params.postId,
     {
-      $set: {
-        text: req.body.text || "",
-        anonymous: req.body.anonymous || false,
-        file: files || req.body.file || "",
-        originalFileNames: fileNames || [],
-        important: req.body.important || false,
-      },
+      $set: set,
     },
     { new: true }
   )
