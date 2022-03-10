@@ -17,12 +17,12 @@ function Members({
     let moderatorsHashMap = {};
 
     moderators.forEach((moderator) => {
-      moderatorsHashMap[moderator] = true;
+      moderatorsHashMap[moderator._id] = true;
     });
 
     // update the state
     setModeratorsList(moderatorsHashMap);
-  }, []);
+  }, [moderators]);
 
   return (
     <div className="bg-white shadow-base min-w-[32rem] rounded">

@@ -7,6 +7,8 @@ function PostFile({ post, handleBack }) {
   const [currentFile, setCurrentFile] = useState(0);
 
   useEffect(() => {
+    if (!post.file.length || post.originalFileNames.length) return;
+
     if (post.originalFileNames[currentFile].type === "image") {
       setFolder("images");
     } else if (post.originalFileNames[currentFile].type === "video") {
@@ -41,7 +43,11 @@ function PostFile({ post, handleBack }) {
           currentFile={currentFile}
           setCurrentFile={setCurrentFile}
         />
-      ) : null}
+      ) : (
+        <p className="text-white text-lg text-center relative top-[45%]">
+          This post does not contain any media.
+        </p>
+      )}
 
       {/* back button */}
       <button
@@ -66,6 +72,7 @@ function PostFile({ post, handleBack }) {
       <button
         onClick={handleDownload}
         className="absolute right-5 top-4 bg-[rgba(255,255,255,0.2)] p-1 rounded-full"
+        hidden={!post.file.length}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

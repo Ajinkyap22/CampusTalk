@@ -17,7 +17,7 @@ function PostPage({ post, title, ...props }) {
   }, []);
 
   return (
-    <main className="grid grid-cols-4 overflow-hidden">
+    <main className="grid grid-cols-4 overflow-hidden h-full">
       <PostFile post={post} handleBack={handleBack} />
 
       {/* post info */}

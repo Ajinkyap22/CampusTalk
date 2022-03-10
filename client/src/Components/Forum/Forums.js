@@ -10,6 +10,7 @@ function Forums({ title }) {
   const [user] = useContext(UserContext);
   const [forums, setForums] = useState([]);
   const [forumsTab, setForumsTab] = useState("userForums");
+  const [userForums, setUserForums] = useState([]);
 
   useEffect(() => {
     document.title = title || `Your Forums | CampusTalk`;

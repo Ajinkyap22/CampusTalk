@@ -66,30 +66,61 @@ exports.create_post = function (req, res) {
         req.body.forumId,
         {
           $push: {
-            posts: post._id,
+            postRequests: post._id,
           },
         },
         { new: true }
       ).exec((err) => {
         if (err) return res.json(err);
 
-        // update user posts
-        User.findByIdAndUpdate(
-          req.body.authorId,
-          {
-            $push: {
-              posts: post._id,
-            },
-          },
-          { new: true }
-        ).exec((err) => {
-          if (err) return res.json(err);
-
-          return res.json(newPost);
-        });
+        return newPost;
       });
     }
   );
+};
+
+// approve post
+exports.approve_post = function (req, res) {
+  // pull the post from postRequests array & push it in posts array of forum
+  Forum.findByIdAndUpdate(
+    req.params.forumId,
+    {
+      $pull: {
+        postRequests: req.params.postId,
+      },
+      $push: {
+        posts: req.params.postId,
+      },
+    },
+    { new: true }
+  )
+    .populate("posts")
+    .exec((err, forum) => {
+      if (err) return res.json(err);
+
+      // get post & populate author & forum fields
+      Post.findById(req.params.postId)
+        .populate("author")
+        .populate("forum")
+        .exec((err, post) => {
+          if (err) return res.json(err);
+
+          // update user posts
+          User.findByIdAndUpdate(
+            req.body.authorId,
+            {
+              $push: {
+                posts: post._id,
+              },
+            },
+            { new: true }
+          ).exec((err) => {
+            if (err) return res.json(err);
+
+            return res.json(post);
+          });
+        });
+    });
 };
 
 // create post with a document or video

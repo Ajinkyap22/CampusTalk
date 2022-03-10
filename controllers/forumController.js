@@ -6,6 +6,7 @@ const { body, validationResult } = require("express-validator");
 exports.forums = function (req, res) {
   Forum.find()
     .populate("members")
+    .populate("moderators")
     .exec((err, forums) => {
       if (err) return res.json(err);
 
@@ -227,6 +228,7 @@ exports.remove_member = function (req, res) {
     {
       $pull: {
         members: req.body.id,
+        moderators: req.body.id,
       },
     },
     { new: true }

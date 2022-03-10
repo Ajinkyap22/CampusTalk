@@ -164,7 +164,7 @@ function CommentActions({ comment, setComments, forumId, postId }) {
         </svg>
       </button>
 
-      <button className="text-mxs mx-2 hover:underline">Reply</button>
+      {/* <button className="text-mxs mx-2 hover:underline">Reply</button> */}
 
       {/* timestamp */}
       <span className="text-xs text-secondary mx-2">

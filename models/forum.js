@@ -12,6 +12,8 @@ const ForumSchema = new Schema({
   members: [{ type: Schema.Types.ObjectId, ref: "User" }],
   moderators: [{ type: Schema.Types.ObjectId, ref: "User" }],
   posts: [{ type: Schema.Types.ObjectId, ref: "Post" }],
+  postRequests: [{ type: Schema.Types.ObjectId, ref: "Post" }],
+  joinRequests: [{ type: Schema.Types.ObjectId, ref: "User" }],
   timestamp: { type: Date, default: Date.now },
 });
 

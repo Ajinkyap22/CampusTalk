@@ -97,6 +97,7 @@ function Forum({ forum, title }) {
     axios
       .post(`/api/forums/${forum._id}/moderators/make`, body, headers)
       .then((res) => {
+        console.log(res.data, forums);
         let newForums = [...forums];
         newForums = newForums.map((f) =>
           f._id === forum._id ? { ...forum, moderators: res.data } : f
@@ -127,6 +128,7 @@ function Forum({ forum, title }) {
     axios
       .post(`/api/forums/${forum._id}/moderators/dismiss`, body, headers)
       .then((res) => {
+        console.log(res.data, forums);
         let newForums = [...forums];
         newForums = newForums.map((f) =>
           f._id === forum._id ? { ...forum, moderators: res.data } : f

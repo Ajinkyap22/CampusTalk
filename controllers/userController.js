@@ -36,7 +36,10 @@ exports.login_post = function (req, res) {
         if (err) return res.status(400).json(err);
 
         User.findById(user._id)
-          .populate("forums")
+          .populate({
+            path: "forums",
+            populate: { path: "members moderators" },
+          })
           .exec((err, user) => {
             if (err) return res.json(err);
 
@@ -104,7 +107,10 @@ exports.signup_post = [
             if (err) return next(err);
 
             User.findById(user._id)
-              .populate("forums")
+              .populate({
+                path: "forums",
+                populate: { path: "members moderators" },
+              })
               .exec((err, user) => {
                 if (err) return res.json(err);
 
@@ -164,7 +170,10 @@ exports.google = async function (req, res) {
           if (err) return res.status(400).json(err);
 
           User.findById(user._id)
-            .populate("forums")
+            .populate({
+              path: "forums",
+              populate: { path: "members moderators" },
+            })
             .exec((err, user) => {
               if (err) return res.json(err);
 

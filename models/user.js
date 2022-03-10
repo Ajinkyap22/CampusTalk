@@ -10,6 +10,7 @@ const UserSchema = new Schema({
   posts: { type: Array, default: [] },
   comments: { type: Array, default: [] },
   forums: [{ type: Schema.Types.ObjectId, ref: "Forum" }],
+  notifications: [{ type: Schema.Types.ObjectId, ref: "Notification" }],
   timestamp: { type: Date, default: Date.now },
 });
 
