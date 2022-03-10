@@ -86,19 +86,21 @@ function App() {
             />
 
             {/* forum page */}
-            {forums.map((forum, i) => (
-              <Route
-                exact
-                path={`/forums/${forum._id}`}
-                key={i}
-                render={() => (
-                  <Forum
-                    title={`${forum.forumName} | CampusTalk`}
-                    forum={forum}
-                  />
-                )}
-              />
-            ))}
+            {forums.map((forum, i) => {
+              return (
+                <Route
+                  exact
+                  path={`/forums/${forum._id}`}
+                  key={i}
+                  render={() => (
+                    <Forum
+                      title={`${forum.forumName} | CampusTalk`}
+                      forum={forum}
+                    />
+                  )}
+                />
+              );
+            })}
 
             {/* Create post */}
             <Route

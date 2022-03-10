@@ -258,7 +258,8 @@ exports.make_moderator = function (req, res) {
   Forum.findByIdAndUpdate(
     req.params.id,
     {
-      $push: {
+      // push only if not already in array
+      $addToSet: {
         moderators: req.body.id,
         members: req.body.id,
       },
@@ -269,22 +270,7 @@ exports.make_moderator = function (req, res) {
     .exec((err, forum) => {
       if (err) return res.json(err);
 
-      // add forum to user's joined forums
-      User.findByIdAndUpdate(
-        req.body.id,
-        {
-          $push: {
-            forums: forum._id,
-          },
-        },
-        { new: true },
-
-        (err, user) => {
-          if (err) return res.json(err);
-
-          return res.json(forum);
-        }
-      );
+      return res.json(forum.moderators);
     });
 };
 

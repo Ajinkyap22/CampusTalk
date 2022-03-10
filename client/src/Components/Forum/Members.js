@@ -1,9 +1,16 @@
 import { useState, useEffect, useContext } from "react";
 import { UserContext } from "../../Contexts/UserContext";
 
-function Members({ members, moderators }) {
+function Members({
+  members,
+  moderators,
+  removeMember,
+  makeModerator,
+  dismissModerator,
+}) {
   const [moderatorsList, setModeratorsList] = useState({});
   const [user, setUser] = useContext(UserContext);
+  const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
     // create a hashmap of moderators
@@ -17,8 +24,6 @@ function Members({ members, moderators }) {
     setModeratorsList(moderatorsHashMap);
   }, []);
 
-  function removeMember() {}
-
   return (
     <div className="bg-white shadow-base min-w-[32rem] rounded">
       {members.map((member, i) => (
@@ -26,7 +31,7 @@ function Members({ members, moderators }) {
           className="flex border-b justify-between items-center w-full p-2.5"
           key={i}
         >
-          <div className="mr-2">
+          <div className="flex items-center">
             {/* image */}
             {member.picture ? (
               <img
@@ -72,11 +77,33 @@ function Members({ members, moderators }) {
             )}
           </div>
 
-          {/* remove member */}
+          {/* make moderator */}
           {moderatorsList[user._id] && member._id !== user._id && (
-            <button className="bg-red-500 p-1 px-2 text-sm rounded-full text-white mx-1">
-              Remove
-            </button>
+            <div className="flex items-center">
+              {moderatorsList[member._id] ? (
+                <button
+                  className="border border-primary-light p-1 px-2 text-xs rounded-full text-primary mx-1 hover:bg-primary hover:text-white"
+                  onClick={() => dismissModerator(member)}
+                >
+                  Dismiss Moderator
+                </button>
+              ) : (
+                <button
+                  onClick={() => makeModerator(member)}
+                  className="border border-primary-light p-1 px-2 text-xs rounded-full text-primary mx-1 hover:bg-primary hover:text-white"
+                >
+                  Make Moderator
+                </button>
+              )}
+
+              {/* remove member */}
+              <button
+                className="border border-red-500 p-1 px-1.5 rounded-full text-xs text-red-500 mx-1 hover:bg-red-500 hover:text-white"
+                onClick={() => removeMember(member)}
+              >
+                Remove
+              </button>
+            </div>
           )}
         </div>
       ))}

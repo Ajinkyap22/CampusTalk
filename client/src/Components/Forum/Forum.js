@@ -1,3 +1,4 @@
+import { ForumContext } from "../../Contexts/ForumContext";
 import { TabContext } from "../../Contexts/TabContext";
 import { UserContext } from "../../Contexts/UserContext";
 import { PostContext } from "../../Contexts/PostContext";
@@ -13,15 +14,18 @@ import TabToggle from "./TabToggle";
 import Members from "./Members";
 import LeaveModal from "./LeaveModal";
 import LogoCropped from "../LogoCropped";
+import Toast from "../Toast";
 
 function Forum({ forum, title }) {
   const [activeTab, setActiveTab] = useContext(TabContext);
   const [user] = useContext(UserContext);
+  const [forums, setForums] = useContext(ForumContext);
   const [activeFilter, setActiveFilter] = useState("latest");
   const [dateRange, setDateRange] = useState("Today");
   const [posts, setPosts] = useContext(PostContext);
   const [tab, setTab] = useState("posts");
   const [showModal, setShowModal] = useState(false);
+  const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
     document.title = title || `${forum.forumName} | CampusTalk`;
@@ -46,6 +50,96 @@ function Forum({ forum, title }) {
       document.body.style.overflow = "visible";
     }
   }, [showModal]);
+
+  function removeMember(member) {
+    let headers = {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(localStorage.getItem("user"))?.token
+        }`,
+      },
+    };
+
+    let body = {
+      id: member._id,
+    };
+
+    axios
+      .post(`/api/forums/${forum._id}/members/delete`, body, headers)
+      .then((res) => {
+        let newForums = [...forums];
+        newForums = newForums.map((f) =>
+          f._id === forum._id ? { ...forum, members: res.data } : f
+        );
+
+        setForums(newForums);
+
+        setShowToast(true);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  function makeModerator(member) {
+    let headers = {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(localStorage.getItem("user"))?.token
+        }`,
+      },
+    };
+
+    let body = {
+      id: member._id,
+    };
+
+    axios
+      .post(`/api/forums/${forum._id}/moderators/make`, body, headers)
+      .then((res) => {
+        let newForums = [...forums];
+        newForums = newForums.map((f) =>
+          f._id === forum._id ? { ...forum, moderators: res.data } : f
+        );
+
+        setForums(newForums);
+
+        setShowToast(true);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  function dismissModerator(member) {
+    let headers = {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(localStorage.getItem("user"))?.token
+        }`,
+      },
+    };
+
+    let body = {
+      id: member._id,
+    };
+
+    axios
+      .post(`/api/forums/${forum._id}/moderators/dismiss`, body, headers)
+      .then((res) => {
+        let newForums = [...forums];
+        newForums = newForums.map((f) =>
+          f._id === forum._id ? { ...forum, moderators: res.data } : f
+        );
+
+        setForums(newForums);
+
+        setShowToast(true);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
 
   return (
     <main className="w-full min-h-full flex flex-col items-center overflow-auto bg-[#F0F2F5] relative">
@@ -97,6 +191,9 @@ function Forum({ forum, title }) {
                 <Members
                   members={forum.members}
                   moderators={forum.moderators}
+                  removeMember={removeMember}
+                  makeModerator={makeModerator}
+                  dismissModerator={dismissModerator}
                 />
               )}
             </div>
@@ -151,6 +248,8 @@ function Forum({ forum, title }) {
         className="w-full h-full absolute bg-[rgba(0,0,0,0.7)]"
         hidden={!showModal}
       ></div>
+
+      <Toast text="Removed member successfully." show={showToast} />
     </main>
   );
 }
