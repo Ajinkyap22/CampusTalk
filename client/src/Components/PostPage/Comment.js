@@ -17,6 +17,7 @@ function Comment({
   const [showOptions, setShowOptions] = useState(false);
   const [isAuthor, setIsAuthor] = useState(false);
   const [user, setUser] = useContext(UserContext);
+  const [isModerator, setIsModerator] = useState(false);
 
   useEffect(() => {
     // check if author is the same as user
@@ -30,6 +31,14 @@ function Comment({
       setIsAuthor(false);
     };
   }, [user, comment.author]);
+
+  useEffect(() => {
+    if (moderators.includes(user._id)) {
+      setIsModerator(true);
+    } else {
+      setIsModerator(false);
+    }
+  }, [moderators, user]);
 
   function toggleOptions() {
     setShowOptions(!showOptions);
@@ -73,7 +82,7 @@ function Comment({
             className="absolute top-1 right-3"
             title="Options"
             onClick={toggleOptions}
-            hidden={!isAuthor}
+            hidden={!isAuthor && !isModerator}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -98,7 +107,7 @@ function Comment({
             isAuthor={isAuthor}
             user={user}
             setUser={setUser}
-            moderators={moderators}
+            isModerator={isModerator}
           />
         </div>
 

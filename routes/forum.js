@@ -36,6 +36,15 @@ router.delete("/:id/rules/delete", verifyToken, forumController.delete_rules);
 // join forum
 router.post("/:id/join", verifyToken, forumController.join_forum);
 
+// approve join request
+router.put("/:id/approve_join/", verifyToken, forumController.approve_request);
+
+// reject join request
+router.put("/:id/reject_join/", verifyToken, forumController.reject_request);
+
+// get all join requests
+router.get("/:id/join_requests", forumController.get_join_requests);
+
 // get members
 router.get("/:id/members", forumController.get_members);
 

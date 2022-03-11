@@ -13,6 +13,7 @@ const PostSchema = new Schema({
   downvotes: [{ type: Schema.Types.ObjectId, ref: "User" }],
   pinned: { type: Boolean, default: false },
   timestamp: { type: Date, default: Date.now },
+  approved: { type: Boolean, default: false },
   important: { type: Boolean, default: false },
 });
 

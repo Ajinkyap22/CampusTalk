@@ -7,6 +7,9 @@ const verifyToken = require("../config/verifyToken");
 // get all posts
 router.get("/", postController.posts);
 
+// get all unapproved posts
+router.get("/postRequests", postController.unapproved_posts);
+
 // get single post
 router.get("/:id", postController.get_post);
 
@@ -36,6 +39,12 @@ router.post(
 
 // delete a post
 router.delete("/delete/:postId", verifyToken, postController.delete_post);
+
+// approve a post
+router.put("/approve/:postId", verifyToken, postController.approve_post);
+
+// reject a post
+router.put("/reject/:postId", verifyToken, postController.reject_post);
 
 // update a post
 router.put(

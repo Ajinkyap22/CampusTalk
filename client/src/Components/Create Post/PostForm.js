@@ -153,36 +153,9 @@ function PostForm({
 
     if (isEditing) {
       onEditingSuccess(res);
-    } else {
-      onPostSuccess(res);
     }
 
     setIsEditing(false);
-  }
-
-  function onPostSuccess(res) {
-    // add post to user's posts
-    setUser({
-      ...user,
-      posts: [...user.posts, res],
-    });
-
-    const newForums = forums.map((forum) => {
-      if (forum._id === res.forum._id) {
-        return {
-          ...forum,
-          posts: [...forum.posts, res],
-        };
-      } else {
-        return forum;
-      }
-    });
-
-    // add post to forum's posts
-    setForums(newForums);
-
-    // add post to posts
-    setPosts([...posts, res]);
   }
 
   function onEditingSuccess(res) {
@@ -218,6 +191,7 @@ function PostForm({
             headers
           )
           .then((res) => {
+            console.log(res.data);
             onSuccess(res.data);
           })
           .catch((err) => {

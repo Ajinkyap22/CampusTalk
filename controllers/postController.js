@@ -5,7 +5,22 @@ const User = require("../models/user");
 // get all posts
 exports.posts = function (req, res) {
   // find posts by forum & sort by date
-  Post.find({ forum: req.params.id })
+  Post.find({ forum: req.params.id, approved: true })
+    .sort({ timestamp: -1 })
+    .populate("author")
+    .populate("forum")
+    .populate("comments")
+    .exec((err, posts) => {
+      if (err) return res.json(err);
+
+      return res.json(posts);
+    });
+};
+
+// get all unapproved posts
+exports.unapproved_posts = function (req, res) {
+  // find posts by forum & sort by date
+  Post.find({ forum: req.params.id, approved: false })
     .sort({ timestamp: -1 })
     .populate("author")
     .populate("forum")
@@ -61,73 +76,14 @@ exports.create_post = function (req, res) {
 
       newPost = await Post.populate(post, { path: "forum" });
 
-      // update forum
-      Forum.findByIdAndUpdate(
-        req.body.forumId,
-        {
-          $push: {
-            postRequests: post._id,
-          },
-        },
-        { new: true }
-      ).exec((err) => {
-        if (err) return res.json(err);
-
-        return newPost;
-      });
+      return res.json(newPost);
     }
   );
-};
-
-// approve post
-exports.approve_post = function (req, res) {
-  // pull the post from postRequests array & push it in posts array of forum
-  Forum.findByIdAndUpdate(
-    req.params.forumId,
-    {
-      $pull: {
-        postRequests: req.params.postId,
-      },
-      $push: {
-        posts: req.params.postId,
-      },
-    },
-    { new: true }
-  )
-    .populate("posts")
-    .exec((err, forum) => {
-      if (err) return res.json(err);
-
-      // get post & populate author & forum fields
-      Post.findById(req.params.postId)
-        .populate("author")
-        .populate("forum")
-        .exec((err, post) => {
-          if (err) return res.json(err);
-
-          // update user posts
-          User.findByIdAndUpdate(
-            req.body.authorId,
-            {
-              $push: {
-                posts: post._id,
-              },
-            },
-            { new: true }
-          ).exec((err) => {
-            if (err) return res.json(err);
-
-            return res.json(post);
-          });
-        });
-    });
 };
 
 // create post with a document or video
 exports.create_doc_post = function (req, res) {
   const fileNames = [];
-
-  console.log(req.body);
 
   if (req.body.originalFileNames) {
     fileNames.push(JSON.parse(req.body.originalFileNames));
@@ -150,21 +106,65 @@ exports.create_doc_post = function (req, res) {
       newPost = await Post.populate(post, { path: "forum" });
 
       // update forum
-      Forum.findByIdAndUpdate(
-        req.body.forumId,
-        {
-          $push: {
-            posts: post._id,
-          },
-        },
-        { new: true }
-      ).exec((err) => {
-        if (err) return res.json(err);
-
-        return res.json(newPost);
-      });
+      return newPost;
     }
   );
+};
+
+// approve post
+exports.approve_post = function (req, res) {
+  Forum.findByIdAndUpdate(
+    req.params.id,
+    {
+      $push: {
+        posts: req.params.postId,
+      },
+    },
+    { new: true }
+  )
+    .populate("posts")
+    .exec((err) => {
+      if (err) return res.json(err);
+
+      // set post approved to true & populate author & forum fields
+      Post.findByIdAndUpdate(
+        req.params.postId,
+        {
+          approved: true,
+        },
+        { new: true }
+      )
+        .populate("author")
+        .populate("forum")
+        .populate("comments")
+        .exec((err, post) => {
+          if (err) return res.json(err);
+
+          // update user posts
+          User.findByIdAndUpdate(
+            req.body.authorId,
+            {
+              $push: {
+                posts: post._id,
+              },
+            },
+            { new: true }
+          ).exec((err) => {
+            if (err) return res.json(err);
+
+            return res.json(post);
+          });
+        });
+    });
+};
+
+// reject post
+exports.reject_post = function (req, res) {
+  Post.findByIdAndRemove(req.params.postId, (err) => {
+    if (err) return res.json(err);
+
+    return res.json({ message: "Post rejected" });
+  });
 };
 
 // delete a post

@@ -39,7 +39,7 @@ function PostActions({
     if (upvoted) {
       axios
         .put(
-          `/api/forums/${forumId}/posts/${id}/unupvote`,
+          `/api/forums/${forumId}/posts/unupvote/${id}`,
           { id: user._id },
           headers
         )

@@ -1,11 +1,11 @@
 import { UserContext } from "../../Contexts/UserContext";
 import { useContext } from "react";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import LogoCropped from "../LogoCropped";
 import moment from "moment";
 import axios from "axios";
 
-function ForumInfo({ forum, showModal, setShowModal, ...props }) {
+function ForumInfo({ forum, showModal, setShowModal, requestSent, ...props }) {
   const [user, setUser] = useContext(UserContext);
 
   function joinForum() {
@@ -100,9 +100,12 @@ function ForumInfo({ forum, showModal, setShowModal, ...props }) {
       {/* buttons */}
       {user && user.forums.some((userForum) => userForum._id === forum._id) ? (
         <div>
-          <button className="mx-auto w-1/2 block p-2 py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-primary-light bg-primary-light text-white rounded-full hover:bg-blue-700">
+          <Link
+            to="/create-post"
+            className="mx-auto text-center w-1/2 block p-2 py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-primary-light bg-primary-light text-white rounded-full hover:bg-blue-700"
+          >
             Create Post
-          </button>
+          </Link>
 
           <button
             onClick={toggleModal}
@@ -113,12 +116,22 @@ function ForumInfo({ forum, showModal, setShowModal, ...props }) {
         </div>
       ) : (
         <div>
-          <button
-            onClick={joinForum}
-            className="mx-auto w-1/2 block p-2 py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-primary-light bg-primary-light text-white rounded-full hover:bg-blue-700"
-          >
-            Join Forum
-          </button>
+          {requestSent ? (
+            <button
+              onClick={joinForum}
+              disabled
+              className="mx-auto w-1/2 block p-2 py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-primary-light bg-primary-light text-white rounded-full"
+            >
+              Request Pending
+            </button>
+          ) : (
+            <button
+              onClick={joinForum}
+              className="mx-auto w-1/2 block p-2 py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-primary-light bg-primary-light text-white rounded-full hover:bg-blue-700"
+            >
+              Join Forum
+            </button>
+          )}
         </div>
       )}
     </div>

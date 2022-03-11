@@ -21,7 +21,6 @@ function useOutsideAlerter(ref, setShowDropdown) {
 }
 
 function CommentOptions({
-  moderators,
   forumId,
   postId,
   commentId,
@@ -32,20 +31,12 @@ function CommentOptions({
   isAuthor,
   user,
   setUser,
+  isModerator,
 }) {
   const wrapperRef = useRef(null);
   const [posts, setPosts] = useContext(PostContext);
-  const [isModerator, setIsModerator] = useState(false);
 
   useOutsideAlerter(wrapperRef, setShowOptions);
-
-  useEffect(() => {
-    if (moderators.includes(user._id)) {
-      setIsModerator(true);
-    } else {
-      setIsModerator(false);
-    }
-  }, [moderators, user]);
 
   function deleteComment() {
     let headers = {
@@ -112,7 +103,7 @@ function CommentOptions({
                 d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
               />
             </svg>
-            Delete Post
+            Delete Comment
           </button>
         </li>
       </ul>

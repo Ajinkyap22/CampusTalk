@@ -50,7 +50,7 @@ exports.create_comment = function (req, res) {
       const newComment = await Comment.populate(comment, { path: "author" });
 
       Post.findByIdAndUpdate(
-        req.body.commentId,
+        req.body.postId,
         {
           $push: {
             comments: comment._id,
@@ -62,8 +62,6 @@ exports.create_comment = function (req, res) {
         .populate("comments")
         .exec((err, post) => {
           if (err) return res.json(err);
-
-          console.log(post);
 
           return res.json({ comment: newComment, post });
         });
@@ -120,6 +118,8 @@ exports.delete_comment = function (req, res) {
       .populate("forum")
       .exec((err, post) => {
         if (err) return res.json(err);
+
+        console.log(req.params.postId);
 
         return res.json({ comment, post });
       });

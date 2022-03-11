@@ -1,10 +1,31 @@
+import { UserContext } from "../../Contexts/UserContext";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import moment from "moment";
 import Options from "./Options";
 
 function PostInfo({ postId, author, forum, timestamp, anonymous, important }) {
+  const [user] = useContext(UserContext);
   const [showOptions, setShowOptions] = useState(false);
+  const [isAuthor, setIsAuthor] = useState(false);
+  const [isModerator, setIsModerator] = useState(false);
+
+  useEffect(() => {
+    // check if author is the same as user
+    if (user && user._id === author._id) {
+      setIsAuthor(true);
+    } else {
+      setIsAuthor(false);
+    }
+  }, [user, author]);
+
+  useEffect(() => {
+    if (forum.moderators.includes(user._id)) {
+      setIsModerator(true);
+    } else {
+      setIsModerator(false);
+    }
+  }, [forum.moderators, user]);
 
   function toggleOptions() {
     setShowOptions(!showOptions);
@@ -74,9 +95,10 @@ function PostInfo({ postId, author, forum, timestamp, anonymous, important }) {
 
         {/* post options */}
         <button
-          className="absolute top-0 right-0"
+          className="absolute top-0 right-[-6px]"
           onClick={toggleOptions}
           title="Options"
+          hidden={!isAuthor && !isModerator}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -92,7 +114,8 @@ function PostInfo({ postId, author, forum, timestamp, anonymous, important }) {
         <Options
           showOptions={showOptions}
           setShowOptions={setShowOptions}
-          author={author}
+          // author={author}
+          isAuthor={isAuthor}
           postId={postId}
           forum={forum}
         />

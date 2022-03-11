@@ -21,31 +21,31 @@ function useOutsideAlerter(ref, setShowDropdown) {
   }, [ref]);
 }
 
-function Options({ postId, forum, showOptions, setShowOptions, author }) {
+function Options({ postId, forum, showOptions, setShowOptions, isAuthor }) {
   const wrapperRef = useRef(null);
   const [user, setUser] = useContext(UserContext);
-  const [isAuthor, setIsAuthor] = useState(false);
+  // const [isAuthor, setIsAuthor] = useState(false);
+  // const [isModerator, setIsModerator] = useState(false);
   const [forums, setForums] = useContext(ForumContext);
   const [posts, setPosts] = useContext(PostContext);
-  const [isModerator, setIsModerator] = useState(false);
   useOutsideAlerter(wrapperRef, setShowOptions);
 
-  useEffect(() => {
-    // check if author is the same as user
-    if (user && user._id === author._id) {
-      setIsAuthor(true);
-    } else {
-      setIsAuthor(false);
-    }
-  }, [user, author]);
+  // useEffect(() => {
+  //   // check if author is the same as user
+  //   if (user && user._id === author._id) {
+  //     setIsAuthor(true);
+  //   } else {
+  //     setIsAuthor(false);
+  //   }
+  // }, [user, author]);
 
-  useEffect(() => {
-    if (forum.moderators.includes(user._id)) {
-      setIsModerator(true);
-    } else {
-      setIsModerator(false);
-    }
-  }, [forum.moderators, user]);
+  // useEffect(() => {
+  //   if (forum.moderators.includes(user._id)) {
+  //     setIsModerator(true);
+  //   } else {
+  //     setIsModerator(false);
+  //   }
+  // }, [forum.moderators, user]);
 
   function deletePost() {
     let headers = {
@@ -114,7 +114,7 @@ function Options({ postId, forum, showOptions, setShowOptions, author }) {
         {/* delete post */}
         <li
           className="p-1.5 text-sm"
-          hidden={!isAuthor && !isModerator}
+          // hidden={!isAuthor && !isModerator}
           onClick={deletePost}
         >
           <button>
@@ -134,10 +134,10 @@ function Options({ postId, forum, showOptions, setShowOptions, author }) {
             Delete Post
           </button>
         </li>
-        <hr hidden={!isAuthor} />
+        {/* <hr hidden={!isAuthor} /> */}
 
         {/* save post */}
-        <li className="p-1.5 text-sm">
+        {/* <li className="p-1.5 text-sm">
           <button>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -156,7 +156,7 @@ function Options({ postId, forum, showOptions, setShowOptions, author }) {
             </svg>
             Save Post
           </button>
-        </li>
+        </li> */}
       </ul>
     </div>
   );

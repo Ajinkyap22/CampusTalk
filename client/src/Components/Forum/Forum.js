@@ -15,10 +15,12 @@ import Members from "./Members";
 import LeaveModal from "./LeaveModal";
 import LogoCropped from "../LogoCropped";
 import Toast from "../Toast";
+import PostRequests from "./PostRequests";
+import JoinRequests from "./JoinRequests";
 
 function Forum({ forum, title }) {
   const [activeTab, setActiveTab] = useContext(TabContext);
-  const [user] = useContext(UserContext);
+  const [user, setUser] = useContext(UserContext);
   const [forums, setForums] = useContext(ForumContext);
   const [activeFilter, setActiveFilter] = useState("latest");
   const [dateRange, setDateRange] = useState("Today");
@@ -26,6 +28,9 @@ function Forum({ forum, title }) {
   const [tab, setTab] = useState("posts");
   const [showModal, setShowModal] = useState(false);
   const [showToast, setShowToast] = useState(false);
+  const [isModerator, setIsModerator] = useState(false);
+  const [requestSent, setRequestSent] = useState(false);
+  const [joinRequests, setJoinRequests] = useState([]);
 
   useEffect(() => {
     document.title = title || `${forum.forumName} | CampusTalk`;
@@ -50,6 +55,30 @@ function Forum({ forum, title }) {
       document.body.style.overflow = "visible";
     }
   }, [showModal]);
+
+  useEffect(() => {
+    if (forum.moderators.find((moderator) => moderator._id === user._id)) {
+      setIsModerator(true);
+    } else {
+      setIsModerator(false);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (!user) return;
+
+    // get all join requests
+    axios.get(`/api/forums/${forum._id}/join_requests`).then((res) => {
+      setJoinRequests(res.data);
+
+      // chec if user is in the join requests
+      if (res.data.find((request) => request._id === user._id)) {
+        setRequestSent(true);
+      } else {
+        setRequestSent(false);
+      }
+    });
+  }, [user]);
 
   function removeMember(member) {
     let headers = {
@@ -151,51 +180,77 @@ function Forum({ forum, title }) {
       <section className="flex justify-between items-start md:w-[70%] mx-auto h-full">
         <div className="grid grid-cols-1 items-center max-w-[32rem] my-8 h-full">
           {/* tab */}
-          <TabToggle tab={tab} setTab={setTab} />
+          <TabToggle tab={tab} setTab={setTab} isModerator={isModerator} />
 
           {/* if user exists & is a member of the forum */}
           {user &&
           user.forums.some((userForum) => userForum._id === forum._id) ? (
             <div>
-              {tab === "posts" ? (
-                <div>
-                  {/* filters */}
-                  <Filter
+              {/* posts */}
+              <div hidden={tab !== "posts"}>
+                {/* filters */}
+                <Filter
+                  activeFilter={activeFilter}
+                  setActiveFilter={setActiveFilter}
+                  posts={posts}
+                  setPosts={setPosts}
+                  dateRange={dateRange}
+                  setDateRange={setDateRange}
+                />
+
+                {/* posts */}
+                {posts.map((post) => (
+                  <Post
+                    key={post._id}
+                    post={post}
                     activeFilter={activeFilter}
-                    setActiveFilter={setActiveFilter}
-                    posts={posts}
-                    setPosts={setPosts}
-                    dateRange={dateRange}
-                    setDateRange={setDateRange}
+                    range={dateRange}
                   />
+                ))}
 
-                  {/* posts */}
-                  {posts.map((post) => (
-                    <Post
-                      key={post._id}
-                      post={post}
-                      activeFilter={activeFilter}
-                      range={dateRange}
-                    />
-                  ))}
+                {/* if there are no posts */}
+                {posts.length === 0 && (
+                  <div className="text-center my-6">
+                    <LogoCropped color="rgba(98,98,98,0.9)" width="80" />
+                    <p className="text-gray-600 my-4">
+                      No posts yet. Be the first to post!
+                    </p>
+                  </div>
+                )}
+              </div>
 
-                  {/* if there are no posts */}
-                  {posts.length === 0 && (
-                    <div className="text-center my-6">
-                      <LogoCropped color="rgba(98,98,98,0.9)" width="80" />
-                      <p className="text-gray-600 my-4">
-                        No posts yet. Be the first to post!
-                      </p>
-                    </div>
-                  )}
-                </div>
-              ) : (
+              {/* members */}
+              {tab === "members" && (
                 <Members
                   members={forum.members}
                   moderators={forum.moderators}
                   removeMember={removeMember}
                   makeModerator={makeModerator}
                   dismissModerator={dismissModerator}
+                />
+              )}
+
+              {/* post requests */}
+              {tab === "postRequests" && isModerator && (
+                <PostRequests
+                  forum={forum}
+                  forums={forums}
+                  setForums={setForums}
+                  user={user}
+                  setUser={setUser}
+                />
+              )}
+
+              {/* join requests */}
+              {tab === "joinRequests" && isModerator && (
+                <JoinRequests
+                  forum={forum}
+                  forums={forums}
+                  setForums={setForums}
+                  user={user}
+                  setUser={setUser}
+                  joinRequests={joinRequests}
+                  setJoinRequests={setJoinRequests}
                 />
               )}
             </div>
@@ -216,10 +271,17 @@ function Forum({ forum, title }) {
               </svg>
 
               {/* text */}
-              <p className="my-4 text-gray-700">
-                You are not a member of this forum. Join the forum to view posts
-                & members.
-              </p>
+              {requestSent ? (
+                <p className="my-4 text-gray-700">
+                  Your request to join the forum has been sent. You will be able
+                  to see all the posts when it is accepted.
+                </p>
+              ) : (
+                <p className="my-4 text-gray-700">
+                  You are not a member of this forum. Join the forum to view
+                  posts & members.
+                </p>
+              )}
             </div>
           )}
         </div>
@@ -230,6 +292,7 @@ function Forum({ forum, title }) {
             forum={forum}
             showModal={showModal}
             setShowModal={setShowModal}
+            requestSent={requestSent}
           />
 
           {/* rules */}

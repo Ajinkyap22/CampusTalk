@@ -52,32 +52,32 @@ function JoinForum({ title, forums, setForums, ...props }) {
       id: user._id,
     };
 
-    let userForums = [];
-    let forumsData = [...forums];
+    // let userForums = [];
+    // let forumsData = [...forums];
 
     // send join requests to each selected forum after confirming rather than sending on selection & then cancelling
     joinList.forEach((forumId) => {
       axios
         .post(`/api/forums/${forumId}/join`, body, headers)
         .then((res) => {
+          console.log(res.data);
           // add forum to users forums
-          userForums.push(res.data);
-
+          // userForums.push(res.data);
           // push user in forum's mebers array
-          forumsData.map((forum) => {
-            if (forum._id === forumId) {
-              forum.members.push(user);
-            }
-            return forum;
-          });
+          // forumsData.map((forum) => {
+          //   if (forum._id === forumId) {
+          //     forum.members.push(user);
+          //   }
+          //   return forum;
+          // });
         })
         .catch((err) => {
           console.error(err);
         });
     });
 
-    setUser({ ...user, forums: userForums });
-    setForums(forumsData);
+    // setUser({ ...user, forums: userForums });
+    // setForums(forumsData);
   };
 
   return (

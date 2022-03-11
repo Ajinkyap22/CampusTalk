@@ -14,6 +14,10 @@ function List({ forums, forumsTab }) {
           <p className="text-center my-3 text-gray-700">
             You have not joined any forums yet.
           </p>
+          <p className="text-mxs w-1/3 mx-auto text-center my-3 text-gray-700">
+            (If you have joined a forum but don't see it here, it means your
+            request hasn't been accepted yet).
+          </p>
         </div>
       ) : (
         <table

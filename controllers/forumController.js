@@ -7,6 +7,7 @@ exports.forums = function (req, res) {
   Forum.find()
     .populate("members")
     .populate("moderators")
+    .populate("posts")
     .exec((err, forums) => {
       if (err) return res.json(err);
 
@@ -183,7 +184,7 @@ exports.join_forum = function (req, res) {
     req.params.id,
     {
       $push: {
-        members: req.body.id,
+        joinRequests: req.body.id,
       },
     },
     { new: true }
@@ -207,6 +208,73 @@ exports.join_forum = function (req, res) {
           return res.json(forum);
         }
       );
+    });
+};
+
+// approve request
+exports.approve_request = function (req, res) {
+  Forum.findByIdAndUpdate(
+    req.params.id,
+    {
+      $pull: {
+        joinRequests: req.body.id,
+      },
+      $push: {
+        members: req.body.id,
+      },
+    },
+    { new: true }
+  )
+    .populate({ path: "members", model: "User" })
+    .populate("moderators")
+    .populate("posts")
+    .exec((err, forum) => {
+      if (err) return res.json(err);
+
+      // add forum to user's joined forums
+      User.findByIdAndUpdate(
+        req.body.id,
+        {
+          $push: {
+            forums: forum._id,
+          },
+        },
+        { new: true },
+        (err, user) => {
+          if (err) return res.json(err);
+
+          return res.json(forum);
+        }
+      );
+    });
+};
+
+// reject request
+exports.reject_request = function (req, res) {
+  Forum.findByIdAndUpdate(
+    req.params.id,
+    {
+      $pull: {
+        joinRequests: req.body.id,
+      },
+    },
+    { new: true }
+  ).exec((err, forum) => {
+    if (err) return res.json(err);
+
+    return res.json(forum);
+  });
+};
+
+// get all join requests
+exports.get_join_requests = function (req, res) {
+  // get all join requests & populate them
+  Forum.findById(req.params.id)
+    .populate({ path: "joinRequests", model: "User" })
+    .exec((err, forum) => {
+      if (err) return res.json(err);
+
+      return res.json(forum.joinRequests);
     });
 };
 

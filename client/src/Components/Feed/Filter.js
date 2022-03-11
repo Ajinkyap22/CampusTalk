@@ -187,7 +187,7 @@ function Filter({
           <li
             className={`p-2 text-sm  ${
               dateRange === "This Week"
-                ? "tbg-[#E2EEFF] ext-primary rounded"
+                ? "bg-[#E2EEFF] text-primary rounded"
                 : ""
             }`}
             onClick={() => handleDay("This Week")}
