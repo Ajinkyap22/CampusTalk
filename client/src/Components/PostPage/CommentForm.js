@@ -19,11 +19,11 @@ function CommentForm({ forumId, postId, comments, setComments }) {
 
   const imageInput = useRef();
   const videoInput = useRef();
-  const linkInput = useRef();
+  // const linkInput = useRef();
 
   const imageButton = useRef();
   const videoButton = useRef();
-  const linkButton = useRef();
+  // const linkButton = useRef();
 
   useEffect(() => {
     // set enablepost to true if there is at least a text or a file, a forum, a mode and an author
@@ -40,21 +40,21 @@ function CommentForm({ forumId, postId, comments, setComments }) {
       // disable all input buttons
       imageButton.current.disabled = true;
       videoButton.current.disabled = true;
-      linkButton.current.disabled = true;
+      // linkButton.current.disabled = true;
       // disable all input refs
       imageInput.current.disabled = true;
       videoInput.current.disabled = true;
-      linkInput.current.disabled = true;
+      // linkInput.current.disabled = true;
       setDisabled(true);
     } else {
       // enable all input buttons
       imageButton.current.disabled = false;
       videoButton.current.disabled = false;
-      linkButton.current.disabled = false;
+      // linkButton.current.disabled = false;
       // enable all input refs
       imageInput.current.disabled = false;
       videoInput.current.disabled = false;
-      linkInput.current.disabled = false;
+      // linkInput.current.disabled = false;
       setDisabled(false);
       setFileType(null);
     }
@@ -67,7 +67,7 @@ function CommentForm({ forumId, postId, comments, setComments }) {
     // reset the input
     imageInput.current.value = "";
     videoInput.current.value = "";
-    linkInput.current.value = "";
+    // linkInput.current.value = "";
   }
 
   function handleSubmit(e) {
@@ -194,10 +194,10 @@ function CommentForm({ forumId, postId, comments, setComments }) {
         <FileInputs
           imageInput={imageInput}
           videoInput={videoInput}
-          linkInput={linkInput}
+          // linkInput={linkInput}
           imageButton={imageButton}
           videoButton={videoButton}
-          linkButton={linkButton}
+          // linkButton={linkButton}
           setFile={setFile}
           setFileType={setFileType}
           setOriginalFileName={setOriginalFileName}

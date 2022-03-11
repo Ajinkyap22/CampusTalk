@@ -5,8 +5,18 @@ import LogoCropped from "../LogoCropped";
 import moment from "moment";
 import axios from "axios";
 
-function ForumInfo({ forum, showModal, setShowModal, requestSent, ...props }) {
-  const [user, setUser] = useContext(UserContext);
+function ForumInfo({
+  forum,
+  showModal,
+  setShowModal,
+  requestSent,
+  setRequestSent,
+  joinRequests,
+  setJoinRequests,
+  isModerator,
+  ...props
+}) {
+  const [user] = useContext(UserContext);
 
   function joinForum() {
     let headers = {
@@ -24,8 +34,11 @@ function ForumInfo({ forum, showModal, setShowModal, requestSent, ...props }) {
     axios
       .post(`/api/forums/${forum._id}/join`, body, headers)
       .then((res) => {
-        // add forum to users forums
-        setUser({ ...user, forums: [...user.forums, forum] });
+        // update requestSent
+        setRequestSent(true);
+
+        // update joinRequests
+        setJoinRequests([...joinRequests, user]);
         props.history.push(`/forums/${forum._id}`);
       })
       .catch((err) => {
@@ -112,6 +125,10 @@ function ForumInfo({ forum, showModal, setShowModal, requestSent, ...props }) {
             className="mx-auto w-1/2 block text-centr p-2 py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-red-500 bg-white text-red-500 rounded-full hover:bg-red-500 hover:text-white"
           >
             Leave Forum
+          </button>
+
+          <button className="mx-auto w-1/2 block text-centr p-2 py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-red-500 bg-white text-red-500 rounded-full hover:bg-red-500 hover:text-white">
+            Delete Forum
           </button>
         </div>
       ) : (

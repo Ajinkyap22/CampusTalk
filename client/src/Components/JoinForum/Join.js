@@ -59,18 +59,7 @@ function JoinForum({ title, forums, setForums, ...props }) {
     joinList.forEach((forumId) => {
       axios
         .post(`/api/forums/${forumId}/join`, body, headers)
-        .then((res) => {
-          console.log(res.data);
-          // add forum to users forums
-          // userForums.push(res.data);
-          // push user in forum's mebers array
-          // forumsData.map((forum) => {
-          //   if (forum._id === forumId) {
-          //     forum.members.push(user);
-          //   }
-          //   return forum;
-          // });
-        })
+        .then((res) => {})
         .catch((err) => {
           console.error(err);
         });

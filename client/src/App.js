@@ -13,6 +13,7 @@ import Signup from "./Components/Auth/Signup";
 import Feed from "./Components/Feed/Feed";
 import CreatePost from "./Components/Create Post/CreatePost";
 import PostPage from "./Components/PostPage/PostPage";
+import Profile from "./Components/Profile/Profile";
 
 import { ForumContext } from "./Contexts/ForumContext";
 import { PostContext } from "./Contexts/PostContext";
@@ -135,6 +136,13 @@ function App() {
                 )}
               />
             ))}
+
+            {/* profile page */}
+            <Route
+              exact
+              path="/profile"
+              render={() => <Profile title={"My Profile | CampusTalk"} />}
+            />
           </TabProvider>
         </Switch>
       </Router>

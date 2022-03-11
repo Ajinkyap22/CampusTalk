@@ -62,7 +62,7 @@ function Dropdown({ showDropdown, setShowDropdown }) {
         <hr />
 
         {/* settings */}
-        <li className="p-2 text-sm" onClick={handleClick}>
+        {/* <li className="p-2 text-sm" onClick={handleClick}>
           <NavLink to="/settings">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -77,7 +77,7 @@ function Dropdown({ showDropdown, setShowDropdown }) {
             Settings{" "}
           </NavLink>
         </li>
-        <hr />
+        <hr /> */}
 
         {/* logout */}
         <li className="p-2 text-sm" onClick={logout}>

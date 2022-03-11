@@ -1,4 +1,5 @@
 require("dotenv").config();
+const Post = require("../models/post");
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
@@ -259,3 +260,16 @@ exports.profile = [
     );
   },
 ];
+
+// get all post created by user
+exports.get_user_posts = function (req, res) {
+  Post.find({ author: req.params.id, approved: true })
+    .populate("author")
+    .populate("forum")
+    .populate("comments")
+    .exec((err, posts) => {
+      if (err) return res.json(err);
+
+      return res.json(posts);
+    });
+};

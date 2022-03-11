@@ -30,4 +30,7 @@ router.put(
   userController.profile
 );
 
+// get all posts created by user
+router.get("/:id/posts", userController.get_user_posts);
+
 module.exports = router;

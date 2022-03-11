@@ -219,7 +219,7 @@ exports.approve_request = function (req, res) {
       $pull: {
         joinRequests: req.body.id,
       },
-      $push: {
+      $addToSet: {
         members: req.body.id,
       },
     },
@@ -235,7 +235,7 @@ exports.approve_request = function (req, res) {
       User.findByIdAndUpdate(
         req.body.id,
         {
-          $push: {
+          $addToSet: {
             forums: forum._id,
           },
         },

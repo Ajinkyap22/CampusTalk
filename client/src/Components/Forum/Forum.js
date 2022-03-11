@@ -17,6 +17,7 @@ import LogoCropped from "../LogoCropped";
 import Toast from "../Toast";
 import PostRequests from "./PostRequests";
 import JoinRequests from "./JoinRequests";
+import Loading from "../Loading";
 
 function Forum({ forum, title }) {
   const [activeTab, setActiveTab] = useContext(TabContext);
@@ -31,6 +32,7 @@ function Forum({ forum, title }) {
   const [isModerator, setIsModerator] = useState(false);
   const [requestSent, setRequestSent] = useState(false);
   const [joinRequests, setJoinRequests] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     document.title = title || `${forum.forumName} | CampusTalk`;
@@ -44,6 +46,7 @@ function Forum({ forum, title }) {
     // get all posts in the forum
     axios.get(`/api/forums/${forum._id}/posts`).then((res) => {
       setPosts(res.data);
+      setLoading(false);
     });
   }, []);
 
@@ -198,18 +201,25 @@ function Forum({ forum, title }) {
                   setDateRange={setDateRange}
                 />
 
+                {loading && (
+                  <div className="mx-auto text-center mt-8">
+                    <Loading />
+                  </div>
+                )}
+
                 {/* posts */}
-                {posts.map((post) => (
-                  <Post
-                    key={post._id}
-                    post={post}
-                    activeFilter={activeFilter}
-                    range={dateRange}
-                  />
-                ))}
+                {!loading &&
+                  posts.map((post) => (
+                    <Post
+                      key={post._id}
+                      post={post}
+                      activeFilter={activeFilter}
+                      range={dateRange}
+                    />
+                  ))}
 
                 {/* if there are no posts */}
-                {posts.length === 0 && (
+                {posts.length === 0 && !loading && (
                   <div className="text-center my-6">
                     <LogoCropped color="rgba(98,98,98,0.9)" width="80" />
                     <p className="text-gray-600 my-4">
@@ -293,6 +303,10 @@ function Forum({ forum, title }) {
             showModal={showModal}
             setShowModal={setShowModal}
             requestSent={requestSent}
+            setRequestSent={setRequestSent}
+            joinRequests={joinRequests}
+            setJoinRequests={setJoinRequests}
+            isModerator={isModerator}
           />
 
           {/* rules */}

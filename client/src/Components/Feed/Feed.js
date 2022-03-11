@@ -10,12 +10,13 @@ import Post from "../Post/Post";
 import ForumBox from "./ForumBox";
 import FAQ from "./FAQ";
 import LogoCropped from "../LogoCropped";
+import Loading from "../Loading";
 
 function Feed({ title }) {
   const [activeTab, setActiveTab] = useContext(TabContext);
   const [activeFilter, setActiveFilter] = useState("latest");
   const [dateRange, setDateRange] = useState("Today");
-  const [posts, setPosts] = useContext(PostContext);
+  const [posts, setPosts, loading] = useContext(PostContext);
   const [user] = useContext(UserContext);
 
   useEffect(() => {
@@ -46,19 +47,26 @@ function Feed({ title }) {
             setDateRange={setDateRange}
           />
 
+          {loading && (
+            <div className="mt-10">
+              <Loading />
+            </div>
+          )}
+
           {/* posts */}
-          {posts.map((post, i) => (
-            <Post
-              key={i}
-              post={post}
-              activeFilter={activeFilter}
-              range={dateRange}
-            />
-          ))}
+          {!loading &&
+            posts.map((post, i) => (
+              <Post
+                key={i}
+                post={post}
+                activeFilter={activeFilter}
+                range={dateRange}
+              />
+            ))}
 
           {/* if feed is empty */}
           <div
-            hidden={posts.length ? true : false}
+            hidden={posts.length || loading ? true : false}
             className="my-12 text-gray-700 text-center"
           >
             {/* logo */}

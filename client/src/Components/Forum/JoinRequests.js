@@ -1,9 +1,70 @@
 import LogoCropped from "../LogoCropped";
+import axios from "axios";
 
-function JoinRequests({ joinRequests, setJoinRequests }) {
-  function acceptRequest(request) {}
+function JoinRequests({
+  forum,
+  forums,
+  setForums,
+  joinRequests,
+  setJoinRequests,
+}) {
+  function acceptRequest(request) {
+    let headers = {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(localStorage.getItem("user")).token
+        }`,
+      },
+    };
 
-  function rejectRequest(request) {}
+    axios
+      .put(
+        `/api/forums/${forum._id}/approve_join`,
+        { id: request._id },
+        headers
+      )
+      .then((res) => {
+        // update forums
+        let newForums = forums.map((f) => (f._id === forum._id ? res.data : f));
+
+        setForums(newForums);
+
+        // update join requests
+        let newJoinRequests = joinRequests.filter(
+          (rq) => rq._id !== request._id
+        );
+
+        setJoinRequests(newJoinRequests);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  function rejectRequest(request) {
+    let headers = {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(localStorage.getItem("user")).token
+        }`,
+      },
+    };
+
+    axios
+      .put(`/api/forums/${forum._id}/reject_join`, { id: request._id }, headers)
+      .then((res) => {
+        // update join requests
+        let newJoinRequests = joinRequests.filter(
+          (rq) => rq._id !== request._id
+        );
+
+        setJoinRequests(newJoinRequests);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
   return (
     <div>
       {/* if empty */}
@@ -51,7 +112,10 @@ function JoinRequests({ joinRequests, setJoinRequests }) {
 
             {/* actions */}
             <div className="flex items-center">
-              <button className="bg-green-500 rounded-full mx-1 px-3 py-1.5 text-sm text-white hover:bg-green-600">
+              <button
+                className="bg-green-500 rounded-full mx-1 px-3 py-1.5 text-sm text-white hover:bg-green-600"
+                onClick={() => acceptRequest(joinRequest)}
+              >
                 Accpet
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -64,7 +128,10 @@ function JoinRequests({ joinRequests, setJoinRequests }) {
                 </svg>
               </button>
 
-              <button className="bg-red-500 rounded-full mx-1 px-3 py-1.5 text-sm text-white hover:bg-red-600">
+              <button
+                className="bg-red-500 rounded-full mx-1 px-3 py-1.5 text-sm text-white hover:bg-red-600"
+                onClick={() => rejectRequest(joinRequest)}
+              >
                 Reject
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

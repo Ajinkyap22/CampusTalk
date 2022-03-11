@@ -74,7 +74,7 @@ function LeaveModal({ forumName, forumId, showModal, setShowModal, ...props }) {
 
       <div>
         <button
-          className="border border-primary font-bold text-primary text-sm px-4 py-2 text-white rounded mx-2 mb-4 hover:bg-primary hover:text-white"
+          className="border border-primary font-bold text-primary text-sm px-4 py-2 rounded mx-2 mb-4 hover:bg-primary hover:text-white"
           onClick={handleClose}
         >
           Cancel
