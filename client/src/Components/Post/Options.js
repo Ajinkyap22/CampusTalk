@@ -69,7 +69,7 @@ function Options({ postId, forum, showOptions, setShowOptions, isAuthor }) {
         );
 
         // remove post from user posts
-        let newUserPosts = user.posts.filter((post) => post._id !== postId);
+        let newUserPosts = user.posts.filter((post) => post !== postId);
 
         setUser((prev) => ({ ...prev, posts: newUserPosts }));
 

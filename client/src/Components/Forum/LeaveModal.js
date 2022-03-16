@@ -55,7 +55,7 @@ function LeaveModal({ forumName, forumId, showModal, setShowModal, ...props }) {
 
   return (
     <div
-      className="absolute bg-white top-[35vh] rounded text-center py-2 shadow-base z-10 w-[80%] xsm:w-[70%] md:w-[50%] lg:w-[30%] 2xl:w-[25%]"
+      className="absolute top-1/2 left-1/2 -translate-x-[45%] -translate-y-[45%] translate-x- bg-white mx-auto rounded text-center py-2 shadow-base z-10 w-[80%] xsm:w-[70%] md:w-[50%] lg:w-[30%] 2xl:w-[25%]"
       hidden={!showModal}
     >
       <svg

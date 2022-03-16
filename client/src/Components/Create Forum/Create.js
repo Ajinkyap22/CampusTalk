@@ -7,7 +7,7 @@ function CreateForum({ title }) {
   }, [title]);
 
   return (
-    <main className="w-full bg-bubble h-full overflow-auto flex flex-col justify-center items-center md:pt-20 md:pb-10">
+    <main className="w-full bg-bubble h-full overflow-auto flex flex-col justify-center items-center md:pt-20 md:pb-10 dark:bg-dark">
       {/* form */}
       <section className="bg-white rounded shadow-base w-[90%] md:w-2/3 xl:w-1/2 2xl:w-1/3 md:mt-10 inline-block 2xl:my-8">
         {/* title */}

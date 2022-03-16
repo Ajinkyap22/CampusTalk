@@ -5,6 +5,7 @@ module.exports = {
       colors: {
         primary: "#0278E4",
         "primary-light": "#0F8CFF",
+        dark: "#191A19",
         secondary: "#626262",
         light: "rgba(255, 255, 255, 0.2)",
       },
@@ -27,4 +28,5 @@ module.exports = {
     },
   },
   plugins: [],
+  darkMode: "class",
 };

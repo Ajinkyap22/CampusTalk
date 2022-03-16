@@ -176,7 +176,7 @@ function Forum({ forum, title }) {
   }
 
   return (
-    <main className="w-full min-h-full flex flex-col items-center overflow-visible bg-[#F0F2F5] relative">
+    <main className="w-full min-h-full flex flex-col items-center overflow-visible bg-[#F0F2F5] dark:bg-dark relative">
       <Nav />
 
       {/* forum content */}

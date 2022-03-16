@@ -78,7 +78,7 @@ function CreatePost({ title, post, ...props }) {
   }, [post]);
 
   return (
-    <main className="w-full h-full bg-[#F0F2F5] flex flex-col items-center p-4 text-center relative">
+    <main className="w-full h-full bg-[#F0F2F5] dark:bg-dark flex flex-col items-center p-4 text-center relative">
       <h1 className="text-primary text-3xl mt-3">Create a Post</h1>
 
       {/* dropdowns */}

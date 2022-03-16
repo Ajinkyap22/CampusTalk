@@ -1,4 +1,5 @@
 import { UserContext } from "../../Contexts/UserContext";
+import { TabContext } from "../../Contexts/TabContext";
 import { useContext, useEffect, useState } from "react";
 import { Link, withRouter } from "react-router-dom";
 import moment from "moment";
@@ -11,17 +12,22 @@ import axios from "axios";
 import Nav from "../Navbar/Nav";
 
 function Profile({ ...props }) {
-  const [user, setUser] = useContext(UserContext);
+  const [user] = useContext(UserContext);
   const [posts, setPosts] = useState([]);
   const [activeFilter, setActiveFilter] = useState("latest");
   const [dateRange, setDateRange] = useState("Today");
   const [loading, setLoading] = useState(true);
+  const [tab, setTab] = useContext(TabContext);
 
   useEffect(() => {
     if (!user) {
       props.history.push("/feed");
     }
   }, [user]);
+
+  useEffect(() => {
+    setTab("profile");
+  }, []);
 
   useEffect(() => {
     axios.get(`/api/users/${user._id}/posts`).then((res) => {
@@ -31,7 +37,7 @@ function Profile({ ...props }) {
   }, []);
 
   return (
-    <main className="w-full min-h-full overflow-auto bg-[#F0F2F5] ">
+    <main className="w-full min-h-full overflow-auto bg-[#F0F2F5] dark:bg-dark">
       <Nav />
 
       <section className="flex items-start relative p-2 mt-4">
@@ -106,7 +112,7 @@ function Profile({ ...props }) {
 
           {/* user forums */}
           <div>
-            <ForumBox user={user} />
+            <ForumBox user={user} fixed={false} />
           </div>
         </div>
 

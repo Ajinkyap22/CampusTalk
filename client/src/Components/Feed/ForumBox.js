@@ -2,9 +2,13 @@ import LogoCropped from "../LogoCropped";
 import ForumsList from "./ForumsList";
 import { Link } from "react-router-dom";
 
-function ForumBox({ user }) {
+function ForumBox({ user, fixed = true }) {
   return (
-    <div className="bg-white shadow-base max-w-[21rem] my-4 mt-8 rounded fixed top-[60%]">
+    <div
+      className={`bg-white shadow-base max-w-[21rem] my-4 mt-8 rounded ${
+        fixed ? "fixed top-[60%]" : ""
+      }`}
+    >
       {/* title */}
       <div className="w-full bg-primary-light p-3 py-2  rounded-t">
         <LogoCropped width="40" />

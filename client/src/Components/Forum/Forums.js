@@ -24,6 +24,7 @@ function Forums({ title }) {
       .get("/api/forums/")
       .then((res) => {
         setForums(res.data);
+        console.log(res.data);
       })
       .catch((err) => {
         console.error(err);
@@ -35,7 +36,7 @@ function Forums({ title }) {
   }
 
   return (
-    <main className="w-full min-h-full overflow-visible bg-[#F0F2F5]">
+    <main className="w-full min-h-full overflow-visible bg-[#F0F2F5] dark:bg-dark">
       <Nav />
 
       <div className="my-5 mt-8 text-center">

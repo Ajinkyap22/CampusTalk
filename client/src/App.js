@@ -1,6 +1,6 @@
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 import { Join } from "./Components/JoinForum/Join";
 import Home from "./Components/Homepage/Home";
@@ -22,6 +22,11 @@ import { TabProvider } from "./Contexts/TabContext";
 function App() {
   const [forums, setForums] = useContext(ForumContext);
   const [posts] = useContext(PostContext);
+
+  useEffect(() => {
+    // add dark class to html element
+    document.documentElement.classList.add("dark");
+  }, []);
 
   return (
     <div className="App relative">

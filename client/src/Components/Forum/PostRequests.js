@@ -1,14 +1,14 @@
 import { PostContext } from "../../Contexts/PostContext";
-import LogoCropped from "../LogoCropped";
+import { UserContext } from "../../Contexts/UserContext";
 import { useEffect, useState, useContext } from "react";
+import LogoCropped from "../LogoCropped";
 import axios from "axios";
 import PostRequest from "./PostRequest";
 
 function PostRequests({ forum, forums, setForums }) {
   const [postRequests, setPostRequests] = useState([]);
   const [posts, setPosts] = useContext(PostContext);
-
-  console.log(forums);
+  const [user, setUser] = useContext(UserContext);
 
   useEffect(() => {
     axios.get(`/api/forums/${forum._id}/posts/postRequests`).then((res) => {
@@ -32,7 +32,6 @@ function PostRequests({ forum, forums, setForums }) {
         headers
       )
       .then((res) => {
-        console.log(res.data);
         let newForum = forums.find((forum) => forum._id === post.forum._id);
 
         newForum.posts.push(res.data);
@@ -56,6 +55,11 @@ function PostRequests({ forum, forums, setForums }) {
 
         // update post requests
         setPostRequests(postRequests.filter((p) => p._id !== post._id));
+
+        // update user's posts
+        let newUserPosts = user.posts.filter((p) => p !== post._id);
+
+        setUser({ ...user, posts: newUserPosts });
       })
       .catch((err) => {
         console.error(err);

@@ -58,7 +58,7 @@ function Feed({ title }) {
   }, [activeTab]);
 
   return (
-    <main className="w-full min-h-full bg-[#F0F2F5]">
+    <main className="w-full min-h-full bg-[#F0F2F5] dark:bg-dark">
       <Nav />
 
       <section className="flex justify-evenly md:w-full mx-auto h-full">
