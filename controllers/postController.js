@@ -53,9 +53,15 @@ exports.create_post = function (req, res) {
   }
 
   if (req.body.originalFileNames) {
-    req.body.originalFileNames.forEach((originalFile) => {
-      fileNames.push(JSON.parse(originalFile));
-    });
+    // if it is an array
+    if (Array.isArray(req.body.originalFileNames)) {
+      req.body.originalFileNames.forEach((originalFile) => {
+        fileNames.push(JSON.parse(originalFile));
+      });
+    } else {
+      let originalFileNames = JSON.parse(req.body.originalFileNames);
+      fileNames.push(originalFileNames);
+    }
   }
 
   Post.create(

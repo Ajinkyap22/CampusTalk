@@ -38,8 +38,8 @@ function Nav() {
         </NavLink>
 
         {/* chats */}
-        {/* <NavLink
-          to={"/chat"}
+        <NavLink
+          to={"/chats"}
           onClick={() => handleClick("chats")}
           className={`mx-4 text-sm py-3 px-2 ${
             activeTab === "chats"
@@ -48,7 +48,7 @@ function Nav() {
           }`}
         >
           Chats
-        </NavLink> */}
+        </NavLink>
 
         {/* forums */}
         <NavLink

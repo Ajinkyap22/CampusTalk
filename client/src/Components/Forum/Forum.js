@@ -176,7 +176,7 @@ function Forum({ forum, title }) {
   }
 
   return (
-    <main className="w-full min-h-full flex flex-col items-center overflow-auto bg-[#F0F2F5] relative">
+    <main className="w-full min-h-full flex flex-col items-center overflow-visible bg-[#F0F2F5] relative">
       <Nav />
 
       {/* forum content */}
@@ -296,7 +296,7 @@ function Forum({ forum, title }) {
           )}
         </div>
 
-        <div className="mt-8">
+        <div className="mt-8 sticky">
           {/* forum info */}
           <ForumInfo
             forum={forum}

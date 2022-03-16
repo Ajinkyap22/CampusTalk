@@ -35,7 +35,7 @@ function Forums({ title }) {
   }
 
   return (
-    <main className="w-full min-h-full overflow-auto bg-[#F0F2F5]">
+    <main className="w-full min-h-full overflow-visible bg-[#F0F2F5]">
       <Nav />
 
       <div className="my-5 mt-8 text-center">

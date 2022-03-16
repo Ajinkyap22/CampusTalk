@@ -5,6 +5,38 @@ import AuthorInfo from "./AuthorInfo";
 import Dropdowns from "./Dropdowns";
 import PostForm from "./PostForm";
 import ProgressBar from "./ProgressBar";
+import Guidelines from "./Guidelines";
+import FAQ from "../Feed/FAQ";
+
+const faqData = [
+  {
+    question: "How do I post anonymously?",
+    answer:
+      "You can post anonymously by selecting the anonymous mode in the post form.",
+  },
+
+  {
+    question: "Can I attach files to my posts?",
+    answer:
+      "Yes you can attach different types of files to your posts such as images, videos, documents, etc.",
+  },
+
+  {
+    question: "How do I mark a post as important?",
+    answer:
+      "Click on the icon on the right side of the post form to mark/unmark it.",
+  },
+  {
+    question: "How many images can I include?",
+    answer:
+      "You can include up to 10 images in a post. If you want to include more images, you can upload them separately.",
+  },
+  {
+    question: "Who will be able to see my post?",
+    answer:
+      "Once your post is approved by the moderators, it will be visible to all the users of the forum you selected.",
+  },
+];
 
 function CreatePost({ title, post, ...props }) {
   const [user, setUser] = useContext(UserContext);
@@ -46,8 +78,8 @@ function CreatePost({ title, post, ...props }) {
   }, [post]);
 
   return (
-    <main className="w-full h-full bg-[#F0F2F5] flex flex-col items-center p-4 text-center">
-      <h1 className="text-primary text-2xl mt-4">Create a Post</h1>
+    <main className="w-full h-full bg-[#F0F2F5] flex flex-col items-center p-4 text-center relative">
+      <h1 className="text-primary text-3xl mt-3">Create a Post</h1>
 
       {/* dropdowns */}
       <Dropdowns
@@ -57,6 +89,8 @@ function CreatePost({ title, post, ...props }) {
         anonymous={anonymous}
         setAnonymous={setAnonymous}
       />
+
+      <Guidelines />
 
       {/* post info */}
       <div className="bg-white shadow-base rounded relative w-[30rem]">
@@ -91,6 +125,10 @@ function CreatePost({ title, post, ...props }) {
           setIsEditing={setIsEditing}
           postId={post?._id}
         />
+      </div>
+
+      <div className="absolute right-2 top-[9%] mx-5">
+        <FAQ faqData={faqData} />
       </div>
 
       {/* progress bar to show upload progress */}

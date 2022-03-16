@@ -3,12 +3,6 @@ import { PostContext } from "../../Contexts/PostContext";
 import { useContext, useState, useEffect } from "react";
 import axios from "axios";
 
-let headers = {
-  headers: {
-    Authorization: `Bearer ${JSON.parse(localStorage.getItem("user"))?.token}`,
-  },
-};
-
 function PostActions({
   id,
   forumId,
@@ -35,6 +29,14 @@ function PostActions({
 
   function handleUpvote() {
     if (!user) return;
+
+    let headers = {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(localStorage.getItem("user"))?.token
+        }`,
+      },
+    };
 
     if (upvoted) {
       axios
@@ -72,6 +74,14 @@ function PostActions({
 
   function handleDownvote() {
     if (!user) return;
+
+    let headers = {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(localStorage.getItem("user"))?.token
+        }`,
+      },
+    };
 
     if (downvoted) {
       axios

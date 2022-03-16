@@ -1,36 +1,6 @@
 import { useState } from "react";
 
-const faqData = [
-  {
-    question: "How do I post anonymously?",
-    answer:
-      "You can post anonymously by selecting the anonymous mode in the post form.",
-  },
-
-  {
-    question: "Can I attach files to my posts?",
-    answer:
-      "Yes you can attach different types of files to your posts such as images, videos, documents, etc.",
-  },
-
-  {
-    question: "How can I leave a forum?",
-    answer:
-      "Visit the forums page that you want to leave and click on the 'Leave a Forum' button.",
-  },
-  {
-    question: "What is the 'important' filter?",
-    answer:
-      "The 'important' filter will show only the posts that are marked as important.",
-  },
-  {
-    question: "What is the 'top' filter?",
-    answer:
-      "The 'top' filter will sort the posts by the number of upvotes, you can select different time ranges like 'Today', 'This Week', 'This Month' etc. that will show you the top posts from that period.",
-  },
-];
-
-function FAQ() {
+function FAQ({ faqData }) {
   const [currentFaq, setCurrentFaq] = useState(-1);
 
   const handleFaq = (index) => {
@@ -39,7 +9,7 @@ function FAQ() {
   };
 
   return (
-    <div className="sticky top-20 bg-white shadow-base text-[#000000e6] my-8 w-[17rem] max-w-[17rem] rounded self-start">
+    <div className="sticky top-[5.5rem] bg-white shadow-base text-[#000000e6] my-8 w-[17rem] max-w-[17rem] rounded self-start">
       {/* title */}
       <div className="bg-primary-light p-2 rounded-t">
         <svg
@@ -57,12 +27,13 @@ function FAQ() {
 
       {/* questions */}
       <div>
+        {/* if data is not undefined map over date else map over faqData */}
         {faqData.map((data, index) => (
           <div key={index}>
             <div className="py-3" onClick={() => handleFaq(index)}>
               <div className="flex items-center justify-between text-sm cursor-pointer">
                 {/* text */}
-                <p className="px-3">{data.question}</p>
+                <p className="px-3 text-left">{data.question}</p>
 
                 {/* toggles */}
                 <button className="pr-3">
@@ -101,7 +72,7 @@ function FAQ() {
                   currentFaq === index ? "px-3 py-2 pt-4 w-full" : "hidden"
                 }
               >
-                <p className="text-xs">{data.answer}</p>
+                <p className="text-xs text-left">{data.answer}</p>
               </div>
             </div>
             <hr />

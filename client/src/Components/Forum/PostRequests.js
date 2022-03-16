@@ -8,6 +8,8 @@ function PostRequests({ forum, forums, setForums }) {
   const [postRequests, setPostRequests] = useState([]);
   const [posts, setPosts] = useContext(PostContext);
 
+  console.log(forums);
+
   useEffect(() => {
     axios.get(`/api/forums/${forum._id}/posts/postRequests`).then((res) => {
       setPostRequests(res.data);
@@ -30,6 +32,7 @@ function PostRequests({ forum, forums, setForums }) {
         headers
       )
       .then((res) => {
+        console.log(res.data);
         let newForum = forums.find((forum) => forum._id === post.forum._id);
 
         newForum.posts.push(res.data);
