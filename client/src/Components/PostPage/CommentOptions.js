@@ -7,7 +7,11 @@ import axios from "axios";
 function useOutsideAlerter(ref, setShowDropdown) {
   useEffect(() => {
     function handleClickOutside(event) {
-      if (ref.current && !ref.current.contains(event.target)) {
+      if (
+        ref.current &&
+        !ref.current.contains(event.target) &&
+        !event.target.classList.contains("dropDownToggle")
+      ) {
         setShowDropdown(false);
       }
     }

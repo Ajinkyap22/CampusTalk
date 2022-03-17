@@ -53,14 +53,14 @@ function PostInfo({ post }) {
 
           {/* post options */}
           <button
-            className="absolute top-0 right-0"
+            className="absolute top-0 right-0 dropDownToggle"
             title="Options"
             onClick={toggleOptions}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="18"
-              className="fil-[#65676b] inline rotate-90"
+              className="fil-[#65676b] inline rotate-90 dropDownToggle"
               viewBox="0 0 16 16"
             >
               <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />

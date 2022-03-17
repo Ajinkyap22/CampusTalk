@@ -23,8 +23,9 @@ function Toggle() {
     <li className="p-2 text-sm dark:text-darkLight">
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        className="h-5 w-5 inline mr-1 strok-[#818181] dark:stroke-gray-300"
+        className="h-5 w-5 inline mr-1 stroke-[#818181] dark:stroke-gray-300"
         viewBox="0 0 24 24"
+        fill="none"
         strokeWidth={2}
       >
         <path

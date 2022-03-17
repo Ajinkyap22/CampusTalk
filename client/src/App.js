@@ -14,6 +14,7 @@ import Feed from "./Components/Feed/Feed";
 import CreatePost from "./Components/Create Post/CreatePost";
 import PostPage from "./Components/PostPage/PostPage";
 import Profile from "./Components/Profile/Profile";
+import Chats from "./Components/Chats/Chats";
 
 import { ForumContext } from "./Contexts/ForumContext";
 import { PostContext } from "./Contexts/PostContext";
@@ -153,6 +154,13 @@ function App() {
               exact
               path="/profile"
               render={() => <Profile title={"My Profile | CampusTalk"} />}
+            />
+
+            {/* chats */}
+            <Route
+              exact
+              path="/chats"
+              render={() => <Chats title={"Chats | CampusTalk"} />}
             />
           </TabProvider>
         </Switch>

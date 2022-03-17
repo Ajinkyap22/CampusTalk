@@ -8,7 +8,11 @@ import axios from "axios";
 function useOutsideAlerter(ref, setShowDropdown) {
   useEffect(() => {
     function handleClickOutside(event) {
-      if (ref.current && !ref.current.contains(event.target)) {
+      if (
+        ref.current &&
+        !ref.current.contains(event.target) &&
+        !event.target.classList.contains("dropDownToggle")
+      ) {
         setShowDropdown(false);
       }
     }
@@ -24,28 +28,9 @@ function useOutsideAlerter(ref, setShowDropdown) {
 function Options({ postId, forum, showOptions, setShowOptions, isAuthor }) {
   const wrapperRef = useRef(null);
   const [user, setUser] = useContext(UserContext);
-  // const [isAuthor, setIsAuthor] = useState(false);
-  // const [isModerator, setIsModerator] = useState(false);
   const [forums, setForums] = useContext(ForumContext);
   const [posts, setPosts] = useContext(PostContext);
   useOutsideAlerter(wrapperRef, setShowOptions);
-
-  // useEffect(() => {
-  //   // check if author is the same as user
-  //   if (user && user._id === author._id) {
-  //     setIsAuthor(true);
-  //   } else {
-  //     setIsAuthor(false);
-  //   }
-  // }, [user, author]);
-
-  // useEffect(() => {
-  //   if (forum.moderators.includes(user._id)) {
-  //     setIsModerator(true);
-  //   } else {
-  //     setIsModerator(false);
-  //   }
-  // }, [forum.moderators, user]);
 
   function deletePost() {
     let headers = {
