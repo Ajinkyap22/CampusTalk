@@ -17,16 +17,22 @@ import Profile from "./Components/Profile/Profile";
 
 import { ForumContext } from "./Contexts/ForumContext";
 import { PostContext } from "./Contexts/PostContext";
+import { ModeContext } from "./Contexts/ModeContext";
 import { TabProvider } from "./Contexts/TabContext";
 
 function App() {
   const [forums, setForums] = useContext(ForumContext);
   const [posts] = useContext(PostContext);
+  const [mode] = useContext(ModeContext);
 
   useEffect(() => {
+    if (mode === "light") {
+      document.documentElement.classList.remove("dark");
+    } else {
+      document.documentElement.classList.add("dark");
+    }
     // add dark class to html element
-    document.documentElement.classList.add("dark");
-  }, []);
+  }, [mode]);
 
   return (
     <div className="App relative">

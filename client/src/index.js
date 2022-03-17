@@ -5,16 +5,19 @@ import App from "./App";
 import { ForumProvider } from "./Contexts/ForumContext";
 import { PostProvider } from "./Contexts/PostContext";
 import { UserProvider } from "./Contexts/UserContext";
+import { ModeProvider } from "./Contexts/ModeContext";
 
 ReactDOM.render(
   <React.StrictMode>
-    <UserProvider>
-      <ForumProvider>
-        <PostProvider>
-          <App />
-        </PostProvider>
-      </ForumProvider>
-    </UserProvider>
+    <ModeProvider>
+      <UserProvider>
+        <ForumProvider>
+          <PostProvider>
+            <App />
+          </PostProvider>
+        </ForumProvider>
+      </UserProvider>
+    </ModeProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

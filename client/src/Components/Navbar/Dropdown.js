@@ -1,11 +1,16 @@
 import { UserContext } from "../../Contexts/UserContext";
 import { NavLink } from "react-router-dom";
 import { useContext, useRef, useEffect } from "react";
+import Toggle from "./Toggle";
 
 function useOutsideAlerter(ref, setShowDropdown) {
   useEffect(() => {
     function handleClickOutside(event) {
-      if (ref.current && !ref.current.contains(event.target)) {
+      if (
+        ref.current &&
+        !ref.current.contains(event.target) &&
+        !event.target.classList.contains("dropDownToggle")
+      ) {
         setShowDropdown(false);
       }
     }
@@ -35,19 +40,18 @@ function Dropdown({ showDropdown, setShowDropdown }) {
 
   return (
     <div
-      className="absolute bg-white shadow-base p-2 top-14 right-32 rounded"
+      className="absolute bg-white shadow-base p-2 top-14 right-28 rounded dark:bg-darkSecondary"
       hidden={showDropdown ? false : true}
       ref={wrapperRef}
     >
       <ul>
         {/* profile */}
-        <li className="p-2 text-sm" onClick={handleClick}>
+        <li className="p-2 text-sm dark:text-darkLight" onClick={handleClick}>
           <NavLink to="/profile">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
-              fill="#818181"
-              className="inline mr-2"
+              className="inline mr-2 fill-[#818181] dark:fill-darkLight"
               viewBox="0 0 16 18"
             >
               <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
@@ -62,13 +66,12 @@ function Dropdown({ showDropdown, setShowDropdown }) {
         <hr />
 
         {/* settings */}
-        {/* <li className="p-2 text-sm" onClick={handleClick}>
+        {/* <li className="p-2 text-sm dark:text-darkLight" onClick={handleClick}>
           <NavLink to="/settings">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
-              fill="#818181"
-              className="inline mr-2"
+              className="inline mr-2 fill-[#818181] dark:fill-darkLight"
               viewBox="0 0 16 16"
             >
               <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z" />
@@ -79,14 +82,17 @@ function Dropdown({ showDropdown, setShowDropdown }) {
         </li>
         <hr /> */}
 
+        {/* Dark mode */}
+        <Toggle />
+        <hr />
+
         {/* logout */}
-        <li className="p-2 text-sm" onClick={logout}>
+        <li className="p-2 text-sm dark:text-darkLight" onClick={logout}>
           <NavLink to="/">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
-              fill="#818181"
-              className="inline mr-2"
+              className="inline mr-2 fill-[#818181] dark:fill-darkLight"
               viewBox="0 0 16 16"
             >
               <path

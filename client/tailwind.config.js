@@ -5,7 +5,10 @@ module.exports = {
       colors: {
         primary: "#0278E4",
         "primary-light": "#0F8CFF",
+        "primary-dark": "#51acff",
+        darkLight: "#EDEDED",
         dark: "#191A19",
+        darkSecondary: "#2b2b2b",
         secondary: "#626262",
         light: "rgba(255, 255, 255, 0.2)",
       },
