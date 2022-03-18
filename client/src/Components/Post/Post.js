@@ -43,7 +43,7 @@ function Post({ post, activeFilter, range = "Today", ...props }) {
 
   return (
     <div
-      className="bg-white shadow-base py-2 mt-8 w-full rounded"
+      className="bg-white dark:bg-darkSecondary shadow-base py-2 mt-8 w-full rounded"
       hidden={!showPost}
     >
       {/* user info */}
@@ -57,7 +57,7 @@ function Post({ post, activeFilter, range = "Today", ...props }) {
       />
 
       {/* caption */}
-      <p className="m-2 my-3 px-2 text-sm">{post.text}</p>
+      <p className="m-2 my-3 px-2 text-sm dark:text-darkLight">{post.text}</p>
 
       {/* image */}
       {post.file.length ? (

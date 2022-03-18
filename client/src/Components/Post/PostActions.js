@@ -127,7 +127,7 @@ function PostActions({
     <div
       className={`w-full grid ${
         showCommentButton ? "grid-cols-3 px-2" : "grid-cols-2 px-4"
-      } grid-flow-col py-1 border-t`}
+      } grid-flow-col py-1 border-t dark:border-light`}
     >
       {/* upvotes */}
       <div className="my-2 inline">
@@ -143,7 +143,11 @@ function PostActions({
             <path
               d="M32,120l96-96,96,96H176v88a8,8,0,0,1-8,8H88a8,8,0,0,1-8-8V120Z"
               fill={upvoted ? "#0F8CFF" : "none"}
-              stroke={upvoted ? "#0F8CFF" : "#484848"}
+              className={`${
+                upvoted
+                  ? "stroke-[#0F8CFF]"
+                  : "stroke-[#484848] dark:stroke-darkLight"
+              }`}
               strokeLinecap="round"
               strokeLinejoin="round"
               strokeWidth="16"
@@ -151,7 +155,9 @@ function PostActions({
           </svg>
         </button>
 
-        <span className="text-sm">{upvotes.length - downvotes.length}</span>
+        <span className="text-sm dark:text-darkLight">
+          {upvotes.length - downvotes.length}
+        </span>
 
         <button onClick={handleDownvote} title="Downvote Post">
           <svg
@@ -166,6 +172,11 @@ function PostActions({
               d="M32,136l96,96,96-96H176V48a8,8,0,0,0-8-8H88a8,8,0,0,0-8,8v88Z"
               fill={downvoted ? "red" : "none"}
               stroke={downvoted ? "red" : "#484848"}
+              className={`${
+                downvoted
+                  ? "stroke-red-500"
+                  : "stroke-[#484848] dark:stroke-darkLight"
+              }`}
               strokeLinecap="round"
               strokeLinejoin="round"
               strokeWidth="16"
@@ -190,18 +201,18 @@ function PostActions({
         >
           <path
             d="M5.83333 6.66665H14.1667H5.83333ZM5.83333 9.99998H9.16667H5.83333ZM10 16.6666L6.66667 13.3333H4.16667C3.72464 13.3333 3.30072 13.1577 2.98816 12.8452C2.67559 12.5326 2.5 12.1087 2.5 11.6666V4.99998C2.5 4.55795 2.67559 4.13403 2.98816 3.82147C3.30072 3.50891 3.72464 3.33331 4.16667 3.33331H15.8333C16.2754 3.33331 16.6993 3.50891 17.0118 3.82147C17.3244 4.13403 17.5 4.55795 17.5 4.99998V11.6666C17.5 12.1087 17.3244 12.5326 17.0118 12.8452C16.6993 13.1577 16.2754 13.3333 15.8333 13.3333H13.3333L10 16.6666Z"
-            stroke="#484848"
+            className="stroke-[#484848] dark:stroke-gray-300"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
         </svg>
-        <span className="text-sm">Comment</span>
+        <span className="text-sm dark:text-gray-300">Comment</span>
       </button>
 
       {/* comment number */}
       <button
-        className="text-sm my-2 text-right text-secondary"
+        className="text-sm my-2 text-right text-secondary dark:text-gray-400"
         title="See Comments"
         onClick={onPostClick}
       >

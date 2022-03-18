@@ -9,9 +9,9 @@ function FAQ({ faqData }) {
   };
 
   return (
-    <div className="sticky top-[5.5rem] bg-white shadow-base text-[#000000e6] my-8 w-[17rem] max-w-[17rem] rounded self-start">
+    <div className="sticky top-[5.5rem] bg-white dark:bg-darkSecondary shadow-base text-[#000000e6] my-8 w-[17rem] max-w-[17rem] rounded self-start">
       {/* title */}
-      <div className="bg-primary-light p-2 rounded-t">
+      <div className="bg-primary-light dark:bg-primary p-2 rounded-t">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -33,7 +33,9 @@ function FAQ({ faqData }) {
             <div className="py-3" onClick={() => handleFaq(index)}>
               <div className="flex items-center justify-between text-sm cursor-pointer">
                 {/* text */}
-                <p className="px-3 text-left">{data.question}</p>
+                <p className="px-3 text-left dark:text-darkLight">
+                  {data.question}
+                </p>
 
                 {/* toggles */}
                 <button className="pr-3">
@@ -42,7 +44,7 @@ function FAQ({ faqData }) {
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"
                       height="16"
-                      className="inline"
+                      className="inline dark:fill-darkLight"
                       viewBox="0 0 16 16"
                     >
                       <path
@@ -55,7 +57,7 @@ function FAQ({ faqData }) {
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"
                       height="16"
-                      className="inline"
+                      className="inline dark:fill-darkLight"
                       viewBox="0 0 16 16"
                     >
                       <path
@@ -72,10 +74,15 @@ function FAQ({ faqData }) {
                   currentFaq === index ? "px-3 py-2 pt-4 w-full" : "hidden"
                 }
               >
-                <p className="text-xs text-left">{data.answer}</p>
+                <p className="text-xs text-left dark:text-darkLight">
+                  {data.answer}
+                </p>
               </div>
             </div>
-            <hr />
+            <hr
+              className="bg-light dark:border-top dark:border-light"
+              hidden={index === faqData.length - 1}
+            />
           </div>
         ))}
       </div>

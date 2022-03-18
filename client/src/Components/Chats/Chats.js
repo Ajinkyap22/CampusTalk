@@ -1,7 +1,8 @@
-import Nav from "../Navbar/Nav";
 import { TabContext } from "../../Contexts/TabContext";
 import { useContext, useEffect } from "react";
+import Nav from "../Navbar/Nav";
 import ChatList from "./ChatList";
+import ChatPage from "./ChatPage";
 
 function Chats({ title }) {
   const [activeTab, setActiveTab] = useContext(TabContext);
@@ -13,8 +14,9 @@ function Chats({ title }) {
   useEffect(() => {
     setActiveTab("chats");
   }, [activeTab]);
+
   return (
-    <main className="w-full h-full bg-[#F0F2F5] dark:bg-dark">
+    <main className="w-full h-full overflow-hidden bg-[#F0F2F5] dark:bg-dark">
       <Nav />
 
       <section className="grid grid-cols-6 w-full h-full">
@@ -22,9 +24,7 @@ function Chats({ title }) {
         <ChatList />
 
         {/* messages */}
-        <div className="col-span-4 h-full dark:bg-darkSecondary">
-          {/* chat title */}
-        </div>
+        <ChatPage />
       </section>
     </main>
   );

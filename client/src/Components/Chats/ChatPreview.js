@@ -6,7 +6,6 @@ function ChatPreview() {
         {/* picture */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          fill="#818181"
           className="inline mx-2 w-10 align-middle fill-[#818181] dark:fill-darkLight"
           viewBox="0 0 16 16"
         >
@@ -23,14 +22,22 @@ function ChatPreview() {
             Little Lord Fuckleroy
           </span>
 
-          <span className="text-xs text-secondary text-justify mx-1 dark:text-darkLight">
+          <span className="text-xs text-secondary text-justify mx-1 dark:text-gray-300">
             You : Little Lord Fuckleroy
           </span>
         </div>
       </div>
 
-      {/* timestamp */}
-      <span className="text-sm text-justify text-secondary mx-1">08.00 PM</span>
+      {/* timestamp & unread messages count */}
+      <div className="flex flex-col justify-center items-center">
+        <span className="text-xs mb-1 text-justify text-secondary dark:text-gray-300 mx-1">
+          08.00 PM
+        </span>
+
+        <span className="text-xs text-center bg-primary-light text-white py-1 px-2 rounded-full mx-1">
+          2
+        </span>
+      </div>
     </div>
   );
 }

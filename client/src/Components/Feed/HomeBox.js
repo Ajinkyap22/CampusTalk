@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 
 function HomeBox() {
   return (
-    <div className="bg-white shadow-base max-w-[21rem] pb-2 rounded sticky top-[5.5rem]">
+    <div className="bg-white dark:bg-darkSecondary shadow-base max-w-[21rem] pb-2 rounded sticky top-[5.5rem]">
       {/* title */}
-      <div className="w-full bg-primary-light p-3 py-2 rounded-t">
+      <div className="w-full bg-primary-light dark:bg-primary p-3 py-2 rounded-t">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="25"
@@ -18,23 +18,23 @@ function HomeBox() {
       </div>
 
       {/* description */}
-      <p className="text-sm p-4">
+      <p className="text-sm p-4 dark:text-darkLight">
         This is your feed. Posts from all of your forums will be displayed here.
         Head to the 'Forums' tab to see the posts of a specific forum.
       </p>
 
       {/* buttons */}
-      <div className="">
+      <div>
         <Link
           to="/create-post"
-          className="w-1/2 mx-auto text-center block py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-primary bg-primary-light text-white rounded-full hover:bg-blue-700"
+          className="w-1/2 mx-auto text-center block py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-primary bg-primary-light dark:bg-primary text-white rounded-full hover:bg-blue-700 dark:hover:bg-primary-light"
         >
           Create Post
         </Link>
 
         <Link
           to="/create-forum"
-          className="w-1/2 mx-auto text-center block py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-primary bg-white text-primary rounded-full hover:bg-primary-light hover:text-white"
+          className="w-1/2 mx-auto text-center block py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-primary dark:border-[#389fff] bg-transparent text-primary dark:text-[#389fff] rounded-full hover:bg-primary-light dark:hover:bg-primary hover:text-white dark:hover:text-white"
         >
           Create Forum
         </Link>

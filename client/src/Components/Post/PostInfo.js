@@ -39,7 +39,7 @@ function PostInfo({ postId, author, forum, timestamp, anonymous, important }) {
           xmlns="http://www.w3.org/2000/svg"
           width="38"
           fill="#818181"
-          className="inline mx-1 h-10"
+          className="inline mx-1 h-10 fill-[#818181] dark:fill-darkLight"
           viewBox="0 0 16 16"
         >
           <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
@@ -57,7 +57,7 @@ function PostInfo({ postId, author, forum, timestamp, anonymous, important }) {
       )}
       <div className="mx-1 relative">
         {/* user name */}
-        <span className="text-sm">
+        <span className="text-sm dark:text-darkLight">
           {anonymous ? " Anonymous" : `${author.firstName} ${author.lastName}`}
         </span>
 
@@ -69,14 +69,14 @@ function PostInfo({ postId, author, forum, timestamp, anonymous, important }) {
         >
           <path
             d="M11.1844 7.71093L5.23437 2.57968C5.0125 2.38906 4.6875 2.56093 4.6875 2.86875V13.1312C4.6875 13.4391 5.0125 13.6109 5.23437 13.4203L11.1844 8.28906C11.3547 8.14218 11.3547 7.85781 11.1844 7.71093Z"
-            fill="#484848"
+            className="fill-[#484848] dark:fill-darkLight"
           />
         </svg>
 
         {/* forum name */}
         <Link
           to={`/forums/${forum._id}/`}
-          className="mx-1 text-sm hover:underline"
+          className="mx-1 text-sm hover:underline dark:text-darkLight"
         >
           {forum.forumName}
           {/* important */}
@@ -103,7 +103,7 @@ function PostInfo({ postId, author, forum, timestamp, anonymous, important }) {
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="14"
-            className="fil-slate-400 inline dropDownToggle"
+            className="fil-slate-400 inline dropDownToggle dark:fill-darkLight"
             viewBox="0 0 16 16"
           >
             <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
@@ -114,14 +114,15 @@ function PostInfo({ postId, author, forum, timestamp, anonymous, important }) {
         <Options
           showOptions={showOptions}
           setShowOptions={setShowOptions}
-          // author={author}
           isAuthor={isAuthor}
           postId={postId}
           forum={forum}
         />
 
         {/* date */}
-        <p className="text-xs text-secondary">{moment(timestamp).fromNow()}</p>
+        <p className="text-xs text-secondary dark:text-gray-300">
+          {moment(timestamp).fromNow()}
+        </p>
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ import ChatPreview from "./ChatPreview";
 
 function ChatList() {
   return (
-    <div className="col-span-2 h-full bg-white dark:bg-dark">
+    <div className="col-span-2 h-full bg-white dark:bg-dark overflow-auto">
       {/* chat preview */}
       <ChatPreview />
     </div>

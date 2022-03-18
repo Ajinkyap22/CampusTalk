@@ -1,4 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+
+function useOutsideAlerter(ref, setShowDropdown) {
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (
+        ref.current &&
+        !ref.current.contains(event.target) &&
+        !event.target.classList.contains("dropDownToggle")
+      ) {
+        setShowDropdown(false);
+      }
+    }
+    // Bind the event listener
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [ref]);
+}
 
 function Filter({
   activeFilter,
@@ -10,6 +30,8 @@ function Filter({
 }) {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showDay, setShowDay] = useState(false);
+  const wrapperRef = useRef(null);
+  useOutsideAlerter(wrapperRef, setShowDropdown);
 
   function switchActiveFilter(filter) {
     setActiveFilter(filter);
@@ -47,14 +69,13 @@ function Filter({
   }
 
   return (
-    <div className="bg-white relative shadow-base flex justify-between items-center w-full rounded">
+    <div className="bg-white dark:bg-darkSecondary relative shadow-base dark:shadow-darkLight flex justify-between items-center w-full rounded">
       {/* filter label */}
-      <p className="inline p-3 text-sm bg-[#f3f3f3]">
+      <p className="inline p-3 text-sm bg-[#f3f3f3] dark:bg-neutral-700 dark:text-darkLight">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="20"
-          fill="#818181"
-          className="inline align-text-bottom"
+          className="inline align-text-bottom fill-[#818181] dark:fill-darkLight"
           viewBox="0 0 16 16"
         >
           <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z" />
@@ -69,14 +90,19 @@ function Filter({
       >
         <span
           className={`${
-            activeFilter === "latest" ? "bg-[#E2EEFF] text-primary" : ""
+            activeFilter === "latest"
+              ? "bg-[#E2EEFF] text-primary"
+              : "dark:text-darkLight"
           } p-1 px-2 rounded-xl`}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="w-5 inline align-text-top"
+            className={`w-5 inline align-text-top ${
+              activeFilter === "latest"
+                ? "fill-[#0278E4]"
+                : "fill-[#626262] dark:fill-darkLight"
+            }`}
             viewBox="0 0 20 20"
-            fill={activeFilter === "latest" ? "#0278E4" : "#626262"}
           >
             <path
               fillRule="evenodd"
@@ -95,7 +121,9 @@ function Filter({
       >
         <span
           className={`${
-            activeFilter === "important" ? "bg-[#E2EEFF] text-primary" : ""
+            activeFilter === "important"
+              ? "bg-[#E2EEFF] text-primary"
+              : "dark:text-darkLight"
           } p-1 px-2 rounded-xl`}
         >
           <svg
@@ -107,7 +135,11 @@ function Filter({
           >
             <path
               d="M2.9165 15.825L12.0832 15.8333C12.6415 15.8333 13.1415 15.5583 13.4415 15.1333L17.0832 9.99999L13.4415 4.86666C13.1415 4.44166 12.6415 4.16666 12.0832 4.16666L2.9165 4.17499L6.94984 9.99999L2.9165 15.825Z"
-              fill={activeFilter === "important" ? "#0278E4" : "#626262"}
+              className={
+                activeFilter === "important"
+                  ? "fill-[#0278E4]"
+                  : "fill-[#626262] dark:fill-[#cbcbcb]"
+              }
             />
           </svg>{" "}
           Important
@@ -118,7 +150,9 @@ function Filter({
       <button onClick={toggleDay} className="p-2 text-sm">
         <span
           className={`${
-            activeFilter === "top" ? "bg-[#E2EEFF] text-primary" : ""
+            activeFilter === "top"
+              ? "bg-[#E2EEFF] text-primary"
+              : "dark:text-darkLight"
           } p-1 px-2 rounded-xl`}
         >
           <svg
@@ -129,7 +163,13 @@ function Filter({
             className="inline"
             viewBox="0 0 64 64"
           >
-            <g fill={activeFilter === "top" ? "#0278E4" : "#626262"}>
+            <g
+              className={
+                activeFilter === "top"
+                  ? "fill-[#0278E4]"
+                  : "fill-[#626262] dark:fill-[#cbcbcb]"
+              }
+            >
               <path d="M21.539 38.05c0-1.322-.91-2.318-2.116-2.318H3.603c-1.209 0-2.118.996-2.118 2.318c0 1.287.921 2.26 2.146 2.26h5.495v17.813c0 1.299.986 2.198 2.397 2.198c1.416 0 2.406-.899 2.406-2.198V40.31h5.495c1.185 0 2.115-.993 2.115-2.26" />
               <path d="M31.05 35.3c-6.728 0-11.08 4.957-11.08 12.625c0 7.705 4.348 12.684 11.08 12.684c6.695 0 11.02-4.967 11.02-12.651c0-7.691-4.321-12.658-11.02-12.658m0 20.762c-3.815 0-6.184-3.104-6.184-8.104c0-5.02 2.369-8.142 6.184-8.142c3.78 0 6.127 3.056 6.127 7.966c.003 5.262-2.232 8.28-6.127 8.28" />
               <path d="M54.4 35.73h-6.376c-2.619 0-3.949 1.387-3.949 4.125v18.207c0 1.352.955 2.258 2.375 2.258c1.394 0 2.371-.916 2.371-2.228v-7.106h5.468c5.153 0 8.231-2.924 8.231-7.828c0-4.648-3.036-7.428-8.12-7.428m3.258 7.487c0 2.229-1.121 3.313-3.432 3.313H48.82v-6.312h5.406c2.311.001 3.432.981 3.432 2.999" />
@@ -144,25 +184,26 @@ function Filter({
       <button
         onClick={handleDropdown}
         disabled={activeFilter === "top" ? false : true}
-        className="p-2 text-sm"
+        className="p-2 text-sm dropDownToggle"
       >
         <span
           className={`${
             activeFilter === "top"
               ? "bg-[#E2EEFF] text-primary"
               : "bg-[#ccc] text-[#666]"
-          } p-1 px-2 rounded-xl`}
+          } p-1 px-2 rounded-xl dropDownToggle`}
         >
           {dateRange}{" "}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="15"
             fill="currentColor"
-            className="inline"
+            className="inline dropDownToggle"
             viewBox="0 0 16 16"
           >
             <path
               fillRule="evenodd"
+              className="dropDownToggle"
               d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
             />
           </svg>
@@ -170,37 +211,40 @@ function Filter({
       </button>
 
       <div
-        className="absolute bg-white shadow-base p-2 top-10 right-0 z-10 rounded"
+        className="absolute bg-white dark:bg-darkSecondary shadow-base p-2 top-10 right-0 z-10 rounded"
         hidden={showDropdown ? false : true}
+        ref={wrapperRef}
       >
         <ul>
           <li
             className={`p-2 text-sm  ${
-              dateRange === "Today" ? "bg-[#E2EEFF] text-primary rounded" : ""
+              dateRange === "Today"
+                ? "bg-[#E2EEFF] text-primary"
+                : "dark:text-darkLight"
             }`}
             onClick={() => handleDay("Today")}
           >
             <button>Today</button>
           </li>
-          <hr />
+          <hr className="dark:bg-light dark:border-top dark:border-light" />
 
           <li
             className={`p-2 text-sm  ${
               dateRange === "This Week"
-                ? "bg-[#E2EEFF] text-primary rounded"
-                : ""
+                ? "bg-[#E2EEFF] text-primary"
+                : "dark:text-darkLight"
             }`}
             onClick={() => handleDay("This Week")}
           >
             <button>This Week</button>
           </li>
-          <hr />
+          <hr className="dark:bg-light dark:border-top dark:border-light" />
 
           <li
             className={`p-2 text-sm  ${
               dateRange === "This Month"
-                ? "bg-[#E2EEFF] text-primary rounded"
-                : ""
+                ? "bg-[#E2EEFF] text-primary"
+                : "dark:text-darkLight"
             }`}
             onClick={() => handleDay("This Month")}
           >

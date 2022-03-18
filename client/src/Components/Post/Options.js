@@ -71,18 +71,17 @@ function Options({ postId, forum, showOptions, setShowOptions, isAuthor }) {
   return (
     <div
       ref={wrapperRef}
-      className="absolute bg-white shadow-base p-1.5 top-7 right-0 rounded z-10"
+      className="absolute bg-white dark:bg-darkSecondary shadow-base p-1.5 top-7 right-0 rounded z-10"
       hidden={!showOptions}
     >
       <ul>
         {/* edit post */}
-        <li className="p-1.5 text-sm" hidden={!isAuthor}>
+        <li className="p-1.5 text-sm dark:text-darkLight" hidden={!isAuthor}>
           <Link to={`/forums/${forum._id}/posts/${postId}/edit-post`}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
-              fill="#818181"
-              className="inline mr-2"
+              className="inline mr-2 fill-[#818181] dark:fill-darkLight"
               viewBox="0 0 16 16"
             >
               <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
@@ -97,17 +96,12 @@ function Options({ postId, forum, showOptions, setShowOptions, isAuthor }) {
         <hr hidden={!isAuthor} />
 
         {/* delete post */}
-        <li
-          className="p-1.5 text-sm"
-          // hidden={!isAuthor && !isModerator}
-          onClick={deletePost}
-        >
+        <li className="p-1.5 text-sm dark:text-darkLight" onClick={deletePost}>
           <button>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
-              fill="#818181"
-              className="inline mr-2"
+              className="inline mr-2 fill-[#818181] dark:fill-darkLight"
               viewBox="0 0 16 16"
             >
               <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />

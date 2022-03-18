@@ -5,12 +5,12 @@ import { Link } from "react-router-dom";
 function ForumBox({ user, fixed = true }) {
   return (
     <div
-      className={`bg-white shadow-base max-w-[21rem] my-4 mt-8 rounded ${
+      className={`bg-white dark:bg-darkSecondary shadow-base max-w-[21rem] my-4 mt-8 rounded ${
         fixed ? "fixed top-[60%]" : ""
       }`}
     >
       {/* title */}
-      <div className="w-full bg-primary-light p-3 py-2  rounded-t">
+      <div className="w-full bg-primary-light dark:bg-primary p-3 py-2 rounded-t">
         <LogoCropped width="40" />
 
         <p className="text-white inline"> Your Forums</p>
@@ -31,13 +31,13 @@ function ForumBox({ user, fixed = true }) {
             })}
             <Link
               to={`/forums/`}
-              className="block p-3 text-primary text-center text-sm underline underline-offset-1 hover:bg-blue-100"
+              className="block p-3 text-primary dark:text-[#389fff] text-center text-sm underline underline-offset-1 hover:bg-blue-100 dark:hover:bg-slate-800"
             >
               See all
             </Link>
           </div>
         ) : (
-          <p className="block p-3 text-center text-sm text-slate-800 hover:bg-gray-100">
+          <p className="block p-3 text-center text-sm text-slate-800 dark:text-secondary hover:bg-gray-100">
             You have not joined any forums yet.
           </p>
         )}
