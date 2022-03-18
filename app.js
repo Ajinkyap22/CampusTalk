@@ -12,6 +12,7 @@ const forumRouter = require("./routes/forum");
 const postRouter = require("./routes/post");
 const commentRouter = require("./routes/comment");
 const replyRouter = require("./routes/reply");
+const chatRouter = require("./routes/chat");
 
 const app = express();
 
@@ -35,5 +36,6 @@ app.use("/api/forums", forumRouter);
 app.use("/api/forums/:id/posts", postRouter);
 app.use("/api/forums/:forumId/posts/:postId/comments", commentRouter);
 app.use("/api/forums/:id/posts/:id/comments/:id/replies", replyRouter);
+app.use("/api/chats", chatRouter);
 
 module.exports = app;

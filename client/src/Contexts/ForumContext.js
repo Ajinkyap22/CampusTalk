@@ -12,7 +12,6 @@ export function ForumProvider({ children }) {
       .get("/api/forums/")
       .then((res) => {
         setForums(res.data);
-        console.log(res.data);
       })
       .catch((err) => {
         console.error(err);

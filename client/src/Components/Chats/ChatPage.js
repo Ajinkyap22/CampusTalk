@@ -1,4 +1,12 @@
-function ChatPage() {
+import { useState, useEffect } from "react";
+
+function ChatPage({ chat, user }) {
+  const [receiver, setReceiver] = useState(null);
+
+  useEffect(() => {
+    chat && setReceiver(chat.members.find((member) => member._id !== user._id));
+  }, []);
+
   return (
     <div className="col-span-4 h-full dark:bg-darkSecondary overflow-auto relative">
       {/* chat title */}
@@ -6,21 +14,29 @@ function ChatPage() {
         {/* picture and name */}
         <div className="flex items-center">
           {/* picture */}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="inline mx-2 w-10 align-middle fill-white dark:fill-darkLight"
-            viewBox="0 0 16 16"
-          >
-            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-            <path
-              fillRule="evenodd"
-              d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
+          {receiver && receiver.picture ? (
+            <img
+              src={`http://localhost:3000/uploads/images/${receiver.picture}`}
+              className="rounded-full object-cover w-10 h-auto inline mx-2"
+              alt=""
             />
-          </svg>
+          ) : (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="inline mx-2 w-10 align-middle fill-[#818181] dark:fill-darkLight"
+              viewBox="0 0 16 16"
+            >
+              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+              <path
+                fillRule="evenodd"
+                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
+              />
+            </svg>
+          )}
 
           {/* name */}
           <span className="text-justify mx-1 text-white dark:text-darkLight">
-            Little Lord Fuckleroy
+            {receiver && receiver.firstName} {receiver && receiver.lastName}
           </span>
         </div>
 
