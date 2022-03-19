@@ -44,7 +44,7 @@ exports.sendMessage = async (req, res) => {
   try {
     const { text, sender, receiver, chat } = req.body;
 
-    const message = new Message({
+    let message = new Message({
       text,
       sender,
       receiver,
@@ -52,7 +52,17 @@ exports.sendMessage = async (req, res) => {
     });
 
     await message.save();
-    res.status(201).json(message);
+
+    // populate sender and receiver
+    Message.populate(message, { path: "sender" }, (err, msg) => {
+      if (err) return res.status(500).json({ error: err.message });
+
+      Message.populate(msg, { path: "receiver" }, (err, msg) => {
+        if (err) return res.status(500).json({ error: err.message });
+
+        res.status(201).json(msg);
+      });
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -76,7 +86,16 @@ exports.sendFileMessage = async (req, res) => {
 
     await message.save();
 
-    res.status(201).json(message);
+    // populate sender and receiver
+    Message.populate(message, { path: "sender" }, (err, msg) => {
+      if (err) return res.status(500).json({ error: err.message });
+
+      Message.populate(msg, { path: "receiver" }, (err, msg) => {
+        if (err) return res.status(500).json({ error: err.message });
+
+        res.status(201).json(msg);
+      });
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

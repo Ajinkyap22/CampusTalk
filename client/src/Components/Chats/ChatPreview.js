@@ -46,10 +46,6 @@ function ChatPreview({ chat, user, activeChat, setActiveChat }) {
           <span className="text-sm text-justify mx-1 dark:text-darkLight">
             {receiver && receiver.firstName} {receiver && receiver.lastName}
           </span>
-
-          <span className="text-xs text-secondary text-justify mx-1 dark:text-gray-300">
-            You : Little Lord Fuckleroy
-          </span>
         </div>
       </div>
 
@@ -59,9 +55,9 @@ function ChatPreview({ chat, user, activeChat, setActiveChat }) {
           08.00 PM
         </span>
 
-        <span className="text-xs text-center bg-primary-light text-white py-1 px-2 rounded-full mx-1">
+        {/* <span className="text-xs text-center bg-primary-light text-white py-1 px-2 rounded-full mx-1">
           2
-        </span>
+        </span> */}
       </div>
     </div>
   );

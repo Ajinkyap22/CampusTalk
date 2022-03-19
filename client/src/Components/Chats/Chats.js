@@ -19,7 +19,7 @@ function Chats({ title }) {
   }, [activeTab]);
 
   return (
-    <main className="w-full h-full overflow-hidden bg-[#F0F2F5] dark:bg-dark">
+    <main className="w-full h-[calc(100vh_-_3.5rem)] bg-[#F0F2F5] dark:bg-dark">
       <Nav />
 
       <section className="grid grid-cols-6 w-full h-full">
