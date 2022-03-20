@@ -4,7 +4,7 @@ function HomeBox() {
   return (
     <div className="bg-white dark:bg-darkSecondary shadow-base max-w-[21rem] pb-2 rounded sticky top-[5.5rem]">
       {/* title */}
-      <div className="w-full bg-primary-light dark:bg-primary p-3 py-2 rounded-t">
+      <div className="w-full bg-primary-light p-3 py-2 rounded-t">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="25"
@@ -27,7 +27,7 @@ function HomeBox() {
       <div>
         <Link
           to="/create-post"
-          className="w-1/2 mx-auto text-center block py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-primary bg-primary-light dark:bg-primary text-white rounded-full hover:bg-blue-700 dark:hover:bg-primary-light"
+          className="w-1/2 mx-auto text-center block py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-primary bg-primary-light text-white rounded-full hover:bg-blue-700 dark:hover:bg-primary-light"
         >
           Create Post
         </Link>

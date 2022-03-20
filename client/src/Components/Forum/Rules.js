@@ -1,7 +1,7 @@
 function Rules({ rules }) {
   return (
     <div
-      className="bg-white shadow-base max-w-[22rem] pb-2 my-8 rounded"
+      className="bg-white dark:bg-darkSecondary shadow-base max-w-[22rem] pb-2 my-8 rounded"
       hidden={rules.length ? false : true}
     >
       {/* title */}
@@ -26,11 +26,13 @@ function Rules({ rules }) {
         {rules.map((rule, i) => (
           <div
             className={`${
-              rules[i + 1] ? "border-b border-[#cfcfcf]" : ""
+              rules[i + 1]
+                ? "border-b border-[#cfcfcf] dark:border-secondary dark:text-darkLight"
+                : ""
             } py-3`}
             key={i}
           >
-            <p className="px-3 text-sm">
+            <p className="px-3 text-sm dark:text-darkLight">
               {i + 1}. {rule}
             </p>
           </div>

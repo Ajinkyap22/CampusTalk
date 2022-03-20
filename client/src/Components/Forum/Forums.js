@@ -24,7 +24,6 @@ function Forums({ title }) {
       .get("/api/forums/")
       .then((res) => {
         setForums(res.data);
-        console.log(res.data);
       })
       .catch((err) => {
         console.error(err);
@@ -44,7 +43,7 @@ function Forums({ title }) {
           className={`p-3 shadow text-sm rounded-l ${
             forumsTab === "userForums"
               ? "bg-primary-light text-white"
-              : "bg-white"
+              : "bg-white dark:bg-zinc-700 dark:text-darkLight"
           }`}
           onClick={toggleTab}
         >
@@ -54,7 +53,7 @@ function Forums({ title }) {
           className={`p-3 shadow text-sm rounded-r ${
             forumsTab === "allForums"
               ? "bg-primary-light text-white"
-              : "bg-white"
+              : "bg-white dark:bg-zinc-700 dark:text-darkLight"
           }`}
           onClick={toggleTab}
         >

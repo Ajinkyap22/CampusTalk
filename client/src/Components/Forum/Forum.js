@@ -60,6 +60,8 @@ function Forum({ forum, title }) {
   }, [showModal]);
 
   useEffect(() => {
+    if (!user) return;
+
     if (forum.moderators.find((moderator) => moderator._id === user._id)) {
       setIsModerator(true);
     } else {
@@ -269,9 +271,8 @@ function Forum({ forum, title }) {
               {/* icon */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-20 w-auto mx-auto my-4"
+                className="h-20 w-auto mx-auto my-4 fill-[rgba(0, 0, 0, 0.6)] dark:fill-gray-300"
                 viewBox="0 0 20 20"
-                fill="rgba(0, 0, 0, 0.6)"
               >
                 <path
                   fillRule="evenodd"
@@ -282,12 +283,12 @@ function Forum({ forum, title }) {
 
               {/* text */}
               {requestSent ? (
-                <p className="my-4 text-gray-700">
+                <p className="my-4 text-gray-700 dark:text-gray-300">
                   Your request to join the forum has been sent. You will be able
                   to see all the posts when it is accepted.
                 </p>
               ) : (
-                <p className="my-4 text-gray-700">
+                <p className="my-4 text-gray-700 dark:text-gray-300">
                   You are not a member of this forum. Join the forum to view
                   posts & members.
                 </p>

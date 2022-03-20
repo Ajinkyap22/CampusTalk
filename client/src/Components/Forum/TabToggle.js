@@ -7,8 +7,10 @@ function TabToggle({ tab, setTab, isModerator }) {
     <div className="text-center sticky mb-8 min-w-[32rem] mx-auto">
       {/* posts */}
       <button
-        className={`p-2 px-8 shadow text-sm border-r border-light rounded-l ${
-          tab === "posts" ? "bg-primary-light text-white" : "bg-white"
+        className={`p-2 px-8 shadow text-sm border-r border-light dark:border-zinc-700 rounded-l ${
+          tab === "posts"
+            ? "bg-primary-light text-white"
+            : "bg-white dark:bg-darkSecondary text-darkLight"
         }`}
         onClick={() => toggleTab("posts")}
       >
@@ -17,8 +19,10 @@ function TabToggle({ tab, setTab, isModerator }) {
 
       {/* members */}
       <button
-        className={`p-2 px-4 shadow text-sm border-x border-light  ${
-          tab === "members" ? "bg-primary-light text-white" : "bg-white"
+        className={`p-2 px-4 shadow text-sm border-x border-light dark:border-zinc-700  ${
+          tab === "members"
+            ? "bg-primary-light text-white"
+            : "bg-white dark:bg-darkSecondary text-darkLight"
         }`}
         onClick={() => toggleTab("members")}
       >
@@ -27,8 +31,10 @@ function TabToggle({ tab, setTab, isModerator }) {
 
       {/* post requests */}
       <button
-        className={`p-2 shadow text-sm border-x border-light  ${
-          tab === "postRequests" ? "bg-primary-light text-white" : "bg-white"
+        className={`p-2 shadow text-sm border-x border-light dark:border-zinc-700  ${
+          tab === "postRequests"
+            ? "bg-primary-light text-white"
+            : "bg-white dark:bg-darkSecondary text-darkLight"
         }`}
         onClick={() => toggleTab("postRequests")}
         hidden={!isModerator}
@@ -38,8 +44,10 @@ function TabToggle({ tab, setTab, isModerator }) {
 
       {/* join requests */}
       <button
-        className={`p-2 shadow text-sm border-l border-light rounded-r ${
-          tab === "joinRequests" ? "bg-primary-light text-white" : "bg-white"
+        className={`p-2 shadow text-sm border-l border-light dark:border-zinc-700 rounded-r ${
+          tab === "joinRequests"
+            ? "bg-primary-light text-white"
+            : "bg-white dark:bg-darkSecondary text-darkLight"
         }`}
         onClick={() => toggleTab("joinRequests")}
         hidden={!isModerator}

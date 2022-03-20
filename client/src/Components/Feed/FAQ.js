@@ -11,7 +11,7 @@ function FAQ({ faqData }) {
   return (
     <div className="sticky top-[5.5rem] bg-white dark:bg-darkSecondary shadow-base text-[#000000e6] my-8 w-[17rem] max-w-[17rem] rounded self-start">
       {/* title */}
-      <div className="bg-primary-light dark:bg-primary p-2 rounded-t">
+      <div className="bg-primary-light p-2 rounded-t">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"

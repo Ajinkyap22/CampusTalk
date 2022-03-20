@@ -40,7 +40,7 @@ function Dropdown({ showDropdown, setShowDropdown }) {
 
   return (
     <div
-      className="absolute bg-white shadow-base p-2 top-14 right-28 rounded dark:bg-darkSecondary"
+      className="absolute bg-white shadow-base p-2 top-14 right-28 z-20 rounded dark:bg-darkSecondary"
       hidden={showDropdown ? false : true}
       ref={wrapperRef}
     >

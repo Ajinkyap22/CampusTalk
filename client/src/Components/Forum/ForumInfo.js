@@ -19,6 +19,8 @@ function ForumInfo({
   const [user] = useContext(UserContext);
 
   function joinForum() {
+    if (!user) return;
+
     let headers = {
       headers: {
         Authorization: `Bearer ${
@@ -51,7 +53,7 @@ function ForumInfo({
   }
 
   return (
-    <div className="bg-white shadow-base max-w-[22rem] pb-1 rounded">
+    <div className="bg-white dark:bg-darkSecondary shadow-base max-w-[22rem] pb-1 rounded">
       {/* title */}
       <div className="flex items-center w-full bg-primary-light p-3 py-2  rounded-t">
         <div className="mr-1">
@@ -61,15 +63,17 @@ function ForumInfo({
       </div>
 
       {/* info */}
-      <div className="p-2 border-b border-[#cfcdcd] px-3">
+      <div className="p-2 border-b border-[#cfcdcd] dark:border-secondary px-3">
         {/* website */}
         <p className="text-xs p-1">
-          <span className="underline underline-offset-1">Website: </span>
+          <span className="underline underline-offset-1 dark:text-darkLight">
+            Website:{" "}
+          </span>
           <a
             href={forum.website}
             target="_blank"
             rel="noreferrer"
-            className="text-primary px-2 hover:underline"
+            className="text-primary dark:text-primary-dark px-2 hover:underline"
           >
             {forum.website}
           </a>
@@ -77,35 +81,41 @@ function ForumInfo({
 
         {/* email */}
         <p className="text-xs p-1">
-          <span className="underline underline-offset-1">Email: </span>
-          <span className="text-primary px-6">{forum.email}</span>
+          <span className="underline underline-offset-1 dark:text-darkLight">
+            Email:{" "}
+          </span>
+          <span className="text-primary dark:text-primary-dark px-6">
+            {forum.email}
+          </span>
         </p>
 
         {/* address */}
         <p className="text-xs p-1">
-          <span className="underline underline-offset-1">Address: </span>
-          <span className="px-2">{forum.address}</span>
+          <span className="underline underline-offset-1 dark:text-darkLight">
+            Address:{" "}
+          </span>
+          <span className="px-2 dark:text-darkLight">{forum.address}</span>
         </p>
       </div>
 
       {/* stats */}
-      <div className="p-3 py-2 border-b border-[#cfcdcd] text-center px-24">
+      <div className="p-3 py-2 border-b border-[#cfcdcd] dark:border-secondary text-center px-24">
         <div className="flex justify-center items-center">
           {/* members */}
           <div className="flex flex-col items-center px-2">
-            <span>{forum.members.length}</span>
-            <span className="text-sm">Members</span>
+            <span className="dark:text-darkLight">{forum.members.length}</span>
+            <span className="text-sm dark:text-darkLight">Members</span>
           </div>
 
           {/* posts */}
           <div className="flex flex-col items-center px-2">
-            <span>{forum.posts.length}</span>
-            <span className="text-sm">Posts</span>
+            <span className="dark:text-darkLight">{forum.posts.length}</span>
+            <span className="text-sm dark:text-darkLight">Posts</span>
           </div>
         </div>
 
         {/* created date */}
-        <p className="text-xs pt-3 text-secondary">
+        <p className="text-xs pt-3 text-secondary dark:text-gray-300">
           Created {moment(forum.timestamp).format("LL")}
         </p>
       </div>
@@ -122,12 +132,12 @@ function ForumInfo({
 
           <button
             onClick={toggleModal}
-            className="mx-auto w-1/2 block text-centr p-2 py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-red-500 bg-white text-red-500 rounded-full hover:bg-red-500 hover:text-white"
+            className="mx-auto w-1/2 block text-centr p-2 py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-red-500 bg-transparent text-red-500 dark:text-[#ff5656] rounded-full hover:bg-red-500 hover:text-white dark:hover:text-darkLight"
           >
             Leave Forum
           </button>
 
-          <button className="mx-auto w-1/2 block text-centr p-2 py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-red-500 bg-white text-red-500 rounded-full hover:bg-red-500 hover:text-white">
+          <button className="mx-auto w-1/2 block text-centr p-2 py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-red-500 bg-transparent text-red-500 dark:text-[#ff5656] rounded-full hover:bg-red-500 hover:text-white dark:hover:text-darkLight">
             Delete Forum
           </button>
         </div>
@@ -144,7 +154,8 @@ function ForumInfo({
           ) : (
             <button
               onClick={joinForum}
-              className="mx-auto w-1/2 block p-2 py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-primary-light bg-primary-light text-white rounded-full hover:bg-blue-700"
+              disabled={!user}
+              className="mx-auto w-1/2 block p-2 py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-primary-light bg-primary-light text-white rounded-full hover:bg-blue-700 disabled:opacity-70 disabled:hover:bg-primary-light"
             >
               Join Forum
             </button>

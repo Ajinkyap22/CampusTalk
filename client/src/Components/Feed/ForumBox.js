@@ -10,7 +10,7 @@ function ForumBox({ user, fixed = true }) {
       }`}
     >
       {/* title */}
-      <div className="w-full bg-primary-light dark:bg-primary p-3 py-2 rounded-t">
+      <div className="w-full bg-primary-light p-3 py-2 rounded-t">
         <LogoCropped width="40" />
 
         <p className="text-white inline"> Your Forums</p>

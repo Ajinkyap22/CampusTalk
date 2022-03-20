@@ -185,6 +185,10 @@ td {
   border-bottom: 1rem solid white;
 }
 
+.dark td {
+  border-bottom: 1rem solid #2b2b2b;
+}
+
 thead tr th:first-child,
 tbody tr td:first-child {
   width: 50%;
