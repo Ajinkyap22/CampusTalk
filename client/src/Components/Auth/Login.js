@@ -20,6 +20,8 @@ function Login({ title, ...props }) {
   }, [title]);
 
   const handleSignIn = async (googleData) => {
+    if (!googleData.tokenId) return;
+
     const body = JSON.stringify({
       token: googleData.tokenId,
     });

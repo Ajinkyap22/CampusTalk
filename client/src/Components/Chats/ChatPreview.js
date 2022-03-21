@@ -1,10 +1,16 @@
 import { useState, useEffect } from "react";
 
-function ChatPreview({ chat, user, activeChat, setActiveChat }) {
+function ChatPreview({ chat, user, activeChat, setActiveChat, onlineUsers }) {
   const [receiver, setReceiver] = useState(null);
+  const [online, setOnline] = useState(false);
 
   useEffect(() => {
-    setReceiver(chat.members.find((member) => member._id !== user._id));
+    let r = chat.members.find((member) => member._id !== user._id);
+    setReceiver(r);
+
+    if (onlineUsers[r._id]) {
+      setOnline(true);
+    }
   }, []);
 
   function handleClick() {
@@ -51,9 +57,21 @@ function ChatPreview({ chat, user, activeChat, setActiveChat }) {
 
       {/* timestamp & unread messages count */}
       <div className="flex flex-col justify-center items-center">
-        <span className="text-xs mb-1 text-justify text-secondary dark:text-gray-300 mx-1">
+        {/* <span className="text-xs mb-1 text-justify text-secondary dark:text-gray-300 mx-1">
           08.00 PM
-        </span>
+        </span> */}
+
+        {/* online status */}
+        {online && (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="10"
+            className="fill-green-500 inline"
+            viewBox="0 0 16 16"
+          >
+            <circle cx="8" cy="8" r="8" />
+          </svg>
+        )}
 
         {/* <span className="text-xs text-center bg-primary-light text-white py-1 px-2 rounded-full mx-1">
           2

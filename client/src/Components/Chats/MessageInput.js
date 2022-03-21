@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 
-function MessageInput({ chat, user, receiver, setMessages }) {
+function MessageInput({ chat, user, receiver, setMessages, socket }) {
   const [text, setText] = useState("");
   const [file, setFile] = useState(null);
 
@@ -44,8 +44,13 @@ function MessageInput({ chat, user, receiver, setMessages }) {
       .post(`/api/chats/send-message`, formData, headers)
       .then((res) => {
         setMessages((messages) => [...messages, res.data]);
-
         setText("");
+
+        socket.emit("sendMessage", {
+          senderId: user._id,
+          receiverId: receiver._id,
+          text,
+        });
       })
       .catch((err) => {
         console.error(err.response);

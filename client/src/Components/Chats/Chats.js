@@ -1,14 +1,17 @@
 import { UserContext } from "../../Contexts/UserContext";
 import { TabContext } from "../../Contexts/TabContext";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
+import { io } from "socket.io-client";
 import Nav from "../Navbar/Nav";
 import ChatList from "./ChatList";
 import ChatPage from "./ChatPage";
 
 function Chats({ title }) {
-  const [activeTab, setActiveTab] = useContext(TabContext);
   const [user] = useContext(UserContext);
+  const [activeTab, setActiveTab] = useContext(TabContext);
   const [activeChat, setActiveChat] = useState(null);
+  const [onlineUsers, setOnlineUsers] = useState({});
+  const socket = useRef();
 
   useEffect(() => {
     document.title = title || "Chats | CampusTalk";
@@ -17,6 +20,17 @@ function Chats({ title }) {
   useEffect(() => {
     setActiveTab("chats");
   }, [activeTab]);
+
+  useEffect(() => {
+    socket.current = io("ws://localhost:8900");
+  }, []);
+
+  useEffect(() => {
+    socket.current.emit("join", user._id);
+    socket.current.on("users", (users) => {
+      setOnlineUsers(users);
+    });
+  }, [user]);
 
   return (
     <main className="w-full h-[calc(100vh_-_3.5rem)] bg-[#F0F2F5] dark:bg-dark">
@@ -28,13 +42,14 @@ function Chats({ title }) {
           user={user}
           activeChat={activeChat}
           setActiveChat={setActiveChat}
+          onlineUsers={onlineUsers}
         />
 
         {/* messages */}
         {activeChat ? (
-          <ChatPage user={user} chat={activeChat} />
+          <ChatPage user={user} chat={activeChat} socket={socket.current} />
         ) : (
-          <div className="col-span-4 flex flex-col justify-center items-center h-full dark:bg-darkSecondary overflow-auto relative">
+          <div className="col-span-4 flex flex-col justify-center items-center h-full bg-[#F0F2F5] dark:bg-darkSecondary overflow-auto relative">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-16 w-16 stroke-[#818181] dark:stroke-darkLight"

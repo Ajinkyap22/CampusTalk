@@ -14,7 +14,7 @@ function Message({ message, user }) {
             message.sender._id === user._id
               ? "bg-primary-light text-white dark:text-darkLight"
               : "bg-white dark:bg-darkLight shadow"
-          } p-1.5 rounded-lg`}
+          } p-1.5 rounded-lg text-sm`}
         >
           {message.text}
         </div>

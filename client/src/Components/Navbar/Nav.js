@@ -16,7 +16,7 @@ function Nav() {
   };
 
   return (
-    <nav className="sticky top-0 z-10 w-full flex bg-white dark:bg-darkSecondary pt-2 shadow-md justify-between md:justify-around items-center">
+    <nav className="sticky top-0 z-30 w-full flex bg-white dark:bg-darkSecondary pt-2 shadow-md justify-between md:justify-around items-center">
       {/* logo */}
       <div className="mb-2">
         <Logo width="120" height="40" />
