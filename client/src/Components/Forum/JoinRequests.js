@@ -70,14 +70,18 @@ function JoinRequests({
       {/* if empty */}
       <div className="text-center my-4" hidden={joinRequests.length}>
         <LogoCropped color="rgba(98,98,98,0.9)" width="80" />
-        <p className="text-secondary">There no new join requests.</p>
+        <p className="text-secondary dark:text-gray-300">
+          There no new join requests.
+        </p>
       </div>
 
       {/* if not empty */}
-      <div className="bg-white shadow-base min-w-[32rem] rounded">
+      <div className="bg-white dark:bg-darkSecondary shadow-base min-w-[32rem] rounded">
         {joinRequests.map((joinRequest, i) => (
           <div
-            className="flex border-b justify-between items-center w-full p-2.5"
+            className={`flex border-b justify-between items-center w-full p-2.5 ${
+              i === joinRequests.length - 1 ? "border-none" : ""
+            }`}
             key={i}
           >
             {/* use info */}
@@ -92,8 +96,7 @@ function JoinRequests({
               ) : (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  fill="#818181"
-                  className="inline mx-2 w-10 align-middle"
+                  className="inline mx-2 w-10 align-middle fill-[#818181] dark:fill-darkLight"
                   viewBox="0 0 16 16"
                 >
                   <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
@@ -105,7 +108,7 @@ function JoinRequests({
               )}
 
               {/* name */}
-              <span className="text-sm text-justify mx-1">
+              <span className="text-sm text-justify mx-1 dark:text-darkLight">
                 {joinRequest.firstName} {joinRequest.lastName}
               </span>
             </div>

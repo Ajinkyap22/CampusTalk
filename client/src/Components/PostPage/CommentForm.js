@@ -154,14 +154,13 @@ function CommentForm({ forumId, postId, comments, setComments }) {
   }
 
   return (
-    <div className="flex items-start p-1.5 sticky bottom-0 bg-white shadow-inner">
+    <div className="flex items-start p-1.5 sticky bottom-0 bg-transparent shadow-inner">
       {/* user picture */}
       {!user.picture ? (
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="30"
-          fill="#818181"
-          className="inline mx-1 h-10"
+          className="inline mx-1 h-10 fill-[#818181] dark:fill-darkLight"
           viewBox="0 0 16 16"
         >
           <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
@@ -187,7 +186,7 @@ function CommentForm({ forumId, postId, comments, setComments }) {
           onChange={(e) => setText(e.target.value)}
           value={text}
           placeholder="Write your comment"
-          className="text-sm mx-1 p-1 border-b-2 border-gray-400 focus:outline-none"
+          className="text-sm mx-1 p-1 border-b-2 border-gray-400 bg-transparent text-white dark:text-darkLight focus:outline-none"
         />
 
         {/* icons for image & video */}
@@ -210,7 +209,7 @@ function CommentForm({ forumId, postId, comments, setComments }) {
             handleRemoveFile={handleRemoveFile}
             index={0}
             originalFileName={originalFileName}
-            classes="border border-primary bg-[#f3f3f3] mt-2 ml-1 px-1.5"
+            classes="border border-primary dark:border-primary-dark bg-[#f3f3f3] dark:bg-gray-800 mt-2 ml-1 px-1.5"
           />
         )}
 

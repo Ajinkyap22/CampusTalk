@@ -57,8 +57,7 @@ function Comment({
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="30"
-          fill="#818181"
-          className="inline mx-1 col-span-1 mt-0.5"
+          className="inline mx-1 col-span-1 mt-0.5 fill-[#818181] dark:fill-darkLight"
           viewBox="0 0 16 16"
         >
           <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
@@ -71,11 +70,11 @@ function Comment({
 
       {/* user name & comment */}
       <div className="flex flex-col col-span-9 relative">
-        <div className=" mx-2 bg-[#f3f3f3] p-2 rounded-lg">
-          <p className="text-mxs font-bold pr-1">
+        <div className=" mx-2 bg-[#f3f3f3] dark:bg-[#3e3d3d] p-2 rounded-lg">
+          <p className="text-mxs font-bold pr-1 dark:text-darkLight">
             {comment.author.firstName} {comment.author.lastName}
           </p>
-          <p className="text-mxs">{comment.text}</p>
+          <p className="text-mxs dark:text-darkLight">{comment.text}</p>
 
           {/* options */}
           <button
@@ -87,7 +86,7 @@ function Comment({
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="14"
-              className="fil-[#65676b] inline dropDownToggle"
+              className="fil-[#65676b] dark:fill-gray-300 inline dropDownToggle"
               viewBox="0 0 16 16"
             >
               <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />

@@ -22,11 +22,11 @@ function PostData({ post }) {
   }, []);
 
   return (
-    <section className="postData sticky top-0 max-h-screen col-span-1 bg-white py-2 pb-0 overflow-auto w-full">
+    <section className="postData sticky top-0 max-h-screen col-span-1 bg-white dark:bg-darkSecondary py-2 pb-0 overflow-auto w-full">
       <PostInfo post={post} />
 
       {/* caption */}
-      <p className="m-2 my-3 px-2 text-sm">{post.text}</p>
+      <p className="m-2 my-3 px-2 text-sm dark:text-darkLight">{post.text}</p>
 
       {/* actions */}
       <PostActions
@@ -37,7 +37,7 @@ function PostData({ post }) {
         comments={post.comments}
         showCommentButton={false}
       />
-      <hr />
+      <hr className="dark:border-t dark:border-secondary" />
 
       {/* comments */}
       <div className="flex flex-col py-1">

@@ -13,11 +13,11 @@ function PostInfo({ post }) {
       {/* forum name */}
       <p
         to={`/forums/${post.forum._id}`}
-        className="p-1 py-1.5 text-sm font-semibold text-gray-700 hover:text-gray-900 hover:bg-gray-100 hover:border-gray-300 rounded-lg"
+        className="p-1 py-1.5 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-gray-900 hover:bg-gray-100 hover:border-gray-300 rounded-lg"
       >
         {post.forum.forumName}
       </p>
-      <hr />
+      <hr className="dark:border-t dark:border-secondary" />
 
       <div className="flex w-full my-1 py-1 relative">
         {/* user profile pic */}
@@ -25,8 +25,7 @@ function PostInfo({ post }) {
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="38"
-            fill="#818181"
-            className="inline mx-1 h-10"
+            className="inline mx-1 h-10 fill-[#818181] dark:fill-darkLight"
             viewBox="0 0 16 16"
           >
             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
@@ -45,7 +44,7 @@ function PostInfo({ post }) {
 
         <div className="inline mx-1 relative w-full">
           {/* user name */}
-          <span className="text-sm mx-1">
+          <span className="text-sm mx-1 dark:text-darkLight">
             {post.anonymous
               ? " Anonymous"
               : `${post.author.firstName} ${post.author.lastName}`}
@@ -60,7 +59,7 @@ function PostInfo({ post }) {
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="18"
-              className="fil-[#65676b] inline rotate-90 dropDownToggle"
+              className="fil-[#65676b] dark:fill-gray-300 inline rotate-90 dropDownToggle"
               viewBox="0 0 16 16"
             >
               <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
@@ -77,7 +76,7 @@ function PostInfo({ post }) {
           />
 
           {/* date */}
-          <p className="text-xs text-secondary">
+          <p className="text-xs text-secondary dark:text-gray-300">
             {moment(post.timestamp).fromNow()}
           </p>
         </div>

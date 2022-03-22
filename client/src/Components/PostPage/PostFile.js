@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import File from "../Post/File";
-import axios from "axios";
 
 function PostFile({ post, handleBack }) {
   const [folder, setFolder] = useState("images");
@@ -44,7 +43,7 @@ function PostFile({ post, handleBack }) {
           setCurrentFile={setCurrentFile}
         />
       ) : (
-        <p className="text-white text-lg text-center relative top-[45%]">
+        <p className="text-white text-lg dark:text-darkLight text-center relative top-[45%]">
           This post does not contain any media.
         </p>
       )}
@@ -52,7 +51,7 @@ function PostFile({ post, handleBack }) {
       {/* back button */}
       <button
         onClick={handleBack}
-        className="absolute left-5 top-4 bg-[rgba(255,255,255,0.2)] p-1 rounded-full"
+        className="absolute left-5 top-4 bg-[rgba(255,255,255,0.2)]  p-1 rounded-full"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

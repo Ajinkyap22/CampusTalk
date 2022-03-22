@@ -91,7 +91,9 @@ function PostRequests({ forum, forums, setForums }) {
       {/* if empty */}
       <div className="text-center my-4" hidden={postRequests.length}>
         <LogoCropped color="rgba(98,98,98,0.9)" width="80" />
-        <p className="text-secondary">There no new post requests.</p>
+        <p className="text-secondary dark:text-gray-300">
+          There no new post requests.
+        </p>
       </div>
 
       {/* if not empty */}

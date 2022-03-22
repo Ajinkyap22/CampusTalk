@@ -14,7 +14,7 @@ function PostRequest({ post, ...props }) {
   // }
 
   return (
-    <div className="bg-white shadow-base py-2 mt-8 w-full rounded">
+    <div className="bg-white dark:bg-darkSecondary shadow-base py-2 mt-8 w-full rounded">
       {/* user info */}
       <div className="flex my-1 px-2 w-full max-w-[32rem] relative">
         {/* user profile pic */}
@@ -22,8 +22,7 @@ function PostRequest({ post, ...props }) {
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="38"
-            fill="#818181"
-            className="inline mx-1 h-10"
+            className="inline mx-1 h-10 fill-[#818181] dark:fill-darkLight"
             viewBox="0 0 16 16"
           >
             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
@@ -41,7 +40,7 @@ function PostRequest({ post, ...props }) {
         )}
         <div className="mx-1 relative">
           {/* user name */}
-          <span className="text-sm">
+          <span className="text-sm dark:text-darkLight">
             {post.anonymous
               ? " Anonymous"
               : `${post.author.firstName} ${post.author.lastName}`}
@@ -50,19 +49,19 @@ function PostRequest({ post, ...props }) {
           <svg
             width="16"
             viewBox="0 0 16 16"
-            className="inline"
+            className="inline ml-1"
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
               d="M11.1844 7.71093L5.23437 2.57968C5.0125 2.38906 4.6875 2.56093 4.6875 2.86875V13.1312C4.6875 13.4391 5.0125 13.6109 5.23437 13.4203L11.1844 8.28906C11.3547 8.14218 11.3547 7.85781 11.1844 7.71093Z"
-              fill="#484848"
+              className="fill-[#484848] dark:fill-darkLight"
             />
           </svg>
 
           {/* forum name */}
           <Link
             to={`/forums/${post.forum._id}/`}
-            className="mx-1 text-sm hover:underline"
+            className="mx-1 text-sm hover:underline dark:text-darkLight"
           >
             {post.forum.forumName}
             {/* important */}
@@ -83,14 +82,14 @@ function PostRequest({ post, ...props }) {
           </Link>
 
           {/* date */}
-          <p className="text-xs text-secondary">
+          <p className="text-xs text-secondary dark:text-gray-300">
             {moment(post.timestamp).fromNow()}
           </p>
         </div>
       </div>
 
       {/* caption */}
-      <p className="m-2 my-3 px-2 text-sm">{post.text}</p>
+      <p className="m-2 my-3 px-2 text-sm dark:text-darkLight">{post.text}</p>
 
       {/* image */}
       {post.file.length ? (

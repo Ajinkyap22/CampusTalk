@@ -7,7 +7,7 @@ function FilePreview({ handleRemoveFile, index, originalFileName, classes }) {
           {originalFileName.type.match("image.*") ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="fill-primary w-4 h-4 inline mr-1"
+              className="fill-primary dark:fill-primary-dark w-4 h-4 inline mr-1"
               viewBox="0 0 16 16"
             >
               <path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
@@ -17,7 +17,7 @@ function FilePreview({ handleRemoveFile, index, originalFileName, classes }) {
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
-              className="inline w-4 h-4 fill-primary mr-1"
+              className="inline w-4 h-4 fill-primary dark:fill-primary-dark  mr-1"
               viewBox="0 0 16 16"
             >
               <path d="M0 12V4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm6.79-6.907A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z" />
@@ -26,7 +26,7 @@ function FilePreview({ handleRemoveFile, index, originalFileName, classes }) {
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
-              className="inline w-4 h-4 mr-1 fill-primary"
+              className="inline w-4 h-4 mr-1 fill-primary dark:fill-primary-dark "
               viewBox="0 0 16 16"
             >
               <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
@@ -35,7 +35,7 @@ function FilePreview({ handleRemoveFile, index, originalFileName, classes }) {
           )}
 
           {/* file name */}
-          <span className="text-sm text-primary pl-1">
+          <span className="text-sm text-primary dark:text-primary-dark pl-1">
             {originalFileName.name}
           </span>
         </div>
@@ -47,7 +47,7 @@ function FilePreview({ handleRemoveFile, index, originalFileName, classes }) {
             className="text-gray-600 text-sm"
           >
             <svg
-              className="fill-current h-3.5 w-3.5"
+              className="fill-current dark:fill-gray-300 h-3.5 w-3.5"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
             >

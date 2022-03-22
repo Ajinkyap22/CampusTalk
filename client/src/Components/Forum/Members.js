@@ -25,10 +25,12 @@ function Members({
   }, [moderators]);
 
   return (
-    <div className="bg-white shadow-base min-w-[32rem] rounded">
+    <div className="bg-white dark:bg-darkSecondary shadow-base min-w-[32rem] rounded">
       {members.map((member, i) => (
         <div
-          className="flex border-b justify-between items-center w-full p-2.5"
+          className={`flex border-b dark:border-secondary justify-between items-center w-full p-2.5 ${
+            i === members.length - 1 ? "border-none" : ""
+          }`}
           key={i}
         >
           <div className="flex items-center">
@@ -42,8 +44,7 @@ function Members({
             ) : (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                fill="#818181"
-                className="inline mx-2 w-10 align-middle"
+                className="inline mx-2 w-10 align-middle fill-[#818181] dark:fill-darkLight"
                 viewBox="0 0 16 16"
               >
                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
@@ -55,7 +56,7 @@ function Members({
             )}
 
             {/* name */}
-            <span className="text-sm text-justify mx-1">
+            <span className="text-sm text-justify mx-1 dark:text-darkLight">
               {member.firstName} {member.lastName}
             </span>
 
@@ -82,7 +83,7 @@ function Members({
             <div className="flex items-center">
               {moderatorsList[member._id] ? (
                 <button
-                  className="border border-primary-light p-1 px-2 text-xs rounded-full text-primary mx-1 hover:bg-primary hover:text-white"
+                  className="border border-primary-light dark:border-primary-dark p-1 px-2 text-xs rounded-full text-primary dark:text-primary-dark mx-1 hover:bg-primary hover:text-white dark:hover:text-darkLight"
                   onClick={() => dismissModerator(member)}
                 >
                   Dismiss Moderator
@@ -90,7 +91,7 @@ function Members({
               ) : (
                 <button
                   onClick={() => makeModerator(member)}
-                  className="border border-primary-light p-1 px-2 text-xs rounded-full text-primary mx-1 hover:bg-primary hover:text-white"
+                  className="border border-primary-light dark:border-primary-dark p-1 px-2 text-xs rounded-full text-primary dark:text-primary-dark mx-1 hover:bg-primary hover:text-white dark:hover:text-darkLight"
                 >
                   Make Moderator
                 </button>
@@ -98,7 +99,7 @@ function Members({
 
               {/* remove member */}
               <button
-                className="border border-red-500 p-1 px-1.5 rounded-full text-xs text-red-500 mx-1 hover:bg-red-500 hover:text-white"
+                className="border border-red-500 dark:border-[#ff5656]  p-1 px-1.5 rounded-full text-xs text-red-500 dark:text-[#ff5656] mx-1 hover:bg-red-500 hover:text-white dark:hover:text-darkLight"
                 onClick={() => removeMember(member)}
               >
                 Remove

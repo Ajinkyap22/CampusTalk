@@ -83,13 +83,13 @@ function CommentOptions({
   return (
     <div
       ref={wrapperRef}
-      className="absolute bg-white shadow-base p-1.5 top-7 right-0 rounded z-10"
+      className="absolute bg-white dark:bg-darkSecondary shadow-base p-1.5 top-7 right-0 rounded z-10"
       hidden={!showOptions}
     >
       <ul>
         {/* delete comment */}
         <li
-          className="p-1.5 text-sm"
+          className="p-1.5 text-sm dark:text-darkLight"
           hidden={!isAuthor && !isModerator}
           onClick={deleteComment}
         >

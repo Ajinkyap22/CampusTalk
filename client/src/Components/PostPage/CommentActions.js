@@ -131,7 +131,11 @@ function CommentActions({ comment, setComments, forumId, postId }) {
           <path
             d="M32,120l96-96,96,96H176v88a8,8,0,0,1-8,8H88a8,8,0,0,1-8-8V120Z"
             fill={upvoted ? "#0F8CFF" : "none"}
-            stroke={upvoted ? "#0F8CFF" : "#484848"}
+            className={`${
+              upvoted
+                ? "stroke-[#0F8CFF]"
+                : "stroke-[#484848] dark:stroke-darkLight"
+            }`}
             strokeLinecap="round"
             strokeLinejoin="round"
             strokeWidth="16"
@@ -139,7 +143,7 @@ function CommentActions({ comment, setComments, forumId, postId }) {
         </svg>
       </button>
 
-      <span className="text-mxs">
+      <span className="text-mxs dark:text-darkLight">
         {comment.upvotes.length - comment.downvotes.length}
       </span>
 
@@ -156,7 +160,11 @@ function CommentActions({ comment, setComments, forumId, postId }) {
           <path
             d="M32,136l96,96,96-96H176V48a8,8,0,0,0-8-8H88a8,8,0,0,0-8,8v88Z"
             fill={downvoted ? "red" : "none"}
-            stroke={downvoted ? "red" : "#484848"}
+            className={`${
+              downvoted
+                ? "stroke-red-500"
+                : "stroke-[#484848] dark:stroke-darkLight"
+            }`}
             strokeLinecap="round"
             strokeLinejoin="round"
             strokeWidth="16"
@@ -167,7 +175,7 @@ function CommentActions({ comment, setComments, forumId, postId }) {
       {/* <button className="text-mxs mx-2 hover:underline">Reply</button> */}
 
       {/* timestamp */}
-      <span className="text-xs text-secondary mx-2">
+      <span className="text-xs text-secondary dark:text-gray-300 mx-2">
         {moment(comment.timestamp).fromNow()}
       </span>
     </div>

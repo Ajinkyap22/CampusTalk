@@ -103,11 +103,11 @@ function Feed({ title }) {
             <LogoCropped color="rgba(98, 98, 98, 0.9)" width="75" />
 
             {/* text */}
-            <p className="w-2/3 mx-auto my-4">
+            <p className="w-2/3 mx-auto my-4 dark:text-darkLight">
               Your feed is empty, why not{" "}
               <Link
                 to="/create-post"
-                className="text-primary underline underline-offset-1"
+                className="text-primary dark:text-primary-dark underline underline-offset-1"
               >
                 {" "}
                 create a post{" "}
@@ -115,7 +115,7 @@ function Feed({ title }) {
               or{" "}
               <Link
                 to="/forums"
-                className="text-primary underline underline-offset-1"
+                className="text-primary dark:text-primary-dark underline underline-offset-1"
               >
                 join more forums?
               </Link>
