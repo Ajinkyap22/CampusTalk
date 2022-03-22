@@ -1,17 +1,16 @@
 import { UserContext } from "../../Contexts/UserContext";
 import { TabContext } from "../../Contexts/TabContext";
-import { useContext, useEffect, useState, useRef } from "react";
-import { io } from "socket.io-client";
+import { SocketContext } from "../../Contexts/SocketContext";
+import { useContext, useEffect, useState } from "react";
 import Nav from "../Navbar/Nav";
 import ChatList from "./ChatList";
 import ChatPage from "./ChatPage";
 
 function Chats({ title }) {
+  const [socket, onlineUsers] = useContext(SocketContext);
   const [user] = useContext(UserContext);
   const [activeTab, setActiveTab] = useContext(TabContext);
   const [activeChat, setActiveChat] = useState(null);
-  const [onlineUsers, setOnlineUsers] = useState({});
-  const socket = useRef();
 
   useEffect(() => {
     document.title = title || "Chats | CampusTalk";
@@ -20,17 +19,6 @@ function Chats({ title }) {
   useEffect(() => {
     setActiveTab("chats");
   }, [activeTab]);
-
-  useEffect(() => {
-    socket.current = io("ws://localhost:8900");
-  }, []);
-
-  useEffect(() => {
-    socket.current.emit("join", user._id);
-    socket.current.on("users", (users) => {
-      setOnlineUsers(users);
-    });
-  }, [user]);
 
   return (
     <main className="w-full h-[calc(100vh_-_3.5rem)] bg-[#F0F2F5] dark:bg-dark">

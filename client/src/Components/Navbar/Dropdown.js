@@ -1,4 +1,5 @@
 import { UserContext } from "../../Contexts/UserContext";
+import { SocketContext } from "../../Contexts/SocketContext";
 import { NavLink } from "react-router-dom";
 import { useContext, useRef, useEffect } from "react";
 import Toggle from "./Toggle";
@@ -25,6 +26,7 @@ function useOutsideAlerter(ref, setShowDropdown) {
 
 function Dropdown({ showDropdown, setShowDropdown }) {
   const [user, setUser] = useContext(UserContext);
+  const [socket] = useContext(SocketContext);
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef, setShowDropdown);
 
@@ -36,6 +38,7 @@ function Dropdown({ showDropdown, setShowDropdown }) {
     handleClick();
     localStorage.removeItem("user");
     setUser(undefined);
+    socket.current.emit("logout", user._id);
   }
 
   return (

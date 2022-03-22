@@ -8,10 +8,14 @@ function ChatPreview({ chat, user, activeChat, setActiveChat, onlineUsers }) {
     let r = chat.members.find((member) => member._id !== user._id);
     setReceiver(r);
 
+    console.log(onlineUsers);
+
     if (onlineUsers[r._id]) {
       setOnline(true);
+    } else {
+      setOnline(false);
     }
-  }, []);
+  }, [onlineUsers]);
 
   function handleClick() {
     setActiveChat(chat);

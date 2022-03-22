@@ -1,4 +1,5 @@
 import { UserContext } from "../../Contexts/UserContext";
+import { SocketContext } from "../../Contexts/SocketContext";
 import { useContext, useEffect, useState } from "react";
 import { withRouter, Link } from "react-router-dom";
 import GoogleLogin from "react-google-login";
@@ -11,6 +12,7 @@ import ActionButtons from "../FormControl/ActionButtons";
 
 function Login({ title, ...props }) {
   const [user, setUser] = useContext(UserContext);
+  const [socket] = useContext(SocketContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState(0);
@@ -37,6 +39,7 @@ function Login({ title, ...props }) {
       .then((res) => {
         localStorage.setItem("user", JSON.stringify(res.data));
         setUser(res.data.user);
+        socket.current.emit("join", res.data.user._id);
         props.history.push("/join-forum");
       })
       .catch((err) => {
@@ -56,6 +59,7 @@ function Login({ title, ...props }) {
       .then((res) => {
         localStorage.setItem("user", JSON.stringify(res.data));
         setUser(res.data.user);
+        socket.current.emit("join", res.data.user._id);
 
         if (res.data.user.forums.length > 0) {
           props.history.push("/feed");

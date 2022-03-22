@@ -1,4 +1,5 @@
 import { UserContext } from "../../Contexts/UserContext";
+import { SocketContext } from "../../Contexts/SocketContext";
 import { useContext, useEffect, useState } from "react";
 import { withRouter, Link } from "react-router-dom";
 import Title from "./Title";
@@ -11,6 +12,7 @@ import ActionButtons from "../FormControl/ActionButtons";
 
 function Signup({ title, ...props }) {
   const [user, setUser] = useContext(UserContext);
+  const [socket] = useContext(SocketContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -37,6 +39,7 @@ function Signup({ title, ...props }) {
         localStorage.setItem("user", JSON.stringify(res.data));
         setUser(res.data.user);
         props.history.push("/join-forum");
+        socket.current.emit("join", res.data.user._id);
       })
       .catch((err) => {
         if (err.response?.status === 401) {
@@ -62,6 +65,7 @@ function Signup({ title, ...props }) {
           JSON.stringify({ token: res.data.token, user: res.data.user })
         );
         setUser(res.data.user);
+        socket.current.emit("join", res.data.user._id);
         props.history.push("/user-info");
       })
       .catch((err) => {

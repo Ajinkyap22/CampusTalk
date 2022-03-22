@@ -6,17 +6,20 @@ import { ForumProvider } from "./Contexts/ForumContext";
 import { PostProvider } from "./Contexts/PostContext";
 import { UserProvider } from "./Contexts/UserContext";
 import { ModeProvider } from "./Contexts/ModeContext";
+import { SocketProvider } from "./Contexts/SocketContext";
 
 ReactDOM.render(
   <React.StrictMode>
     <ModeProvider>
-      <UserProvider>
-        <ForumProvider>
-          <PostProvider>
-            <App />
-          </PostProvider>
-        </ForumProvider>
-      </UserProvider>
+      <SocketProvider>
+        <UserProvider>
+          <ForumProvider>
+            <PostProvider>
+              <App />
+            </PostProvider>
+          </ForumProvider>
+        </UserProvider>
+      </SocketProvider>
     </ModeProvider>
   </React.StrictMode>,
   document.getElementById("root")

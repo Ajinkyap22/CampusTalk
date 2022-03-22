@@ -10,6 +10,14 @@ function addUser(userId, socketId) {
   !users[userId] && (users[userId] = socketId);
 }
 
+function disconnect(socketId) {
+  const userId = Object.keys(users).find(
+    (userId) => users[userId] === socketId
+  );
+
+  delete users[userId];
+}
+
 io.on("connection", (socket) => {
   // on connect
   console.log("connected");
@@ -34,10 +42,12 @@ io.on("connection", (socket) => {
 
   // on disconnect
   socket.on("disconnect", () => {
-    const userId = Object.keys(users).find(
-      (userId) => users[userId] === socket.id
-    );
+    disconnect(socket.id);
+    io.emit("users", users);
+  });
 
+  // on logout
+  socket.on("logout", (userId) => {
     delete users[userId];
 
     io.emit("users", users);
