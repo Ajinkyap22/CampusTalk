@@ -154,7 +154,7 @@ function CommentForm({ forumId, postId, comments, setComments }) {
   }
 
   return (
-    <div className="flex items-start p-1.5 sticky bottom-0 bg-transparent shadow-inner">
+    <div className="flex items-start p-1.5 sticky bottom-0 bg-white dark:bg-darkSecondary z-10 shadow-inner">
       {/* user picture */}
       {!user.picture ? (
         <svg

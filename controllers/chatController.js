@@ -5,9 +5,14 @@ const Message = require("../models/message");
 exports.createChat = async (req, res) => {
   try {
     const { members } = req.body;
-    const chat = new Chat({ members });
+    let chat = new Chat({ members });
     await chat.save();
-    res.status(201).json(chat);
+
+    Chat.populate(chat, { path: "members" }, (err, newChat) => {
+      if (err) return res.status(500).json({ error: err.message });
+
+      res.status(201).json(newChat);
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

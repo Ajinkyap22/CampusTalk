@@ -3,8 +3,14 @@ import ChatPreview from "./ChatPreview";
 import axios from "axios";
 import Loading from "../Loading";
 
-function ChatList({ user, activeChat, setActiveChat, onlineUsers }) {
-  const [chats, setChats] = useState([]);
+function ChatList({
+  user,
+  activeChat,
+  setActiveChat,
+  onlineUsers,
+  chats,
+  setChats,
+}) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

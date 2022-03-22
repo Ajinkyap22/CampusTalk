@@ -1,28 +1,9 @@
 import { UserContext } from "../../Contexts/UserContext";
 import { SocketContext } from "../../Contexts/SocketContext";
 import { NavLink } from "react-router-dom";
-import { useContext, useRef, useEffect } from "react";
+import { useContext, useRef } from "react";
+import useOutsideAlerter from "../../Hooks/useOutsideAlerter";
 import Toggle from "./Toggle";
-
-function useOutsideAlerter(ref, setShowDropdown) {
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (
-        ref.current &&
-        !ref.current.contains(event.target) &&
-        !event.target.classList.contains("dropDownToggle")
-      ) {
-        setShowDropdown(false);
-      }
-    }
-    // Bind the event listener
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      // Unbind the event listener on clean up
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [ref]);
-}
 
 function Dropdown({ showDropdown, setShowDropdown }) {
   const [user, setUser] = useContext(UserContext);

@@ -76,7 +76,7 @@ function ChatPage({ chat, user, socket }) {
               </div>
             ))
           ) : (
-            <div className="p-3 text-center text-white dark:text-darkLight">
+            <div className="p-3 text-center text-secondary dark:text-darkLight">
               No messages yet
             </div>
           )}

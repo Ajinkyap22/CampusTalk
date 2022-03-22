@@ -2,27 +2,8 @@ import { useEffect, useRef, useContext, useState } from "react";
 import { UserContext } from "../../Contexts/UserContext";
 import { PostContext } from "../../Contexts/PostContext";
 import { Link } from "react-router-dom";
+import useOutsideAlerter from "../../Hooks/useOutsideAlerter";
 import axios from "axios";
-
-function useOutsideAlerter(ref, setShowDropdown) {
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (
-        ref.current &&
-        !ref.current.contains(event.target) &&
-        !event.target.classList.contains("dropDownToggle")
-      ) {
-        setShowDropdown(false);
-      }
-    }
-    // Bind the event listener
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      // Unbind the event listener on clean up
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [ref]);
-}
 
 function CommentOptions({
   forumId,

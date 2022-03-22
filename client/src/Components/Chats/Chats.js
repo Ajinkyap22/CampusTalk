@@ -1,6 +1,7 @@
 import { UserContext } from "../../Contexts/UserContext";
 import { TabContext } from "../../Contexts/TabContext";
 import { SocketContext } from "../../Contexts/SocketContext";
+import { ChatContext } from "../../Contexts/ChatContext";
 import { useContext, useEffect, useState } from "react";
 import Nav from "../Navbar/Nav";
 import ChatList from "./ChatList";
@@ -10,7 +11,7 @@ function Chats({ title }) {
   const [socket, onlineUsers] = useContext(SocketContext);
   const [user] = useContext(UserContext);
   const [activeTab, setActiveTab] = useContext(TabContext);
-  const [activeChat, setActiveChat] = useState(null);
+  const [chats, setChats, activeChat, setActiveChat] = useContext(ChatContext);
 
   useEffect(() => {
     document.title = title || "Chats | CampusTalk";
@@ -31,6 +32,8 @@ function Chats({ title }) {
           activeChat={activeChat}
           setActiveChat={setActiveChat}
           onlineUsers={onlineUsers}
+          chats={chats}
+          setChats={setChats}
         />
 
         {/* messages */}
