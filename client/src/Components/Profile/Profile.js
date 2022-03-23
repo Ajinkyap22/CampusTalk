@@ -42,7 +42,7 @@ function Profile({ ...props }) {
 
       <section className="flex items-start relative p-2 mt-4">
         <div className="self-start ml-12">
-          <div className="bg-white p-2 rounded shadow-base mt-2 relative text-center">
+          <div className="bg-white dark:bg-darkSecondary p-2 rounded shadow-base mt-2 relative text-center">
             {/* user picture */}
             {user && user.picture ? (
               <img
@@ -54,8 +54,7 @@ function Profile({ ...props }) {
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="120"
-                fill="#818181"
-                className="inline my-2 mt-4"
+                className="inline my-2 mt-4 fill-[#818181] dark:fill-darkLight"
                 viewBox="0 0 16 16"
               >
                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
@@ -66,28 +65,30 @@ function Profile({ ...props }) {
               </svg>
             )}
             {/* user name */}
-            <h1 className="text-lg text-center mt-2">
+            <h1 className="text-lg text-center mt-2 dark:text-darkLight">
               {user.firstName} {user.lastName}
             </h1>
 
             {/* user join date */}
-            <p className="text-mxs text-secondary mt-1">
+            <p className="text-mxs text-secondary dark:text-gray-300 mt-1">
               Joined {moment(user.timestamp).format("LL")}
             </p>
-            <hr className="mt-2" />
+            <hr className="mt-2 dark:border-t dark:border-secondary" />
 
             {/* stats */}
             <div className="flex justify-center items-center mt-3">
               {/* members */}
               <div className="flex flex-col items-center px-2.5">
-                <span>{user.posts.length}</span>
-                <span className="text-mxs">Posts</span>
+                <span className="dark:text-darkLight">{user.posts.length}</span>
+                <span className="text-mxs dark:text-darkLight">Posts</span>
               </div>
 
               {/* posts */}
               <div className="flex flex-col items-center px-2.5">
-                <span>{user.forums.length}</span>
-                <span className="text-mxs">Forums</span>
+                <span className="dark:text-darkLight">
+                  {user.forums.length}
+                </span>
+                <span className="text-mxs dark:text-darkLight">Forums</span>
               </div>
             </div>
 
@@ -149,7 +150,7 @@ function Profile({ ...props }) {
           {posts.length === 0 && !loading && (
             <div className="text-center my-6">
               <LogoCropped color="rgba(98,98,98,0.9)" width="80" />
-              <p className="text-gray-600 my-4">
+              <p className="text-gray-600 dark:text-gray-300 my-4">
                 No posts yet. Be the first to post!
               </p>
             </div>

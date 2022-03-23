@@ -22,7 +22,7 @@ function Chats({ title }) {
   }, [activeTab]);
 
   return (
-    <main className="w-full h-[calc(100vh_-_3.5rem)] bg-[#F0F2F5] dark:bg-dark">
+    <main className="w-full h-[calc(100vh_-_3.5rem)] bg-white dark:bg-dark">
       <Nav />
 
       <section className="grid grid-cols-6 w-full h-full">
@@ -34,11 +34,17 @@ function Chats({ title }) {
           onlineUsers={onlineUsers}
           chats={chats}
           setChats={setChats}
+          socket={socket}
         />
 
         {/* messages */}
         {activeChat ? (
-          <ChatPage user={user} chat={activeChat} socket={socket.current} />
+          <ChatPage
+            user={user}
+            chat={activeChat}
+            socket={socket.current}
+            setActiveChat={setActiveChat}
+          />
         ) : (
           <div className="col-span-4 flex flex-col justify-center items-center h-full bg-[#F0F2F5] dark:bg-darkSecondary overflow-auto relative">
             <svg

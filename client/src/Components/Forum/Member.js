@@ -1,4 +1,5 @@
 import { ChatContext } from "../../Contexts/ChatContext";
+import { SocketContext } from "../../Contexts/SocketContext";
 import { useState, useContext } from "react";
 import { withRouter } from "react-router-dom";
 import MemberActions from "./MemberActions";
@@ -17,6 +18,7 @@ function Member({
 }) {
   const [showDropdown, setShowDropdown] = useState(false);
   const [chats, setChats, activeChat, setActiveChat] = useContext(ChatContext);
+  const [socket] = useContext(SocketContext);
 
   function toggleDropdown() {
     setShowDropdown(!showDropdown);
@@ -34,9 +36,12 @@ function Member({
     axios
       .post("/api/chats/new-chat", { members: [member._id, user._id] }, headers)
       .then((res) => {
-        console.log(res.data);
         setChats([...chats, res.data]);
         setActiveChat(res.data);
+        socket.current.emit("newChat", {
+          chat: res.data,
+          receiverId: member._id,
+        });
         history.push("/chats");
       })
       .catch((err) => {
@@ -96,7 +101,7 @@ function Member({
       </div>
 
       {/* make moderator */}
-      {moderatorsList[user._id] && member._id !== user._id && (
+      {member._id !== user._id && (
         <div className="flex items-center">
           {/* remove member */}
           <button
@@ -107,12 +112,14 @@ function Member({
           </button>
 
           {/* remove member */}
-          <button
-            className="bg-red-500 p-1 px-2 rounded-full text-mxs text-white dark:text-darkLight mx-1 hover:bg-red-600"
-            onClick={() => removeMember(member)}
-          >
-            Remove
-          </button>
+          {moderatorsList[user._id] && (
+            <button
+              className="bg-red-500 p-1 px-2 rounded-full text-mxs text-white dark:text-darkLight mx-1 hover:bg-red-600"
+              onClick={() => removeMember(member)}
+            >
+              Remove
+            </button>
+          )}
 
           {/* options */}
           {moderatorsList[user._id] && member._id !== user._id && (

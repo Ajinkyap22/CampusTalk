@@ -36,7 +36,7 @@ function App() {
   }, [mode]);
 
   return (
-    <div className="App relative">
+    <div className="App relative dark:bg-dark">
       <Router>
         <Switch>
           {/* Homepage */}

@@ -1,4 +1,13 @@
-function ChatTitle({ receiver }) {
+import { useState } from "react";
+import ChatOptions from "./ChatOptions";
+
+function ChatTitle({ receiver, chat }) {
+  const [showOptions, setShowOptions] = useState(false);
+
+  function toggleOptions() {
+    setShowOptions(!showOptions);
+  }
+
   return (
     <div className="w-full sticky top-0 bg-primary-light flex justify-between items-center p-3 border-b border-primary-light">
       {/* picture and name */}
@@ -30,17 +39,31 @@ function ChatTitle({ receiver }) {
         </span>
       </div>
 
-      {/* options */}
-      <button className="mr-2" title="Options">
+      {/* optionsToggle */}
+      <button
+        className="mr-2 dropDownToggle"
+        title="Options"
+        onClick={toggleOptions}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="22"
-          className="fill-white inline rotate-90"
+          className="fill-white inline rotate-90 dropDownToggle"
           viewBox="0 0 16 16"
         >
-          <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+          <path
+            className="dropDownToggle"
+            d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"
+          />
         </svg>
       </button>
+
+      {/* options */}
+      <ChatOptions
+        chat={chat}
+        showOptions={showOptions}
+        setShowOptions={setShowOptions}
+      />
     </div>
   );
 }

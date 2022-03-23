@@ -10,6 +10,7 @@ function ChatList({
   onlineUsers,
   chats,
   setChats,
+  socket,
 }) {
   const [loading, setLoading] = useState(true);
 
@@ -21,10 +22,15 @@ function ChatList({
         setLoading(false);
       })
       .catch((err) => console.error(err));
+
+    // on new chat
+    socket.current.on("newChat", ({ chat }) => {
+      setChats([...chats, chat]);
+    });
   }, []);
 
   return (
-    <div className="col-span-2 h-full bg-white dark:bg-dark overflow-auto postData relative">
+    <div className="col-span-2 bg-white h-fit dark:bg-dark overflow-auto postData relative">
       {/* title */}
       <div className="p-1.5 px-3 border-b border-gray-300 dark:border-secondary">
         <svg
@@ -82,7 +88,7 @@ function ChatList({
       )}
 
       {/* add new message */}
-      <button className="relative top-2/3 float-right mr-8" title="New Chat">
+      {/* <button className="relative top-2/3 float-right mr-8" title="New Chat">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="36"
@@ -91,7 +97,7 @@ function ChatList({
         >
           <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
         </svg>
-      </button>
+      </button> */}
     </div>
   );
 }

@@ -5,7 +5,7 @@ import Message from "./Message";
 import MessageInput from "./MessageInput";
 import Loading from "../Loading";
 
-function ChatPage({ chat, user, socket }) {
+function ChatPage({ chat, user, socket, setActiveChat }) {
   const [receiver, setReceiver] = useState(null);
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -25,7 +25,7 @@ function ChatPage({ chat, user, socket }) {
         setLoading(false);
       })
       .catch((err) => console.error(err));
-  }, []);
+  }, [chat]);
 
   useEffect(() => {
     // listen for new messages
@@ -58,9 +58,13 @@ function ChatPage({ chat, user, socket }) {
   }, [messages]);
 
   return (
-    <div className="col-span-4 h-full dark:bg-darkSecondary overflow-auto relative postData">
+    <div className="col-span-4 h-full dark:bg-darkSecondary bg-[#F0F2F5] overflow-auto relative postData">
       {/* chat title */}
-      <ChatTitle receiver={receiver} />
+      <ChatTitle
+        receiver={receiver}
+        chat={chat}
+        setActiveChat={setActiveChat}
+      />
 
       {/* messages */}
       {loading ? (
@@ -68,7 +72,7 @@ function ChatPage({ chat, user, socket }) {
           <Loading />
         </div>
       ) : (
-        <div className="overflow-auto pb-14 ">
+        <div className="overflow-auto pb-14 pt-2">
           {messages && messages.length ? (
             messages.map((message, i) => (
               <div ref={scrollRef} key={i}>
@@ -76,8 +80,56 @@ function ChatPage({ chat, user, socket }) {
               </div>
             ))
           ) : (
-            <div className="p-3 text-center text-secondary dark:text-darkLight">
-              No messages yet
+            <div className="p-3 text-center pt-16 text-secondary dark:text-darkLight">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="80"
+                className="fill-[#818181] dark:fill-darkLight mx-auto my-4"
+                viewBox="0 0 256 256"
+              >
+                <rect width="256" height="256" fill="none"></rect>
+                <path
+                  d="M94,61.4a20,20,0,0,1,34.6-20l30,51.9"
+                  fill="none"
+                  className="dark:stroke-darkLight stroke-[#818181]"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="16"
+                ></path>
+                <path
+                  d="M67.4,95.2l-16-27.7A20,20,0,0,1,86,47.5l34,58.9"
+                  fill="none"
+                  className="dark:stroke-darkLight stroke-[#818181]"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="16"
+                ></path>
+                <path
+                  d="M154,165.3a39.9,39.9,0,0,1,14.6-54.6l-10-17.4a20,20,0,0,1,34.7-20l20,34.7A80,80,0,0,1,74.7,188l-42-72.8a20,20,0,0,1,34.7-20l22,38.1"
+                  fill="none"
+                  className="dark:stroke-darkLight stroke-[#818181]"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="16"
+                ></path>
+                <path
+                  d="M81.1,240A110.3,110.3,0,0,1,48,204"
+                  fill="none"
+                  className="dark:stroke-darkLight stroke-[#818181]"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="16"
+                ></path>
+                <path
+                  d="M176,31a51.7,51.7,0,0,1,45,26"
+                  fill="none"
+                  className="dark:stroke-darkLight stroke-[#818181]"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="16"
+                ></path>
+              </svg>
+              <span>Say hello to {receiver.firstName}!</span>
             </div>
           )}
         </div>

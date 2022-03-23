@@ -40,6 +40,16 @@ io.on("connection", (socket) => {
     }
   });
 
+  // on creating a new chat
+  socket.on("newChat", ({ receiverId, chat }) => {
+    const receiver = users[receiverId];
+
+    receiver &&
+      io.to(receiver).emit("newChat", {
+        chat,
+      });
+  });
+
   // on disconnect
   socket.on("disconnect", () => {
     disconnect(socket.id);
