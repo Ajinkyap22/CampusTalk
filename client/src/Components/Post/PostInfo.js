@@ -3,12 +3,14 @@ import { Link } from "react-router-dom";
 import { useState, useContext, useEffect } from "react";
 import moment from "moment";
 import Options from "./Options";
+import UserModal from "../UserModal";
 
 function PostInfo({ postId, author, forum, timestamp, anonymous, important }) {
   const [user] = useContext(UserContext);
   const [showOptions, setShowOptions] = useState(false);
   const [isAuthor, setIsAuthor] = useState(false);
   const [isModerator, setIsModerator] = useState(false);
+  const [hovering, setHovering] = useState(false);
 
   useEffect(() => {
     // check if author is the same as user
@@ -26,6 +28,14 @@ function PostInfo({ postId, author, forum, timestamp, anonymous, important }) {
       setIsModerator(false);
     }
   }, [forum.moderators, user]);
+
+  function handleHover() {
+    setHovering(true);
+  }
+
+  function handleLeave() {
+    setHovering(false);
+  }
 
   function toggleOptions() {
     setShowOptions(!showOptions);
@@ -57,7 +67,11 @@ function PostInfo({ postId, author, forum, timestamp, anonymous, important }) {
       )}
       <div className="mx-1 relative">
         {/* user name */}
-        <span className="text-sm dark:text-darkLight">
+        <span
+          className="text-sm dark:text-darkLight"
+          onMouseEnter={handleHover}
+          onMouseLeave={handleLeave}
+        >
           {anonymous ? " Anonymous" : `${author.firstName} ${author.lastName}`}
         </span>
 
@@ -124,6 +138,8 @@ function PostInfo({ postId, author, forum, timestamp, anonymous, important }) {
           {moment(timestamp).fromNow()}
         </p>
       </div>
+
+      <UserModal hovering={hovering} user={author} />
     </div>
   );
 }

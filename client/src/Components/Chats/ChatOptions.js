@@ -1,12 +1,46 @@
-import { useRef } from "react";
+import { SocketContext } from "../../Contexts/SocketContext";
+import { useRef, useContext } from "react";
 import useOutsideAlerter from "../../Hooks/useOutsideAlerter";
 import axios from "axios";
 
-function ChatOptions({ chat, showOptions, setShowOptions, setActiveChat }) {
+function ChatOptions({
+  chat,
+  showOptions,
+  setShowOptions,
+  setActiveChat,
+  chats,
+  setChats,
+  receiver,
+}) {
+  const [socket] = useContext(SocketContext);
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef, setShowOptions);
 
-  function deleteChat() {}
+  function deleteChat() {
+    let headers = {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(localStorage.getItem("user"))?.token
+        }`,
+      },
+    };
+
+    axios
+      .delete(`/api/chats/delete-chat/${chat._id}`, headers)
+      .then((res) => {
+        setChats(chats.filter((c) => c._id !== chat._id));
+        setActiveChat(null);
+        setShowOptions(false);
+
+        socket.current.emit("deleteChat", {
+          chatId: chat._id,
+          receiverId: receiver._id,
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
 
   return (
     <div
@@ -16,7 +50,7 @@ function ChatOptions({ chat, showOptions, setShowOptions, setActiveChat }) {
     >
       <ul>
         {/* delete chat */}
-        <li className="p-1.5 text-sm dark:text-darkLight">
+        <li className="p-1.5 text-sm dark:text-darkLight" onClick={deleteChat}>
           <button>
             <svg
               xmlns="http://www.w3.org/2000/svg"

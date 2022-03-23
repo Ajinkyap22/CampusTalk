@@ -50,6 +50,16 @@ io.on("connection", (socket) => {
       });
   });
 
+  // on deleting a chat
+  socket.on("deleteChat", ({ receiverId, chatId }) => {
+    const receiver = users[receiverId];
+
+    receiver &&
+      io.to(receiver).emit("deleteChat", {
+        chatId,
+      });
+  });
+
   // on disconnect
   socket.on("disconnect", () => {
     disconnect(socket.id);

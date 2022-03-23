@@ -2,7 +2,7 @@ import { UserContext } from "../../Contexts/UserContext";
 import { TabContext } from "../../Contexts/TabContext";
 import { SocketContext } from "../../Contexts/SocketContext";
 import { ChatContext } from "../../Contexts/ChatContext";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import Nav from "../Navbar/Nav";
 import ChatList from "./ChatList";
 import ChatPage from "./ChatPage";
@@ -20,6 +20,14 @@ function Chats({ title }) {
   useEffect(() => {
     setActiveTab("chats");
   }, [activeTab]);
+
+  useEffect(() => {
+    // on delete chat
+    socket.current.on("deleteChat", ({ chatId }) => {
+      setChats(chats.filter((c) => c._id !== chatId));
+      setActiveChat(null);
+    });
+  }, []);
 
   return (
     <main className="w-full h-[calc(100vh_-_3.5rem)] bg-white dark:bg-dark">
@@ -44,6 +52,8 @@ function Chats({ title }) {
             chat={activeChat}
             socket={socket.current}
             setActiveChat={setActiveChat}
+            chats={chats}
+            setChats={setChats}
           />
         ) : (
           <div className="col-span-4 flex flex-col justify-center items-center h-full bg-[#F0F2F5] dark:bg-darkSecondary overflow-auto relative">

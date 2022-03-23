@@ -5,7 +5,7 @@ import Message from "./Message";
 import MessageInput from "./MessageInput";
 import Loading from "../Loading";
 
-function ChatPage({ chat, user, socket, setActiveChat }) {
+function ChatPage({ chat, user, socket, setActiveChat, chats, setChats }) {
   const [receiver, setReceiver] = useState(null);
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -64,6 +64,8 @@ function ChatPage({ chat, user, socket, setActiveChat }) {
         receiver={receiver}
         chat={chat}
         setActiveChat={setActiveChat}
+        chats={chats}
+        setChats={setChats}
       />
 
       {/* messages */}

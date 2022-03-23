@@ -1,12 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ChatOptions from "./ChatOptions";
 
-function ChatTitle({ receiver, chat }) {
+function ChatTitle({ receiver, chat, chats, setChats, setActiveChat }) {
   const [showOptions, setShowOptions] = useState(false);
 
   function toggleOptions() {
     setShowOptions(!showOptions);
   }
+
+  useEffect(() => {
+    let isMounted = true;
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   return (
     <div className="w-full sticky top-0 bg-primary-light flex justify-between items-center p-3 border-b border-primary-light">
@@ -63,6 +71,10 @@ function ChatTitle({ receiver, chat }) {
         chat={chat}
         showOptions={showOptions}
         setShowOptions={setShowOptions}
+        chats={chats}
+        setChats={setChats}
+        setActiveChat={setActiveChat}
+        receiver={receiver}
       />
     </div>
   );
