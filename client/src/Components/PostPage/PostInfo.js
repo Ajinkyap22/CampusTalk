@@ -1,13 +1,38 @@
-import { useState } from "react";
+import { UserContext } from "../../Contexts/UserContext";
+import { useState, useEffect, useContext } from "react";
 import moment from "moment";
 import Options from "../Post/Options";
+import UserModal from "../UserModal";
 
 function PostInfo({ post }) {
   const [showOptions, setShowOptions] = useState(false);
+  const [hovering, setHovering] = useState(false);
+  const [overName, setOverName] = useState(false);
+  const [overModal, setOverModal] = useState(false);
+  const [user] = useContext(UserContext);
+
+  useEffect(() => {
+    if (post.anonymous) return;
+
+    !overName && !overModal ? setHovering(false) : setHovering(true);
+  }, [overName, overModal, post.anonymous]);
 
   function toggleOptions() {
     setShowOptions(!showOptions);
   }
+
+  function handleHover() {
+    setTimeout(() => {
+      setOverName(true);
+    }, 500);
+  }
+
+  function handleLeave() {
+    setTimeout(() => {
+      setOverName(false);
+    }, 500);
+  }
+
   return (
     <div className="my-1 px-2 w-full max-w-[32rem] relative">
       {/* forum name */}
@@ -44,7 +69,15 @@ function PostInfo({ post }) {
 
         <div className="inline mx-1 relative w-full">
           {/* user name */}
-          <span className="text-sm mx-1 dark:text-darkLight">
+          <span
+            className={`text-sm dark:text-darkLight ${
+              !post.anonymous &&
+              post.author._id !== user._id &&
+              "hover:underline"
+            }`}
+            onMouseEnter={handleHover}
+            onMouseLeave={handleLeave}
+          >
             {post.anonymous
               ? " Anonymous"
               : `${post.author.firstName} ${post.author.lastName}`}
@@ -80,6 +113,13 @@ function PostInfo({ post }) {
             {moment(post.timestamp).fromNow()}
           </p>
         </div>
+
+        {/* user modal */}
+        <UserModal
+          hovering={hovering}
+          setOverModal={setOverModal}
+          receiver={post.author}
+        />
       </div>
     </div>
   );

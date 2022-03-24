@@ -3,6 +3,7 @@ import { useState, useContext, useEffect } from "react";
 import CommentOptions from "./CommentOptions";
 import CommentFile from "./CommentFile";
 import CommentActions from "./CommentActions";
+import UserModal from "../UserModal";
 
 function Comment({
   moderators,
@@ -18,6 +19,9 @@ function Comment({
   const [isAuthor, setIsAuthor] = useState(false);
   const [user, setUser] = useContext(UserContext);
   const [isModerator, setIsModerator] = useState(false);
+  const [hovering, setHovering] = useState(false);
+  const [overName, setOverName] = useState(false);
+  const [overModal, setOverModal] = useState(false);
 
   useEffect(() => {
     // check if author is the same as user
@@ -40,8 +44,24 @@ function Comment({
     }
   }, [moderators, user]);
 
+  useEffect(() => {
+    !overName && !overModal ? setHovering(false) : setHovering(true);
+  }, [overName, overModal]);
+
   function toggleOptions() {
     setShowOptions(!showOptions);
+  }
+
+  function handleHover() {
+    setTimeout(() => {
+      setOverName(true);
+    }, 500);
+  }
+
+  function handleLeave() {
+    setTimeout(() => {
+      setOverName(false);
+    }, 500);
   }
 
   return (
@@ -71,9 +91,16 @@ function Comment({
       {/* user name & comment */}
       <div className="flex flex-col col-span-9 relative">
         <div className=" mx-2 bg-[#f3f3f3] dark:bg-[#3e3d3d] p-2 rounded-lg">
-          <p className="text-mxs font-bold pr-1 dark:text-darkLight">
+          {/* name */}
+          <p
+            className="text-mxs font-semibold pr-1 dark:text-darkLight hover:underline"
+            onMouseEnter={handleHover}
+            onMouseLeave={handleLeave}
+          >
             {comment.author.firstName} {comment.author.lastName}
           </p>
+
+          {/* text */}
           <p className="text-mxs dark:text-darkLight">{comment.text}</p>
 
           {/* options */}
@@ -121,6 +148,13 @@ function Comment({
 
         {/* actions */}
         <CommentActions comment={comment} setComments={setComments} />
+
+        {/* user modal */}
+        <UserModal
+          hovering={hovering}
+          setOverModal={setOverModal}
+          receiver={comment.author}
+        />
       </div>
     </div>
   );

@@ -50,4 +50,7 @@ router.delete(
 // delete a chat
 router.delete("/delete-chat/:chatId", verifyToken, chatController.deleteChat);
 
+// clear a chat
+router.delete("/clear-chat/:chatId", verifyToken, chatController.clearChat);
+
 module.exports = router;

@@ -15,18 +15,25 @@ function ChatList({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get(`/api/chats/${user._id}`)
-      .then((res) => {
-        setChats(res.data);
-        setLoading(false);
-      })
-      .catch((err) => console.error(err));
+    let mounted = true;
+    if (mounted) {
+      axios
+        .get(`/api/chats/${user._id}`)
+        .then((res) => {
+          setChats(res.data);
+          setLoading(false);
+        })
+        .catch((err) => console.error(err));
 
-    // on new chat
-    socket.current.on("newChat", ({ chat }) => {
-      setChats([...chats, chat]);
-    });
+      // on new chat
+      socket.current.on("newChat", ({ chat }) => {
+        setChats([...chats, chat]);
+      });
+    }
+
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   return (

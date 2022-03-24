@@ -11,6 +11,8 @@ function PostInfo({ postId, author, forum, timestamp, anonymous, important }) {
   const [isAuthor, setIsAuthor] = useState(false);
   const [isModerator, setIsModerator] = useState(false);
   const [hovering, setHovering] = useState(false);
+  const [overName, setOverName] = useState(false);
+  const [overModal, setOverModal] = useState(false);
 
   useEffect(() => {
     // check if author is the same as user
@@ -29,12 +31,22 @@ function PostInfo({ postId, author, forum, timestamp, anonymous, important }) {
     }
   }, [forum.moderators, user]);
 
+  useEffect(() => {
+    if (anonymous) return;
+
+    !overName && !overModal ? setHovering(false) : setHovering(true);
+  }, [overName, overModal, anonymous]);
+
   function handleHover() {
-    setHovering(true);
+    setTimeout(() => {
+      setOverName(true);
+    }, 500);
   }
 
   function handleLeave() {
-    setHovering(false);
+    setTimeout(() => {
+      setOverName(false);
+    }, 500);
   }
 
   function toggleOptions() {
@@ -68,7 +80,9 @@ function PostInfo({ postId, author, forum, timestamp, anonymous, important }) {
       <div className="mx-1 relative">
         {/* user name */}
         <span
-          className="text-sm dark:text-darkLight"
+          className={`text-sm dark:text-darkLight ${
+            !anonymous && author._id !== user._id && "hover:underline"
+          }`}
           onMouseEnter={handleHover}
           onMouseLeave={handleLeave}
         >
@@ -139,7 +153,11 @@ function PostInfo({ postId, author, forum, timestamp, anonymous, important }) {
         </p>
       </div>
 
-      <UserModal hovering={hovering} user={author} />
+      <UserModal
+        hovering={hovering}
+        setOverModal={setOverModal}
+        receiver={author}
+      />
     </div>
   );
 }

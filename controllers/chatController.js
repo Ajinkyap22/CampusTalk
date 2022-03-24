@@ -139,3 +139,20 @@ exports.deleteChat = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+// clear a chat
+exports.clearChat = async (req, res) => {
+  try {
+    let chat = await Chat.findById(req.params.chatId);
+
+    if (!chat) {
+      return res.status(404).json({ error: "Chat not found" });
+    }
+
+    await Message.deleteMany({ chat: req.params.chatId });
+
+    res.status(200).json(chat);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
