@@ -1,4 +1,5 @@
 import moment from "moment";
+import File from "./File";
 
 function Message({ message, user }) {
   return (
@@ -9,15 +10,23 @@ function Message({ message, user }) {
     >
       {/* message */}
       <div>
-        <div
-          className={`${
-            message.sender._id === user._id
-              ? "bg-primary-light text-white dark:text-darkLight"
-              : "bg-white dark:bg-darkLight shadow"
-          } p-1.5 rounded-lg text-sm`}
-        >
-          {message.text}
-        </div>
+        {/* text */}
+        {message.text && (
+          <div
+            className={`${
+              message.sender._id === user._id
+                ? "bg-primary-light text-white dark:text-darkLight"
+                : "bg-white dark:bg-darkLight shadow"
+            } p-1.5 rounded-lg text-sm`}
+          >
+            {message.text}
+          </div>
+        )}
+
+        {/* file */}
+        {message.file && (
+          <File file={message.file} user={user} sender={message.sender} />
+        )}
 
         {/* time */}
         <div

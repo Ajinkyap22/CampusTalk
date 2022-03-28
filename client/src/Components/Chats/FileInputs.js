@@ -1,16 +1,13 @@
 function FileInputs({
   imageInput,
   videoInput,
-  // linkInput,
   docInput,
   imageButton,
   videoButton,
   docButton,
-  // linkButton,
   setFile,
   setOriginalFileName,
   setFileType,
-  disabled,
   isChatting = false,
 }) {
   function handleFileInput(e, ref) {
@@ -162,7 +159,7 @@ function FileInputs({
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="18"
-          fill={disabled ? "#ababab" : "#818181"}
+          fill="#818181"
           className="inline"
           viewBox="0 0 16 16"
         >
@@ -182,7 +179,7 @@ function FileInputs({
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="18"
-          fill={disabled ? "#ababab" : "#818181"}
+          fill="#818181"
           className="inline"
           viewBox="0 0 16 16"
         >
@@ -209,31 +206,6 @@ function FileInputs({
           </svg>
         </button>
       )}
-
-      {/* link */}
-      {/* <button
-        ref={linkButton}
-        onClick={(e) => handleFileInput(e, linkInput)}
-        type="button"
-        className={isChatting ? "mx-2" : "mx-1"}
-        title="Add a link"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="18"
-          className="vertical-align-middle inline"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke={disabled ? "#ababab" : "#818181"}
-          strokeWidth={2}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
-          />
-        </svg>
-      </button> */}
 
       <input
         onChange={handleImageFileChange}
@@ -266,14 +238,6 @@ function FileInputs({
           data-max-size="10485760"
         />
       )}
-
-      {/* <input
-        // onChange={handleVideoFileChange}
-        ref={linkInput}
-        type="text"
-        name="link"
-        className="hidden"
-      /> */}
     </div>
   );
 }

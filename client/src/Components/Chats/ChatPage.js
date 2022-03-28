@@ -13,7 +13,36 @@ function ChatPage({ chat, user, socket, setActiveChat, chats, setChats }) {
   const scrollRef = useRef(null);
 
   useEffect(() => {
-    chat && setReceiver(chat.members.find((member) => member._id !== user._id));
+    let isMounted = true;
+
+    if (isMounted) {
+      chat &&
+        setReceiver(chat.members.find((member) => member._id !== user._id));
+
+      // listen for new messages
+      socket.on("message", (message) => {
+        setNewMessage({
+          sender: message.senderId,
+          text: message.text,
+          receiver: user._id,
+          timestamp: Date.now(),
+        });
+      });
+
+      // listen for file messages
+      socket.on("fileMessage", (message) => {
+        setNewMessage({
+          sender: message.senderId,
+          file: message.file,
+          receiver: user._id,
+          timestamp: Date.now(),
+        });
+      });
+    }
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   useEffect(() => {
@@ -28,29 +57,10 @@ function ChatPage({ chat, user, socket, setActiveChat, chats, setChats }) {
   }, [chat]);
 
   useEffect(() => {
-    // listen for new messages
-    socket.on("message", (message) => {
-      setNewMessage({
-        sender: message.senderId,
-        text: message.text,
-        receiver: user._id,
-        timestamp: Date.now(),
-      });
-    });
-  }, []);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    if (isMounted) {
-      newMessage &&
-        newMessage.sender === receiver._id &&
-        setMessages((messages) => [...messages, newMessage]);
-    }
-
-    return () => {
-      isMounted = false;
-    };
+    newMessage &&
+      newMessage.sender === receiver._id &&
+      setMessages((messages) => [...messages, newMessage]);
+    setNewMessage(null);
   }, [newMessage, receiver]);
 
   useEffect(() => {
@@ -58,7 +68,7 @@ function ChatPage({ chat, user, socket, setActiveChat, chats, setChats }) {
   }, [messages]);
 
   return (
-    <div className="col-span-4 h-full dark:bg-darkSecondary bg-[#F0F2F5] overflow-auto relative postData">
+    <div className="col-span-4 h-full flex flex-col justify-between dark:bg-darkSecondary bg-[#F0F2F5] overflow-auto relative">
       {/* chat title */}
       <ChatTitle
         receiver={receiver}
@@ -74,7 +84,7 @@ function ChatPage({ chat, user, socket, setActiveChat, chats, setChats }) {
           <Loading />
         </div>
       ) : (
-        <div className="overflow-auto pb-14 pt-2">
+        <div className="overflow-auto h-full pb-14 pt-2 postData">
           {messages && messages.length ? (
             messages.map((message, i) => (
               <div ref={scrollRef} key={i}>

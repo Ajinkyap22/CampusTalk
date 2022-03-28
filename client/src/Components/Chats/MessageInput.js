@@ -1,9 +1,20 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import axios from "axios";
+import FileInputs from "../PostPage/FileInputs";
 
 function MessageInput({ chat, user, receiver, setMessages, socket }) {
   const [text, setText] = useState("");
   const [file, setFile] = useState(null);
+  const imageInput = useRef(null);
+  const videoInput = useRef(null);
+  const docInput = useRef(null);
+  const imageButton = useRef(null);
+  const videoButton = useRef(null);
+  const docButton = useRef(null);
+  const [originalFileName, setOriginalFileName] = useState();
+  const [enableSend, setEnableSend] = useState(false);
+  const [fileType, setFileType] = useState(null);
+  const formRef = useRef(null);
 
   function handleChange(e) {
     setText(e.target.value);
@@ -12,6 +23,55 @@ function MessageInput({ chat, user, receiver, setMessages, socket }) {
   function handleSubmit(e) {
     e.preventDefault();
 
+    if (text && text.trim() === "") return;
+
+    let formData;
+
+    if (file) {
+      formData = new FormData();
+
+      formData.append("sender", user._id);
+      formData.append("receiver", receiver._id);
+      formData.append("chat", chat._id);
+      formData.append("file", file);
+
+      apiRequest(fileType, formData);
+    } else {
+      formData = {
+        text,
+        sender: user._id,
+        receiver: receiver._id,
+        chat: chat._id,
+      };
+
+      apiRequest("text", formData);
+    }
+  }
+
+  function onSuccess(res, type) {
+    setMessages((messages) => [...messages, res]);
+    setText("");
+    setFile(null);
+    setOriginalFileName("");
+    setFileType("");
+    setEnableSend(false);
+
+    if (type === "text") {
+      socket.emit("sendMessage", {
+        senderId: user._id,
+        receiverId: receiver._id,
+        text,
+      });
+    } else {
+      socket.emit("sendFile", {
+        senderId: user._id,
+        receiverId: receiver._id,
+        file: res.file,
+      });
+    }
+  }
+
+  function apiRequest(type, formData) {
     let headers = {
       headers: {
         Authorization: `Bearer ${
@@ -20,83 +80,58 @@ function MessageInput({ chat, user, receiver, setMessages, socket }) {
       },
     };
 
-    if (text.trim() === "") return;
-
-    let formData;
-
-    if (file) {
-      formData = new FormData();
-
-      formData.append("text", text);
-      formData.append("sender", user._id);
-      formData.append("receiver", receiver._id);
-      formData.append("chat", chat._id);
-    } else {
-      formData = {
-        text,
-        sender: user._id,
-        receiver: receiver._id,
-        chat: chat._id,
-      };
-    }
-
-    axios
-      .post(`/api/chats/send-message`, formData, headers)
-      .then((res) => {
-        setMessages((messages) => [...messages, res.data]);
-        setText("");
-
-        socket.emit("sendMessage", {
-          senderId: user._id,
-          receiverId: receiver._id,
-          text,
+    if (type === "text") {
+      axios
+        .post(`/api/chats/send-message`, formData, headers)
+        .then((res) => {
+          onSuccess(res.data, type);
+        })
+        .catch((err) => {
+          console.error(err.response);
         });
-      })
-      .catch((err) => {
-        console.error(err.response);
-      });
+    } else {
+      axios
+        .post(`/api/chats/send-${type}`, formData, headers)
+        .then((res) => {
+          onSuccess(res.data, type);
+        })
+        .catch((err) => {
+          console.error(err.response);
+        });
+    }
   }
 
+  useEffect(() => {
+    if (text && user) {
+      setEnableSend(true);
+    } else {
+      setEnableSend(false);
+    }
+  }, [text, user]);
+
+  useEffect(() => {
+    if (!file) return;
+
+    formRef.current?.dispatchEvent(
+      new Event("submit", { cancelable: true, bubbles: true })
+    );
+  }, [file]);
+
   return (
-    <div className="w-full p-2.5 bg-white dark:bg-dark shadow-base fixed bottom-0">
-      <form className="flex items-center" onSubmit={handleSubmit}>
-        {/* images */}
-        <button type="button" className="mx-2" title="Add images">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            className="inline fill-[#818181] dark:fill-darkLight"
-            viewBox="0 0 16 16"
-          >
-            <path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
-            <path d="M14.002 13a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2V5A2 2 0 0 1 2 3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-1.998 2zM14 2H4a1 1 0 0 0-1 1h9.002a2 2 0 0 1 2 2v7A1 1 0 0 0 15 11V3a1 1 0 0 0-1-1zM2.002 4a1 1 0 0 0-1 1v8l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71a.5.5 0 0 1 .577-.094l1.777 1.947V5a1 1 0 0 0-1-1h-10z" />
-          </svg>
-        </button>
-
-        {/* video */}
-        <button type="button" className="mx-2" title="Add a video">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            className="inline fill-[#818181] dark:fill-darkLight"
-            viewBox="0 0 16 16"
-          >
-            <path d="M0 12V4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm6.79-6.907A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z" />
-          </svg>
-        </button>
-
-        {/* doc */}
-        <button type="button" className="mx-2" title="Add a document">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            className="inline fill-[#818181] dark:fill-darkLight"
-            viewBox="0 0 16 16"
-          >
-            <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
-            <path d="M3 8.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0-5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-1z" />
-          </svg>
-        </button>
+    <div className="w-full p-2.5  bg-white dark:bg-dark shadow-base fixed bottom-0">
+      <form className="flex items-center" onSubmit={handleSubmit} ref={formRef}>
+        <FileInputs
+          imageInput={imageInput}
+          videoInput={videoInput}
+          docInput={docInput}
+          imageButton={imageButton}
+          videoButton={videoButton}
+          docButton={docButton}
+          setFile={setFile}
+          setFileType={setFileType}
+          setOriginalFileName={setOriginalFileName}
+          isChatting={true}
+        />
 
         {/* input field */}
         <input
@@ -111,7 +146,8 @@ function MessageInput({ chat, user, receiver, setMessages, socket }) {
         {/* send button */}
         <button
           type="submit"
-          className="bg-primary-light p-2 rounded-full mx-1"
+          className="bg-primary-light p-2 rounded-full mx-1 disabled:opacity-50"
+          disabled={!enableSend}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

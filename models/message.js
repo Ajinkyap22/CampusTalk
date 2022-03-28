@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const MessageSchema = new Schema({
   text: { type: String, maxlength: 5000 },
   file: { type: String },
+  fileType: { type: String },
   sender: { type: Schema.Types.ObjectId, ref: "User", required: true },
   receiver: { type: Schema.Types.ObjectId, ref: "User", required: true },
   chat: { type: Schema.Types.ObjectId, required: true },

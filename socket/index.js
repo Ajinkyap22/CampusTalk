@@ -40,6 +40,18 @@ io.on("connection", (socket) => {
     }
   });
 
+  // file message
+  socket.on("sendFile", ({ senderId, receiverId, file }) => {
+    const receiver = users[receiverId];
+
+    if (receiver) {
+      io.to(receiver).emit("fileMessage", {
+        senderId,
+        file,
+      });
+    }
+  });
+
   // on creating a new chat
   socket.on("newChat", ({ receiverId, chat }) => {
     const receiver = users[receiverId];

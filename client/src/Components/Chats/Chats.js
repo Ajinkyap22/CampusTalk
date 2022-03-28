@@ -22,6 +22,7 @@ function Chats({ title }) {
   }, [activeTab]);
 
   useEffect(() => {
+    setActiveChat(null);
     // on delete chat
     socket.current.on("deleteChat", ({ chatId }) => {
       setChats(chats.filter((c) => c._id !== chatId));
