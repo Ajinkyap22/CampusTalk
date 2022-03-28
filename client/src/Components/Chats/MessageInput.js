@@ -34,6 +34,7 @@ function MessageInput({ chat, user, receiver, setMessages, socket }) {
       formData.append("receiver", receiver._id);
       formData.append("chat", chat._id);
       formData.append("file", file);
+      formData.append("originalFileName", JSON.stringify(originalFileName));
 
       apiRequest(fileType, formData);
     } else {
@@ -67,6 +68,8 @@ function MessageInput({ chat, user, receiver, setMessages, socket }) {
         senderId: user._id,
         receiverId: receiver._id,
         file: res.file,
+        fileType: res.fileType,
+        originalFileName: res.originalFileName,
       });
     }
   }

@@ -34,6 +34,8 @@ function ChatPage({ chat, user, socket, setActiveChat, chats, setChats }) {
         setNewMessage({
           sender: message.senderId,
           file: message.file,
+          fileType: message.fileType,
+          originalFileName: message.originalFileName,
           receiver: user._id,
           timestamp: Date.now(),
         });
@@ -60,7 +62,6 @@ function ChatPage({ chat, user, socket, setActiveChat, chats, setChats }) {
     newMessage &&
       newMessage.sender === receiver._id &&
       setMessages((messages) => [...messages, newMessage]);
-    setNewMessage(null);
   }, [newMessage, receiver]);
 
   useEffect(() => {

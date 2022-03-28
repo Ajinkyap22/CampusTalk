@@ -25,7 +25,12 @@ function Message({ message, user }) {
 
         {/* file */}
         {message.file && (
-          <File file={message.file} user={user} sender={message.sender} />
+          <File
+            file={message.file}
+            user={user}
+            sender={message.sender}
+            type={message.fileType}
+          />
         )}
 
         {/* time */}

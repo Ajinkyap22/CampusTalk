@@ -31,6 +31,7 @@ io.on("connection", (socket) => {
   // send and receive message
   socket.on("sendMessage", ({ senderId, receiverId, text }) => {
     const receiver = users[receiverId];
+    console.log("text");
 
     if (receiver) {
       io.to(receiver).emit("message", {
@@ -41,13 +42,16 @@ io.on("connection", (socket) => {
   });
 
   // file message
-  socket.on("sendFile", ({ senderId, receiverId, file }) => {
+  socket.on("sendFile", ({ senderId, receiverId, file, originalFileName }) => {
     const receiver = users[receiverId];
+
+    console.log("file");
 
     if (receiver) {
       io.to(receiver).emit("fileMessage", {
         senderId,
         file,
+        originalFileName,
       });
     }
   });

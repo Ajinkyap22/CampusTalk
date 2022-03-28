@@ -78,15 +78,16 @@ exports.sendFileMessage = async (req, res) => {
   try {
     const { sender, receiver, chat } = req.body;
 
-    const file = req.file.filename;
+    const filename = JSON.parse(req.body.originalFileName);
 
-    // console.log(req.body, req.file, req.files);
+    const file = req.file.filename;
 
     const message = new Message({
       file,
       sender,
       receiver,
       chat,
+      originalFileName: filename,
     });
 
     await message.save();
