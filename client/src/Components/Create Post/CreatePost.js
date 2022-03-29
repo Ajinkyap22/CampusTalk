@@ -79,7 +79,9 @@ function CreatePost({ title, post, ...props }) {
 
   return (
     <main className="w-full h-full bg-[#F0F2F5] dark:bg-dark flex flex-col items-center p-4 text-center relative">
-      <h1 className="text-primary text-3xl mt-3">Create a Post</h1>
+      <h1 className="text-primary dark:text-primary-dark text-3xl mt-3">
+        Create a Post
+      </h1>
 
       {/* dropdowns */}
       <Dropdowns
@@ -93,7 +95,7 @@ function CreatePost({ title, post, ...props }) {
       <Guidelines />
 
       {/* post info */}
-      <div className="bg-white shadow-base rounded relative w-[30rem]">
+      <div className="bg-white dark:bg-darkSecondary shadow-base rounded relative w-[30rem]">
         {/* user profile picture & name */}
         <AuthorInfo
           picture={user.picture}

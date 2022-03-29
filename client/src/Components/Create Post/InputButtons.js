@@ -25,8 +25,9 @@ function InputButtons({
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="20"
-          fill={disabled ? "#ababab" : "#818181"}
-          className="inline"
+          className={`inline ${
+            disabled ? "fill-[#ababab]" : "fill-[#818181] dark:fill-gray-300"
+          }`}
           viewBox="0 0 16 16"
         >
           <path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
@@ -45,8 +46,9 @@ function InputButtons({
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="20"
-          fill={disabled ? "#ababab" : "#818181"}
-          className="inline"
+          className={`inline ${
+            disabled ? "fill-[#ababab]" : "fill-[#818181] dark:fill-gray-300"
+          }`}
           viewBox="0 0 16 16"
         >
           <path d="M0 12V4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm6.79-6.907A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z" />
@@ -64,8 +66,9 @@ function InputButtons({
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="20"
-          fill={disabled ? "#ababab" : "#818181"}
-          className="inline"
+          className={`inline ${
+            disabled ? "fill-[#ababab]" : "fill-[#818181] dark:fill-gray-300"
+          }`}
           viewBox="0 0 16 16"
         >
           <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />

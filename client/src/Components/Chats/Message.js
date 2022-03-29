@@ -29,7 +29,8 @@ function Message({ message, user }) {
             file={message.file}
             user={user}
             sender={message.sender}
-            type={message.fileType}
+            originalFileName={message.originalFileName}
+            type={message.originalFileName?.type || message.fileType}
           />
         )}
 

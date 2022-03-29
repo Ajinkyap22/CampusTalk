@@ -14,7 +14,7 @@ function Caption({ text, setText }) {
         name="text"
         cols="30"
         rows="1"
-        className="p-2 w-full rounded text-sm focus:outline-none focus:border-gray-500 overflow-hidden"
+        className="p-2 w-full rounded text-sm focus:outline-none focus:border-gray-500 dark:text-darkLight bg-transparent overflow-hidden"
         placeholder="Write something..."
         onKeyDown={handleKeyDown}
         onChange={handleTextInput}

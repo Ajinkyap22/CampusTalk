@@ -38,7 +38,7 @@ function PostInfo({ post }) {
       {/* forum name */}
       <p
         to={`/forums/${post.forum._id}`}
-        className="p-1 py-1.5 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-gray-900 hover:bg-gray-100 hover:border-gray-300 rounded-lg"
+        className="p-1 py-1.5 text-sm font-semibold text-gray-700 dark:text-gray-300"
       >
         {post.forum.forumName}
       </p>

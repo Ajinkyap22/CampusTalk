@@ -76,6 +76,8 @@ function PostForm({
     // set enablepost to true if there is at least a text or a file, a forum, a mode and an author
     if ((text || file) && forum && user) {
       setEnablePost(true);
+    } else {
+      setEnablePost(false);
     }
   }, [file, text, forum, user]);
 
@@ -295,7 +297,7 @@ function PostForm({
               key={index}
               index={index}
               originalFileName={originalFileNames[index]}
-              classes="w-full border border-primary bg-[#f3f3f3] mx-4 my-1 mb-2 py-1 px-1.5"
+              classes="w-full border border-primary dark:border-primary-dark bg-[#f3f3f3] dark:bg-gray-800 mx-4 my-1 mb-2 py-1 px-1.5"
             />
           ))}
 
@@ -324,7 +326,7 @@ function PostForm({
       <div className="absolute right-3 bottom-2.5">
         <Link
           to="/feed"
-          className=" text-primary border border-primary mx-1 p-1.5 px-4 rounded-full text-sm hover:bg-primary hover:text-white"
+          className=" text-primary dark:text-primary-light border border-primary dark:border-primary-light mx-1 p-1.5 px-4 rounded-full text-sm hover:bg-primary hover:text-white hover:dark:text-darkLight"
         >
           Cancel
         </Link>

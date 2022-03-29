@@ -13,7 +13,7 @@ function Dropdowns({ forums, forum, setForum, anonymous, setAnonymous }) {
       <div className="relative mx-2">
         <select
           onChange={handleForumChange}
-          className="block appearance-none max-w-[18rem] text-sm w-full bg-white shadow-base px-4 py-2 pr-8 rounded shadow focus:outline-none cursor-pointer focus:shadow-outline"
+          className="block appearance-none max-w-[18rem] text-sm w-full bg-white dark:bg-darkSecondary dark:text-darkLight shadow-base px-4 py-2 pr-8 rounded shadow focus:outline-none cursor-pointer focus:shadow-outline"
         >
           <option>Select a Forum</option>
           {forums.map((f, i) => (
@@ -41,7 +41,7 @@ function Dropdowns({ forums, forum, setForum, anonymous, setAnonymous }) {
       <div className="relative mx-2">
         <select
           onChange={handleModeChange}
-          className="block appearance-none text-sm w-full bg-white shadow-base px-4 py-2 pr-8 rounded shadow focus:outline-none cursor-pointer focus:shadow-outline"
+          className="block appearance-none text-sm w-full bg-white dark:bg-darkSecondary dark:text-darkLight shadow-base px-4 py-2 pr-8 rounded shadow focus:outline-none cursor-pointer focus:shadow-outline"
         >
           <option value="public" selected={!anonymous}>
             Public Mode

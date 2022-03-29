@@ -134,7 +134,7 @@ function FileInputs({
     ) {
       // set the formData
       setFile(file);
-      setOriginalFileName({ name: file.name, type: file.type });
+      setOriginalFileName({ name: file.name, type: "doc" });
 
       setFileType("doc");
     } else {
