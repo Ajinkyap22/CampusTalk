@@ -1,7 +1,20 @@
-function File({ file, user, sender, type = "image", originalFileName }) {
+import { withRouter } from "react-router-dom";
+
+function File({
+  file,
+  user,
+  sender,
+  type = "image",
+  originalFileName,
+  history,
+}) {
+  function handleClick() {
+    history.push(`/chats/media/${file}`);
+  }
+
   return (
     <div
-      className={`flex items-center relative mt-2 mx-auto bg-white  rounded shadow-base max-w-xs cursor-pointer ${
+      className={`flex items-center mt-2 mx-auto bg-white rounded shadow-base max-w-xs cursor-pointer ${
         sender._id === user._id && type !== "doc"
           ? "border-[5px] border-primary-light"
           : "border-[5px] border-white"
@@ -10,6 +23,7 @@ function File({ file, user, sender, type = "image", originalFileName }) {
       {type === "image" && (
         <img
           src={`http://localhost:3000/uploads/images/${file}`}
+          onClick={handleClick}
           alt=""
           className="mx-auto w-full h-full object-cover"
         />
@@ -25,7 +39,10 @@ function File({ file, user, sender, type = "image", originalFileName }) {
       )}
 
       {type === "doc" && (
-        <div className="flex items-center justify-center w-full h-full p-2 rounded">
+        <div
+          className="flex items-center justify-center w-full h-full p-2 rounded"
+          onClick={handleClick}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -36,7 +53,15 @@ function File({ file, user, sender, type = "image", originalFileName }) {
             <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20M13,13V18H10V13H13Z" />
           </svg>
 
-          <span className="ml-2 text-secondary">{originalFileName.name}</span>
+          <span className="ml-2 block">{originalFileName.name}</span>
+          {/* file size in kb or mb */}
+          {originalFileName.size && (
+            <span className="ml-2 text-secondary text-sm">
+              {originalFileName.size > 1024
+                ? `${(originalFileName.size / 1024).toFixed(2)} MB`
+                : `(${originalFileName.size || 852} KB)`}
+            </span>
+          )}
 
           {/* open icon */}
           <svg
@@ -54,4 +79,4 @@ function File({ file, user, sender, type = "image", originalFileName }) {
   );
 }
 
-export default File;
+export default withRouter(File);

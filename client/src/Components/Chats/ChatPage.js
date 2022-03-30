@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef } from "react";
+import { FileContext } from "../../Contexts/FileContext";
+import { useState, useEffect, useRef, useContext } from "react";
 import axios from "axios";
 import ChatTitle from "./ChatTitle";
 import Message from "./Message";
@@ -6,6 +7,7 @@ import MessageInput from "./MessageInput";
 import Loading from "../Loading";
 
 function ChatPage({ chat, user, socket, setActiveChat, chats, setChats }) {
+  const [files, setFiles] = useContext(FileContext);
   const [receiver, setReceiver] = useState(null);
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -18,6 +20,14 @@ function ChatPage({ chat, user, socket, setActiveChat, chats, setChats }) {
     if (isMounted) {
       chat &&
         setReceiver(chat.members.find((member) => member._id !== user._id));
+
+      // get files
+      axios
+        .get(`/api/chats/${chat._id}/files`)
+        .then((res) => {
+          setFiles(res.data);
+        })
+        .catch((err) => console.log(err));
 
       // listen for new messages
       socket.on("message", (message) => {

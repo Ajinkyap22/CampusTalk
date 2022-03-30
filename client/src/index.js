@@ -8,6 +8,7 @@ import { UserProvider } from "./Contexts/UserContext";
 import { ModeProvider } from "./Contexts/ModeContext";
 import { SocketProvider } from "./Contexts/SocketContext";
 import { ChatProvider } from "./Contexts/ChatContext";
+import { FileProvider } from "./Contexts/FileContext";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -16,9 +17,11 @@ ReactDOM.render(
         <UserProvider>
           <ForumProvider>
             <PostProvider>
-              <ChatProvider>
-                <App />
-              </ChatProvider>
+              <FileProvider>
+                <ChatProvider>
+                  <App />
+                </ChatProvider>
+              </FileProvider>
             </PostProvider>
           </ForumProvider>
         </UserProvider>

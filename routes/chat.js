@@ -53,4 +53,7 @@ router.delete("/delete-chat/:chatId", verifyToken, chatController.deleteChat);
 // clear a chat
 router.delete("/clear-chat/:chatId", verifyToken, chatController.clearChat);
 
+// get all files in a chat
+router.get("/:chatId/files", chatController.getChatFiles);
+
 module.exports = router;

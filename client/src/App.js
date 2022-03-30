@@ -15,14 +15,17 @@ import CreatePost from "./Components/Create Post/CreatePost";
 import PostPage from "./Components/PostPage/PostPage";
 import Profile from "./Components/Profile/Profile";
 import Chats from "./Components/Chats/Chats";
+import FileView from "./Components/Chats/FileView";
 
 import { ForumContext } from "./Contexts/ForumContext";
 import { PostContext } from "./Contexts/PostContext";
 import { ModeContext } from "./Contexts/ModeContext";
+import { FileContext } from "./Contexts/FileContext";
 import { TabProvider } from "./Contexts/TabContext";
 
 function App() {
   const [forums, setForums] = useContext(ForumContext);
+  const [files] = useContext(FileContext);
   const [posts] = useContext(PostContext);
   const [mode] = useContext(ModeContext);
 
@@ -82,6 +85,23 @@ function App() {
             path="/create-forum"
             render={() => <CreateForum title={"Create Forum | CampusTalk"} />}
           />
+
+          {/* chat file view */}
+          {files.map((file, i) => (
+            <Route
+              exact
+              path={`/chats/media/${file.file}`}
+              render={() => (
+                <FileView
+                  file={file.file}
+                  name={file.name}
+                  type={file.type}
+                  title={`${file.name} | CampusTalk`}
+                />
+              )}
+              key={i}
+            />
+          ))}
 
           {/* Feed */}
           <TabProvider>

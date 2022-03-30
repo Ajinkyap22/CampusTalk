@@ -157,3 +157,29 @@ exports.clearChat = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+// get all files in a chat
+exports.getChatFiles = async (req, res) => {
+  try {
+    const messages = await Message.find({ chat: req.params.chatId })
+      .populate("sender")
+      .populate("receiver");
+
+    let files = [];
+
+    messages.forEach((message) => {
+      // get file and original file name
+      if (message.file) {
+        files.push({
+          file: message.file,
+          name: message.originalFileName?.name,
+          type: message.originalFileName?.type,
+        });
+      }
+    });
+
+    res.status(200).json(files);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
