@@ -32,7 +32,7 @@ exports.login_post = function (req, res) {
     jwt.sign(
       { _id: user._id, email: user.email },
       process.env.SECRET,
-      { expiresIn: "1d" },
+      { expiresIn: "7d" },
       (err, token) => {
         if (err) return res.status(400).json(err);
 
@@ -44,8 +44,14 @@ exports.login_post = function (req, res) {
           .exec((err, user) => {
             if (err) return res.json(err);
 
+            // get token expiration date
+            const expirationDate = new Date(
+              new Date().getTime() + 7 * 24 * 60 * 60 * 1000
+            );
+
             res.json({
               token: token,
+              expirationDate: expirationDate,
               user,
             });
           });
@@ -103,7 +109,7 @@ exports.signup_post = [
         jwt.sign(
           { _id: user._id, email: user.email },
           process.env.SECRET,
-          { expiresIn: "1d" },
+          { expiresIn: "7d" },
           (err, token) => {
             if (err) return next(err);
 
@@ -115,8 +121,14 @@ exports.signup_post = [
               .exec((err, user) => {
                 if (err) return res.json(err);
 
+                // get token expiration date
+                const expirationDate = new Date(
+                  new Date().getTime() + 7 * 24 * 60 * 60 * 1000
+                );
+
                 return res.json({
                   token: token,
+                  expirationDate: expirationDate,
                   user,
                 });
               });
@@ -166,7 +178,7 @@ exports.google = async function (req, res) {
       jwt.sign(
         { _id: user._id, email: user.email },
         process.env.SECRET,
-        { expiresIn: "10m" },
+        { expiresIn: "7d" },
         (err, token) => {
           if (err) return res.status(400).json(err);
 
@@ -178,8 +190,14 @@ exports.google = async function (req, res) {
             .exec((err, user) => {
               if (err) return res.json(err);
 
+              // get token expiration date
+              const expirationDate = new Date(
+                new Date().getTime() + 7 * 24 * 60 * 60 * 1000
+              );
+
               return res.json({
                 token: token,
+                expirationDate: expirationDate,
                 user,
               });
             });

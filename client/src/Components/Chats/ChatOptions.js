@@ -10,6 +10,7 @@ function ChatOptions({
   setActiveChat,
   chats,
   setChats,
+  setMessages,
   receiver,
 }) {
   const [socket] = useContext(SocketContext);
@@ -33,6 +34,31 @@ function ChatOptions({
         setShowOptions(false);
 
         socket.current.emit("deleteChat", {
+          chatId: chat._id,
+          receiverId: receiver._id,
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  function clearChat() {
+    let headers = {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(localStorage.getItem("user"))?.token
+        }`,
+      },
+    };
+
+    axios
+      .delete(`/api/chats/clear-chat/${chat._id}`, headers)
+      .then((res) => {
+        setMessages([]);
+        setShowOptions(false);
+
+        socket.current.emit("clearChat", {
           chatId: chat._id,
           receiverId: receiver._id,
         });
@@ -71,7 +97,7 @@ function ChatOptions({
         <hr className="dark:border-t dark:border-secondary" />
 
         {/* clear chat */}
-        <li className="p-1.5 text-sm dark:text-darkLight" onClick={deleteChat}>
+        <li className="p-1.5 text-sm dark:text-darkLight" onClick={clearChat}>
           <button>
             <svg
               xmlns="http://www.w3.org/2000/svg"

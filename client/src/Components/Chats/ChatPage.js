@@ -50,6 +50,11 @@ function ChatPage({ chat, user, socket, setActiveChat, chats, setChats }) {
           timestamp: Date.now(),
         });
       });
+
+      // listen for clear chat
+      socket.on("clearChat", (message) => {
+        setMessages([]);
+      });
     }
 
     return () => {
@@ -87,6 +92,7 @@ function ChatPage({ chat, user, socket, setActiveChat, chats, setChats }) {
         setActiveChat={setActiveChat}
         chats={chats}
         setChats={setChats}
+        setMessages={setMessages}
       />
 
       {/* messages */}

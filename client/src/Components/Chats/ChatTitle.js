@@ -1,7 +1,14 @@
 import { useState, useEffect } from "react";
 import ChatOptions from "./ChatOptions";
 
-function ChatTitle({ receiver, chat, chats, setChats, setActiveChat }) {
+function ChatTitle({
+  receiver,
+  chat,
+  chats,
+  setChats,
+  setActiveChat,
+  setMessages,
+}) {
   const [showOptions, setShowOptions] = useState(false);
 
   function toggleOptions() {
@@ -75,6 +82,7 @@ function ChatTitle({ receiver, chat, chats, setChats, setActiveChat }) {
         setChats={setChats}
         setActiveChat={setActiveChat}
         receiver={receiver}
+        setMessages={setMessages}
       />
     </div>
   );

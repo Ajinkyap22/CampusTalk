@@ -142,7 +142,7 @@ function MessageInput({ chat, user, receiver, setMessages, socket }) {
           placeholder="Type your message..."
           value={text}
           onChange={handleChange}
-          className="p-2 px-3 bg-[#f3f3f3] dark:bg-darkSecondary rounded-full mx-2 shadow-base focus:outline-none w-1/2"
+          className="p-2 px-3 bg-[#f3f3f3] dark:bg-darkSecondary dark:text-darkLight rounded-full mx-2 shadow-base focus:outline-none w-1/2"
           required
         />
 

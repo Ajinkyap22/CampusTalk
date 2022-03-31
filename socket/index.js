@@ -76,6 +76,16 @@ io.on("connection", (socket) => {
       });
   });
 
+  // on clearing the chat
+  socket.on("clearChat", ({ receiverId, chatId }) => {
+    const receiver = users[receiverId];
+
+    receiver &&
+      io.to(receiver).emit("clearChat", {
+        chatId,
+      });
+  });
+
   // on disconnect
   socket.on("disconnect", () => {
     disconnect(socket.id);
