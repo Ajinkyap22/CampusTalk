@@ -85,7 +85,7 @@ function CreatePost({ title, post, ...props }) {
 
       {/* dropdowns */}
       <Dropdowns
-        forums={user.forums}
+        forums={user?.forums || []}
         forum={post?.forum || forum}
         setForum={setForum}
         anonymous={anonymous}
@@ -98,10 +98,10 @@ function CreatePost({ title, post, ...props }) {
       <div className="bg-white dark:bg-darkSecondary shadow-base rounded relative w-[30rem]">
         {/* user profile picture & name */}
         <AuthorInfo
-          picture={user.picture}
-          firstName={user.firstName}
+          picture={user?.picture}
+          firstName={user?.firstName}
           anonymous={anonymous}
-          lastName={user.lastName}
+          lastName={user?.lastName}
           important={important}
           setImportant={setImportant}
         />

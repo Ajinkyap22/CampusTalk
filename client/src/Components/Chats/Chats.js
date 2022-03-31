@@ -8,10 +8,16 @@ import ChatList from "./ChatList";
 import ChatPage from "./ChatPage";
 
 function Chats({ title }) {
+  const [user, setUser] = useContext(UserContext);
   const [socket, onlineUsers] = useContext(SocketContext);
-  const [user] = useContext(UserContext);
   const [activeTab, setActiveTab] = useContext(TabContext);
   const [chats, setChats, activeChat, setActiveChat] = useContext(ChatContext);
+
+  useEffect(() => {
+    if (!user) {
+      setUser(JSON.parse(localStorage.getItem("user"))?.user);
+    }
+  }, [user]);
 
   useEffect(() => {
     document.title = title || "Chats | CampusTalk";
@@ -24,7 +30,7 @@ function Chats({ title }) {
   useEffect(() => {
     setActiveChat(null);
     // on delete chat
-    socket.current.on("deleteChat", ({ chatId }) => {
+    socket.current?.on("deleteChat", ({ chatId }) => {
       setChats(chats.filter((c) => c._id !== chatId));
       setActiveChat(null);
     });
@@ -38,6 +44,7 @@ function Chats({ title }) {
         {/* chat list */}
         <ChatList
           user={user}
+          setUser={setUser}
           activeChat={activeChat}
           setActiveChat={setActiveChat}
           onlineUsers={onlineUsers}

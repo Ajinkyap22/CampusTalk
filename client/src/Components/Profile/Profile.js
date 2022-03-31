@@ -26,11 +26,17 @@ function Profile({ ...props }) {
   }, [user]);
 
   useEffect(() => {
-    setTab("profile");
+    let mounted = true;
+
+    if (mounted) setTab("profile");
+
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   useEffect(() => {
-    axios.get(`/api/users/${user._id}/posts`).then((res) => {
+    axios.get(`/api/users/${user?._id}/posts`).then((res) => {
       setPosts(res.data);
       setLoading(false);
     });
@@ -44,9 +50,9 @@ function Profile({ ...props }) {
         <div className="self-start ml-12">
           <div className="bg-white dark:bg-darkSecondary p-2 rounded shadow-base mt-2 relative text-center">
             {/* user picture */}
-            {user && user.picture ? (
+            {user && user?.picture ? (
               <img
-                src={`http://localhost:3000/uploads/images/${user.picture}`}
+                src={`http://localhost:3000/uploads/images/${user?.picture}`}
                 alt=""
                 className="rounded-full inline h-28 w-auto mt-4 my-2"
               />
@@ -66,12 +72,12 @@ function Profile({ ...props }) {
             )}
             {/* user name */}
             <h1 className="text-lg text-center mt-2 dark:text-darkLight">
-              {user.firstName} {user.lastName}
+              {user?.firstName} {user?.lastName}
             </h1>
 
             {/* user join date */}
             <p className="text-mxs text-secondary dark:text-gray-300 mt-1">
-              Joined {moment(user.timestamp).format("LL")}
+              Joined {moment(user?.timestamp).format("LL")}
             </p>
             <hr className="mt-2 dark:border-t dark:border-secondary" />
 
@@ -79,14 +85,16 @@ function Profile({ ...props }) {
             <div className="flex justify-center items-center mt-3">
               {/* members */}
               <div className="flex flex-col items-center px-2.5">
-                <span className="dark:text-darkLight">{user.posts.length}</span>
+                <span className="dark:text-darkLight">
+                  {user?.posts.length}
+                </span>
                 <span className="text-mxs dark:text-darkLight">Posts</span>
               </div>
 
               {/* posts */}
               <div className="flex flex-col items-center px-2.5">
                 <span className="dark:text-darkLight">
-                  {user.forums.length}
+                  {user?.forums.length}
                 </span>
                 <span className="text-mxs dark:text-darkLight">Forums</span>
               </div>

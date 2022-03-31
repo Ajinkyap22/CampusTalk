@@ -22,6 +22,13 @@ function Signup({ title, ...props }) {
     document.title = title || "Sign up | CampusTalk";
   }, [title]);
 
+  useEffect(() => {
+    // redirect to feed if user already exists
+    if (user) {
+      props.history.push("/feed");
+    }
+  }, []);
+
   const handleSignIn = async (googleData) => {
     const body = JSON.stringify({
       token: googleData.tokenId,

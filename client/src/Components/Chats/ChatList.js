@@ -18,7 +18,7 @@ function ChatList({
     let mounted = true;
     if (mounted) {
       axios
-        .get(`/api/chats/${user._id}`)
+        .get(`/api/chats/${user?._id}`)
         .then((res) => {
           setChats(res.data);
           setLoading(false);
@@ -26,7 +26,7 @@ function ChatList({
         .catch((err) => console.error(err));
 
       // on new chat
-      socket.current.on("newChat", ({ chat }) => {
+      socket.current?.on("newChat", ({ chat }) => {
         setChats([...chats, chat]);
       });
     }
@@ -34,7 +34,7 @@ function ChatList({
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [user]);
 
   return (
     <div className="col-span-2 bg-white h-fit dark:bg-dark overflow-auto postData relative">

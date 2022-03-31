@@ -1,7 +1,11 @@
-import HeroImg from "../../assets/Hero.png";
+import { UserContext } from "../../Contexts/UserContext";
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import HeroImg from "../../assets/Hero.png";
 
 function Hero() {
+  const [user] = useContext(UserContext);
+
   return (
     <section className="m-3 mt-16 md:mt-10 flex flex-col p-3 py-5 md:py-20 2xl:py-20">
       <div className="flex items-center justify-around md:p-2">
@@ -37,7 +41,7 @@ function Hero() {
           </svg>
 
           <NavLink
-            to="/signup"
+            to={user ? "/feed" : "/signup"}
             className="bg-primary hover:bg-blue-700 self-start text-white p-2 md:px-3 2xl:p-3 2xl:px-5 mt-3 md:mt-5 text-xs md:text-base xl:text-xl 2xl:text-3xl rounded-full"
           >
             Get Started

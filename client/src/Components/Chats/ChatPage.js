@@ -19,7 +19,7 @@ function ChatPage({ chat, user, socket, setActiveChat, chats, setChats }) {
 
     if (isMounted) {
       chat &&
-        setReceiver(chat.members.find((member) => member._id !== user._id));
+        setReceiver(chat.members.find((member) => member._id !== user?._id));
 
       // get files
       axios
@@ -30,17 +30,17 @@ function ChatPage({ chat, user, socket, setActiveChat, chats, setChats }) {
         .catch((err) => console.log(err));
 
       // listen for new messages
-      socket.on("message", (message) => {
+      socket?.on("message", (message) => {
         setNewMessage({
           sender: message.senderId,
           text: message.text,
-          receiver: user._id,
+          receiver: user?._id,
           timestamp: Date.now(),
         });
       });
 
       // listen for file messages
-      socket.on("fileMessage", (message) => {
+      socket?.on("fileMessage", (message) => {
         setNewMessage({
           sender: message.senderId,
           file: message.file,
@@ -52,7 +52,7 @@ function ChatPage({ chat, user, socket, setActiveChat, chats, setChats }) {
       });
 
       // listen for clear chat
-      socket.on("clearChat", (message) => {
+      socket?.on("clearChat", (message) => {
         setMessages([]);
       });
     }
@@ -60,7 +60,7 @@ function ChatPage({ chat, user, socket, setActiveChat, chats, setChats }) {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     // get messages

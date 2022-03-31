@@ -1,9 +1,11 @@
+import { UserContext } from "../../Contexts/UserContext";
 import { NavLink } from "react-router-dom";
+import { useState, useContext } from "react";
 import Menu from "react-burger-menu/lib/menus/slide";
-import { useState } from "react";
 
 function Navbar() {
   const [open, setOpen] = useState(false);
+  const [user] = useContext(UserContext);
 
   const handleOpen = () => {
     setOpen(true);
@@ -110,12 +112,22 @@ function Navbar() {
         >
           FAQ
         </a>
-        <NavLink
-          to="/login"
-          className="mx-5 2xl:text-lg bg-white text-primary hover:bg-primary hover:text-white font-bold shadow-md py-2 px-4 rounded-full"
-        >
-          Log in
-        </NavLink>
+
+        {user ? (
+          <NavLink
+            to="/feed"
+            className="mx-5 2xl:text-lg bg-white text-primary hover:bg-primary hover:text-white font-bold shadow-md py-2 px-4 rounded-full"
+          >
+            Go To Feed
+          </NavLink>
+        ) : (
+          <NavLink
+            to="/login"
+            className="mx-5 2xl:text-lg bg-white text-primary hover:bg-primary hover:text-white font-bold shadow-md py-2 px-4 rounded-full"
+          >
+            Log in
+          </NavLink>
+        )}
       </div>
 
       {/* Mobile Menu */}
@@ -135,13 +147,23 @@ function Navbar() {
           <a className="my-5 border-b" onClick={handleClose} href="#faq">
             FAQ
           </a>
-          <NavLink
-            to="/login"
-            onClick={handleClose}
-            className="my-5 bg-white text-primary font-bold shadow-md py-2 px-4 rounded-full"
-          >
-            Log in
-          </NavLink>
+          {user ? (
+            <NavLink
+              to="/feed"
+              onClick={handleClose}
+              className="my-5 bg-white text-primary font-bold shadow-md py-2 px-4 rounded-full"
+            >
+              Go To Feed
+            </NavLink>
+          ) : (
+            <NavLink
+              to="/login"
+              onClick={handleClose}
+              className="my-5 bg-white text-primary font-bold shadow-md py-2 px-4 rounded-full"
+            >
+              Log in
+            </NavLink>
+          )}
         </Menu>
       </div>
     </nav>
