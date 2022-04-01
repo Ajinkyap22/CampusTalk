@@ -57,7 +57,9 @@ function Post({ post, activeFilter, range = "Today", ...props }) {
       />
 
       {/* caption */}
-      <p className="m-2 my-3 px-2 text-sm dark:text-darkLight">{post.text}</p>
+      <p className="m-2 my-3 px-2 text-sm 2xl:text-xl dark:text-darkLight">
+        {post.text}
+      </p>
 
       {/* image */}
       {post.file.length ? (

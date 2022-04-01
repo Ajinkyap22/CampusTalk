@@ -165,3 +165,25 @@ exports.deleteNotification = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+// mark notification as seen
+exports.markAsSeen = async (req, res) => {
+  try {
+    const { notificationId } = req.params;
+
+    Notification.findByIdAndUpdate(
+      notificationId,
+      {
+        $set: { seen: true },
+      },
+      { new: true },
+      (err, notification) => {
+        if (err) return res.status(500).json({ error: err.message });
+
+        res.status(200).json(notification);
+      }
+    );
+  } catch {
+    res.status(500).json({ error: error.message });
+  }
+};

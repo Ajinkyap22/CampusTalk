@@ -1,0 +1,113 @@
+import moment from "moment";
+import { withRouter } from "react-router-dom";
+
+function Notification({ notification, history }) {
+  function handleClick() {
+    if (
+      notification.type === "joinRequest" ||
+      notification.type === "postReuest"
+    ) {
+      history.push(`/forums/${notification.forum._id}`);
+    } else {
+      history.push(
+        `/forums/${notification.forum._id}/posts/${notification.post}`
+      );
+    }
+  }
+
+  return (
+    <div
+      className={`flex items-center p-2.5 dark:border-secondary cursor-pointer ${
+        notification.seen ? "bg-[#E2F0FE] dark:bg-dark" : "bg-transparent"
+      }`}
+      onClick={handleClick}
+    >
+      {/* picture */}
+      {notification.type === "comment" || notification.type === "reply" ? (
+        notification.from.picture ? (
+          <img
+            src={`http://localhost:3000/uploads/images/${notification.from.picture}`}
+            className="rounded-full object-cover w-10 h-auto inline mx-2"
+            alt=""
+          />
+        ) : (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="inline mx-2 w-10 align-middle fill-[#818181] dark:fill-darkLight"
+            viewBox="0 0 16 16"
+          >
+            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+            <path
+              fillRule="evenodd"
+              d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
+            />
+          </svg>
+        )
+      ) : notification.type === "joinRequest" ? (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-10 inline mx-2 align-middle fill-primary"
+          viewBox="0 0 24 24"
+        >
+          <path d="M16 9v-4l8 7-8 7v-4h-8v-6h8zm-2 10v-.083c-1.178.685-2.542 1.083-4 1.083-4.411 0-8-3.589-8-8s3.589-8 8-8c1.458 0 2.822.398 4 1.083v-2.245c-1.226-.536-2.577-.838-4-.838-5.522 0-10 4.477-10 10s4.478 10 10 10c1.423 0 2.774-.302 4-.838v-2.162z" />
+        </svg>
+      ) : (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-10 inline mx-2.5 align-middle fill-primary"
+          viewBox="0 0 16 16"
+        >
+          <path
+            fillRule="evenodd"
+            d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2ZM1 4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4Zm7.5.5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7ZM2 5.5a.5.5 0 0 1 .5-.5H6a.5.5 0 0 1 0 1H2.5a.5.5 0 0 1-.5-.5Zm0 2a.5.5 0 0 1 .5-.5H6a.5.5 0 0 1 0 1H2.5a.5.5 0 0 1-.5-.5Zm0 2a.5.5 0 0 1 .5-.5H6a.5.5 0 0 1 0 1H2.5a.5.5 0 0 1-.5-.5ZM10.5 5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3ZM13 8h-2V6h2v2Z"
+          />
+        </svg>
+      )}
+
+      {/* text */}
+      {notification.type === "comment" || notification.type === "reply" ? (
+        <p className="text-mxs dark:text-darkLight mr-1">
+          <span className="font-semibold">
+            {notification.from.firstName} {notification.from.lastName}
+          </span>{" "}
+          {notification.type === "comment"
+            ? "commented on your post in"
+            : "replied to your comment on a post in"}{" "}
+          <span className="font-semibold">{notification.forum.forumName}</span>
+        </p>
+      ) : (
+        <p className="text-mxs dark:text-darkLight mr-1">
+          There are new {notification.type === "joinRequest" ? "join" : "post"}{" "}
+          requests in {notification.forum.forumName}
+        </p>
+      )}
+
+      {/* time and delete button */}
+      <div className="ml-1 flex flex-col items-center">
+        {/* time */}
+        <p className="text-xsm text-center pb-1.5 dark:text-darkLight">
+          {moment(notification.timestamp).fromNow()}
+        </p>
+
+        {/* delete button */}
+        <button title="Delete">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-4 w-4 stroke-[#818181]"
+            viewBox="0 0 24 24"
+            fill="none"
+            strokeWidth={2}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  );
+}
+
+export default withRouter(Notification);

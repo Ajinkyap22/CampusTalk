@@ -1,18 +1,34 @@
 import { UserContext } from "../../Contexts/UserContext";
 import { TabContext } from "../../Contexts/TabContext";
 import { NavLink } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import Dropdown from "./Dropdown";
 import Logo from "../Logo";
+import Notifications from "./Notifications";
+import axios from "axios";
 
 function Nav() {
   const [activeTab, setActiveTab] = useContext(TabContext);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [user] = useContext(UserContext);
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [notifications, setNotifications] = useState([]);
+  const [user, setUser] = useContext(UserContext);
+
+  useEffect(() => {
+    if (!user) return;
+
+    axios.get(`/api/notifications/${user._id}`).then((res) => {
+      setNotifications(res.data);
+    });
+  }, [user]);
 
   // switch tab on button click
   const handleClick = (tab) => {
     setActiveTab(tab);
+  };
+
+  const toggleNotifications = () => {
+    setShowNotifications(!showNotifications);
   };
 
   return (
@@ -65,12 +81,12 @@ function Nav() {
       </div>
 
       {/* user section */}
-      <div className="flex items-center">
+      <div className="flex items-center dropDownToggle">
         {/* notifications */}
-        <button className="w-5 h-auto">
+        <button className="w-5 h-auto" onClick={toggleNotifications}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="bi bi-bell fill-[#818181] dark:fill-gray-300"
+            className="bi bi-bell fill-[#818181] dark:fill-gray-300 dropDownToggle"
             viewBox="0 0 16 16"
           >
             <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z" />
@@ -122,6 +138,17 @@ function Nav() {
           </svg>
         </button>
       </div>
+
+      {/* notifications */}
+      {showNotifications && (
+        <Notifications
+          showNotifications={showNotifications}
+          setShowNotifications={setShowNotifications}
+          notifications={notifications}
+          setNotifications={setNotifications}
+          user={user}
+        />
+      )}
 
       {/*dropdown  */}
       <Dropdown showDropdown={showDropdown} setShowDropdown={setShowDropdown} />

@@ -27,4 +27,11 @@ router.delete(
   notificatinController.deleteNotification
 );
 
+// mark notification as seen
+router.put(
+  "/:notificationId/mark",
+  verifyToken,
+  notificatinController.markAsSeen
+);
+
 module.exports = router;

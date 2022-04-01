@@ -2,7 +2,6 @@ function LogoCropped({ width = "45", color = "white" }) {
   return (
     <svg
       width={width}
-      // height="43"
       viewBox="0 0 50 43"
       className="inline mr-1 align-middle"
       fill="none"
