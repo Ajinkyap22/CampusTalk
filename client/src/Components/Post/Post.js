@@ -43,7 +43,7 @@ function Post({ post, activeFilter, range = "Today", ...props }) {
 
   return (
     <div
-      className="bg-white dark:bg-darkSecondary shadow-base py-2 mt-8 w-full rounded"
+      className="bg-white dark:bg-darkSecondary shadow-base lg:py-1.5 xl:py-2 mt-8 w-full rounded"
       hidden={!showPost}
     >
       {/* user info */}
@@ -57,7 +57,7 @@ function Post({ post, activeFilter, range = "Today", ...props }) {
       />
 
       {/* caption */}
-      <p className="m-2 my-3 px-2 text-sm 2xl:text-xl dark:text-darkLight">
+      <p className="m-2 my-3 2xl:my-4 lg:px-1.5 xl:px-2 lg:text-xs xl:text-sm 2xl:text-xl dark:text-darkLight">
         {post.text}
       </p>
 

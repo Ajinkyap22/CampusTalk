@@ -24,18 +24,20 @@ function Dropdown({ showDropdown, setShowDropdown }) {
 
   return (
     <div
-      className="absolute bg-white shadow-base p-2 top-14 right-28 z-30 rounded dark:bg-darkSecondary"
+      className="absolute bg-white shadow-base p-2 2xl:p-2.5 top-14 2xl:top-15 right-28 2xl:right-36 3xl:right-52 z-30 rounded dark:bg-darkSecondary"
       hidden={showDropdown ? false : true}
       ref={wrapperRef}
     >
       <ul>
         {/* profile */}
-        <li className="p-2 text-sm dark:text-darkLight" onClick={handleClick}>
+        <li
+          className="p-2 2xl:p-2.5 text-sm 2xl:text-lg dark:text-darkLight"
+          onClick={handleClick}
+        >
           <NavLink to="/profile">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              className="inline mr-2 fill-[#818181] dark:fill-darkLight"
+              className="inline mr-2 fill-[#818181] dark:fill-darkLight w-4 2xl:w-5"
               viewBox="0 0 16 18"
             >
               <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
@@ -50,12 +52,11 @@ function Dropdown({ showDropdown, setShowDropdown }) {
         <hr />
 
         {/* settings */}
-        {/* <li className="p-2 text-sm dark:text-darkLight" onClick={handleClick}>
+        {/* <li className="p-2 2xl:p-2.5 text-sm 2xl:text-lg dark:text-darkLight" onClick={handleClick}>
           <NavLink to="/settings">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              className="inline mr-2 fill-[#818181] dark:fill-darkLight"
+              className="inline mr-2 fill-[#818181] dark:fill-darkLight w-4 2xl:w-5"
               viewBox="0 0 16 16"
             >
               <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z" />
@@ -71,12 +72,14 @@ function Dropdown({ showDropdown, setShowDropdown }) {
         <hr />
 
         {/* logout */}
-        <li className="p-2 text-sm dark:text-darkLight" onClick={logout}>
+        <li
+          className="p-2 2xl:p-2.5 text-sm 2xl:text-lg dark:text-darkLight"
+          onClick={logout}
+        >
           <NavLink to="/">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              className="inline mr-2 fill-[#818181] dark:fill-darkLight"
+              className="inline mr-2 fill-[#818181] dark:fill-darkLight w-4 2xl:w-5"
               viewBox="0 0 16 16"
             >
               <path

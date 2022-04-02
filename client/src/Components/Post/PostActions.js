@@ -126,17 +126,16 @@ function PostActions({
   return (
     <div
       className={`w-full grid ${
-        showCommentButton ? "grid-cols-3 px-2" : "grid-cols-2 px-4"
-      } grid-flow-col py-1 border-t dark:border-light`}
+        showCommentButton ? "grid-cols-3 lg:px-1.5 xl:px-2" : "grid-cols-2 px-4"
+      } grid-flow-col py-1 2xl:py-1.5 border-t dark:border-light`}
     >
       {/* upvotes */}
       <div className="my-2 inline">
         <button onClick={handleUpvote} title="Upvote Post">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="20"
             fill={upvoted ? "#0F8CFF" : "#484848"}
-            className="inline mx-1"
+            className="inline mx-1 w-5 2xl:w-6"
             viewBox="0 0 256 256"
           >
             <rect width="256" height="256" fill="none"></rect>
@@ -155,16 +154,15 @@ function PostActions({
           </svg>
         </button>
 
-        <span className="text-sm dark:text-darkLight">
+        <span className="text-sm 2xl:text-base align-middle dark:text-darkLight">
           {upvotes.length - downvotes.length}
         </span>
 
         <button onClick={handleDownvote} title="Downvote Post">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="20"
             fill={downvoted ? "red" : "#484848"}
-            className="inline mx-1"
+            className="inline mx-1 w-5 2xl:w-6"
             viewBox="0 0 256 256"
           >
             <rect width="256" height="256" fill="none"></rect>
@@ -207,16 +205,18 @@ function PostActions({
             strokeLinejoin="round"
           />
         </svg>
-        <span className="text-sm dark:text-gray-300">Comment</span>
+        <span className="text-sm 2xl:text-base align-middle dark:text-gray-300">
+          Comment
+        </span>
       </button>
 
       {/* comment number */}
       <button
-        className="text-sm my-2 text-right text-secondary dark:text-gray-400"
+        className="text-sm 2xl:text-base my-2 text-right text-secondary dark:text-gray-400"
         title="See Comments"
         onClick={onPostClick}
       >
-        {comments.length} Comments
+        {comments.length} {comments.length === 1 ? "Comment" : "Comments"}
       </button>
     </div>
   );

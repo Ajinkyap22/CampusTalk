@@ -52,10 +52,10 @@ function Filter({
   return (
     <div className="bg-white dark:bg-darkSecondary relative shadow-base dark:shadow-darkLight flex justify-between items-center w-full rounded">
       {/* filter label */}
-      <p className="inline p-3 text-sm 2xl:text-xl bg-[#f3f3f3] dark:bg-neutral-700 dark:text-darkLight">
+      <p className="inline lg:p-2.5 xl:p-3 lg:text-xs xl:text-sm 2xl:text-lg 3xl:text-xl bg-[#f3f3f3] dark:bg-neutral-700 dark:text-darkLight">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="inline align-text-bottom fill-[#818181] dark:fill-darkLight w-5 2xl:w-7"
+          className="inline align-text-bottom fill-[#818181] dark:fill-darkLight w-4 xl:w-5 2xl:w-7"
           viewBox="0 0 16 16"
         >
           <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z" />
@@ -66,7 +66,7 @@ function Filter({
       {/* latest */}
       <button
         onClick={() => switchActiveFilter("latest")}
-        className="p-2 text-sm 2xl:text-xl"
+        className="p-2 lg:text-xs xl:text-sm 2xl:text-lg 3xl:text-xl"
       >
         <span
           className={`${
@@ -77,7 +77,7 @@ function Filter({
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className={`w-5 inline align-text-top ${
+            className={`lg:w-4 xl:w-5 inline align-text-top ${
               activeFilter === "latest"
                 ? "fill-[#0278E4]"
                 : "fill-[#626262] dark:fill-darkLight"
@@ -97,7 +97,7 @@ function Filter({
       {/* important */}
       <button
         onClick={() => switchActiveFilter("important")}
-        className="p-2 text-sm 2xl:text-xl"
+        className="p-2 lg:text-xs xl:text-sm 2xl:text-lg 3xl:text-xl"
       >
         <span
           className={`${
@@ -107,10 +107,8 @@ function Filter({
           } p-1 px-2 rounded-xl`}
         >
           <svg
-            width="20"
-            height="20"
             viewBox="0 0 20 20"
-            className="inline align-text-top"
+            className="inline align-text-top lg:w-4 xl:w-5"
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
@@ -127,7 +125,10 @@ function Filter({
       </button>
 
       {/* top */}
-      <button onClick={toggleDay} className="p-2 text-sm 2xl:text-xl">
+      <button
+        onClick={toggleDay}
+        className="p-2 lg:text-xs xl:text-sm 2xl:text-lg 3xl:text-xl"
+      >
         <span
           className={`${
             activeFilter === "top"
@@ -138,9 +139,7 @@ function Filter({
           <svg
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
-            width="16"
-            height="16"
-            className="inline"
+            className="inline lg:w-3.5 xl:w-4"
             viewBox="0 0 64 64"
           >
             <g
@@ -164,7 +163,7 @@ function Filter({
       <button
         onClick={handleDropdown}
         disabled={activeFilter === "top" ? false : true}
-        className="p-2 text-sm 2xl:text-xl dropDownToggle"
+        className="p-2 lg:text-xs xl:text-sm 2xl:text-lg 3xl:text-xl dropDownToggle"
       >
         <span
           className={`${
@@ -176,9 +175,8 @@ function Filter({
           {dateRange}{" "}
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="15"
             fill="currentColor"
-            className="inline dropDownToggle"
+            className="inline dropDownToggle lg:w-3.5 xl:w-4"
             viewBox="0 0 16 16"
           >
             <path
@@ -197,7 +195,7 @@ function Filter({
       >
         <ul>
           <li
-            className={`p-2 text-sm 2xl:text-xl  ${
+            className={`p-2 lg:text-xs xl:text-sm 2xl:text-lg 3xl:text-xl  ${
               dateRange === "Today"
                 ? "bg-[#E2EEFF] text-primary"
                 : "dark:text-darkLight"
@@ -209,7 +207,7 @@ function Filter({
           <hr className="dark:bg-light dark:border-top dark:border-light" />
 
           <li
-            className={`p-2 text-sm 2xl:text-xl  ${
+            className={`p-2 lg:text-xs xl:text-sm 2xl:text-lg 3xl:text-xl  ${
               dateRange === "This Week"
                 ? "bg-[#E2EEFF] text-primary"
                 : "dark:text-darkLight"
@@ -221,7 +219,7 @@ function Filter({
           <hr className="dark:bg-light dark:border-top dark:border-light" />
 
           <li
-            className={`p-2 text-sm 2xl:text-xl  ${
+            className={`p-2 lg:text-xs xl:text-sm 2xl:text-lg 3xl:text-xl  ${
               dateRange === "This Month"
                 ? "bg-[#E2EEFF] text-primary"
                 : "dark:text-darkLight"

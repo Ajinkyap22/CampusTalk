@@ -8,7 +8,7 @@ const NotificationSchema = new Schema({
   forum: { type: Schema.Types.ObjectId, ref: "Forum" },
   post: { type: Schema.Types.ObjectId, ref: "Post" },
   timestamp: { type: Date, default: Date.now },
-  seen: { type: Boolean, default: false },
+  seen: [{ type: Schema.Types.ObjectId, ref: "User" }],
 });
 
 module.exports = mongoose.model("Notification", NotificationSchema);

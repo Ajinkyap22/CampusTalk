@@ -1,8 +1,52 @@
-import moment from "moment";
+import { useEffect } from "react";
 import { withRouter } from "react-router-dom";
+import moment from "moment";
+import axios from "axios";
 
-function Notification({ notification, history }) {
-  function handleClick() {
+function Notification({ notification, setNotifications, history, user }) {
+  useEffect(() => {
+    let mounted = true;
+
+    if (mounted && !notification.hasSeen) {
+      let headers = {
+        headers: {
+          Authorization: `Bearer ${
+            JSON.parse(localStorage.getItem("user")).token
+          }`,
+        },
+      };
+
+      axios
+        .put(
+          `/api/notifications/${notification._id}/mark`,
+          { userId: user._id },
+          headers
+        )
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+
+    return () => {
+      // mark the notification as seen
+      setNotifications((prev) =>
+        prev.map((n) => {
+          if (n._id === notification._id) {
+            n.seen.push(user._id);
+            n.hasSeen = true;
+          }
+
+          return n;
+        })
+      );
+
+      mounted = false;
+    };
+  }, []);
+
+  function handleClick(e) {
+    if (e.target.classList.contains("delete")) return;
+
     if (
       notification.type === "joinRequest" ||
       notification.type === "postReuest"
@@ -15,10 +59,31 @@ function Notification({ notification, history }) {
     }
   }
 
+  function handleDelete() {
+    let headers = {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(localStorage.getItem("user")).token
+        }`,
+      },
+    };
+
+    axios
+      .delete(`/api/notifications/${notification._id}`, headers)
+      .then((res) => {
+        setNotifications((notifications) =>
+          notifications.filter((n) => n._id !== notification._id)
+        );
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
   return (
     <div
       className={`flex items-center p-2.5 dark:border-secondary cursor-pointer ${
-        notification.seen ? "bg-[#E2F0FE] dark:bg-dark" : "bg-transparent"
+        !notification.hasSeen ? "bg-[#E2F0FE] dark:bg-dark" : "bg-transparent"
       }`}
       onClick={handleClick}
     >
@@ -90,10 +155,10 @@ function Notification({ notification, history }) {
         </p>
 
         {/* delete button */}
-        <button title="Delete">
+        <button title="Delete" className="delete" onClick={handleDelete}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-4 w-4 stroke-[#818181]"
+            className="h-4 w-4 stroke-[#818181] delete"
             viewBox="0 0 24 24"
             fill="none"
             strokeWidth={2}
@@ -101,6 +166,7 @@ function Notification({ notification, history }) {
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
+              className="delete"
               d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
             />
           </svg>

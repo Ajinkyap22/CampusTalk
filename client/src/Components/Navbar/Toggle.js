@@ -20,10 +20,10 @@ function Toggle() {
   }
 
   return (
-    <li className="p-2 text-sm dark:text-darkLight">
+    <li className="p-2 2xl:p-2.5 text-sm 2xl:text-lg dark:text-darkLight">
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        className="h-5 w-5 inline mr-1 stroke-[#818181] dark:stroke-gray-300"
+        className="h-5 w-5 2xl:h-6 2xl:w-6 inline mr-1 stroke-[#818181] dark:stroke-gray-300"
         viewBox="0 0 24 24"
         fill="none"
         strokeWidth={2}

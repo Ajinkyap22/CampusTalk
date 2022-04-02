@@ -66,7 +66,7 @@ function Feed({ title }) {
         <FAQ faqData={faqData} />
 
         {/* posts and filters */}
-        <div className="flex flex-col items-center my-8 h-full max-w-[32rem] 2xl:max-w-[40rem] col-start-1 col-span-2">
+        <div className="flex flex-col items-center my-8 h-full lg:max-w-[30rem] xl:max-w-[32rem] 2xl:max-w-[36rem] 3xl:max-w-[40rem] col-start-1 col-span-2">
           {/* filters */}
           <Filter
             activeFilter={activeFilter}

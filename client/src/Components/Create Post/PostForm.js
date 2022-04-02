@@ -136,7 +136,7 @@ function PostForm({
     apiRequests(formData, headers);
   }
 
-  function onSuccess(res) {
+  function onSuccess(res, headers) {
     // reset form data
     setFile(null);
     setText("");
@@ -155,9 +155,21 @@ function PostForm({
 
     if (isEditing) {
       onEditingSuccess(res);
+    } else {
+      axios
+        .post(
+          `/api/notifications/requestNotification`,
+          { forum: forum._id || forum, type: "postRequest" },
+          headers
+        )
+        .catch((err) => {
+          console.log(err.response);
+        });
     }
 
     setIsEditing(false);
+
+    // send a notification to the moderators
   }
 
   function onEditingSuccess(res) {
@@ -193,7 +205,6 @@ function PostForm({
             headers
           )
           .then((res) => {
-            console.log(res.data);
             onSuccess(res.data);
           })
           .catch((err) => {
@@ -232,7 +243,7 @@ function PostForm({
         axios
           .post(`/api/forums/${forum._id}/posts/create-post`, formData, headers)
           .then((res) => {
-            onSuccess(res.data);
+            onSuccess(res.data, headers);
           })
           .catch((err) => {
             console.error(err);
@@ -245,7 +256,7 @@ function PostForm({
             headers
           )
           .then((res) => {
-            onSuccess(res.data);
+            onSuccess(res.data, headers);
           })
           .catch((err) => {
             console.error(err);
@@ -258,7 +269,7 @@ function PostForm({
             headers
           )
           .then((res) => {
-            onSuccess(res.data);
+            onSuccess(res.data, headers);
           })
           .catch((err) => {
             console.error(err);

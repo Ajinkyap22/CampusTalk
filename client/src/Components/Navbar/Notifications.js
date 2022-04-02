@@ -3,7 +3,6 @@ import useOutsideAlerter from "../../Hooks/useOutsideAlerter";
 import Notification from "./Notification";
 
 function Notifications({
-  showNotifications,
   setShowNotifications,
   notifications,
   setNotifications,
@@ -18,7 +17,7 @@ function Notifications({
       className="absolute top-14 right-2 z-20 bg-white dark:bg-[#3e3d3d] shadow-base flex flex-col max-w-[32rem] rounded-lg"
     >
       <button
-        className="text-secondary dark:text-gray-300 text-right p-2 mx-2 text-sm"
+        className="text-secondary border-b dark:border-secondary dark:text-gray-300 text-right p-2 mx-2 text-sm"
         hidden={!notifications.length}
       >
         <svg
@@ -36,7 +35,14 @@ function Notifications({
 
       {notifications.length ? (
         notifications.map((notification, i) => {
-          return <Notification key={i} notification={notification} />;
+          return (
+            <Notification
+              key={i}
+              notification={notification}
+              setNotifications={setNotifications}
+              user={user}
+            />
+          );
         })
       ) : (
         // no new notifications

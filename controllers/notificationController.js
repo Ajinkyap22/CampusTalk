@@ -32,13 +32,15 @@ exports.requestNotification = async (req, res) => {
         });
       });
 
-    Notification.populate(notif, { path: "forum" }, (err, newNotification) => {
-      if (err) return res.status(500).json({ error: err.message });
+    Notification.populate(
+      notification,
+      { path: "forum" },
+      (err, newNotification) => {
+        if (err) return res.status(500).json({ error: err.message });
 
-      res.status(201).json(newNotification);
-    });
-
-    res.status(201).json(notification);
+        res.status(201).json(newNotification);
+      }
+    );
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -125,7 +127,7 @@ exports.deleteNotification = async (req, res) => {
   try {
     const { notificationId } = req.params;
 
-    Notification.findByIdAndDelete(notificationId, (err, notification) => {
+    Notification.findById(notificationId, (err, notification) => {
       if (err) return res.status(500).json({ error: err.message });
 
       // remove notification from user's notifications
@@ -170,12 +172,12 @@ exports.deleteNotification = async (req, res) => {
 exports.markAsSeen = async (req, res) => {
   try {
     const { notificationId } = req.params;
+    const { userId } = req.body;
 
+    // push user id to notification's seen array
     Notification.findByIdAndUpdate(
       notificationId,
-      {
-        $set: { seen: true },
-      },
+      { $push: { seen: userId } },
       { new: true },
       (err, notification) => {
         if (err) return res.status(500).json({ error: err.message });
