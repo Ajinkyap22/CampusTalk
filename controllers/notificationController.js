@@ -111,6 +111,11 @@ exports.getNotifications = async (req, res) => {
               (err, newNotifications) => {
                 if (err) return res.status(500).json({ error: err.message });
 
+                // sort notifications by timestamp
+                newNotifications.sort((a, b) => {
+                  return b.timestamp - a.timestamp;
+                });
+
                 res.status(201).json(newNotifications);
               }
             );
@@ -163,6 +168,26 @@ exports.deleteNotification = async (req, res) => {
 
       res.status(200).json(notification);
     });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// clear all notifications
+exports.clearNotifications = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    User.findByIdAndUpdate(
+      userId,
+      { $set: { notifications: [] } },
+      { new: true },
+      (err, user) => {
+        if (err) return res.status(500).json({ error: err.message });
+
+        res.status(200).json(user);
+      }
+    );
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

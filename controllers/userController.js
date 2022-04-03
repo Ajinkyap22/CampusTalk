@@ -150,11 +150,15 @@ exports.signup_post = [
 
 // get single user
 exports.user = async function (req, res) {
-  User.findById(req.params.id, (err, user) => {
-    if (err) res.json(err);
+  User.findById(req.params.id)
+    .populate("forums")
+    .populate("notifications")
+    .populate("posts")
+    .exec((err, user) => {
+      if (err) return res.json(err);
 
-    res.json(user);
-  });
+      return res.json(user);
+    });
 };
 
 // google auth

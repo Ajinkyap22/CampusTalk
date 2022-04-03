@@ -27,10 +27,6 @@ exports.get_comment = function (req, res) {
 
 // create comment
 exports.create_comment = function (req, res) {
-  const errors = validationResult(req.body);
-
-  if (!errors.isEmpty()) return res.json({ errros: errors.array() });
-
   const file = req.file ? req.file.filename : "";
   const filename = req.body.originalFileName
     ? JSON.parse(req.body.originalFileName)
@@ -70,33 +66,23 @@ exports.create_comment = function (req, res) {
 };
 
 // Edit a comment
-exports.edit_comment = [
-  // sanitize and validate fields
-  body("text", "Text cannot be empty.").trim().isLength({ min: 1 }),
-
-  // process request
-  (req, res) => {
-    const errors = validationResult(req.body);
-
-    if (!errors.isEmpty()) return res.json({ errros: errors.array() });
-
-    Comment.findByIdAndUpdate(
-      req.params.commentId,
-      {
-        $set: {
-          text: req.body.text,
-        },
+exports.edit_comment = function (req, res) {
+  Comment.findByIdAndUpdate(
+    req.params.commentId,
+    {
+      $set: {
+        text: req.body.text,
       },
-      { new: true }
-    )
-      .populate("author")
-      .exec((err, comment) => {
-        if (err) return res.json(err);
+    },
+    { new: true }
+  )
+    .populate("author")
+    .exec((err, comment) => {
+      if (err) return res.json(err);
 
-        return res.json(comment);
-      });
-  },
-];
+      return res.json(comment);
+    });
+};
 
 // delete a comment
 exports.delete_comment = function (req, res) {
@@ -118,8 +104,6 @@ exports.delete_comment = function (req, res) {
       .populate("forum")
       .exec((err, post) => {
         if (err) return res.json(err);
-
-        console.log(req.params.postId);
 
         return res.json({ comment, post });
       });

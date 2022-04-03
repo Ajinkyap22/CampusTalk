@@ -1,20 +1,21 @@
 import { PostContext } from "../../Contexts/PostContext";
 import { UserContext } from "../../Contexts/UserContext";
-import { useEffect, useState, useContext } from "react";
+import { useContext } from "react";
 import LogoCropped from "../LogoCropped";
 import axios from "axios";
 import PostRequest from "./PostRequest";
+import Loading from "../Loading";
 
-function PostRequests({ forum, forums, setForums }) {
-  const [postRequests, setPostRequests] = useState([]);
+function PostRequests({
+  forum,
+  forums,
+  setForums,
+  postRequests,
+  setPostRequests,
+  postRequestLoading,
+}) {
   const [posts, setPosts] = useContext(PostContext);
   const [user, setUser] = useContext(UserContext);
-
-  useEffect(() => {
-    axios.get(`/api/forums/${forum._id}/posts/postRequests`).then((res) => {
-      setPostRequests(res.data);
-    });
-  }, []);
 
   function approvePost(post) {
     let headers = {
@@ -88,62 +89,69 @@ function PostRequests({ forum, forums, setForums }) {
 
   return (
     <div>
-      {/* if empty */}
-      <div className="text-center my-4" hidden={postRequests.length}>
-        <LogoCropped color="rgba(98,98,98,0.9)" width="80" />
-        <p className="text-secondary dark:text-gray-300">
-          There no new post requests.
-        </p>
-      </div>
-
-      {/* if not empty */}
-      {postRequests.map((post, i) => (
-        <div key={i}>
-          <PostRequest post={post} />
-
-          {/* buttons to approve or reject post */}
-          <div className="flex items-center mt-3">
-            <button
-              className="bg-green-500 p-2 text-sm text-white flex-1 hover:bg-green-600"
-              onClick={() => approvePost(post)}
-            >
-              Approve
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                fill="white"
-                className="inline mx-1"
-                viewBox="0 0 16 16"
-              >
-                <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
-              </svg>
-            </button>
-
-            <button
-              className="bg-red-500 p-2 text-sm text-white flex-1 hover:bg-red-600"
-              onClick={() => rejectPost(post)}
-            >
-              Reject
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="14"
-                fill="white"
-                className="inline mx-1"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z"
-                />
-                <path
-                  fillRule="evenodd"
-                  d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z"
-                />
-              </svg>
-            </button>
-          </div>
+      {postRequestLoading ? (
+        <div className="mx-auto text-center mt-8">
+          <Loading />
         </div>
-      ))}
+      ) : (
+        <div>
+          <div className="text-center my-4" hidden={postRequests.length}>
+            <LogoCropped color="rgba(98,98,98,0.9)" width="80" />
+            <p className="text-secondary dark:text-gray-300">
+              There no new post requests.
+            </p>
+          </div>
+
+          {/* if not empty */}
+          {postRequests.map((post, i) => (
+            <div key={i}>
+              <PostRequest post={post} />
+
+              {/* buttons to approve or reject post */}
+              <div className="flex items-center mt-3">
+                <button
+                  className="bg-green-500 p-2 text-sm text-white flex-1 hover:bg-green-600"
+                  onClick={() => approvePost(post)}
+                >
+                  Approve
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    fill="white"
+                    className="inline mx-1"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
+                  </svg>
+                </button>
+
+                <button
+                  className="bg-red-500 p-2 text-sm text-white flex-1 hover:bg-red-600"
+                  onClick={() => rejectPost(post)}
+                >
+                  Reject
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="14"
+                    fill="white"
+                    className="inline mx-1"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z"
+                    />
+                    <path
+                      fillRule="evenodd"
+                      d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

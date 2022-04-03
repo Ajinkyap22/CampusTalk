@@ -1,15 +1,50 @@
 import { useRef } from "react";
 import useOutsideAlerter from "../../Hooks/useOutsideAlerter";
 import Notification from "./Notification";
+import axios from "axios";
+import { useEffect } from "react";
 
 function Notifications({
   setShowNotifications,
   notifications,
   setNotifications,
+  setNotificationCount,
   user,
 }) {
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef, setShowNotifications);
+
+  useEffect(() => {
+    let mounted = true;
+
+    if (mounted) {
+      setNotificationCount(0);
+    }
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  function clearNotifications() {
+    let headers = {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(localStorage.getItem("user")).token
+        }`,
+      },
+    };
+
+    axios
+      .put(`/api/notifications/${user._id}/clear`, {}, headers)
+      .then((res) => {
+        setNotifications([]);
+        setNotificationCount(0);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
 
   return (
     <div
@@ -17,8 +52,9 @@ function Notifications({
       className="absolute top-14 right-2 z-20 bg-white dark:bg-[#3e3d3d] shadow-base flex flex-col max-w-[32rem] rounded-lg"
     >
       <button
-        className="text-secondary border-b dark:border-secondary dark:text-gray-300 text-right p-2 mx-2 text-sm"
+        className="text-secondary border-b dark:border-secondary self-end dark:text-gray-300 text-right p-2 mx-2 text-sm"
         hidden={!notifications.length}
+        onClick={clearNotifications}
       >
         <svg
           width="24"

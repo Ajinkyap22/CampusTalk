@@ -130,7 +130,7 @@ function PostActions({
       } grid-flow-col py-1 2xl:py-1.5 border-t dark:border-light`}
     >
       {/* upvotes */}
-      <div className="my-2 inline">
+      <div className="my-1 inline">
         <button onClick={handleUpvote} title="Upvote Post">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -154,7 +154,7 @@ function PostActions({
           </svg>
         </button>
 
-        <span className="text-sm 2xl:text-base align-middle dark:text-darkLight">
+        <span className="text-mxs 2xl:text-base align-middle dark:text-darkLight">
           {upvotes.length - downvotes.length}
         </span>
 
@@ -185,7 +185,7 @@ function PostActions({
 
       {/* comment */}
       <button
-        className="my-2 mr-4"
+        className="my-1 mr-4"
         title="Post a comment"
         onClick={onPostClick}
         hidden={!showCommentButton}
@@ -205,14 +205,14 @@ function PostActions({
             strokeLinejoin="round"
           />
         </svg>
-        <span className="text-sm 2xl:text-base align-middle dark:text-gray-300">
+        <span className="text-mxs 2xl:text-base align-middle dark:text-gray-300">
           Comment
         </span>
       </button>
 
       {/* comment number */}
       <button
-        className="text-sm 2xl:text-base my-2 text-right text-secondary dark:text-gray-400"
+        className="text-mxs 2xl:text-base my-1 text-right text-secondary dark:text-gray-400"
         title="See Comments"
         onClick={onPostClick}
       >

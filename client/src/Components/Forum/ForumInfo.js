@@ -42,6 +42,16 @@ function ForumInfo({
         // update joinRequests
         setJoinRequests([...joinRequests, user]);
         props.history.push(`/forums/${forum._id}`);
+
+        axios
+          .post(
+            `/api/notifications/requestNotification`,
+            { forum: forum._id || forum, type: "joinRequest" },
+            headers
+          )
+          .catch((err) => {
+            console.log(err.response);
+          });
       })
       .catch((err) => {
         console.error(err);

@@ -121,17 +121,45 @@ function App() {
             {/* forum page */}
             {forums.map((forum, i) => {
               return (
-                <Route
-                  exact
-                  path={`/forums/${forum._id}`}
-                  key={i}
-                  render={() => (
-                    <Forum
-                      title={`${forum.forumName} | CampusTalk`}
-                      forum={forum}
-                    />
-                  )}
-                />
+                <div key={i}>
+                  {/* default */}
+                  <Route
+                    exact
+                    path={`/forums/${forum._id}`}
+                    render={() => (
+                      <Forum
+                        title={`${forum.forumName} | CampusTalk`}
+                        forum={forum}
+                      />
+                    )}
+                  />
+
+                  {/* postRequests */}
+                  <Route
+                    exact
+                    path={`/forums/${forum._id}/postRequests`}
+                    render={() => (
+                      <Forum
+                        title={`${forum.forumName} | CampusTalk`}
+                        forum={forum}
+                        defaultTab="postRequests"
+                      />
+                    )}
+                  />
+
+                  {/* joinRequests */}
+                  <Route
+                    exact
+                    path={`/forums/${forum._id}/joinRequests`}
+                    render={() => (
+                      <Forum
+                        title={`${forum.forumName} | CampusTalk`}
+                        forum={forum}
+                        defaultTab="joinRequests"
+                      />
+                    )}
+                  />
+                </div>
               );
             })}
 

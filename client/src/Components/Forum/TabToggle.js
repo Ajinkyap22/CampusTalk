@@ -1,4 +1,4 @@
-function TabToggle({ tab, setTab, isModerator }) {
+function TabToggle({ tab, setTab, isModerator, postRequests, joinRequests }) {
   function toggleTab(tabName) {
     setTab(tabName);
   }
@@ -39,7 +39,12 @@ function TabToggle({ tab, setTab, isModerator }) {
         onClick={() => toggleTab("postRequests")}
         hidden={!isModerator}
       >
-        Post Requests
+        Post Requests{" "}
+        {postRequests.length > 0 && (
+          <span className="text-mxs rounded-full bg-[red] dark:bg-red-600 px-1.5 text-white">
+            {postRequests.length}
+          </span>
+        )}
       </button>
 
       {/* join requests */}
@@ -52,7 +57,12 @@ function TabToggle({ tab, setTab, isModerator }) {
         onClick={() => toggleTab("joinRequests")}
         hidden={!isModerator}
       >
-        Join Requests
+        Join Requests{" "}
+        {joinRequests.length > 0 && (
+          <span className="text-mxs rounded-full bg-[red] dark:bg-red-600 px-1.5 text-white">
+            {joinRequests.length}
+          </span>
+        )}
       </button>
     </div>
   );

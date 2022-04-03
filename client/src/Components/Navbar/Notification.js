@@ -49,9 +49,9 @@ function Notification({ notification, setNotifications, history, user }) {
 
     if (
       notification.type === "joinRequest" ||
-      notification.type === "postReuest"
+      notification.type === "postRequest"
     ) {
-      history.push(`/forums/${notification.forum._id}`);
+      history.push(`/forums/${notification.forum._id}/${notification.type}s`);
     } else {
       history.push(
         `/forums/${notification.forum._id}/posts/${notification.post}`
@@ -83,7 +83,9 @@ function Notification({ notification, setNotifications, history, user }) {
   return (
     <div
       className={`flex items-center p-2.5 dark:border-secondary cursor-pointer ${
-        !notification.hasSeen ? "bg-[#E2F0FE] dark:bg-dark" : "bg-transparent"
+        !notification.hasSeen
+          ? "bg-[#cfe2ff] dark:bg-dark"
+          : "bg-[#f3f3f3] dark:bg-transparent"
       }`}
       onClick={handleClick}
     >
@@ -143,7 +145,8 @@ function Notification({ notification, setNotifications, history, user }) {
       ) : (
         <p className="text-mxs dark:text-darkLight mr-1">
           There are new {notification.type === "joinRequest" ? "join" : "post"}{" "}
-          requests in {notification.forum.forumName}
+          requests in{" "}
+          <span className="font-semibold">{notification.forum.forumName}</span>
         </p>
       )}
 
@@ -158,7 +161,7 @@ function Notification({ notification, setNotifications, history, user }) {
         <button title="Delete" className="delete" onClick={handleDelete}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-4 w-4 stroke-[#818181] delete"
+            className="h-4 w-4 stroke-[#818181] dark:stroke-gray-300 delete"
             viewBox="0 0 24 24"
             fill="none"
             strokeWidth={2}

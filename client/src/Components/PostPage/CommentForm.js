@@ -5,7 +5,7 @@ import axios from "axios";
 import FileInputs from "./FileInputs";
 import FilePreview from "../Create Post/FilePreview";
 
-function CommentForm({ forumId, postId, comments, setComments }) {
+function CommentForm({ forumId, postId, postAuthorId, comments, setComments }) {
   const [user, setUser] = useContext(UserContext);
   const [posts, setPosts] = useContext(PostContext);
 
@@ -105,7 +105,7 @@ function CommentForm({ forumId, postId, comments, setComments }) {
           headers
         )
         .then((res) => {
-          onPostSuccess(res.data);
+          onPostSuccess(res.data, headers);
         });
     } else if (fileType === "video") {
       axios
@@ -115,14 +115,12 @@ function CommentForm({ forumId, postId, comments, setComments }) {
           headers
         )
         .then((res) => {
-          console.log(res.data);
-
-          onPostSuccess(res.data);
+          onPostSuccess(res.data, headers);
         });
     }
   }
 
-  function onPostSuccess(res) {
+  function onPostSuccess(res, headers) {
     setText("");
     setFile(null);
     setOriginalFileName("");
@@ -151,6 +149,20 @@ function CommentForm({ forumId, postId, comments, setComments }) {
 
     // update comments
     setComments([...comments, res.comment]);
+
+    let body = {
+      type: "comment",
+      from: user._id,
+      to: postAuthorId,
+      post: postId,
+      forum: forumId,
+    };
+
+    axios
+      .post(`/api/notifications/activityNotification`, body, headers)
+      .catch((err) => {
+        console.log(err.response);
+      });
   }
 
   return (
@@ -186,7 +198,7 @@ function CommentForm({ forumId, postId, comments, setComments }) {
           onChange={(e) => setText(e.target.value)}
           value={text}
           placeholder="Write your comment"
-          className="text-sm mx-1 p-1 border-b-2 border-gray-400 bg-transparent text-white dark:text-darkLight focus:outline-none"
+          className="text-sm mx-1 p-1 border-b-2 border-gray-400 bg-transparent dark:text-darkLight focus:outline-none"
         />
 
         {/* icons for image & video */}

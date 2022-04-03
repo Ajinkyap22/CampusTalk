@@ -31,6 +31,9 @@ router.post(
 // retrieve all replies
 router.get("/", replyController.replies);
 
+// retrieve all replies for a comment
+router.get("/:commentId", replyController.get_comment_replies);
+
 // retrieve single comment
 router.get("/:id", replyController.get_reply);
 

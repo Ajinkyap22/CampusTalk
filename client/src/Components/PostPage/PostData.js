@@ -58,6 +58,7 @@ function PostData({ post }) {
       <CommentForm
         forumId={post.forum._id}
         postId={post._id}
+        postAuthorId={post.author._id}
         comments={comments}
         setComments={setComments}
       />

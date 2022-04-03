@@ -34,4 +34,11 @@ router.put(
   notificatinController.markAsSeen
 );
 
+// clear all notifications
+router.put(
+  "/:userId/clear",
+  verifyToken,
+  notificatinController.clearNotifications
+);
+
 module.exports = router;

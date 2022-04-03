@@ -19,7 +19,7 @@ import PostRequests from "./PostRequests";
 import JoinRequests from "./JoinRequests";
 import Loading from "../Loading";
 
-function Forum({ forum, title }) {
+function Forum({ forum, title, defaultTab = "posts" }) {
   const [activeTab, setActiveTab] = useContext(TabContext);
   const [user, setUser] = useContext(UserContext);
   const [forums, setForums] = useContext(ForumContext);
@@ -33,6 +33,9 @@ function Forum({ forum, title }) {
   const [requestSent, setRequestSent] = useState(false);
   const [joinRequests, setJoinRequests] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [postRequests, setPostRequests] = useState([]);
+  const [postRequestLoading, setPostRequestLoading] = useState(true);
+  const [joinRequestLoading, setJoinRequestLoading] = useState(true);
 
   useEffect(() => {
     document.title = title || `${forum.forumName} | CampusTalk`;
@@ -44,9 +47,18 @@ function Forum({ forum, title }) {
 
   useEffect(() => {
     // get all posts in the forum
+    setTab(defaultTab);
+
+    // get posts
     axios.get(`/api/forums/${forum._id}/posts`).then((res) => {
       setPosts(res.data);
       setLoading(false);
+    });
+
+    // get post requests
+    axios.get(`/api/forums/${forum._id}/posts/postRequests`).then((res) => {
+      setPostRequests(res.data);
+      setPostRequestLoading(false);
     });
   }, []);
 
@@ -75,6 +87,7 @@ function Forum({ forum, title }) {
     // get all join requests
     axios.get(`/api/forums/${forum._id}/join_requests`).then((res) => {
       setJoinRequests(res.data);
+      setJoinRequestLoading(false);
 
       // chec if user is in the join requests
       if (res.data.find((request) => request._id === user._id)) {
@@ -185,7 +198,13 @@ function Forum({ forum, title }) {
       <section className="flex justify-between items-start md:w-[70%] mx-auto h-full">
         <div className="grid grid-cols-1 items-center max-w-[32rem] my-8 h-full">
           {/* tab */}
-          <TabToggle tab={tab} setTab={setTab} isModerator={isModerator} />
+          <TabToggle
+            tab={tab}
+            setTab={setTab}
+            isModerator={isModerator}
+            postRequests={postRequests}
+            joinRequests={joinRequests}
+          />
 
           {/* if user exists & is a member of the forum */}
           {user &&
@@ -250,6 +269,9 @@ function Forum({ forum, title }) {
                   setForums={setForums}
                   user={user}
                   setUser={setUser}
+                  postRequests={postRequests}
+                  setPostRequests={setPostRequests}
+                  postRequestLoading={postRequestLoading}
                 />
               )}
 
@@ -263,6 +285,7 @@ function Forum({ forum, title }) {
                   setUser={setUser}
                   joinRequests={joinRequests}
                   setJoinRequests={setJoinRequests}
+                  joinRequestLoading={joinRequestLoading}
                 />
               )}
             </div>

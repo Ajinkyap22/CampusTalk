@@ -90,10 +90,10 @@ function Comment({
 
       {/* user name & comment */}
       <div className="flex flex-col col-span-9 relative">
-        <div className=" mx-2 bg-[#f3f3f3] dark:bg-[#3e3d3d] p-2 rounded-lg">
+        <div className="flex flex-col mx-2 bg-[#f3f3f3] dark:bg-[#3e3d3d] p-2 rounded-lg">
           {/* name */}
           <p
-            className="text-mxs font-semibold pr-1 dark:text-darkLight hover:underline"
+            className="text-mxs font-semibold pr-1 dark:text-darkLight hover:underline inline self-start"
             onMouseEnter={handleHover}
             onMouseLeave={handleLeave}
           >
