@@ -7,7 +7,7 @@ const ReplySchema = new Schema({
   originalFileName: { type: Object },
   upvotes: [{ type: Schema.Types.ObjectId, ref: "User" }],
   downvotes: [{ type: Schema.Types.ObjectId, ref: "User" }],
-  author: { type: Schema.Types.ObjectId, required: true },
+  author: { type: Schema.Types.ObjectId, ref: "User", required: true },
   comment: { type: Schema.Types.ObjectId, required: true },
   timestamp: { type: Date, default: Date.now },
 });

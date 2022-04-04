@@ -127,7 +127,7 @@ function PostActions({
     <div
       className={`w-full grid ${
         showCommentButton ? "grid-cols-3 lg:px-1.5 xl:px-2" : "grid-cols-2 px-4"
-      } grid-flow-col py-1 2xl:py-1.5 border-t dark:border-light`}
+      } grid-flow-col lg:py-0.5 xl:py-1 2xl:py-1.5 border-t dark:border-light`}
     >
       {/* upvotes */}
       <div className="my-1 inline">
@@ -135,7 +135,7 @@ function PostActions({
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill={upvoted ? "#0F8CFF" : "#484848"}
-            className="inline mx-1 w-5 2xl:w-6"
+            className="inline mx-1 lg:w-4 xl:w-5 2xl:w-6"
             viewBox="0 0 256 256"
           >
             <rect width="256" height="256" fill="none"></rect>
@@ -154,7 +154,7 @@ function PostActions({
           </svg>
         </button>
 
-        <span className="text-mxs 2xl:text-base align-middle dark:text-darkLight">
+        <span className="lg:text-xs xl:text-mxs 2xl:text-base align-middle dark:text-darkLight">
           {upvotes.length - downvotes.length}
         </span>
 
@@ -162,7 +162,7 @@ function PostActions({
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill={downvoted ? "red" : "#484848"}
-            className="inline mx-1 w-5 2xl:w-6"
+            className="inline mx-1 lg:w-4 xl:w-5 2xl:w-6"
             viewBox="0 0 256 256"
           >
             <rect width="256" height="256" fill="none"></rect>
@@ -191,11 +191,10 @@ function PostActions({
         hidden={!showCommentButton}
       >
         <svg
-          width="20"
           viewBox="0 0 20 20"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="inline mx-1"
+          className="inline mx-1 lg:w-4 xl:w-5"
         >
           <path
             d="M5.83333 6.66665H14.1667H5.83333ZM5.83333 9.99998H9.16667H5.83333ZM10 16.6666L6.66667 13.3333H4.16667C3.72464 13.3333 3.30072 13.1577 2.98816 12.8452C2.67559 12.5326 2.5 12.1087 2.5 11.6666V4.99998C2.5 4.55795 2.67559 4.13403 2.98816 3.82147C3.30072 3.50891 3.72464 3.33331 4.16667 3.33331H15.8333C16.2754 3.33331 16.6993 3.50891 17.0118 3.82147C17.3244 4.13403 17.5 4.55795 17.5 4.99998V11.6666C17.5 12.1087 17.3244 12.5326 17.0118 12.8452C16.6993 13.1577 16.2754 13.3333 15.8333 13.3333H13.3333L10 16.6666Z"
@@ -205,14 +204,14 @@ function PostActions({
             strokeLinejoin="round"
           />
         </svg>
-        <span className="text-mxs 2xl:text-base align-middle dark:text-gray-300">
+        <span className="lg:text-xs xl:text-mxs 2xl:text-base align-middle dark:text-gray-300">
           Comment
         </span>
       </button>
 
       {/* comment number */}
       <button
-        className="text-mxs 2xl:text-base my-1 text-right text-secondary dark:text-gray-400"
+        className="lg:text-xs xl:text-mxs 2xl:text-base my-1 text-right text-secondary dark:text-gray-400"
         title="See Comments"
         onClick={onPostClick}
       >

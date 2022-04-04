@@ -5,12 +5,12 @@ import { Link } from "react-router-dom";
 function ForumBox({ user, fixed = true }) {
   return (
     <div
-      className={`bg-white dark:bg-darkSecondary shadow-base lg:max-w-[19rem] xl:max-w-[21rem] 2xl:max-w-[26rem] 3xl:max-w-[30rem] my-4 mt-8 rounded ${
+      className={`bg-white dark:bg-darkSecondary shadow-base lg:max-w-[18rem] xl:max-w-[21rem] 2xl:max-w-[26rem] 3xl:max-w-[30rem] my-4 mt-8 rounded ${
         fixed ? "fixed xl:top-[60%] 2xl:top-1/3" : ""
       }`}
     >
       {/* title */}
-      <div className="w-full bg-primary-light lg:px-2.5 xl:p-3 2xl:px-4 2xl:py-3 py-2 rounded-t">
+      <div className="w-full bg-primary-light lg:px-2 xl:p-3 2xl:px-4 2xl:py-3 py-2 rounded-t">
         <LogoCropped width="40" />
 
         <p className="text-white lg:text-base xl:text-lg 2xl:text-2xl inline">

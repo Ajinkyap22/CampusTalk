@@ -61,12 +61,12 @@ function Feed({ title }) {
     <main className="w-full min-h-full bg-[#F0F2F5] dark:bg-dark">
       <Nav />
 
-      <section className="flex justify-evenly md:w-full mx-auto h-full">
+      <section className="hidden lg:flex justify-evenly md:w-full mx-auto h-full">
         {/* faq */}
         <FAQ faqData={faqData} />
 
         {/* posts and filters */}
-        <div className="flex flex-col items-center my-8 h-full lg:max-w-[30rem] xl:max-w-[32rem] 2xl:max-w-[36rem] 3xl:max-w-[40rem] col-start-1 col-span-2">
+        <div className="flex flex-col items-center my-8 h-full lg:max-w-[28rem] xl:max-w-[32rem] 2xl:max-w-[36rem] 3xl:max-w-[40rem] col-start-1 col-span-2">
           {/* filters */}
           <Filter
             activeFilter={activeFilter}

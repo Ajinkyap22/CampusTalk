@@ -4,6 +4,8 @@ import CommentOptions from "./CommentOptions";
 import CommentFile from "./CommentFile";
 import CommentActions from "./CommentActions";
 import UserModal from "../UserModal";
+import Reply from "./Reply";
+import axios from "axios";
 
 function Comment({
   moderators,
@@ -13,8 +15,6 @@ function Comment({
   comments,
   setComments,
 }) {
-  const [upvoted, setUpvoted] = useState(false);
-  const [downvoted, setDownvoted] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
   const [isAuthor, setIsAuthor] = useState(false);
   const [user, setUser] = useContext(UserContext);
@@ -22,6 +22,8 @@ function Comment({
   const [hovering, setHovering] = useState(false);
   const [overName, setOverName] = useState(false);
   const [overModal, setOverModal] = useState(false);
+  const [showReplies, setShowReplies] = useState(false);
+  const [replies, setReplies] = useState([]);
 
   useEffect(() => {
     // check if author is the same as user
@@ -48,6 +50,22 @@ function Comment({
     !overName && !overModal ? setHovering(false) : setHovering(true);
   }, [overName, overModal]);
 
+  useEffect(() => {
+    // get replies
+    if (!comment.replies.length) return;
+
+    axios
+      .get(
+        `/api/forums/${forumId}/posts/${postId}/comments/${comment._id}/replies`
+      )
+      .then((res) => {
+        setReplies(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
+
   function toggleOptions() {
     setShowOptions(!showOptions);
   }
@@ -62,6 +80,10 @@ function Comment({
     setTimeout(() => {
       setOverName(false);
     }, 500);
+  }
+
+  function toggleReplies() {
+    setShowReplies(!showReplies);
   }
 
   return (
@@ -148,6 +170,45 @@ function Comment({
 
         {/* actions */}
         <CommentActions comment={comment} setComments={setComments} />
+
+        {/* view reply button */}
+        <button
+          className="text-sm text-left mt-1 dark:text-gray-300 mx-2 hover:underline"
+          onClick={toggleReplies}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="inline mx-1 w-4 fill-[#818181] dark:fill-darkLight"
+            viewBox="0 0 16 16"
+          >
+            <path
+              fillRule="evenodd"
+              d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"
+            />
+          </svg>
+
+          <span>{showReplies ? "Hide Replies" : "View Replies"}</span>
+        </button>
+
+        {/* replies */}
+        {showReplies && (
+          <div className="flex flex-col py-1">
+            {replies.map((reply, i) => (
+              <Reply
+                key={i}
+                reply={reply}
+                user={user}
+                isModerator={isModerator}
+                forumId={forumId}
+                postId={postId}
+                commentId={comment._id}
+                setReplies={setReplies}
+                comments={comments}
+                setComments={setComments}
+              />
+            ))}
+          </div>
+        )}
 
         {/* user modal */}
         <UserModal

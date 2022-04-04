@@ -5,6 +5,7 @@ import { useContext, useState, useEffect } from "react";
 import Dropdown from "./Dropdown";
 import Logo from "../Logo";
 import Notifications from "./Notifications";
+import MobileNav from "./MobileNav";
 import axios from "axios";
 
 function Nav() {
@@ -56,12 +57,12 @@ function Nav() {
   return (
     <nav className="sticky top-0 z-30 w-full flex bg-white dark:bg-darkSecondary pt-2 2xl:pt-3.5 shadow-md justify-between md:justify-around items-center">
       {/* logo */}
-      <div className="mb-2">
+      <div className="hidden lg:block mb-2">
         <Logo width="120" height="40" />
       </div>
 
       {/* Mid part */}
-      <div>
+      <div className="hidden lg:block">
         {/* feed */}
         <NavLink
           to={"/feed"}
@@ -103,7 +104,7 @@ function Nav() {
       </div>
 
       {/* user section */}
-      <div className="flex items-center dropDownToggle">
+      <div className="hidden lg:flex items-center dropDownToggle">
         {/* notifications */}
         <button className="h-auto relative" onClick={toggleNotifications}>
           <svg
@@ -178,6 +179,9 @@ function Nav() {
 
       {/*dropdown  */}
       <Dropdown showDropdown={showDropdown} setShowDropdown={setShowDropdown} />
+
+      {/* mobile nav */}
+      <MobileNav user={user} handleClick={handleClick} activeTab={activeTab} />
     </nav>
   );
 }

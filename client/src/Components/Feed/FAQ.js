@@ -9,9 +9,9 @@ function FAQ({ faqData }) {
   };
 
   return (
-    <div className="sticky top-[5.5rem] bg-white dark:bg-darkSecondary shadow-base text-[#000000e6] my-8 lg:w-[15rem] lg-max-w-[15rem] xl:w-[17rem] xl:max-w-[17rem] 2xl:w-[24rem] 2xl:max-w-[24rem] 3xl:w-[28rem] 3xl:max-w-[28rem] rounded self-start">
+    <div className="sticky top-[5.5rem] bg-white dark:bg-darkSecondary shadow-base text-[#000000e6] my-8 lg:w-[14rem] lg-max-w-[14rem] xl:w-[17rem] xl:max-w-[17rem] 2xl:w-[24rem] 2xl:max-w-[24rem] 3xl:w-[28rem] 3xl:max-w-[28rem] rounded self-start">
       {/* title */}
-      <div className="bg-primary-light lg:px-2.5 xl:p-3 py-2 2xl:px-4 2xl:py-3 rounded-t flex items-center">
+      <div className="bg-primary-light lg:px-2 xl:p-3 py-2 2xl:px-4 2xl:py-3 rounded-t flex items-center">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="white"
@@ -34,7 +34,7 @@ function FAQ({ faqData }) {
             <div className="py-3" onClick={() => handleFaq(index)}>
               <div className="flex items-center justify-between text-xs xl:text-sm 2xl:text-lg cursor-pointer">
                 {/* text */}
-                <p className="px-2.5 xl:px-3 text-left dark:text-darkLight">
+                <p className="lg:px-2 xl:px-3 text-left dark:text-darkLight">
                   {data.question}
                 </p>
 
@@ -69,7 +69,7 @@ function FAQ({ faqData }) {
               <div
                 className={
                   currentFaq === index
-                    ? "px-2.5 xl:px-3 py-2 pt-4 w-full"
+                    ? "lg:px-2 xl:px-3 py-2 pt-4 w-full"
                     : "hidden"
                 }
               >

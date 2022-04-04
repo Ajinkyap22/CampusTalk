@@ -1,5 +1,5 @@
 const express = require("express");
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 const replyController = require("../controllers/replyController");
 const { upload, uploadDocs, uploadVideos } = require("../config/multer");
 const verifyToken = require("../config/verifyToken");
@@ -28,11 +28,8 @@ router.post(
   replyController.create_reply
 );
 
-// retrieve all replies
-router.get("/", replyController.replies);
-
 // retrieve all replies for a comment
-router.get("/:commentId", replyController.get_comment_replies);
+router.get("/", replyController.get_comment_replies);
 
 // retrieve single comment
 router.get("/:id", replyController.get_reply);

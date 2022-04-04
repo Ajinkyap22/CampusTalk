@@ -62,9 +62,8 @@ function UserModal({ receiver, hovering, setOverModal, history }) {
         {!receiver.picture ? (
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="38"
             fill="#818181"
-            className="inline mx-1 h-10 fill-[#818181] dark:fill-darkLight"
+            className="inline mx-1 lg:w-7 xl:w-9 2lx:w-11 fill-[#818181] dark:fill-darkLight"
             viewBox="0 0 16 16"
           >
             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
@@ -77,12 +76,12 @@ function UserModal({ receiver, hovering, setOverModal, history }) {
           <img
             src={`http://localhost:3000/uploads/images/${receiver.picture}`}
             alt=""
-            className="rounded-full inline h-10 mx-1"
+            className="rounded-full inline lg:h-8 xl:h-10 2xl:h-12 mx-1"
           />
         )}
 
         {/* name */}
-        <span className="text-sm text-justify mx-1 dark:text-darkLight">
+        <span className="lg:text-xs xl:text-sm 2xl:text-base text-justify mx-1 dark:text-darkLight">
           {receiver.firstName} {receiver.lastName}
         </span>
       </div>
@@ -91,20 +90,20 @@ function UserModal({ receiver, hovering, setOverModal, history }) {
       <div className="flex justify-center items-center my-1">
         {/* members */}
         <div className="flex flex-col items-center px-2.5">
-          <span className="text-sm text-secondary dark:text-gray-300">
+          <span className="lg:text-xsm xl:text-xs 2xl:text-sm text-secondary dark:text-gray-300">
             {receiver.posts.length}
           </span>
-          <span className="text-xs text-secondary dark:text-gray-300">
+          <span className="lg:text-xsm xl:text-xs 2xl:text-sm text-secondary dark:text-gray-300">
             {receiver.posts.length === 1 ? "Post" : "Posts"}
           </span>
         </div>
 
         {/* posts */}
         <div className="flex flex-col items-center px-2.5">
-          <span className="text-sm text-secondary dark:text-gray-300">
+          <span className="lg:text-xsm xl:text-xs 2xl:text-sm text-secondary dark:text-gray-300">
             {receiver.forums.length}
           </span>
-          <span className="text-xs text-secondary dark:text-gray-300">
+          <span className="lg:text-xsm xl:text-xs 2xl:text-sm text-secondary dark:text-gray-300">
             {receiver.forums.length === 1 ? "Forum" : "Forums"}
           </span>
         </div>
@@ -113,7 +112,7 @@ function UserModal({ receiver, hovering, setOverModal, history }) {
       {/* message */}
       <button
         onClick={newChat}
-        className="p-1 px-2 my-1.5 rounded-full w-full text-sm text-white dark:text-darkLight bg-primary-light hover:bg-primary"
+        className="p-1 px-2 my-1.5 rounded-full w-full lg:text-xs xl:text-sm 2xl:text-base text-white dark:text-darkLight bg-primary-light hover:bg-primary"
       >
         Message
       </button>

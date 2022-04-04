@@ -1,24 +1,11 @@
 const Comment = require("../models/comment");
 const Reply = require("../models/reply");
-const { body, validationResult } = require("express-validator");
-
-// get all replies
-exports.replies = function (req, res) {
-  Reply.find()
-    .populate("author")
-    .populate("comment")
-    .exec((err, replies) => {
-      if (err) return res.json(err);
-
-      return res.json(replies);
-    });
-};
 
 // get all replies for a comment
 exports.get_comment_replies = function (req, res) {
   Reply.find({ comment: req.params.commentId })
     .populate("author")
-    .populate("comment")
+    .sort({ timestamp: -1 })
     .exec((err, replies) => {
       if (err) return res.json(err);
 
