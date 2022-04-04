@@ -134,6 +134,26 @@ exports.upvote_reply = function (req, res) {
     });
 };
 
+// unupvote a reply
+exports.unupvote_reply = function (req, res) {
+  Reply.findByIdAndUpdate(
+    req.params.id,
+    {
+      $pull: {
+        upvotes: req.body.id,
+      },
+    },
+    { new: true }
+  )
+    .populate("author")
+    .populate("comment")
+    .exec((err, reply) => {
+      if (err) return res.json(err);
+
+      return res.json(reply);
+    });
+};
+
 // downvote a reply
 exports.downvote_reply = function (req, res) {
   Reply.findByIdAndUpdate(
@@ -143,6 +163,26 @@ exports.downvote_reply = function (req, res) {
         upvotes: req.body.id,
       },
       $push: {
+        downvotes: req.body.id,
+      },
+    },
+    { new: true }
+  )
+    .populate("author")
+    .populate("comment")
+    .exec((err, reply) => {
+      if (err) return res.json(err);
+
+      return res.json(reply);
+    });
+};
+
+// undownvote a reply
+exports.undownvote_reply = function (req, res) {
+  Reply.findByIdAndUpdate(
+    req.params.id,
+    {
+      $pull: {
         downvotes: req.body.id,
       },
     },

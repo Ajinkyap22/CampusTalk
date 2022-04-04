@@ -43,8 +43,14 @@ router.delete("/:id/delete-reply", verifyToken, replyController.delete_reply);
 // upvote a reply
 router.put("/:id/upvote", verifyToken, replyController.upvote_reply);
 
+// unupvote a reply
+router.put("/:id/unupvote", verifyToken, replyController.unupvote_reply);
+
 // downvote a reply
 router.put("/:id/downvote", verifyToken, replyController.downvote_reply);
+
+// undownvote a reply
+router.put("/:id/undownvote", verifyToken, replyController.undownvote_reply);
 
 // pin a reply
 router.put("/:id/pin", verifyToken, replyController.pin_reply);

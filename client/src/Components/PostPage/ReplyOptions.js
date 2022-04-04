@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import useOutsideAlerter from "../../Hooks/useOutsideAlerter";
 import axios from "axios";
 
@@ -28,6 +28,35 @@ function ReplyOptions({
         }`,
       },
     };
+
+    axios
+      .delete(
+        `/api/forums/${forumId}/posts/${postId}/comments/${commentId}/replies/${replyId}/delete-reply`,
+        headers
+      )
+      .then((res) => {
+        // update replies
+        setReplies(replies.filter((reply) => reply._id !== replyId));
+
+        setShowOptions(false);
+
+        // update comments
+        setComments(
+          comments.map((comment) =>
+            comment._id === commentId
+              ? {
+                  ...comment,
+                  replies: comment.replies.filter(
+                    (reply) => reply._id !== replyId
+                  ),
+                }
+              : comment
+          )
+        );
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
   return (

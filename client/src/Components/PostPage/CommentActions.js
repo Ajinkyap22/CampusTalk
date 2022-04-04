@@ -83,7 +83,6 @@ function CommentActions({ comment, setComments, forumId, postId }) {
           headers
         )
         .then((res) => {
-          console.log(res.data);
           updateComments(res.data);
           setDownvoted(false);
         })

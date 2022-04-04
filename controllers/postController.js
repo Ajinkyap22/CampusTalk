@@ -111,8 +111,7 @@ exports.create_doc_post = function (req, res) {
       let newPost = await Post.populate(post, { path: "author" });
       newPost = await Post.populate(post, { path: "forum" });
 
-      // update forum
-      return newPost;
+      return res.json(newPost);
     }
   );
 };

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import moment from "moment";
+import axios from "axios";
 
 function ReplyActions({ reply, setReplies, forumId, postId, commentId, user }) {
   const [upvoted, setUpvoted] = useState(false);
@@ -18,14 +19,104 @@ function ReplyActions({ reply, setReplies, forumId, postId, commentId, user }) {
       : setDownvoted(false);
   }, [user, reply.upvotes, reply.downvotes]);
 
-  function handleUpvote() {}
+  function handleUpvote() {
+    if (!user) return;
 
-  function handleDownvote() {}
+    let headers = {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(localStorage.getItem("user"))?.token
+        }`,
+      },
+    };
+
+    if (upvoted) {
+      axios
+        .put(
+          `/api/forums/${forumId}/posts/${postId}/comments/${commentId}/replies/${reply._id}/unupvote`,
+          { id: user._id },
+          headers
+        )
+        .then((res) => {
+          updateReplies(res.data);
+          setUpvoted(false);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    } else {
+      axios
+        .put(
+          `/api/forums/${forumId}/posts/${postId}/comments/${commentId}/replies/${reply._id}/upvote`,
+          {
+            id: user._id,
+          },
+          headers
+        )
+        .then((res) => {
+          updateReplies(res.data);
+          setUpvoted(true);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  }
+
+  function handleDownvote() {
+    if (!user) return;
+
+    let headers = {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(localStorage.getItem("user"))?.token
+        }`,
+      },
+    };
+
+    if (downvoted) {
+      axios
+        .put(
+          `/api/forums/${forumId}/posts/${postId}/comments/${commentId}/replies/${reply._id}/undownvote`,
+          { id: user._id },
+          headers
+        )
+        .then((res) => {
+          updateReplies(res.data);
+          setDownvoted(false);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    } else {
+      axios
+        .put(
+          `/api/forums/${forumId}/posts/${postId}/comments/${commentId}/replies/${reply._id}/downvote`,
+          {
+            id: user._id,
+          },
+          headers
+        )
+        .then((res) => {
+          updateReplies(res.data);
+          setDownvoted(true);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  }
+
+  function updateReplies(data) {
+    setReplies((prevState) =>
+      prevState.map((c) => (data._id === c._id ? data : c))
+    );
+  }
 
   return (
     <div className="mx-2 inline">
       {/* upvote */}
-      <button title="Upvote Comment" onClick={handleUpvote}>
+      <button title="Upvote Reply" onClick={handleUpvote}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -54,7 +145,7 @@ function ReplyActions({ reply, setReplies, forumId, postId, commentId, user }) {
       </span>
 
       {/* downvote */}
-      <button title="Downvote Comment" onClick={handleDownvote}>
+      <button title="Downvote Reply" onClick={handleDownvote}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
