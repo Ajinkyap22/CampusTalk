@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import PostActions from "../Post/PostActions";
 import PostInfo from "./PostInfo";
-import Comment from "./Comment";
-import CommentForm from "./CommentForm";
+import Comment from "./Comment/Comment";
+import CommentForm from "./Comment/CommentForm";
 import axios from "axios";
 import "./PostData.css";
 

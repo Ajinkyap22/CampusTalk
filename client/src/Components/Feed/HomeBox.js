@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 function HomeBox() {
   return (
-    <div className="bg-white dark:bg-darkSecondary shadow-base lg:max-w-[18rem] xl:max-w-[21rem] 2xl:max-w-[26rem] 3xl:max-w-[30rem] pb-2 rounded sticky top-[5.5rem]">
+    <div className="hidden md:block bg-white dark:bg-darkSecondary shadow-base lg:max-w-[18rem] xl:max-w-[21rem] 2xl:max-w-[26rem] 3xl:max-w-[30rem] pb-2 rounded sticky top-[5.5rem]">
       {/* title */}
       <div className="w-full bg-primary-light lg:px-2 xl:p-3 py-2 2xl:px-4 2xl:py-3 rounded-t flex items-center">
         <svg

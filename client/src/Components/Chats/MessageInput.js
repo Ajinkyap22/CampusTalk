@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import axios from "axios";
-import FileInputs from "../PostPage/FileInputs";
+import FileInputs from "../PostPage/Comment/FileInputs";
 
 function MessageInput({ chat, user, receiver, setMessages, socket }) {
   const [text, setText] = useState("");

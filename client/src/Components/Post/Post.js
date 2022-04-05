@@ -43,7 +43,7 @@ function Post({ post, activeFilter, range = "Today", ...props }) {
 
   return (
     <div
-      className="bg-white dark:bg-darkSecondary shadow-base lg:py-1.5 xl:py-2 mt-8 w-full rounded"
+      className="hidden md:block bg-white dark:bg-darkSecondary shadow-base lg:py-1.5 xl:py-2 mt-8 w-full rounded"
       hidden={!showPost}
     >
       {/* user info */}
