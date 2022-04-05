@@ -1,5 +1,6 @@
 const Comment = require("../models/comment");
 const Post = require("../models/post");
+const Reply = require("../models/reply");
 const { body, validationResult } = require("express-validator");
 
 // get all comments
@@ -104,6 +105,11 @@ exports.delete_comment = function (req, res) {
       .populate("forum")
       .exec((err, post) => {
         if (err) return res.json(err);
+
+        // delete all replies to comment
+        Reply.deleteMany({ comment: req.params.commentId }, function (err) {
+          if (err) return res.json(err);
+        });
 
         return res.json({ comment, post });
       });

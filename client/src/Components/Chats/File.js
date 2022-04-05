@@ -9,7 +9,7 @@ function File({
   history,
 }) {
   function handleClick() {
-    history.push(`/chats/media/${file}`);
+    history.push(`/media/${file}`);
   }
 
   return (
@@ -57,9 +57,11 @@ function File({
           {/* file size in kb or mb */}
           {originalFileName.size && (
             <span className="ml-2 text-secondary text-sm">
-              {originalFileName.size > 1024
+              {originalFileName.size > 1000000
                 ? `${(originalFileName.size / 1024).toFixed(2)} MB`
-                : `(${originalFileName.size || 852} KB)`}
+                : originalFileName.size > 1024
+                ? `(${(originalFileName.size / 1024).toFixed(2)} KB)`
+                : `(${originalFileName.size} Bytes)`}
             </span>
           )}
 

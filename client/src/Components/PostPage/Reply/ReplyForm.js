@@ -24,9 +24,11 @@ function ReplyForm({
 
   const imageInput = useRef();
   const videoInput = useRef();
+  const docInput = useRef();
 
   const imageButton = useRef();
   const videoButton = useRef();
+  const docButton = useRef();
 
   useEffect(() => {
     // set enablepost to true if there is at least a text or a file, a forum, a mode and an author
@@ -43,20 +45,24 @@ function ReplyForm({
       // disable all input buttons
       imageButton.current.disabled = true;
       videoButton.current.disabled = true;
+      docButton.current.disabled = true;
 
       // disable all input refs
       imageInput.current.disabled = true;
       videoInput.current.disabled = true;
+      docInput.current.disabled = true;
 
       setDisabled(true);
     } else {
       // enable all input buttons
       imageButton.current.disabled = false;
       videoButton.current.disabled = false;
+      docButton.current.disabled = false;
 
       // enable all input refs
       imageInput.current.disabled = false;
       videoInput.current.disabled = false;
+      docInput.current.disabled = false;
 
       setDisabled(false);
       setFileType(null);
@@ -112,6 +118,16 @@ function ReplyForm({
         .then((res) => {
           onPostSuccess(res.data, headers);
         });
+    } else if (fileType === "doc") {
+      axios
+        .post(
+          `/api/forums/${forumId}/posts/${postId}/comments/${commentId}/replies/create-doc-reply`,
+          formData,
+          headers
+        )
+        .then((res) => {
+          onPostSuccess(res.data, headers);
+        });
     }
   }
 
@@ -154,6 +170,7 @@ function ReplyForm({
     // reset the input
     imageInput.current.value = "";
     videoInput.current.value = "";
+    docInput.current.value = "";
   }
 
   return (
@@ -196,12 +213,15 @@ function ReplyForm({
           <FileInputs
             imageInput={imageInput}
             videoInput={videoInput}
+            docInput={docInput}
             imageButton={imageButton}
             videoButton={videoButton}
+            docButton={docButton}
             setFile={setFile}
             setFileType={setFileType}
             setOriginalFileName={setOriginalFileName}
             disabled={disabled}
+            small={true}
           />
         </div>
 

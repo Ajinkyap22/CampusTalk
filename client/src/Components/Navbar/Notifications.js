@@ -49,7 +49,7 @@ function Notifications({
   return (
     <div
       ref={wrapperRef}
-      className="absolute top-14 right-2 z-20 bg-white dark:bg-[#3e3d3d] shadow-base flex flex-col max-w-[32rem] rounded-lg"
+      className="absolute max-h-[80vh] top-14 right-2 z-20 bg-white dark:bg-[#3e3d3d] shadow-base flex flex-col max-w-[32rem] rounded-lg overflow-scroll postData"
     >
       <button
         className="text-secondary border-b dark:border-secondary self-end dark:text-gray-300 text-right p-2 mx-2 text-sm"

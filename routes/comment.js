@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router({ mergeParams: true });
 const commentController = require("../controllers/commentController");
-const { upload, uploadVideos } = require("../config/multer");
+const { upload, uploadVideos, uploadDocs } = require("../config/multer");
 const verifyToken = require("../config/verifyToken");
 
 // get all comments
@@ -22,6 +22,14 @@ router.post(
 router.post(
   "/create-vid-comment",
   uploadVideos.single("file"),
+  verifyToken,
+  commentController.create_comment
+);
+
+// create doc comment
+router.post(
+  "/create-doc-comment",
+  uploadDocs.single("file"),
   verifyToken,
   commentController.create_comment
 );

@@ -1,17 +1,16 @@
 function FileInputs({
   imageInput,
   videoInput,
-  // linkInput,
   docInput,
   imageButton,
   videoButton,
   docButton,
-  // linkButton,
   setFile,
   setOriginalFileName,
   setFileType,
   disabled,
   isChatting = false,
+  small = false,
 }) {
   function handleFileInput(e, ref) {
     // trigger click on the ref
@@ -156,14 +155,13 @@ function FileInputs({
         ref={imageButton}
         onClick={(e) => handleFileInput(e, imageInput)}
         type="button"
-        className={isChatting ? "mx-2" : "mx-1"}
+        className={isChatting ? "mx-2" : small ? "mx-0.5" : "mx-1"}
         title="Add images"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="18"
           fill={disabled ? "#ababab" : "#818181"}
-          className="inline"
+          className="inline w-4"
           viewBox="0 0 16 16"
         >
           <path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
@@ -176,64 +174,38 @@ function FileInputs({
         ref={videoButton}
         onClick={(e) => handleFileInput(e, videoInput)}
         type="button"
-        className={isChatting ? "mx-2" : "mx-1"}
+        className={isChatting ? "mx-2" : small ? "mx-0.5" : "mx-1"}
         title="Add a video"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="18"
           fill={disabled ? "#ababab" : "#818181"}
-          className="inline"
+          className="inline w-4"
           viewBox="0 0 16 16"
         >
           <path d="M0 12V4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm6.79-6.907A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z" />
         </svg>
       </button>
-      {/* doc */}
-      {isChatting && (
-        <button
-          type="button"
-          className="mx-2"
-          title="Add a document"
-          ref={docButton}
-          onClick={(e) => handleFileInput(e, docInput)}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            className="inline fill-[#818181] dark:fill-darkLight"
-            viewBox="0 0 16 16"
-          >
-            <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
-            <path d="M3 8.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0-5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-1z" />
-          </svg>
-        </button>
-      )}
 
-      {/* link */}
-      {/* <button
-        ref={linkButton}
-        onClick={(e) => handleFileInput(e, linkInput)}
+      {/* doc */}
+      <button
+        ref={docButton}
+        onClick={(e) => handleFileInput(e, docInput)}
         type="button"
-        className={isChatting ? "mx-2" : "mx-1"}
-        title="Add a link"
+        className={isChatting ? "mx-2" : small ? "mx-0.5" : "mx-1"}
+        title="Add a document"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="18"
-          className="vertical-align-middle inline"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke={disabled ? "#ababab" : "#818181"}
-          strokeWidth={2}
+          className={`inline w-4 ${
+            disabled ? "fill-[#ababab]" : "fill-[#818181] dark:fill-gray-300"
+          }`}
+          viewBox="0 0 16 16"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
-          />
+          <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
+          <path d="M3 8.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0-5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-1z" />
         </svg>
-      </button> */}
+      </button>
 
       <input
         onChange={handleImageFileChange}
@@ -255,25 +227,15 @@ function FileInputs({
         data-max-size=" 10485760"
       />
 
-      {isChatting && (
-        <input
-          onChange={handleDocFileChange}
-          ref={docInput}
-          type="file"
-          name="file"
-          accept="application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.presentation, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-          className="hidden"
-          data-max-size="10485760"
-        />
-      )}
-
-      {/* <input
-        // onChange={handleVideoFileChange}
-        ref={linkInput}
-        type="text"
-        name="link"
+      <input
+        onChange={handleDocFileChange}
+        ref={docInput}
+        type="file"
+        name="file"
+        accept="application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.presentation, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         className="hidden"
-      /> */}
+        data-max-size="10485760"
+      />
     </div>
   );
 }

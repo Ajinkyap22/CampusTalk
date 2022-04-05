@@ -161,7 +161,14 @@ function Comment({
         </div>
 
         {/* file */}
-        <CommentFile file={comment.file} type={comment.type} />
+        {comment.file && (
+          <CommentFile
+            file={comment?.file}
+            type={comment?.originalFileName?.type}
+            name={comment?.originalFileName?.name}
+            size={comment?.originalFileName?.size}
+          />
+        )}
 
         {/* actions */}
         <CommentActions

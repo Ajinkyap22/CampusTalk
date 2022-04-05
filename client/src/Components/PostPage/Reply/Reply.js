@@ -126,7 +126,13 @@ function Reply({
           />
         </div>
 
-        <CommentFile file={reply?.file} type={reply?.originalFileName?.type} />
+        <CommentFile
+          file={reply?.file}
+          type={reply?.originalFileName?.type}
+          name={reply?.originalFileName?.name}
+          size={reply?.originalFileName?.size}
+          small={true}
+        />
 
         {/* reply actions */}
         <ReplyActions

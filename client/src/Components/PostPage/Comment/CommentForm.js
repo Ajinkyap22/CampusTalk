@@ -19,11 +19,11 @@ function CommentForm({ forumId, postId, postAuthorId, comments, setComments }) {
 
   const imageInput = useRef();
   const videoInput = useRef();
-  // const linkInput = useRef();
+  const docInput = useRef();
 
   const imageButton = useRef();
   const videoButton = useRef();
-  // const linkButton = useRef();
+  const docButton = useRef();
 
   useEffect(() => {
     // set enablepost to true if there is at least a text or a file, a forum, a mode and an author
@@ -40,21 +40,25 @@ function CommentForm({ forumId, postId, postAuthorId, comments, setComments }) {
       // disable all input buttons
       imageButton.current.disabled = true;
       videoButton.current.disabled = true;
-      // linkButton.current.disabled = true;
+      docButton.current.disabled = true;
+
       // disable all input refs
       imageInput.current.disabled = true;
       videoInput.current.disabled = true;
-      // linkInput.current.disabled = true;
+      docInput.current.disabled = true;
+
       setDisabled(true);
     } else {
       // enable all input buttons
       imageButton.current.disabled = false;
       videoButton.current.disabled = false;
-      // linkButton.current.disabled = false;
+      docButton.current.disabled = false;
+
       // enable all input refs
       imageInput.current.disabled = false;
       videoInput.current.disabled = false;
-      // linkInput.current.disabled = false;
+      docInput.current.disabled = false;
+
       setDisabled(false);
       setFileType(null);
     }
@@ -67,7 +71,7 @@ function CommentForm({ forumId, postId, postAuthorId, comments, setComments }) {
     // reset the input
     imageInput.current.value = "";
     videoInput.current.value = "";
-    // linkInput.current.value = "";
+    docInput.current.value = "";
   }
 
   function handleSubmit(e) {
@@ -111,6 +115,16 @@ function CommentForm({ forumId, postId, postAuthorId, comments, setComments }) {
       axios
         .post(
           `/api/forums/${forumId}/posts/${postId}/comments/create-vid-comment`,
+          formData,
+          headers
+        )
+        .then((res) => {
+          onPostSuccess(res.data, headers);
+        });
+    } else if (fileType === "doc") {
+      axios
+        .post(
+          `/api/forums/${forumId}/posts/${postId}/comments/create-doc-comment`,
           formData,
           headers
         )
@@ -205,10 +219,10 @@ function CommentForm({ forumId, postId, postAuthorId, comments, setComments }) {
         <FileInputs
           imageInput={imageInput}
           videoInput={videoInput}
-          // linkInput={linkInput}
+          docInput={docInput}
           imageButton={imageButton}
           videoButton={videoButton}
-          // linkButton={linkButton}
+          docButton={docButton}
           setFile={setFile}
           setFileType={setFileType}
           setOriginalFileName={setOriginalFileName}

@@ -90,7 +90,7 @@ function App() {
           {files.map((file, i) => (
             <Route
               exact
-              path={`/chats/media/${file.file}`}
+              path={`/media/${file.file}`}
               render={() => (
                 <FileView
                   file={file.file}
