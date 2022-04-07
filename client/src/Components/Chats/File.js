@@ -58,7 +58,7 @@ function File({
           {originalFileName.size && (
             <span className="ml-2 text-secondary text-sm">
               {originalFileName.size > 1000000
-                ? `${(originalFileName.size / 1024).toFixed(2)} MB`
+                ? `(${(originalFileName.size / 1024 / 1024).toFixed(2)} MB)`
                 : originalFileName.size > 1024
                 ? `(${(originalFileName.size / 1024).toFixed(2)} KB)`
                 : `(${originalFileName.size} Bytes)`}

@@ -25,7 +25,7 @@ function ChatPage({ chat, user, socket, setActiveChat, chats, setChats }) {
       axios
         .get(`/api/chats/${chat._id}/files`)
         .then((res) => {
-          setFiles(res.data);
+          setFiles([...files, ...res.data]);
         })
         .catch((err) => console.log(err));
 

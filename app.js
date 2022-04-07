@@ -14,6 +14,7 @@ const commentRouter = require("./routes/comment");
 const replyRouter = require("./routes/reply");
 const chatRouter = require("./routes/chat");
 const notificationRouter = require("./routes/notification");
+const eventRouter = require("./routes/event");
 
 const app = express();
 
@@ -39,5 +40,6 @@ app.use("/api/forums/:forumId/posts/:postId/comments", commentRouter);
 app.use("/api/forums/:id/posts/:id/comments/:commentId/replies", replyRouter);
 app.use("/api/chats", chatRouter);
 app.use("/api/notifications", notificationRouter);
+app.use("/api/events", eventRouter);
 
 module.exports = app;

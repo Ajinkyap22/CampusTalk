@@ -146,7 +146,9 @@ function HiddenInputs({
     ) {
       // set the formData
       setFile(file);
-      setOriginalFileNames([{ name: file.name, type: file.type }]);
+      setOriginalFileNames([
+        { name: file.name, type: file.type, size: file.size },
+      ]);
 
       setFileType("doc");
     } else {

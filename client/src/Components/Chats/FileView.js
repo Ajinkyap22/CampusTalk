@@ -63,7 +63,7 @@ function FileView({ file, name, type, title, history }) {
             alt=""
             className="mx-auto max-h-screen object-cover"
           />
-        ) : (
+        ) : type === "doc" ? (
           <Document
             file={`http://localhost:3000/uploads/docs/${file}`}
             onLoadSuccess={onDocumentLoadSuccess}
@@ -81,7 +81,7 @@ function FileView({ file, name, type, title, history }) {
               onClick={() => changePage(1)}
             />
           </Document>
-        )}
+        ) : null}
       </div>
 
       {/* back button */}

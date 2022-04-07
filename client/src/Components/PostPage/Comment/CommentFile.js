@@ -53,7 +53,7 @@ function CommentFile({ file, type, name, size, history, small = false }) {
             {size && (
               <span className="ml-2 text-secondary text-xs">
                 {size > 1000000
-                  ? `${(size / 1024).toFixed(2)} MB`
+                  ? `(${(size / 1024 / 1024).toFixed(2)} MB)`
                   : size > 1024
                   ? `(${(size / 1024).toFixed(2)} KB)`
                   : `(${size} Bytes)`}

@@ -54,13 +54,13 @@ function PostInfo({ postId, author, forum, timestamp, anonymous, important }) {
   }
 
   return (
-    <div className="flex my-1 2xl:my-1.5 lg:px-1.5 xl:px-2 w-full max-w-full relative">
+    <div className="flex my-1 2xl:my-1.5 px-1 lg:px-1.5 xl:px-2 w-full max-w-full relative">
       {/* user profile pic */}
-      {anonymous || !author.picture ? (
+      {!anonymous || !author.picture ? (
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="#818181"
-          className="inline mx-1 lg:h-8 xl:h-10 2xl:h-12 fill-[#818181] dark:fill-darkLight"
+          className="inline mx-1 h-9 xl:h-10 2xl:h-12 fill-[#818181] dark:fill-darkLight"
           viewBox="0 0 16 16"
         >
           <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
@@ -73,13 +73,13 @@ function PostInfo({ postId, author, forum, timestamp, anonymous, important }) {
         <img
           src={`http://localhost:3000/uploads/images/${author.picture}`}
           alt=""
-          className="rounded-full inline lg:h-8 xl:h-10 2xl:h-12 mx-1"
+          className="rounded-full inline h-8 xl:h-10 2xl:h-12 mx-1"
         />
       )}
-      <div className="mx-1 relative">
+      <div className="mx-1 mr-2 w-full relative">
         {/* user name */}
         <span
-          className={`lg:text-xs xl:text-sm 2xl:text-xl dark:text-darkLight ${
+          className={`text-xs xl:text-sm 2xl:text-xl dark:text-darkLight ${
             !anonymous && author._id !== user._id && "hover:underline"
           }`}
           onMouseEnter={handleHover}
@@ -90,7 +90,7 @@ function PostInfo({ postId, author, forum, timestamp, anonymous, important }) {
 
         <svg
           viewBox="0 0 16 16"
-          className="inline lg:w-3 xl:w-4 2xl:w-5"
+          className="inline w-3 xl:w-4 2xl:w-5 mx-1"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
@@ -102,16 +102,15 @@ function PostInfo({ postId, author, forum, timestamp, anonymous, important }) {
         {/* forum name */}
         <Link
           to={`/forums/${forum._id}/`}
-          className="mx-1 lg:text-xs xl:text-sm 2xl:text-xl hover:underline dark:text-darkLight"
+          className="mr-1 text-xs xl:text-sm 2xl:text-xl hover:underline dark:text-darkLight"
         >
           {forum.forumName}
           {/* important */}
           {important && (
             <svg
-              width="20"
               viewBox="0 0 20 20"
               fill="#027bff"
-              className="inline ml-1 rotate-90 w-5 2xl:w-6"
+              className="inline ml-1 rotate-90 w-4 lg:w-5 2xl:w-6"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path d="M2.9165 15.825L12.0832 15.8333C12.6415 15.8333 13.1415 15.5583 13.4415 15.1333L17.0832 9.99999L13.4415 4.86666C13.1415 4.44166 12.6415 4.16666 12.0832 4.16666L2.9165 4.17499L6.94984 9.99999L2.9165 15.825Z" />
@@ -121,14 +120,14 @@ function PostInfo({ postId, author, forum, timestamp, anonymous, important }) {
 
         {/* post options */}
         <button
-          className="absolute top-0 right-[-6px] dropDownToggle"
+          className="absolute top-0 right-0 lg:right-[-6px] dropDownToggle"
           onClick={toggleOptions}
           title="Options"
-          hidden={!isAuthor && !isModerator}
+          // hidden={!isAuthor && !isModerator}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="fil-slate-400 inline dropDownToggle dark:fill-darkLight lg:w-3 xl:w-3.5 2xl:w-5"
+            className="fil-slate-400 inline dropDownToggle dark:fill-darkLight w-3 xl:w-3.5 2xl:w-5"
             viewBox="0 0 16 16"
           >
             <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
@@ -145,7 +144,7 @@ function PostInfo({ postId, author, forum, timestamp, anonymous, important }) {
         />
 
         {/* date */}
-        <p className="lg:text-xsm xl:text-xs 2xl:text-lg text-secondary dark:text-gray-300">
+        <p className="text-xsm xl:text-xs 2xl:text-lg text-secondary dark:text-gray-300">
           {moment(timestamp).fromNow()}
         </p>
       </div>

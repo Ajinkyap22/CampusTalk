@@ -99,6 +99,7 @@ function PostRequest({ post, ...props }) {
           // onPostClick={onPostClick}
           currentFile={currentFile}
           setCurrentFile={setCurrentFile}
+          originalFileNames={post.originalFileNames}
         />
       ) : null}
     </div>

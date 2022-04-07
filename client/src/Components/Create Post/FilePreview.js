@@ -3,7 +3,6 @@ function FilePreview({ handleRemoveFile, index, originalFileName, classes }) {
     <div className={classes}>
       <div className="flex items-center justify-between">
         <div className="text-left">
-          {/* svg icon based on file type */}
           {originalFileName.type.match("image.*") ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
