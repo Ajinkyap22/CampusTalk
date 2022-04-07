@@ -196,6 +196,18 @@ tbody tr td:first-child {
   max-width: 50%;
 }
 
+thead tr .row {
+  width: 40%;
+  min-width: 40%;
+  max-width: 40%;
+}
+
+thead tr .rowFirst {
+  width: 40% !important;
+  min-width: 40% !important;
+  max-width: 40% !important;
+}
+
 .requested:hover {
   background: white !important;
   border: 1px solid #0278e4 !important;

@@ -9,6 +9,7 @@ import { ModeProvider } from "./Contexts/ModeContext";
 import { SocketProvider } from "./Contexts/SocketContext";
 import { ChatProvider } from "./Contexts/ChatContext";
 import { FileProvider } from "./Contexts/FileContext";
+import { EventProvider } from "./Contexts/EventContext";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -19,7 +20,9 @@ ReactDOM.render(
             <PostProvider>
               <FileProvider>
                 <ChatProvider>
-                  <App />
+                  <EventProvider>
+                    <App />
+                  </EventProvider>
                 </ChatProvider>
               </FileProvider>
             </PostProvider>

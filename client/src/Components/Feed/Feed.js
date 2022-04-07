@@ -1,6 +1,7 @@
 import { UserContext } from "../../Contexts/UserContext";
 import { TabContext } from "../../Contexts/TabContext";
 import { PostContext } from "../../Contexts/PostContext";
+import { EventContext } from "../../Contexts/EventContext";
 import { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import Nav from "../Navbar/Nav";
@@ -11,6 +12,8 @@ import ForumBox from "./ForumBox";
 import FAQ from "./FAQ";
 import LogoCropped from "../LogoCropped";
 import Loading from "../Loading";
+import axios from "axios";
+import EventsBox from "./EventsBox";
 
 const faqData = [
   {
@@ -47,7 +50,8 @@ function Feed({ title }) {
   const [activeFilter, setActiveFilter] = useState("latest");
   const [dateRange, setDateRange] = useState("Today");
   const [posts, setPosts, loading] = useContext(PostContext);
-  const [user] = useContext(UserContext);
+  const [user, setUser] = useContext(UserContext);
+  const [events, setEvents] = useContext(EventContext);
 
   useEffect(() => {
     document.title = title || "Feed | CampusTalk";
@@ -57,13 +61,36 @@ function Feed({ title }) {
     setActiveTab("feed");
   }, [activeTab]);
 
+  useEffect(() => {
+    let newUser;
+    if (!user) {
+      newUser = JSON.parse(localStorage.getItem("user")).user;
+    } else {
+      newUser = user;
+    }
+
+    axios
+      .get(`/api/events/${newUser._id}/user-events`)
+      .then((res) => {
+        setEvents(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, [user]);
+
   return (
     <main className="w-full min-h-full bg-[#F0F2F5] dark:bg-dark">
       <Nav />
 
       <section className="flex justify-evenly md:w-full mx-auto h-full">
-        {/* faq */}
-        <FAQ faqData={faqData} />
+        <div>
+          {/* faq */}
+          <FAQ faqData={faqData} />
+
+          {/* events */}
+          <EventsBox events={events} />
+        </div>
 
         {/* posts and filters */}
         <div className="flex flex-col items-center my-6 lg:my-8 h-full lg:max-w-[28rem] xl:max-w-[32rem] 2xl:max-w-[36rem] 3xl:max-w-[40rem] col-start-1 col-span-2">

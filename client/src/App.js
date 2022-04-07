@@ -16,6 +16,7 @@ import PostPage from "./Components/PostPage/PostPage";
 import Profile from "./Components/Profile/Profile";
 import Chats from "./Components/Chats/Chats";
 import FileView from "./Components/Chats/FileView";
+import Events from "./Components/Events/Events";
 
 import { ForumContext } from "./Contexts/ForumContext";
 import { PostContext } from "./Contexts/PostContext";
@@ -209,6 +210,13 @@ function App() {
               exact
               path="/chats"
               render={() => <Chats title={"Chats | CampusTalk"} />}
+            />
+
+            {/* events */}
+            <Route
+              exact
+              path="/events"
+              render={() => <Events title={"Events | CampusTalk"} />}
             />
           </TabProvider>
         </Switch>

@@ -1,11 +1,11 @@
 import LogoCropped from "../LogoCropped";
-import ForumsList from "./ForumsList";
+import EventsList from "./EventsList";
 import { Link } from "react-router-dom";
 
-function ForumBox({ user, fixed = true }) {
+function EventBox({ events, fixed = true }) {
   return (
     <div
-      className={`hidden md:block bg-white dark:bg-darkSecondary shadow-base lg:max-w-[18rem] xl:max-w-[21rem] 2xl:max-w-[26rem] 3xl:max-w-[30rem] my-4 rounded ${
+      className={`hidden md:block bg-white dark:bg-darkSecondary shadow-base lg:w-[14rem] lg-max-w-[14rem] xl:w-[17rem] xl:max-w-[17rem] 2xl:w-[24rem] 2xl:max-w-[24rem] 3xl:w-[28rem] 3xl:max-w-[28rem] rounded ${
         fixed ? "fixed xl:top-[60%] 2xl:top-1/3" : ""
       }`}
     >
@@ -15,25 +15,25 @@ function ForumBox({ user, fixed = true }) {
 
         <p className="text-white lg:text-base xl:text-lg 2xl:text-2xl inline">
           {" "}
-          Your Forums
+          Your Events
         </p>
       </div>
 
-      {/* forums list */}
+      {/* Events list */}
       <div>
-        {user && user.forums.length ? (
+        {events.length ? (
           <div>
-            {user.forums.map((forum, i) => {
+            {events.map((event, i) => {
               return (
-                <ForumsList
+                <EventsList
                   key={i}
-                  forumName={forum.forumName}
-                  forumId={forum._id}
+                  eventName={event.name}
+                  eventId={event._id}
                 />
               );
             })}
             <Link
-              to={`/forums/`}
+              to={`/events`}
               className="block lg:p-2.5 xl:p-3 text-primary dark:text-[#389fff] text-center lg:text-mxs xl:text-sm 2xl:text-xl underline underline-offset-1 hover:bg-blue-100 dark:hover:bg-slate-800"
             >
               See all
@@ -41,7 +41,7 @@ function ForumBox({ user, fixed = true }) {
           </div>
         ) : (
           <p className="block lg:p-2.5 xl:p-3 text-center text-sm 2xl:text-xl text-slate-800 dark:text-secondary hover:bg-gray-100">
-            You have not joined any forums yet.
+            There are no upcoming events.
           </p>
         )}
       </div>
@@ -49,4 +49,4 @@ function ForumBox({ user, fixed = true }) {
   );
 }
 
-export default ForumBox;
+export default EventBox;
