@@ -51,7 +51,7 @@ function Member({
 
   return (
     <div
-      className={`flex border-b relative dark:border-secondary justify-between items-center w-full p-2.5 ${
+      className={`flex border-b relative dark:border-secondary justify-between items-center w-full p-2 lg:p-2.5 ${
         i === members.length - 1 ? "border-none" : ""
       }`}
     >
@@ -60,13 +60,13 @@ function Member({
         {member.picture ? (
           <img
             src={`http://localhost:3000/uploads/images/${member.picture}`}
-            className="rounded-full object-cover w-10 h-auto inline mx-2"
+            className="rounded-full object-cover w-8 lg:w-10 h-auto inline mx-1 lg:mx-2"
             alt=""
           />
         ) : (
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="inline mx-2 w-10 align-middle fill-[#818181] dark:fill-darkLight"
+            className="inline mx-1 lg:mx-2 w-8 lg:w-10 align-middle fill-[#818181] dark:fill-darkLight"
             viewBox="0 0 16 16"
           >
             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
@@ -78,7 +78,7 @@ function Member({
         )}
 
         {/* name */}
-        <span className="text-sm text-justify mx-1 dark:text-darkLight">
+        <span className="text-xs lg:text-sm text-justify mx-1 dark:text-darkLight">
           {member.firstName} {member.lastName}
         </span>
 

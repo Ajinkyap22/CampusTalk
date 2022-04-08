@@ -10,6 +10,7 @@ const EventSchema = new Schema({
   link: { type: String },
   forum: { type: Schema.Types.ObjectId, ref: "Forum", required: true },
   date: { type: Date, required: true },
+  time: { type: String, required: true },
   venue: { type: String },
   timestamp: { type: Date, default: Date.now },
 });

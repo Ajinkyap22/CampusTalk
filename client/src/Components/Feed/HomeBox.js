@@ -29,9 +29,16 @@ function HomeBox() {
       <div>
         <Link
           to="/create-post"
-          className="w-1/2 mx-auto text-center block py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-primary bg-primary-light text-white rounded-full hover:bg-blue-700 dark:hover:bg-primary-light"
+          className="w-1/2 mx-auto text-center block py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-primary bg-primary-light text-white rounded-full hover:bg-blue-700 dark:hover:bg-primary"
         >
           Create Post
+        </Link>
+
+        <Link
+          to="/create-event"
+          className="w-1/2 mx-auto text-center block py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-primary bg-primary text-white rounded-full hover:bg-blue-700 dark:hover:bg-primary-light"
+        >
+          Create Event
         </Link>
 
         <Link

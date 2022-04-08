@@ -12,7 +12,6 @@ import ForumBox from "./ForumBox";
 import FAQ from "./FAQ";
 import LogoCropped from "../LogoCropped";
 import Loading from "../Loading";
-import axios from "axios";
 import EventsBox from "./EventsBox";
 
 const faqData = [
@@ -60,24 +59,6 @@ function Feed({ title }) {
   useEffect(() => {
     setActiveTab("feed");
   }, [activeTab]);
-
-  useEffect(() => {
-    let newUser;
-    if (!user) {
-      newUser = JSON.parse(localStorage.getItem("user")).user;
-    } else {
-      newUser = user;
-    }
-
-    axios
-      .get(`/api/events/${newUser._id}/user-events`)
-      .then((res) => {
-        setEvents(res.data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, [user]);
 
   return (
     <main className="w-full min-h-full bg-[#F0F2F5] dark:bg-dark">

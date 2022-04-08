@@ -14,14 +14,14 @@ function List({ forums, forumsTab }) {
           <p className="text-center my-3 text-gray-700 dark:text-gray-300">
             You have not joined any forums yet.
           </p>
-          <p className="text-mxs w-1/3 mx-auto text-center my-3 text-gray-700 dark:text-gray-300">
+          <p className="text-mxs w-2/3 lg:w-1/3 mx-auto text-center my-3 text-gray-700 dark:text-gray-300">
             (If you have joined a forum but don't see it here, it means your
             request hasn't been accepted yet).
           </p>
         </div>
       ) : (
         <table
-          className="table-fixed w-[60%] m-auto bg-white dark:bg-darkSecondary shadow-base mt-8"
+          className="table-fixed w-[90%] lg:w-[60%] m-auto bg-white dark:bg-darkSecondary shadow-base mt-8"
           hidden={forums.length === 0}
         >
           <thead>

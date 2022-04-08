@@ -4,10 +4,10 @@ function TabToggle({ tab, setTab, isModerator, postRequests, joinRequests }) {
   }
 
   return (
-    <div className="text-center sticky mb-8 min-w-[32rem] mx-auto">
+    <div className="text-center w-full sticky mb-8 lg:min-w-[32rem] mx-auto">
       {/* posts */}
       <button
-        className={`p-2 px-8 shadow text-sm border-r border-light dark:border-zinc-700 rounded-l ${
+        className={`p-2 px-5 shadow text-xs lg:text-sm border-r border-light dark:border-zinc-700 rounded-l ${
           tab === "posts"
             ? "bg-primary-light text-white"
             : "bg-white dark:bg-darkSecondary dark:text-darkLight"
@@ -19,7 +19,7 @@ function TabToggle({ tab, setTab, isModerator, postRequests, joinRequests }) {
 
       {/* members */}
       <button
-        className={`p-2 px-4 shadow text-sm border-x border-light dark:border-zinc-700  ${
+        className={`p-2 px-3 shadow text-xs lg:text-sm border-x border-light dark:border-zinc-700  ${
           tab === "members"
             ? "bg-primary-light text-white"
             : "bg-white dark:bg-darkSecondary dark:text-darkLight"
@@ -31,7 +31,7 @@ function TabToggle({ tab, setTab, isModerator, postRequests, joinRequests }) {
 
       {/* post requests */}
       <button
-        className={`p-2 shadow text-sm border-x border-light dark:border-zinc-700  ${
+        className={`p-2 px-1 shadow text-xs lg:text-sm border-x border-light dark:border-zinc-700  ${
           tab === "postRequests"
             ? "bg-primary-light text-white"
             : "bg-white dark:bg-darkSecondary dark:text-darkLight"
@@ -49,7 +49,7 @@ function TabToggle({ tab, setTab, isModerator, postRequests, joinRequests }) {
 
       {/* join requests */}
       <button
-        className={`p-2 shadow text-sm border-l border-light dark:border-zinc-700 rounded-r ${
+        className={`p-2 px-1 shadow text-xs lg:text-sm border-l border-light dark:border-zinc-700 rounded-r ${
           tab === "joinRequests"
             ? "bg-primary-light text-white"
             : "bg-white dark:bg-darkSecondary dark:text-darkLight"

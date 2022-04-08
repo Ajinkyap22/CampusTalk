@@ -11,7 +11,6 @@ function Members({
 }) {
   const [moderatorsList, setModeratorsList] = useState({});
   const [user, setUser] = useContext(UserContext);
-  const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
     // create a hashmap of moderators
@@ -26,7 +25,7 @@ function Members({
   }, [moderators]);
 
   return (
-    <div className="bg-white dark:bg-darkSecondary shadow-base min-w-[32rem] rounded">
+    <div className="bg-white dark:bg-darkSecondary shadow-base w-full lg:min-w-[32rem] lg:rounded">
       {members.map((member, i) => (
         <Member
           key={i}

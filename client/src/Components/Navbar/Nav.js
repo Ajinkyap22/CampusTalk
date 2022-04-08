@@ -101,6 +101,19 @@ function Nav() {
         >
           Forums
         </NavLink>
+
+        {/* events */}
+        <NavLink
+          to={"/events"}
+          onClick={() => handleClick("events")}
+          className={`mx-4 text-sm 2xl:text-lg py-3 2xl:py-2.5 px-2 ${
+            activeTab === "events"
+              ? "border-b-[3px] border-primary text-primary dark:text-primary-dark"
+              : "dark:text-darkLight"
+          }`}
+        >
+          Events
+        </NavLink>
       </div>
 
       {/* user section */}

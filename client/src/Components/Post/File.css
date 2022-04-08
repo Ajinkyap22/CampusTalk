@@ -20,6 +20,10 @@
   color: white;
 }
 
-.react-pdf__Page_textContent {
-  max-width: 100%;
+.react-pdf__Page__textContent {
+  max-width: 100% !important;
+}
+
+.react-pdf__Page__textContent > * {
+  max-width: 100% !important;
 }

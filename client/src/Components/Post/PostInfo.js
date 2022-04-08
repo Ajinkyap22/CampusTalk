@@ -56,7 +56,7 @@ function PostInfo({ postId, author, forum, timestamp, anonymous, important }) {
   return (
     <div className="flex my-1 2xl:my-1.5 px-1 lg:px-1.5 xl:px-2 w-full max-w-full relative">
       {/* user profile pic */}
-      {!anonymous || !author.picture ? (
+      {anonymous || !author.picture ? (
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="#818181"
@@ -120,7 +120,7 @@ function PostInfo({ postId, author, forum, timestamp, anonymous, important }) {
 
         {/* post options */}
         <button
-          className="absolute top-0 right-0 lg:right-[-6px] dropDownToggle"
+          className="absolute top-0 right-[-6px] lg:right-[-6px] dropDownToggle"
           onClick={toggleOptions}
           title="Options"
           // hidden={!isAuthor && !isModerator}
