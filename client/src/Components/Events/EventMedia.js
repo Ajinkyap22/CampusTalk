@@ -1,7 +1,19 @@
+import { FileContext } from "../../Contexts/FileContext";
 import { withRouter } from "react-router-dom";
-import { useRef } from "react";
+import { useRef, useContext } from "react";
+import axios from "axios";
 
-function EventMedia({ video, doc, name, images, history }) {
+function EventMedia({
+  id,
+  video,
+  doc,
+  name,
+  images,
+  setEvents,
+  isModerator,
+  history,
+}) {
+  const [files, setFiles] = useContext(FileContext);
   const videoRef = useRef();
   const docRef = useRef();
   const imageRef = useRef();
@@ -29,6 +41,65 @@ function EventMedia({ video, doc, name, images, history }) {
   function handleFileInput(ref) {
     // trigger click on the ref
     ref.current.click();
+  }
+
+  function uploadMedia(e, type) {
+    if (e.target.files.length > 5) {
+      alert("You can only upload 5 images");
+      return;
+    }
+
+    let files;
+
+    if (type === "images") {
+      files = [...images];
+
+      // append images to files array upto 5
+      for (let i = 0; i < e.target.files.length; i++) {
+        if (files.length < 5) {
+          files.push(e.target.files[i]);
+        } else {
+          break;
+        }
+      }
+    }
+
+    let formData = new FormData();
+
+    if (type === "images") {
+      files.forEach((file) => {
+        formData.append("images", file);
+      });
+    } else {
+      formData.append(type, e.target.files[0]);
+    }
+
+    formData.append("type", type);
+
+    apiRequest(formData, type);
+  }
+
+  function apiRequest(formData, type) {
+    let headers = {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(localStorage.getItem("user")).token
+        }`,
+      },
+    };
+
+    axios
+      .post(`/api/events/${id}/upload-event-${type}`, formData, headers)
+      .then((res) => {
+        setEvents((prevEvents) =>
+          prevEvents.map((e) => (e._id === res.data._id ? res.data : e))
+        );
+
+        setFiles([...files, ...res.data[type]]);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
   return (
@@ -60,6 +131,28 @@ function EventMedia({ video, doc, name, images, history }) {
 
             {/* actions */}
             <div className="flex items-center">
+              {/* delete */}
+              {isModerator && (
+                <button
+                  className="inline-flex items-center hover:scale-110 transition-all"
+                  title="Delete Document"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-6 mx-1 stroke-red-500 dark:stroke-gray-300"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                    />
+                  </svg>
+                </button>
+              )}
+
               {/* download button */}
               <button
                 onClick={handleDownload}
@@ -104,6 +197,7 @@ function EventMedia({ video, doc, name, images, history }) {
             <button
               className="mt-4 block mx-auto hover:scale-125 transition-all"
               onClick={() => handleFileInput(docRef)}
+              hidden={!isModerator}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -120,7 +214,7 @@ function EventMedia({ video, doc, name, images, history }) {
 
             {/* docs input - accept only pdf|doc|docx|ppt|pptx|xls|xlsx */}
             <input
-              // onChange={handleDocFileChange}
+              onChange={(e) => uploadMedia(e, "document")}
               ref={docRef}
               type="file"
               name="file"
@@ -153,6 +247,7 @@ function EventMedia({ video, doc, name, images, history }) {
             <button
               className="mt-4 block mx-auto hover:scale-125 transition-all"
               onClick={() => handleFileInput(videoRef)}
+              hidden={!isModerator}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -169,7 +264,7 @@ function EventMedia({ video, doc, name, images, history }) {
 
             {/* video inputm accept only videos */}
             <input
-              // onChange={handleVideoFileChange}
+              onChange={(e) => uploadMedia(e, "video")}
               ref={videoRef}
               type="file"
               name="file"
@@ -199,44 +294,47 @@ function EventMedia({ video, doc, name, images, history }) {
               />
             ))}
           </div>
-        ) : (
-          <div>
-            <span className="text-secondary dark:text-gray-300">
-              There are no images
-            </span>
+        ) : null}
 
-            <button
-              className="mt-4 block mx-auto hover:scale-125 transition-all"
-              onClick={() => handleFileInput(imageRef)}
+        <span
+          className="text-secondary dark:text-gray-300"
+          hidden={images.length !== 0}
+        >
+          There are no images
+        </span>
+
+        <div hidden={images.length === 5 || !isModerator}>
+          <button
+            className="mt-4 block mx-auto hover:scale-125 transition-all"
+            onClick={() => handleFileInput(imageRef)}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-8 fill-[#818181] dark:fill-gray-300 mx-auto"
+              viewBox="0 0 16 16"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-8 fill-[#818181] dark:fill-gray-300 mx-auto"
-                viewBox="0 0 16 16"
-              >
-                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
-              </svg>
-            </button>
+              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+            </svg>
+          </button>
 
-            <span className="mt-2 block text-secondary dark:text-gray-300">
-              Click here to add images
-            </span>
-            <span className="mt-2 block text-sm text-secondary dark:text-gray-300">
-              (You can add upto 5 images)
-            </span>
+          <span className="mt-2 block text-secondary dark:text-gray-300">
+            Click here to add images
+          </span>
+          <span className="mt-2 block text-sm text-secondary dark:text-gray-300">
+            (You can add upto 5 images)
+          </span>
 
-            {/* docs input - accept only pdf|doc|docx|ppt|pptx|xls|xlsx */}
-            <input
-              // onChange={handleDocFileChange}
-              ref={imageRef}
-              type="file"
-              name="file"
-              accept="application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.presentation, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-              className="hidden"
-              data-max-size="10485760"
-            />
-          </div>
-        )}
+          <input
+            onChange={(e) => uploadMedia(e, "images")}
+            ref={imageRef}
+            type="file"
+            name="file"
+            accept="image/*"
+            multiple
+            className="hidden"
+            data-max-size="20971520"
+          />
+        </div>
       </section>
     </div>
   );

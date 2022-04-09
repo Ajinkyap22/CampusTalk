@@ -17,6 +17,8 @@ function Events({ title }) {
     setActiveTab("events");
   }, [activeTab]);
 
+  
+
   return (
     <main className="w-full min-h-full overflow-visible bg-[#F0F2F5] dark:bg-dark">
       <Nav />

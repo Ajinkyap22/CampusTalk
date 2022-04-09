@@ -44,8 +44,10 @@ exports.uploadEventImages = async (req, res, next) => {
     Event.findByIdAndUpdate(
       eventId,
       {
-        $set: {
-          images,
+        $push: {
+          images: {
+            $each: images,
+          },
         },
       },
       { new: true },
@@ -89,6 +91,50 @@ exports.uploadEventMedia = async (req, res, next) => {
         });
       }
     );
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// delete event image
+exports.deleteEventImage = async (req, res, next) => {
+  try {
+    const { eventId } = req.params;
+    const { imageName } = req.body;
+
+    const event = await Event.findByIdAndUpdate(
+      eventId,
+      {
+        $pull: {
+          images: imageName,
+        },
+      },
+      { new: true }
+    ).populate("forum");
+
+    res.status(200).json(event);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// delete event video or doc
+exports.deleteEventMedia = async (req, res, next) => {
+  try {
+    const { eventId } = req.params;
+    const { type, file } = req.body;
+
+    const event = await Event.findByIdAndUpdate(
+      eventId,
+      {
+        $pull: {
+          [type]: file,
+        },
+      },
+      { new: true }
+    ).populate("forum");
+
+    res.status(200).json(event);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

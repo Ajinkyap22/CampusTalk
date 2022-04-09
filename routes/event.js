@@ -30,6 +30,20 @@ router.post(
   eventController.uploadEventMedia
 );
 
+// delete event image
+router.post(
+  "/:eventId/delete-event-image",
+  verifyToken,
+  eventController.deleteEventImage
+);
+
+// delete event video or doc
+router.post(
+  "/:eventId/delete-event-media",
+  verifyToken,
+  eventController.deleteEventMedia
+);
+
 // get all events of a forum
 router.get("/:forumId/events", eventController.getEvents);
 
@@ -43,10 +57,6 @@ router.get("/:userId/user-events", eventController.getUserEvents);
 router.put("/:eventId/update-event", verifyToken, eventController.updateEvent);
 
 // delete event
-router.delete(
-  "/:eventId/delete-event",
-  verifyToken,
-  eventController.deleteEvent
-);
+router.delete("/:eventId", verifyToken, eventController.deleteEvent);
 
 module.exports = router;
