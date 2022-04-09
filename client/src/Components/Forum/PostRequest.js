@@ -14,7 +14,7 @@ function PostRequest({ post, ...props }) {
   // }
 
   return (
-    <div className="bg-white dark:bg-darkSecondary shadow-base py-2 mt-8 w-full rounded">
+    <div className="bg-white dark:bg-darkSecondary shadow-base py-2 lg:mt-8 w-full rounded">
       {/* user info */}
       <div className="flex my-1 px-2 w-full max-w-[32rem] relative">
         {/* user profile pic */}

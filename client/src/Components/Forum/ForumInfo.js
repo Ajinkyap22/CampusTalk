@@ -155,7 +155,6 @@ function ForumInfo({
         <div>
           {requestSent ? (
             <button
-              onClick={joinForum}
               disabled
               className="mx-auto w-1/2 block p-2 py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-primary-light bg-primary-light text-white rounded-full"
             >

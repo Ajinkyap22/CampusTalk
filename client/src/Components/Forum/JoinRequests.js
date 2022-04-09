@@ -83,27 +83,27 @@ function JoinRequests({
           </div>
 
           {/* if not empty */}
-          <div className="bg-white dark:bg-darkSecondary shadow-base min-w-[32rem] rounded">
+          <div className="bg-white dark:bg-darkSecondary shadow-base lg:min-w-[32rem] rounded">
             {joinRequests.map((joinRequest, i) => (
               <div
-                className={`flex border-b justify-between items-center w-full p-2.5 ${
+                className={`flex border-b justify-between items-center w-full p-2 lg:p-2.5 ${
                   i === joinRequests.length - 1 ? "border-none" : ""
                 }`}
                 key={i}
               >
-                {/* use info */}
+                {/* user info */}
                 <div className="flex items-center">
                   {/* image */}
                   {joinRequest.picture ? (
                     <img
                       src={`http://localhost:3000/uploads/images/${joinRequest.picture}`}
-                      className="rounded-full object-cover w-10 h-auto inline mx-2"
+                      className="rounded-full object-cover w-8 lg:w-10 h-auto inline mx-1 lg:mx-2"
                       alt=""
                     />
                   ) : (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="inline mx-2 w-10 align-middle fill-[#818181] dark:fill-darkLight"
+                      className="inline mx-1 lg:mx-2 w-8 lg:w-10 align-middle fill-[#818181] dark:fill-darkLight"
                       viewBox="0 0 16 16"
                     >
                       <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
@@ -123,15 +123,14 @@ function JoinRequests({
                 {/* actions */}
                 <div className="flex items-center">
                   <button
-                    className="bg-green-500 rounded-full mx-1 px-3 py-1.5 text-sm text-white hover:bg-green-600"
+                    className="bg-green-500 rounded-full mx-1 px-2 lg:px-3 py-1.5 text-xs lg:text-sm text-white hover:bg-green-600"
                     onClick={() => acceptRequest(joinRequest)}
                   >
                     Accpet
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      width="18"
                       fill="white"
-                      className="inline ml-1"
+                      className="inline ml-1 w-4"
                       viewBox="0 0 16 16"
                     >
                       <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
@@ -139,15 +138,14 @@ function JoinRequests({
                   </button>
 
                   <button
-                    className="bg-red-500 rounded-full mx-1 px-3 py-1.5 text-sm text-white hover:bg-red-600"
+                    className="bg-red-500 rounded-full mx-1 px-2 lg:px-3 py-1.5 text-xs lg:text-sm text-white hover:bg-red-600"
                     onClick={() => rejectRequest(joinRequest)}
                   >
                     Reject
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      width="14"
                       fill="white"
-                      className="inline mx-1"
+                      className="inline mx-1 w-3 lg:w-3.5"
                       viewBox="0 0 16 16"
                     >
                       <path

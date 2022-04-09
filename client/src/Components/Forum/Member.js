@@ -85,9 +85,8 @@ function Member({
         {moderatorsList[member._id] && (
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="18"
             fill="#0F8CFF"
-            className="inline mx-2"
+            className="inline mx-1 lg:mx-2 w-3.5 lg:w-4"
             viewBox="0 0 16 16"
             // check if the user is a moderator
             hidden={moderatorsList[member._id] ? false : true}
@@ -106,7 +105,7 @@ function Member({
           {/* remove member */}
           <button
             onClick={newChat}
-            className="p-1 px-2 rounded-full text-mxs text-white dark:text-darkLight mx-1 bg-primary-light hover:bg-primary"
+            className="p-1 px-1.5 lg:px-2 rounded-full text-xsm lg:text-mxs text-white dark:text-darkLight mx-1 bg-primary-light hover:bg-primary"
           >
             Message
           </button>
@@ -114,7 +113,7 @@ function Member({
           {/* remove member */}
           {moderatorsList[user._id] && (
             <button
-              className="bg-red-500 p-1 px-2 rounded-full text-mxs text-white dark:text-darkLight mx-1 hover:bg-red-600"
+              className="bg-red-500 p-1 px-1.5 lg:px-2 rounded-full text-xsm lg:text-mxs text-white dark:text-darkLight mx-1 hover:bg-red-600"
               onClick={() => removeMember(member)}
             >
               Remove

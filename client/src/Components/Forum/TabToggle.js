@@ -4,7 +4,7 @@ function TabToggle({ tab, setTab, isModerator, postRequests, joinRequests }) {
   }
 
   return (
-    <div className="text-center w-full sticky mb-8 lg:min-w-[32rem] mx-auto">
+    <div className="hidden lg:block text-center w-full sticky mb-8 lg:min-w-[32rem] mx-auto">
       {/* posts */}
       <button
         className={`p-2 px-5 shadow text-xs lg:text-sm border-r border-light dark:border-zinc-700 rounded-l ${

@@ -5,12 +5,13 @@ const User = require("../models/user");
 // create event
 exports.createEvent = async (req, res, next) => {
   try {
-    const { name, description, link, forum, date, venue } = req.body;
+    const { name, description, link, forum, time, date, venue } = req.body;
 
     let event = new Event({
       name,
       description,
       link,
+      time,
       forum,
       date,
       venue,
@@ -98,7 +99,9 @@ exports.getEvents = async (req, res, next) => {
   try {
     const { forumId } = req.params;
 
-    const events = await Event.find({ forum: forumId }).populate("forum");
+    const events = await Event.find({ forum: forumId })
+      .sort({ date: -1 })
+      .populate("forum");
 
     res.status(200).json(events);
   } catch (err) {
@@ -110,8 +113,6 @@ exports.getEvents = async (req, res, next) => {
 exports.getEvent = async (req, res, next) => {
   try {
     const { eventId } = req.params;
-
-    console.log(eventId);
 
     const event = await Event.findById(eventId).populate("forum");
 
@@ -129,9 +130,9 @@ exports.getUserEvents = async (req, res, next) => {
     let user = await User.findById(userId);
     let forums = user.forums;
 
-    const events = await Event.find({ forum: { $in: forums } }).populate(
-      "forum"
-    );
+    const events = await Event.find({ forum: { $in: forums } })
+      .sort({ date: -1 })
+      .populate("forum");
 
     res.status(200).json(events);
   } catch (err) {
@@ -143,7 +144,7 @@ exports.getUserEvents = async (req, res, next) => {
 exports.updateEvent = async (req, res, next) => {
   try {
     const { eventId } = req.params;
-    const { name, description, link, date, venue } = req.body;
+    const { name, description, link, time, date, venue } = req.body;
 
     const event = await Event.findByIdAndUpdate(
       eventId,
@@ -152,6 +153,7 @@ exports.updateEvent = async (req, res, next) => {
           name,
           description,
           link,
+          time,
           date,
           venue,
         },

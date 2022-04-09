@@ -6,12 +6,6 @@ import axios from "axios";
 import Input from "../FormControl/Input";
 import ActionButtons from "../FormControl/ActionButtons";
 
-let headers = {
-  headers: {
-    Authorization: `Bearer ${JSON.parse(localStorage.getItem("user"))?.token}`,
-  },
-};
-
 function ForumForm(props) {
   const [checked, setChecked] = useState(false);
   const [user, setUser] = useContext(UserContext);
@@ -47,6 +41,14 @@ function ForumForm(props) {
   function handleSubmit(e) {
     e.preventDefault();
 
+    let headers = {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(localStorage.getItem("user"))?.token
+        }`,
+      },
+    };
+
     axios
       .post(`/api/forums/create-forum`, formData, headers)
       .then((res) => {
@@ -67,6 +69,14 @@ function ForumForm(props) {
     if (!user) return;
 
     let body = { id: user._id };
+
+    let headers = {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(localStorage.getItem("user"))?.token
+        }`,
+      },
+    };
 
     axios
       .post(`/api/forums/${forumId}/moderators/make`, body, headers)

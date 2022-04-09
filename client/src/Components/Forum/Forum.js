@@ -18,6 +18,8 @@ import Toast from "../Toast";
 import PostRequests from "./PostRequests";
 import JoinRequests from "./JoinRequests";
 import Loading from "../Loading";
+import MobileTabs from "./MobileTabs";
+import ForumInfoMobile from "./ForumInfoMobile";
 
 function Forum({ forum, title, defaultTab = "posts" }) {
   const [activeTab, setActiveTab] = useContext(TabContext);
@@ -191,12 +193,12 @@ function Forum({ forum, title, defaultTab = "posts" }) {
   }
 
   return (
-    <main className="w-full min-h-full h-full flex flex-col items-center overflow-visible bg-[#F0F2F5] dark:bg-dark relative">
+    <main className="w-full min-h-full flex flex-col items-start bg-[#F0F2F5] overflow-auto dark:bg-dark relative">
       <Nav />
 
       {/* forum content */}
       <section className="lg:flex justify-between items-start w-full lg:w-[70%] mx-auto h-full">
-        <div className="grid grid-cols-1 items-center max-w-full lg:max-w-[32rem] my-8 h-full">
+        <div className="grid grid-cols-1 max-w-full lg:max-w-[32rem] my-4 lg:my-8 h-full">
           {/* tab */}
           <TabToggle
             tab={tab}
@@ -204,6 +206,15 @@ function Forum({ forum, title, defaultTab = "posts" }) {
             isModerator={isModerator}
             postRequests={postRequests}
             joinRequests={joinRequests}
+          />
+
+          <MobileTabs
+            tab={tab}
+            setTab={setTab}
+            isModerator={isModerator}
+            postRequests={postRequests}
+            joinRequests={joinRequests}
+            forumName={forum.forumName}
           />
 
           {/* if user exists & is a member of the forum */}
@@ -336,6 +347,20 @@ function Forum({ forum, title, defaultTab = "posts" }) {
           {/* rules */}
           <Rules rules={forum.rules} />
         </div>
+
+        {tab === "info" && (
+          <ForumInfoMobile
+            forum={forum}
+            showModal={showModal}
+            setShowModal={setShowModal}
+            requestSent={requestSent}
+            setRequestSent={setRequestSent}
+            joinRequests={joinRequests}
+            setJoinRequests={setJoinRequests}
+            isModerator={isModerator}
+            user={user}
+          />
+        )}
       </section>
 
       {/* leave forum warning modal */}
