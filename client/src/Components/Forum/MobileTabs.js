@@ -24,7 +24,11 @@ function MobileTabs({
       </div>
 
       {/* tabs */}
-      <div className="bg-white w-full dark:bg-darkSecondary text-center flex items-center justify-between">
+      <div
+        className={`bg-white w-full dark:bg-darkSecondary text-center flex items-center ${
+          isModerator ? "justify-between" : "justify-evenly"
+        }`}
+      >
         {/* posts */}
         <button
           className={`mx-1 text-[.7rem] py-2 px-1 ${

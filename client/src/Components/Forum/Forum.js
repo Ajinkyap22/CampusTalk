@@ -193,12 +193,12 @@ function Forum({ forum, title, defaultTab = "posts" }) {
   }
 
   return (
-    <main className="w-full min-h-full flex flex-col items-start bg-[#F0F2F5] overflow-auto dark:bg-dark relative">
+    <main className="w-full min-h-screen lg:h-full flex flex-col items-start bg-[#F0F2F5] overflow-auto dark:bg-dark relative">
       <Nav />
 
       {/* forum content */}
       <section className="lg:flex justify-between items-start w-full lg:w-[70%] mx-auto h-full">
-        <div className="grid grid-cols-1 max-w-full lg:max-w-[32rem] my-4 lg:my-8 h-full">
+        <div className="flex flex-col max-w-full lg:max-w-[32rem] my-4 lg:my-8 h-full">
           {/* tab */}
           <TabToggle
             tab={tab}

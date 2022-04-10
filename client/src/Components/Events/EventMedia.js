@@ -102,16 +102,53 @@ function EventMedia({
       });
   }
 
+  function deleteMedia(type, file) {
+    let headers = {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(localStorage.getItem("user")).token
+        }`,
+      },
+    };
+
+    let body = {};
+
+    type === "image" ? (body.imageName = file) : (body.type = type);
+
+    let path =
+      type === "image"
+        ? `/api/events/${id}/delete-event-image`
+        : `/api/events/${id}/delete-event-media`;
+
+    axios
+      .post(path, body, headers)
+      .then((res) => {
+        console.log(res.data);
+
+        setEvents((prevEvents) =>
+          prevEvents.map((e) => (e._id === res.data._id ? res.data : e))
+        );
+
+        if (type !== "video") {
+          setFiles((prevFiles) => prevFiles.filter((f) => f.name !== file));
+        }
+      })
+      .catch((err) => {
+        console.log(err.response);
+        console.error(err);
+      });
+  }
+
   return (
-    <div className="col-span-2">
+    <div className="lg:col-span-2">
       {/* event doc */}
-      <section className="text-center my-8 w-2/3">
-        <h2 className="text-xl my-4 text-primary dark:text-primary-light">
+      <section className="text-center my-8 lg:w-2/3">
+        <h2 className="text-xl my-4 text-primary dark:text-primary-dark">
           Information Document
         </h2>
 
         {doc ? (
-          <div className="flex items-center bg-white w-full justify-between h-full p-2 rounded">
+          <div className="flex items-center bg-white dark:bg-[#3e3d3d] mx-auto w-[90%] lg:w-full justify-between h-full p-2 rounded">
             {/* info */}
             <div className="flex items-center">
               <svg
@@ -124,7 +161,7 @@ function EventMedia({
                 <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20M13,13V18H10V13H13Z" />
               </svg>
 
-              <span className="ml-2">
+              <span className="ml-2 dark:text-darkLight">
                 {name}.{doc.split(".")[1]}
               </span>
             </div>
@@ -136,10 +173,11 @@ function EventMedia({
                 <button
                   className="inline-flex items-center hover:scale-110 transition-all"
                   title="Delete Document"
+                  onClick={() => deleteMedia("document", doc)}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="w-6 mx-1 stroke-red-500 dark:stroke-gray-300"
+                    className="w-6 mx-1 stroke-red-500 dark:stroke-gray-400"
                     fill="none"
                     viewBox="0 0 24 24"
                     strokeWidth={2}
@@ -227,16 +265,40 @@ function EventMedia({
       </section>
 
       {/* event video */}
-      <section className="my-8 text-center w-2/3">
-        <h2 className="text-xl my-4 text-primary dark:text-primary-light">
-          Video
-        </h2>
+      <section className="my-8 text-center lg:w-2/3">
+        <div className="flex items-center justify-center">
+          <h2 className="text-xl  my-4 text-primary dark:text-primary-dark">
+            Video
+          </h2>
+
+          {isModerator && video && (
+            <button
+              className="hover:scale-110 transition-all"
+              title="Delete Document"
+              onClick={() => deleteMedia("video", video)}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-5 mx-1.5 stroke-red-500 dark:stroke-gray-300"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                />
+              </svg>
+            </button>
+          )}
+        </div>
 
         {video ? (
           <video
             src={`http://localhost:3000/uploads/videos/${video}`}
             controls
-            className="w-full h-full"
+            className="w-[90%] mx-auto lg:w-full h-full"
           />
         ) : (
           <div>
@@ -277,21 +339,32 @@ function EventMedia({
       </section>
 
       {/* images */}
-      <section className="my-8 text-center w-2/3">
-        <h2 className="text-xl my-4 text-primary dark:text-primary-light">
+      <section className="my-8 text-center lg:w-2/3">
+        <h2 className="text-xl my-4 text-primary dark:text-primary-dark">
           Images
         </h2>
 
         {images && images.length > 0 ? (
           <div className="flex flex-wrap justify-center">
             {images.map((image, i) => (
-              <img
-                src={`http://localhost:3000/uploads/images/${image}`}
-                alt={image}
-                key={i}
-                onClick={() => handleImageClick(i)}
-                className="m-2 cursor-pointer"
-              />
+              <div key={i} className="relative w-full h-full">
+                <img
+                  src={`http://localhost:3000/uploads/images/${image}`}
+                  alt={image}
+                  onClick={() => handleImageClick(i)}
+                  className="m-2 cursor-pointer w-[90%] lg:w-full"
+                />
+
+                {isModerator && (
+                  <button
+                    className="text-sm text-secondary dark:text-gray-300 hover:scale-105 transition-all underline dark:hover:text-red-500 hover:text-red-500"
+                    title="Delete Document"
+                    onClick={() => deleteMedia("image", image)}
+                  >
+                    Delete Image
+                  </button>
+                )}
+              </div>
             ))}
           </div>
         ) : null}

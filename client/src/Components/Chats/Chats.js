@@ -40,7 +40,7 @@ function Chats({ title }) {
     <main className="w-full h-[calc(100vh_-_3.5rem)] bg-white dark:bg-dark">
       <Nav />
 
-      <section className="grid grid-cols-6 w-full h-full">
+      <section className="lg:grid lg:grid-cols-6 w-full h-full">
         {/* chat list */}
         <ChatList
           user={user}
@@ -59,12 +59,13 @@ function Chats({ title }) {
             user={user}
             chat={activeChat}
             socket={socket.current}
+            activeChat={activeChat}
             setActiveChat={setActiveChat}
             chats={chats}
             setChats={setChats}
           />
         ) : (
-          <div className="col-span-4 flex flex-col justify-center items-center h-full bg-[#F0F2F5] dark:bg-darkSecondary overflow-auto relative">
+          <div className="hidden lg:col-span-4 lg:flex flex-col justify-center items-center h-full bg-[#F0F2F5] dark:bg-darkSecondary overflow-auto relative">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-16 w-16 stroke-[#818181] dark:stroke-darkLight"

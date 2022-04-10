@@ -37,7 +37,11 @@ function ChatList({
   }, [user]);
 
   return (
-    <div className="col-span-2 bg-white h-fit dark:bg-dark overflow-auto postData relative">
+    <div
+      className={`${
+        activeChat ? "hidden lg:block" : ""
+      } lg:col-span-2 bg-white h-fit dark:bg-dark overflow-auto postData relative`}
+    >
       {/* title */}
       <div className="p-1.5 px-3 border-b border-gray-300 dark:border-secondary">
         <svg

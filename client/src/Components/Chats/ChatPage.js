@@ -6,7 +6,15 @@ import Message from "./Message";
 import MessageInput from "./MessageInput";
 import Loading from "../Loading";
 
-function ChatPage({ chat, user, socket, setActiveChat, chats, setChats }) {
+function ChatPage({
+  chat,
+  user,
+  socket,
+  activeChat,
+  setActiveChat,
+  chats,
+  setChats,
+}) {
   const [files, setFiles] = useContext(FileContext);
   const [receiver, setReceiver] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -84,7 +92,7 @@ function ChatPage({ chat, user, socket, setActiveChat, chats, setChats }) {
   }, [messages]);
 
   return (
-    <div className="col-span-4 h-full flex flex-col justify-between dark:bg-darkSecondary bg-[#F0F2F5] overflow-auto relative">
+    <div className="lg:col-span-4 h-full lg:flex-col justify-between dark:bg-darkSecondary bg-[#F0F2F5] overflow-auto relative">
       {/* chat title */}
       <ChatTitle
         receiver={receiver}

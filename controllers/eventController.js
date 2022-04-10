@@ -122,13 +122,13 @@ exports.deleteEventImage = async (req, res, next) => {
 exports.deleteEventMedia = async (req, res, next) => {
   try {
     const { eventId } = req.params;
-    const { type, file } = req.body;
+    const { type } = req.body;
 
     const event = await Event.findByIdAndUpdate(
       eventId,
       {
-        $pull: {
-          [type]: file,
+        $set: {
+          [type]: "",
         },
       },
       { new: true }

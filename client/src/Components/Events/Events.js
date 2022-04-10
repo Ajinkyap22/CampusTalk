@@ -17,8 +17,6 @@ function Events({ title }) {
     setActiveTab("events");
   }, [activeTab]);
 
-  
-
   return (
     <main className="w-full min-h-full overflow-visible bg-[#F0F2F5] dark:bg-dark">
       <Nav />
@@ -33,7 +31,7 @@ function Events({ title }) {
           </div>
         ) : (
           <table
-            className="table-fixed w-[80%] m-auto bg-white dark:bg-darkSecondary shadow-base mt-8"
+            className="table-fixed w-[90%] lg:w-[80%] m-auto bg-white dark:bg-darkSecondary shadow-base mt-8"
             hidden={events.length === 0}
           >
             <thead>

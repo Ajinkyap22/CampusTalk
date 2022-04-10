@@ -11,6 +11,11 @@ function ChatTitle({
 }) {
   const [showOptions, setShowOptions] = useState(false);
 
+  function back() {
+    setActiveChat(null);
+    setMessages([]);
+  }
+
   function toggleOptions() {
     setShowOptions(!showOptions);
   }
@@ -27,6 +32,22 @@ function ChatTitle({
     <div className="w-full sticky top-0 z-10 bg-primary-light flex justify-between items-center p-3 border-b border-primary-light">
       {/* picture and name */}
       <div className="flex items-center">
+        {/* back button for mobile */}
+        <button className="lg:hidden" onClick={back}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6 stroke-darkLight"
+            viewBox="0 0 24 24"
+            strokeWidth={2}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M10 19l-7-7m0 0l7-7m-7 7h18"
+            />
+          </svg>
+        </button>
+
         {/* picture */}
         {receiver && receiver.picture ? (
           <img

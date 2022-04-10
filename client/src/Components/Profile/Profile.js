@@ -46,8 +46,8 @@ function Profile({ ...props }) {
     <main className="w-full min-h-full overflow-auto bg-[#F0F2F5] dark:bg-dark">
       <Nav />
 
-      <section className="flex items-start relative p-2 mt-4">
-        <div className="self-start ml-12">
+      <section className="flex flex-col items-center lg:flex-row lg:items-start relative p-2 mt-4">
+        <div className="lg:ml-12 w-[80%] lg:w-auto">
           <div className="bg-white dark:bg-darkSecondary p-2 rounded shadow-base mt-2 relative text-center">
             {/* user picture */}
             {user && user?.picture ? (
@@ -121,12 +121,12 @@ function Profile({ ...props }) {
 
           {/* user forums */}
           <div>
-            <ForumBox user={user} fixed={false} />
+            <ForumBox user={user} fixed={false} onProfilePage={true} />
           </div>
         </div>
 
         {/* user posts */}
-        <div className="max-w-[32rem] mt-2 ml-24">
+        <div className="lg:max-w-[32rem] mt-6 lg:mt-2 lg:ml-24">
           {/* filters */}
           <Filter
             activeFilter={activeFilter}
@@ -159,7 +159,7 @@ function Profile({ ...props }) {
             <div className="text-center my-6">
               <LogoCropped color="rgba(98,98,98,0.9)" width="80" />
               <p className="text-gray-600 dark:text-gray-300 my-4">
-                No posts yet. Be the first to post!
+                You haven't created any posts yet.
               </p>
             </div>
           )}

@@ -85,12 +85,12 @@ function Event({ event, title, events, setEvents, history }) {
     <main className="w-full h-full overflow-auto bg-[#F0F2F5] dark:bg-dark">
       <Nav />
 
-      <div className="grid grid-cols-5">
+      <div className="flex flex-col items-center lg:items-start lg:grid lg:grid-cols-5">
         {/* left side */}
-        <div className="col-span-3">
-          <section className="px-6 my-8">
+        <div className="lg:col-span-3">
+          <section className="text-center lg:text-left px-6 my-8">
             {/* name */}
-            <h1 className="text-3xl inline my-2 text-primary dark:text-primary-light">
+            <h1 className="text-3xl lg:inline my-2 text-primary dark:text-primary-dark">
               {event.name}
             </h1>
 
@@ -153,8 +153,8 @@ function Event({ event, title, events, setEvents, history }) {
           </section>
 
           {/* event info */}
-          <section className="px-6 my-8 w-2/3">
-            <h2 className="text-xl my-4 text-primary dark:text-primary-light">
+          <section className="text-center lg:text-left px-6 my-8 lg:w-2/3">
+            <h2 className="text-xl my-4 text-primary dark:text-primary-dark">
               About the event
             </h2>
 
@@ -164,7 +164,7 @@ function Event({ event, title, events, setEvents, history }) {
             {/* Event date */}
             {event.date && (
               <div className="mt-4">
-                <h2 className="text-xl text-primary dark:text-primary-light">
+                <h2 className="text-xl text-primary dark:text-primary-dark">
                   Date
                 </h2>
                 <p className="my-2 dark:text-darkLight">
@@ -176,7 +176,7 @@ function Event({ event, title, events, setEvents, history }) {
             {/* Event venue */}
             {event.venue && (
               <div className="mt-4">
-                <h2 className="text-xl  text-primary dark:text-primary-light">
+                <h2 className="text-xl  text-primary dark:text-primary-dark">
                   Venue
                 </h2>
                 <p className="my-2 dark:text-darkLight">{event.venue}</p>
@@ -186,8 +186,8 @@ function Event({ event, title, events, setEvents, history }) {
 
           {/* event registration link */}
           {event.link && (
-            <section className="px-6 my-8 w-2/3">
-              <h2 className="text-xl my-4 text-primary dark:text-primary-light">
+            <section className="text-center lg:text-left px-6 my-8 lg:w-2/3">
+              <h2 className="text-xl my-4 text-primary dark:text-primary-dark">
                 Registration
               </h2>
 
@@ -195,7 +195,7 @@ function Event({ event, title, events, setEvents, history }) {
                 href={event.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-primary dark:text-primary-light underline"
+                className="text-primary dark:text-primary-dark underline"
               >
                 {event.link}
               </a>

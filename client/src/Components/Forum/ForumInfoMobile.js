@@ -143,9 +143,11 @@ function ForumInfoMobile({
               Leave Forum
             </button>
 
-            <button className="mx-auto w-1/2 block text-centr p-2 py-1.5 my-5 text-xs md:text-sm border border-red-500 bg-transparent text-red-500 dark:text-[#ff5656] rounded-full hover:bg-red-500 hover:text-white dark:hover:text-darkLight">
-              Delete Forum
-            </button>
+            {isModerator && (
+              <button className="mx-auto w-1/2 block text-centr p-2 py-1.5 my-5 text-xs md:text-sm border border-red-500 bg-transparent text-red-500 dark:text-[#ff5656] rounded-full hover:bg-red-500 hover:text-white dark:hover:text-darkLight">
+                Delete Forum
+              </button>
+            )}
           </div>
         ) : (
           <div>
