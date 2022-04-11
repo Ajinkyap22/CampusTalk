@@ -59,7 +59,9 @@ function JoinForum({ title, forums, setForums, ...props }) {
     joinList.forEach((forumId) => {
       axios
         .post(`/api/forums/${forumId}/join`, body, headers)
-        .then((res) => {})
+        .then((res) => {
+          sendMail(forumId);
+        })
         .catch((err) => {
           console.error(err);
         });
@@ -68,6 +70,33 @@ function JoinForum({ title, forums, setForums, ...props }) {
     // setUser({ ...user, forums: userForums });
     // setForums(forumsData);
   };
+
+  function sendMail(f) {
+    let forum = forums.find((forum) => forum._id === f);
+
+    let forumName = forum?.forumName;
+    let forumId = forum?._id;
+
+    let mods = forum?.moderators;
+
+    mods = mods.map((moderator) => moderator.email);
+
+    let body = {
+      forumName,
+      forumId,
+      emails: mods,
+      type: "join",
+    };
+
+    axios
+      .post("/api/mail/requests", body)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
 
   return (
     <div

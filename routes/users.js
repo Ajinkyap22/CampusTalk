@@ -36,4 +36,7 @@ router.put(
 // get all posts created by user
 router.get("/:id/posts", userController.get_user_posts);
 
+// reset password
+router.post("/reset-password", userController.reset_password);
+
 module.exports = router;

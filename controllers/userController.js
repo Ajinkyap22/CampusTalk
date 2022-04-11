@@ -311,3 +311,41 @@ exports.get_user_posts = function (req, res) {
       return res.json(posts);
     });
 };
+
+// reset password
+exports.reset_password = function (req, res) {
+  const { email, newPassword, confirmPassword } = req.body;
+
+  User.findOne({ email }, (err, user) => {
+    if (err) return res.json(err);
+
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    // check if new password matches confirm password
+    if (newPassword !== confirmPassword)
+      return res.status(401).json({
+        error: "Confirmed Password must be the same as password.",
+      });
+
+    // hash new password
+    bcrypt.hash(newPassword, 10, (err, hash) => {
+      if (err) return res.json(err);
+
+      // update password
+      User.findByIdAndUpdate(
+        user._id,
+        {
+          $set: {
+            password: hash,
+          },
+        },
+        { new: true },
+        (err, user) => {
+          if (err) return res.json(err);
+
+          return res.json(user);
+        }
+      );
+    });
+  });
+};

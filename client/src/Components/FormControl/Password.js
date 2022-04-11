@@ -7,6 +7,7 @@ function Password({
   callback,
   minLength = 0,
   required,
+  setState = true,
 }) {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -25,7 +26,7 @@ function Password({
       <input
         type={showPassword ? "text" : "password"}
         name={name}
-        onChange={(e) => callback(e.target.value)}
+        onChange={(e) => (setState ? callback(e.target.value) : callback(e))}
         placeholder={placeholder}
         className="mt-2 block w-full px-3 py-1.5 border border-gray-300 bg-[#f6f6f6] rounded-md text-xs lg:text-sm 2xl:text-base shadow-sm placeholder-[#818181] 
               focus:outline-none focus:border-sky-500"

@@ -172,9 +172,11 @@ function PostForm({
         )
         .then((res) => {
           props.history.push("/feed");
+
+          sendMail(forum);
         })
         .catch((err) => {
-          console.log(err.response);
+          console.error(err);
         });
     }
 
@@ -294,6 +296,33 @@ function PostForm({
           });
       }
     }
+  }
+
+  function sendMail(f) {
+    let forum = forums.find((forum) => forum._id === f);
+
+    let forumName = forum?.forumName;
+    let forumId = forum?._id;
+
+    let mods = forum?.moderators;
+
+    mods = mods.map((moderator) => moderator.email);
+
+    let body = {
+      forumName,
+      forumId,
+      emails: mods,
+      type: "post",
+    };
+
+    axios
+      .post("/api/mail/requests", body)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
   return (

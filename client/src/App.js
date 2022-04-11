@@ -23,6 +23,7 @@ import Notifications from "./Components/Navbar/Notifications";
 import Verify from "./Components/Auth/Verify";
 import Confirm from "./Components/Auth/Confirm";
 import Forget from "./Components/Auth/Forget";
+import Reset from "./Components/Auth/Reset";
 
 import { ForumContext } from "./Contexts/ForumContext";
 import { PostContext } from "./Contexts/PostContext";
@@ -109,6 +110,13 @@ function App() {
             exact
             path="/forgot-password"
             render={() => <Forget title={"Forget Password | CampusTalk"} />}
+          />
+
+          {/* reset password */}
+          <Route
+            exact
+            path="/reset-password"
+            render={() => <Reset title={"Reset Password | CampusTalk"} />}
           />
 
           {/* Join Forum */}
