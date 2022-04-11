@@ -1,7 +1,7 @@
 function ProgressBar({ progress }) {
   return (
     <div
-      className="w-[30rem] my-4 bg-gray-200 rounded-full dark:bg-gray-700 z-10"
+      className="w-full lg:w-[30rem] my-4 bg-gray-200 rounded-full dark:bg-gray-700 z-10"
       hidden={!progress}
     >
       <div

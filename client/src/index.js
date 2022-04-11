@@ -10,6 +10,7 @@ import { SocketProvider } from "./Contexts/SocketContext";
 import { ChatProvider } from "./Contexts/ChatContext";
 import { FileProvider } from "./Contexts/FileContext";
 import { EventProvider } from "./Contexts/EventContext";
+import { NotificationProvider } from "./Contexts/NotificationContext";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -21,7 +22,9 @@ ReactDOM.render(
               <FileProvider>
                 <ChatProvider>
                   <EventProvider>
-                    <App />
+                    <NotificationProvider>
+                      <App />
+                    </NotificationProvider>
                   </EventProvider>
                 </ChatProvider>
               </FileProvider>

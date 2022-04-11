@@ -81,6 +81,14 @@ function PostForm({
     }
   }, [file, text, forum, user]);
 
+  useEffect(() => {
+    let mounted = true;
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
   function handleRemoveFile(e, index) {
     // if index is not defined, setFormData.file to null
     if (!index && index !== 0) {
@@ -118,7 +126,7 @@ function PostForm({
     formData.append("text", text);
     formData.append("anonymous", anonymous);
     formData.append("important", important);
-    formData.append("forumId", forum._id || forum);
+    formData.append("forumId", forum || forum?._id);
     formData.append("authorId", user._id);
     // if file is an array, add each file to formData
     if (file instanceof Array) {
@@ -159,7 +167,7 @@ function PostForm({
       axios
         .post(
           `/api/notifications/requestNotification`,
-          { forum: forum._id || forum, type: "postRequest" },
+          { forum: forum || forum?._id, type: "postRequest" },
           headers
         )
         .then((res) => {
@@ -201,7 +209,7 @@ function PostForm({
       if (fileType === "image" || !fileType) {
         axios
           .put(
-            `/api/forums/${forum._id}/posts/update/${postId}`,
+            `/api/forums/${forum || forum?._id}/posts/update/${postId}`,
             formData,
             headers
           )
@@ -214,7 +222,9 @@ function PostForm({
       } else if (fileType === "video") {
         axios
           .put(
-            `/api/forums/${forum._id}/posts/update-vid-post/${postId}`,
+            `/api/forums/${
+              forum || forum?._id
+            }/posts/update-vid-post/${postId}`,
             formData,
             headers
           )
@@ -227,7 +237,9 @@ function PostForm({
       } else if (fileType === "doc") {
         axios
           .put(
-            `/api/forums/${forum._id}/posts/update-doc-post/${postId}`,
+            `/api/forums/${
+              forum || forum?._id
+            }/posts/update-doc-post/${postId}`,
             formData,
             headers
           )
@@ -242,17 +254,22 @@ function PostForm({
       // if fileType is image or null
       if (fileType === "image" || !fileType) {
         axios
-          .post(`/api/forums/${forum._id}/posts/create-post`, formData, headers)
+          .post(
+            `/api/forums/${forum || forum?._id}/posts/create-post`,
+            formData,
+            headers
+          )
           .then((res) => {
             onSuccess(res.data, headers);
           })
           .catch((err) => {
             console.error(err);
+            console.log(err.response);
           });
       } else if (fileType === "video") {
         axios
           .post(
-            `/api/forums/${forum._id}/posts/create-vid-post`,
+            `/api/forums/${forum || forum?._id}/posts/create-vid-post`,
             formData,
             headers
           )
@@ -265,7 +282,7 @@ function PostForm({
       } else if (fileType === "doc") {
         axios
           .post(
-            `/api/forums/${forum._id}/posts/create-doc-post`,
+            `/api/forums/${forum || forum?._id}/posts/create-doc-post`,
             formData,
             headers
           )

@@ -32,7 +32,11 @@ function PostFile({ post, handleBack }) {
   }
 
   return (
-    <section className="col-span-3 bg-black relative">
+    <section
+      className={`${
+        !post.file || !post.file.length ? "hidden" : ""
+      } lg:col-span-3 bg-black relative`}
+    >
       {/* file */}
       {post.file.length ? (
         <File
@@ -51,7 +55,7 @@ function PostFile({ post, handleBack }) {
       {/* back button */}
       <button
         onClick={handleBack}
-        className="absolute left-5 top-4 bg-[rgba(255,255,255,0.2)]  p-1 rounded-full"
+        className="absolute left-3 lg:left-5 top-3 lg:top-4 bg-[rgba(10,10,10,0.5)] lg:bg-[rgba(255,255,255,0.2)]  p-1 rounded-full"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -70,7 +74,7 @@ function PostFile({ post, handleBack }) {
       {/* download button */}
       <button
         onClick={handleDownload}
-        className="absolute right-5 top-4 bg-[rgba(255,255,255,0.2)] p-1 rounded-full"
+        className="absolute right-5 top-4 bg-[rgba(10,10,10,0.5)] lg:bg-[rgba(255,255,255,0.2)] p-1 rounded-full"
         hidden={!post.file.length}
       >
         <svg

@@ -34,7 +34,7 @@ function MobileTabs({
           className={`mx-1 text-[.7rem] py-2 px-1 ${
             tab === "posts"
               ? "border-b-2 border-primary text-primary dark:text-primary-dark"
-              : ""
+              : "dark:text-darkLight"
           }`}
           onClick={() => toggleTab("posts")}
         >
@@ -46,7 +46,7 @@ function MobileTabs({
           className={`mx-1 text-[.7rem] py-2 px-1 ${
             tab === "members"
               ? "border-b-2 border-primary text-primary dark:text-primary-dark"
-              : ""
+              : "dark:text-darkLight"
           }`}
           onClick={() => toggleTab("members")}
         >
@@ -58,7 +58,7 @@ function MobileTabs({
           className={`mx-1 text-[.7rem] py-2 px-1  ${
             tab === "info"
               ? "border-b-2 border-primary text-primary dark:text-primary-dark"
-              : ""
+              : "dark:text-darkLight"
           }`}
           onClick={() => toggleTab("info")}
         >
@@ -70,7 +70,7 @@ function MobileTabs({
           className={`mx-1 text-[.7rem] py-2 px-1 ${
             tab === "postRequests"
               ? "border-b-2 border-primary text-primary dark:text-primary-dark"
-              : ""
+              : "dark:text-darkLight"
           }`}
           onClick={() => toggleTab("postRequests")}
           hidden={!isModerator}
@@ -88,7 +88,7 @@ function MobileTabs({
           className={`mx-1 text-[.7rem] py-2 px-1 ${
             tab === "joinRequests"
               ? "border-b-2 border-primary text-primary dark:text-primary-dark"
-              : ""
+              : "dark:text-darkLight"
           }`}
           onClick={() => toggleTab("joinRequests")}
           hidden={!isModerator}

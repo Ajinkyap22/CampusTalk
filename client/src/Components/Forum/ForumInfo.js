@@ -62,6 +62,28 @@ function ForumInfo({
     setShowModal(!showModal);
   }
 
+  function deleteForum() {
+    let headers = {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(localStorage.getItem("user")).token
+        }`,
+      },
+    };
+    let body = {
+      text: "Are you sure you want to delete this forum?",
+    };
+
+    axios
+      .post("/api/mail/send_mail", body, headers)
+      .then((res) => {
+        console.log("mail sent");
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
   return (
     <div className="bg-white dark:bg-darkSecondary shadow-base max-w-[22rem] pb-1 rounded">
       {/* title */}
@@ -148,7 +170,10 @@ function ForumInfo({
           </button>
 
           {isModerator && (
-            <button className="mx-auto w-1/2 block text-centr p-2 py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-red-500 bg-transparent text-red-500 dark:text-[#ff5656] rounded-full hover:bg-red-500 hover:text-white dark:hover:text-darkLight">
+            <button
+              onClick={deleteForum}
+              className="mx-auto w-1/2 block text-centr p-2 py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-red-500 bg-transparent text-red-500 dark:text-[#ff5656] rounded-full hover:bg-red-500 hover:text-white dark:hover:text-darkLight"
+            >
               Delete Forum
             </button>
           )}

@@ -19,6 +19,7 @@ import FileView from "./Components/Chats/FileView";
 import Events from "./Components/Events/Events";
 import Event from "./Components/Events/Event";
 import CreateEvent from "./Components/Events/CreateEvent";
+import Notifications from "./Components/Navbar/Notifications";
 
 import { ForumContext } from "./Contexts/ForumContext";
 import { PostContext } from "./Contexts/PostContext";
@@ -26,6 +27,7 @@ import { ModeContext } from "./Contexts/ModeContext";
 import { FileContext } from "./Contexts/FileContext";
 import { TabProvider } from "./Contexts/TabContext";
 import { EventContext } from "./Contexts/EventContext";
+import { NotificationContext } from "./Contexts/NotificationContext";
 
 function App() {
   const [forums, setForums] = useContext(ForumContext);
@@ -33,6 +35,14 @@ function App() {
   const [files] = useContext(FileContext);
   const [posts] = useContext(PostContext);
   const [mode] = useContext(ModeContext);
+  const [
+    notifications,
+    setNotifications,
+    showNotifications,
+    setShowNotifications,
+    notificationCount,
+    setNotificationCount,
+  ] = useContext(NotificationContext);
 
   useEffect(() => {
     if (mode === "light") {
@@ -245,6 +255,24 @@ function App() {
               exact
               path="/create-event"
               render={() => <CreateEvent title={"Create Event | CampusTalk"} />}
+            />
+
+            {/* notifications */}
+            <Route
+              exact
+              path="/notifications"
+              render={() => (
+                <Notifications
+                  title={"Notifications | CampusTalk"}
+                  isMobile={true}
+                  showNotifications={showNotifications}
+                  setShowNotifications={setShowNotifications}
+                  notifications={notifications}
+                  setNotifications={setNotifications}
+                  setNotificationCount={setNotificationCount}
+                  classes="z-20 bg-white dark:bg-[#3e3d3d] flex flex-col"
+                />
+              )}
             />
           </TabProvider>
         </Switch>

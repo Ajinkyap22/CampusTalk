@@ -1,10 +1,14 @@
 import { ModeContext } from "../../Contexts/ModeContext";
+import { SocketContext } from "../../Contexts/SocketContext";
+import { UserContext } from "../../Contexts/UserContext";
 import { NavLink } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import Logo from "../Logo";
 
-function MobileNav({ user, handleClick, activeTab, notificationCount }) {
+function MobileNav({ handleClick, activeTab, notificationCount }) {
   const [mode, setMode] = useContext(ModeContext);
+  const [user, setUser] = useContext(UserContext);
+  const [socket] = useContext(SocketContext);
   const [toggle, setToggle] = useState(true);
 
   useEffect(() => {
@@ -18,6 +22,12 @@ function MobileNav({ user, handleClick, activeTab, notificationCount }) {
   function toggleMode() {
     setToggle(!toggle);
     mode === "light" ? setMode("dark") : setMode("light");
+  }
+
+  function logout() {
+    localStorage.removeItem("user");
+    setUser(undefined);
+    socket.current.emit("logout", user._id);
   }
 
   return (
@@ -67,7 +77,7 @@ function MobileNav({ user, handleClick, activeTab, notificationCount }) {
           <NavLink
             to={"/notifications"}
             onClick={() => handleClick("notifications")}
-            className={`mx-1 text-xsm lg:text-sm flex flex-col justify-between items-center 2xl:text-lg pb-0.5 lg:py-3 2xl:py-2.5 px-1 ${
+            className={`mx-1 text-xsm lg:text-sm flex flex-col relative justify-between items-center 2xl:text-lg pb-0.5 lg:py-3 2xl:py-2.5 px-1 ${
               activeTab === "notifications"
                 ? "border-b-[2px] border-primary text-primary dark:text-primary-dark"
                 : "dark:text-darkLight"
@@ -82,7 +92,7 @@ function MobileNav({ user, handleClick, activeTab, notificationCount }) {
             </svg>
 
             {notificationCount > 0 && (
-              <span className="text-xsmm absolute top-0 left-2 inline bg-[red] rounded-full px-1.5 text-white">
+              <span className="text-[0.55rem] lg:text-xsm absolute top-[-2px] lg:top-0 left-3 lg:left-2 inline bg-[red] rounded-full px-1.5 text-white">
                 {notificationCount}
               </span>
             )}
@@ -117,6 +127,28 @@ function MobileNav({ user, handleClick, activeTab, notificationCount }) {
                 />
               </svg>
             )}
+          </NavLink>
+
+          {/* logout */}
+          <NavLink
+            to={"/"}
+            onClick={logout}
+            className="mr-1 text-xsm lg:text-sm flex items-center relative 2xl:text-lg pb-0.5 lg:py-3 2xl:py-2.5 px-1"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-5 mx-auto mb-0.5 fill-[#818181] dark:fill-gray-400"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fillRule="evenodd"
+                d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"
+              />
+              <path
+                fillRule="evenodd"
+                d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"
+              />
+            </svg>
           </NavLink>
         </div>
       </div>

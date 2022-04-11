@@ -1,30 +1,44 @@
-import { useRef } from "react";
+import { TabContext } from "../../Contexts/TabContext";
+import { UserContext } from "../../Contexts/UserContext";
+import { useRef, useEffect, useContext } from "react";
 import useOutsideAlerter from "../../Hooks/useOutsideAlerter";
 import Notification from "./Notification";
 import axios from "axios";
-import { useEffect } from "react";
+import Nav from "./Nav";
 
 function Notifications({
   setShowNotifications,
   notifications,
   setNotifications,
   setNotificationCount,
-  user,
+  title,
+  classes,
+  isMobile = false,
 }) {
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef, setShowNotifications);
+  const [tab, setTab] = useContext(TabContext);
+  const [user] = useContext(UserContext);
 
   useEffect(() => {
     let mounted = true;
 
     if (mounted) {
       setNotificationCount(0);
+
+      if (isMobile) setTab("notifications");
     }
 
     return () => {
       mounted = false;
     };
   }, []);
+
+  useEffect(() => {
+    if (!isMobile) return;
+
+    document.title = title || "Notifications | CampusTalk";
+  }, [title, isMobile]);
 
   function clearNotifications() {
     let headers = {
@@ -47,10 +61,9 @@ function Notifications({
   }
 
   return (
-    <div
-      ref={wrapperRef}
-      className="absolute max-h-[80vh] p-0 top-14 right-2 z-20 bg-white dark:bg-[#3e3d3d] shadow-base flex flex-col max-w-[32rem] rounded-lg overflow-auto postData"
-    >
+    <div ref={wrapperRef} className={classes}>
+      {isMobile && <Nav />}
+
       <button
         className="text-secondary border-b dark:border-secondary self-end dark:text-gray-300 text-right p-2 mx-2 text-sm"
         hidden={!notifications.length}

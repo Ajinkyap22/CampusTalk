@@ -15,6 +15,7 @@ const replyRouter = require("./routes/reply");
 const chatRouter = require("./routes/chat");
 const notificationRouter = require("./routes/notification");
 const eventRouter = require("./routes/event");
+const mailRouter = require("./routes/mail");
 
 const app = express();
 
@@ -41,5 +42,6 @@ app.use("/api/forums/:id/posts/:id/comments/:commentId/replies", replyRouter);
 app.use("/api/chats", chatRouter);
 app.use("/api/notifications", notificationRouter);
 app.use("/api/events", eventRouter);
+app.use("/api/mail", mailRouter);
 
 module.exports = app;

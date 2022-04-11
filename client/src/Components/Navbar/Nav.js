@@ -1,5 +1,6 @@
 import { UserContext } from "../../Contexts/UserContext";
 import { TabContext } from "../../Contexts/TabContext";
+import { NotificationContext } from "../../Contexts/NotificationContext";
 import { NavLink } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
 import Dropdown from "./Dropdown";
@@ -11,10 +12,16 @@ import axios from "axios";
 function Nav() {
   const [activeTab, setActiveTab] = useContext(TabContext);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [showNotifications, setShowNotifications] = useState(false);
-  const [notifications, setNotifications] = useState([]);
+  const [
+    notifications,
+    setNotifications,
+    showNotifications,
+    setShowNotifications,
+    notificationCount,
+    setNotificationCount,
+  ] = useContext(NotificationContext);
+
   const [user, setUser] = useContext(UserContext);
-  const [notificationCount, setNotificationCount] = useState(0);
 
   useEffect(() => {
     if (!user) return;
@@ -186,7 +193,7 @@ function Nav() {
           notifications={notifications}
           setNotifications={setNotifications}
           setNotificationCount={setNotificationCount}
-          user={user}
+          classes="absolute max-h-[80vh] p-0 top-14 right-2 z-20 bg-white dark:bg-[#3e3d3d] shadow-base flex flex-col max-w-[32rem] rounded-lg overflow-auto postData"
         />
       )}
 
@@ -194,7 +201,12 @@ function Nav() {
       <Dropdown showDropdown={showDropdown} setShowDropdown={setShowDropdown} />
 
       {/* mobile nav */}
-      <MobileNav user={user} handleClick={handleClick} activeTab={activeTab} />
+      <MobileNav
+        user={user}
+        handleClick={handleClick}
+        activeTab={activeTab}
+        notificationCount={notificationCount}
+      />
     </nav>
   );
 }

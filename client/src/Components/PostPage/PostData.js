@@ -22,7 +22,7 @@ function PostData({ post }) {
   }, []);
 
   return (
-    <section className="postData sticky top-0 max-h-screen col-span-1 bg-white dark:bg-darkSecondary py-2 pb-0 overflow-auto w-full">
+    <section className="lg:postData lg:sticky lg:top-0 lg:max-h-screen lg:col-span-1 bg-white dark:bg-darkSecondary py-2 pb-0 lg:overflow-auto w-full">
       <PostInfo post={post} />
 
       {/* caption */}
