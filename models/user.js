@@ -12,6 +12,7 @@ const UserSchema = new Schema({
   forums: [{ type: Schema.Types.ObjectId, ref: "Forum" }],
   notifications: [{ type: Schema.Types.ObjectId, ref: "Notification" }],
   timestamp: { type: Date, default: Date.now },
+  active: { type: Boolean, default: false },
 });
 
 module.exports = mongoose.model("User", UserSchema);

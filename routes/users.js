@@ -16,6 +16,9 @@ router.post("/login", userController.login_post);
 // POST signup
 router.post("/signup", userController.signup_post);
 
+// confirm account
+router.put("/confirm/:id", userController.confirm_account);
+
 // google auth
 router.post("/google", userController.google);
 

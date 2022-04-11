@@ -101,11 +101,38 @@ function UserInfo({ title, ...props }) {
       .then((res) => {
         setUser(res.data);
 
-        props.history.push("/join-forum");
+        sendVerificationMail(res.data.firstName, res.data.email, res.data._id);
+
+        props.history.push("/verify");
       })
       .catch((err) => {
         console.error(err);
         setError(err.response || err);
+      });
+  }
+
+  function sendVerificationMail(name, email, id) {
+    let headers = {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(localStorage.getItem("user")).token
+        }`,
+      },
+    };
+
+    let body = {
+      name,
+      email,
+      confirmationCode: id,
+    };
+
+    axios
+      .post("/api/mail/verification", body, headers)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
       });
   }
 

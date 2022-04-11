@@ -172,7 +172,7 @@ function Signup({ title, ...props }) {
               </Link>
 
               <Link
-                to="/"
+                to="/forgot-password"
                 className="text-xsm md:text-xs text-primary block mt-1 md:mt-2 lg:mt-3"
               >
                 Forgot Password?

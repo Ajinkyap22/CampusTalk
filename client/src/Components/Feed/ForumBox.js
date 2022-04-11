@@ -8,7 +8,7 @@ function ForumBox({ user, fixed = true, onProfilePage = false }) {
       className={`${
         onProfilePage ? "" : "hidden"
       } md:block bg-white dark:bg-darkSecondary shadow-base lg:max-w-[18rem] xl:max-w-[21rem] 2xl:max-w-[26rem] 3xl:max-w-[30rem] my-4 rounded ${
-        fixed ? "fixed xl:top-[60%] 2xl:top-1/3" : ""
+        fixed ? "fixed xl:top-2/3 2xl:top-1/3" : ""
       }`}
     >
       {/* title */}

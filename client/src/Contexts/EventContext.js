@@ -14,7 +14,9 @@ export function EventProvider({ children }) {
     let newUser;
 
     if (!user) {
-      newUser = JSON.parse(localStorage.getItem("user")).user;
+      newUser = JSON.parse(localStorage.getItem("user"))?.user;
+
+      if (!newUser) return;
     } else {
       newUser = user;
     }

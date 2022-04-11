@@ -20,6 +20,9 @@ import Events from "./Components/Events/Events";
 import Event from "./Components/Events/Event";
 import CreateEvent from "./Components/Events/CreateEvent";
 import Notifications from "./Components/Navbar/Notifications";
+import Verify from "./Components/Auth/Verify";
+import Confirm from "./Components/Auth/Confirm";
+import Forget from "./Components/Auth/Forget";
 
 import { ForumContext } from "./Contexts/ForumContext";
 import { PostContext } from "./Contexts/PostContext";
@@ -28,6 +31,7 @@ import { FileContext } from "./Contexts/FileContext";
 import { TabProvider } from "./Contexts/TabContext";
 import { EventContext } from "./Contexts/EventContext";
 import { NotificationContext } from "./Contexts/NotificationContext";
+import { UserContext } from "./Contexts/UserContext";
 
 function App() {
   const [forums, setForums] = useContext(ForumContext);
@@ -35,6 +39,7 @@ function App() {
   const [files] = useContext(FileContext);
   const [posts] = useContext(PostContext);
   const [mode] = useContext(ModeContext);
+  const [user] = useContext(UserContext);
   const [
     notifications,
     setNotifications,
@@ -79,6 +84,31 @@ function App() {
             exact
             path="/user-info"
             render={() => <UserInfo title={"User Profile | CampusTalk"} />}
+          />
+
+          {/* verify page */}
+          <Route
+            exact
+            path="/verify"
+            render={() => <Verify title={"Account Created | CampusTalk"} />}
+          />
+
+          {/* confirm page */}
+          {user && (
+            <Route
+              exact
+              path={`/confirm/${user._id}`}
+              render={() => (
+                <Confirm title={"Account Confirmed | CampusTalk"} />
+              )}
+            />
+          )}
+
+          {/* forget password */}
+          <Route
+            exact
+            path="/forgot-password"
+            render={() => <Forget title={"Forget Password | CampusTalk"} />}
           />
 
           {/* Join Forum */}

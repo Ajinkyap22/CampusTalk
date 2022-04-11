@@ -103,50 +103,66 @@ exports.signup_post = [
     bcrypt.hash(req.body.password, 10, (err, hash) => {
       if (err) return next(err);
 
-      User.create({ email: req.body.email, password: hash }, (err, user) => {
-        if (err) return next(err);
+      User.create(
+        { email: req.body.email, password: hash, active: false },
+        (err, user) => {
+          if (err) return next(err);
 
-        jwt.sign(
-          { _id: user._id, email: user.email },
-          process.env.SECRET,
-          { expiresIn: "7d" },
-          (err, token) => {
-            if (err) return next(err);
+          jwt.sign(
+            { _id: user._id, email: user.email },
+            process.env.SECRET,
+            { expiresIn: "7d" },
+            (err, token) => {
+              if (err) return next(err);
 
-            User.findById(user._id)
-              .populate({
-                path: "forums",
-                populate: { path: "members moderators" },
-              })
-              .exec((err, user) => {
-                if (err) return res.json(err);
+              User.findById(user._id)
+                .populate({
+                  path: "forums",
+                  populate: { path: "members moderators" },
+                })
+                .exec((err, user) => {
+                  if (err) return res.json(err);
 
-                // get token expiration date
-                const expirationDate = new Date(
-                  new Date().getTime() + 7 * 24 * 60 * 60 * 1000
-                );
+                  // get token expiration date
+                  const expirationDate = new Date(
+                    new Date().getTime() + 7 * 24 * 60 * 60 * 1000
+                  );
 
-                return res.json({
-                  token: token,
-                  expirationDate: expirationDate,
-                  user,
+                  return res.json({
+                    token: token,
+                    expirationDate: expirationDate,
+                    user,
+                  });
                 });
-              });
-
-            // return res.status(200).json({
-            //   token,
-            //   user: {
-            //     _id: user._id,
-            //     email: user.email,
-            //   },
-            //   message: "Signup successful",
-            // });
-          }
-        );
-      });
+            }
+          );
+        }
+      );
     });
   },
 ];
+
+// confirm account
+exports.confirm_account = function (req, res) {
+  try {
+    const { id } = req.params;
+
+    User.findByIdAndUpdate(
+      id,
+      {
+        $set: { active: true },
+      },
+      { new: true },
+      (err, user) => {
+        if (err) return res.json(err);
+
+        return res.json(user);
+      }
+    );
+  } catch (err) {
+    return res.json(err);
+  }
+};
 
 // get single user
 exports.user = async function (req, res) {

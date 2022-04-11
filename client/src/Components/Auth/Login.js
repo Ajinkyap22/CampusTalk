@@ -71,7 +71,11 @@ function Login({ title, ...props }) {
         if (res.data.user.forums.length > 0) {
           props.history.push("/feed");
         } else if (res.data.user.firstName) {
-          props.history.push("/join-forum");
+          if (res.data.user.active === false) {
+            props.history.push("verfiy");
+          } else {
+            props.history.push("/join-forum");
+          }
         } else {
           props.history.push("/user-info");
         }
@@ -150,7 +154,7 @@ function Login({ title, ...props }) {
               </Link>
 
               <Link
-                to="/"
+                to="/forgot-password"
                 className="text-xsm md:text-xs text-primary block mt-1 md:mt-2 lg:mt-3"
               >
                 Forgot Password?
