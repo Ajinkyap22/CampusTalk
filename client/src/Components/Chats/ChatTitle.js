@@ -29,7 +29,7 @@ function ChatTitle({
   }, []);
 
   return (
-    <div className="w-full sticky top-0 z-10 bg-primary-light flex justify-between items-center p-3 border-b border-primary-light">
+    <div className="w-full sticky top-0 z-10 row-span-1 bg-primary-light flex justify-between items-center p-3 border-b border-primary-light">
       {/* picture and name */}
       <div className="flex items-center">
         {/* back button for mobile */}

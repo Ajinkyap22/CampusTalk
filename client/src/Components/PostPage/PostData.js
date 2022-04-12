@@ -46,6 +46,7 @@ function PostData({ post }) {
             comment={comment}
             key={i}
             forumId={post.forum._id}
+            forumName={post.forum.forumName}
             postId={post._id}
             comments={comments}
             setComments={setComments}
@@ -59,6 +60,9 @@ function PostData({ post }) {
         forumId={post.forum._id}
         postId={post._id}
         postAuthorId={post.author._id}
+        postAuthorMail={post.author.email}
+        postAuthorName={post.author.firstName}
+        forumName={post.forum.forumName}
         comments={comments}
         setComments={setComments}
       />

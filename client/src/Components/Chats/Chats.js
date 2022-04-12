@@ -37,7 +37,7 @@ function Chats({ title }) {
   }, []);
 
   return (
-    <main className="w-full h-[calc(100vh_-_3.5rem)] bg-white dark:bg-dark">
+    <main className="w-full h-[calc(100vh_-_3.5rem)] bg-white overflow-hidden lg:overflow-visible dark:bg-dark">
       <Nav />
 
       <section className="lg:grid lg:grid-cols-6 w-full h-full">

@@ -1,10 +1,11 @@
 import { FileContext } from "../../Contexts/FileContext";
-import { useState, useEffect, useRef, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import ChatTitle from "./ChatTitle";
 import Message from "./Message";
 import MessageInput from "./MessageInput";
 import Loading from "../Loading";
+import Messages from "./Messages";
 
 function ChatPage({
   chat,
@@ -20,7 +21,6 @@ function ChatPage({
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [newMessage, setNewMessage] = useState(null);
-  const scrollRef = useRef(null);
 
   useEffect(() => {
     let isMounted = true;
@@ -35,7 +35,7 @@ function ChatPage({
         .then((res) => {
           setFiles([...files, ...res.data]);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.error(err));
 
       // listen for new messages
       socket?.on("message", (message) => {
@@ -73,12 +73,12 @@ function ChatPage({
   useEffect(() => {
     // get messages
     axios
-      .get(`/api/chats/messages/${chat._id}`)
+      .get(`/api/chats/messages/${chat._id}/${user?._id}`)
       .then((res) => {
         setMessages(res.data);
         setLoading(false);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => console.log(err.response));
   }, [chat]);
 
   useEffect(() => {
@@ -87,12 +87,8 @@ function ChatPage({
       setMessages((messages) => [...messages, newMessage]);
   }, [newMessage, receiver]);
 
-  useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
-
   return (
-    <div className="lg:col-span-4 h-full lg:flex-col justify-between dark:bg-darkSecondary bg-[#F0F2F5] overflow-auto relative">
+    <div className="lg:col-span-4 h-full lg:grid grid-cols-1 grid-rows-10 justify-between dark:bg-darkSecondary bg-[#F0F2F5] overflow-auto relative">
       {/* chat title */}
       <ChatTitle
         receiver={receiver}
@@ -105,17 +101,13 @@ function ChatPage({
 
       {/* messages */}
       {loading ? (
-        <div className="text-center mt-8">
+        <div className="text-center mt-8 row-span-8">
           <Loading />
         </div>
       ) : (
-        <div className="overflow-auto h-full pb-14 pt-2 postData">
+        <div className="pt-2 row-span-8 overflow-auto postData">
           {messages && messages.length ? (
-            messages.map((message, i) => (
-              <div ref={scrollRef} key={i}>
-                <Message message={message} user={user} />
-              </div>
-            ))
+            <Messages messages={messages} user={user} loading={loading} />
           ) : (
             <div className="p-3 text-center pt-16 text-secondary dark:text-darkLight">
               <svg

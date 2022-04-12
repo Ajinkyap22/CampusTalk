@@ -11,4 +11,10 @@ router.post("/reset-password", mailController.reset_password);
 // requests mail
 router.post("/requests", mailController.post_requests_mail);
 
+// comment mail
+router.post("/comment", mailController.comment_mail);
+
+// reply mail
+router.post("/reply", mailController.reply_mail);
+
 module.exports = router;

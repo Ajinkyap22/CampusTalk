@@ -13,6 +13,7 @@ import FAQ from "./FAQ";
 import LogoCropped from "../LogoCropped";
 import Loading from "../Loading";
 import EventsBox from "./EventsBox";
+import MobileActions from "./MobileActions";
 
 const faqData = [
   {
@@ -64,7 +65,7 @@ function Feed({ title }) {
     <main className="w-full min-h-full bg-[#F0F2F5] dark:bg-dark">
       <Nav />
 
-      <section className="flex justify-evenly md:w-full mx-auto h-full">
+      <section className="flex justify-evenly md:w-full mx-auto h-full relative">
         <div>
           {/* faq */}
           <FAQ faqData={faqData} />
@@ -138,6 +139,8 @@ function Feed({ title }) {
           {/* forums joined box */}
           <ForumBox user={user} />
         </div>
+
+        <MobileActions />
       </section>
     </main>
   );

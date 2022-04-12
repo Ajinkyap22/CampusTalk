@@ -9,11 +9,10 @@ exports.verifiation_mail = (req, res) => {
   let { name, email, confirmationCode } = req.body;
 
   const msg = {
-    to: "palaskarap15@gmail.com",
+    to: email,
     from: process.env.MAIL_FROM,
     subject: "Please confirm your CampusTalk account",
-    html: `<h1>Email Confirmation</h1>
-    <h2>Hello ${name}</h2>
+    html: `<p>Hey ${name}!</p>
     <p>Thank you for joining CampusTalk. Please confirm your account by clicking on the following link</p>
     <a href=http://localhost:3001/confirm/${confirmationCode}>Confirm Account</a>
     </div>`,
@@ -49,11 +48,10 @@ exports.reset_password = (req, res) => {
       name = user.firstName;
 
       const msg = {
-        to: "palaskarap15@gmail.com", // Change to your recipient
+        to: email, // Change to your recipient
         from: process.env.MAIL_FROM, // Change to your verified sender
         subject: "Link to reset your CampusTalk password",
-        html: `<h1>Reset Password</h1>
-          <h2>Hello ${name}</h2>
+        html: `<p>Hey ${name}!</p>
           <p>You requested to reset your CampusTalk password. You can reset your password by clicking on the following link</p>
           <a href=http://localhost:3001/reset-password>Reset Password</a>
           </div>`,
@@ -81,11 +79,10 @@ exports.post_requests_mail = (req, res) => {
   let { emails, forumName, type, forumId } = req.body;
 
   const msg = {
-    to: ["palaskarap15@gmail.com", "palaskarajinkya22@gmail.com"],
+    to: emails,
     from: process.env.MAIL_FROM,
     subject: `New ${type} requests in ${forumName}`,
-    html: `<h1>New ${type} Requests</h1>
-    <h2>Hello fellow Moderator</h2>
+    html: `<p>Hey fellow Moderator!</p>
     <p>There are new ${type} requests in ${forumName} waiting to be approved by you. Click on the below link to view them</p>
     <a href=http://localhost:3001/forums/${forumId}/${type}Requests>View Requests</a>
     </div>`,
@@ -107,5 +104,62 @@ exports.post_requests_mail = (req, res) => {
 };
 
 // comment mail
+exports.comment_mail = (req, res) => {
+  let { email, name, forumName, author, forumId, postId } = req.body;
+
+  const msg = {
+    to: email,
+    from: process.env.MAIL_FROM,
+    subject: `${author} commented on your post in ${forumName}`,
+    html: `<p>Hey ${name}!</p>
+    <p>${author} commented on your post in ${forumName}. Click on the below link to view the comments.</p>
+    <a href=http://localhost:3001/forums/${forumId}/posts/${postId}>View Comments</a>
+    </div>`,
+  };
+
+  sgMail
+    .send(msg)
+    .then(() => {
+      res.status(200).json({
+        message: "mail sent",
+      });
+    })
+    .catch((error) => {
+      res.status(500).json({
+        message: "mail not sent",
+        error: error,
+      });
+    });
+};
 
 // reply mail
+exports.reply_mail = (req, res) => {
+  let { email, name, forumName, author, forumId, postId } = req.body;
+
+  const msg = {
+    to: email,
+    from: process.env.MAIL_FROM,
+    subject: `${author} replied to your comment on a post in ${forumName}`,
+    html: `<p>Hey ${name}!</p>
+    <p>${author} replied to your comment on a post in ${forumName}. Click on the below link to view the reply.</p>
+    <a href=http://localhost:3001/forums/${forumId}/posts/${postId}>View Reply</a>
+    </div>`,
+  };
+
+  sgMail
+    .send(msg)
+    .then(() => {
+      res.status(200).json({
+        message: "mail sent",
+      });
+    })
+    .catch((error) => {
+      res.status(500).json({
+        message: "mail not sent",
+        error: error,
+      });
+    });
+};
+
+// change from env variable
+// make forget password more secure

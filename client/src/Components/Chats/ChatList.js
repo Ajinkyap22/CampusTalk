@@ -17,13 +17,15 @@ function ChatList({
   useEffect(() => {
     let mounted = true;
     if (mounted) {
-      axios
-        .get(`/api/chats/${user?._id}`)
-        .then((res) => {
-          setChats(res.data);
-          setLoading(false);
-        })
-        .catch((err) => console.error(err));
+      user &&
+        axios
+          .get(`/api/chats/${user?._id}`)
+          .then((res) => {
+            setChats(res.data);
+
+            setLoading(false);
+          })
+          .catch((err) => console.error(err));
 
       // on new chat
       socket.current?.on("newChat", ({ chat }) => {
@@ -62,7 +64,7 @@ function ChatList({
 
       {/* chat preview */}
       {loading ? (
-        <div className="text-center mt-10">
+        <div className="text-center mt-10 overflow-hidden">
           <Loading />
         </div>
       ) : chats && chats.length ? (

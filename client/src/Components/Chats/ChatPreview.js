@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 function ChatPreview({ chat, user, activeChat, setActiveChat, onlineUsers }) {
   const [receiver, setReceiver] = useState(null);
   const [online, setOnline] = useState(false);
+  const [unReadCount, setUnReadCount] = useState(0);
 
   useEffect(() => {
     let r = chat.members.find((member) => member._id !== user._id);
@@ -14,6 +15,11 @@ function ChatPreview({ chat, user, activeChat, setActiveChat, onlineUsers }) {
       setOnline(false);
     }
   }, [onlineUsers]);
+
+  useEffect(() => {
+    setUnReadCount(chat.unReadCounts[user._id]);
+    console.log(chat.unReadCounts);
+  }, [chat]);
 
   function handleClick() {
     setActiveChat(chat);

@@ -5,7 +5,14 @@ const Message = require("../models/message");
 exports.createChat = async (req, res) => {
   try {
     const { members } = req.body;
-    let chat = new Chat({ members });
+    console.log(members);
+
+    let unReadCounts = {
+      [members[0]]: 0,
+      [members[1]]: 0,
+    };
+
+    let chat = new Chat({ members, unReadCounts });
     await chat.save();
 
     Chat.populate(chat, { path: "members" }, (err, newChat) => {
@@ -38,7 +45,18 @@ exports.getMessages = async (req, res) => {
       .populate("sender")
       .populate("receiver");
 
-    res.status(200).json(messages);
+    // update unReadCounts
+    Chat.findByIdAndUpdate(
+      req.params.chatId,
+      {
+        $set: { unReadCounts: { [req.params.userId]: 0 } },
+      },
+      { new: true }
+    ).exec((err, chat) => {
+      if (err) return res.status(500).json({ error: err.message });
+
+      res.status(200).json(messages);
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -58,14 +76,25 @@ exports.sendMessage = async (req, res) => {
 
     await message.save();
 
-    // populate sender and receiver
-    Message.populate(message, { path: "sender" }, (err, msg) => {
+    // update unReadCount
+    Chat.findByIdAndUpdate(
+      chat,
+      {
+        $inc: { unReadCounts: { [receiver]: 1 } },
+      },
+      { new: true }
+    ).exec((err, chat) => {
       if (err) return res.status(500).json({ error: err.message });
 
-      Message.populate(msg, { path: "receiver" }, (err, msg) => {
+      // populate sender and receiver
+      Message.populate(message, { path: "sender" }, (err, msg) => {
         if (err) return res.status(500).json({ error: err.message });
 
-        res.status(201).json(msg);
+        Message.populate(msg, { path: "receiver" }, (err, msg) => {
+          if (err) return res.status(500).json({ error: err.message });
+
+          res.status(201).json(msg);
+        });
       });
     });
   } catch (error) {
@@ -92,14 +121,25 @@ exports.sendFileMessage = async (req, res) => {
 
     await message.save();
 
-    // populate sender and receiver
-    Message.populate(message, { path: "sender" }, (err, msg) => {
+    // update unReadCount
+    Chat.findByIdAndUpdate(
+      chat,
+      {
+        $inc: { unReadCounts: { [receiver]: 1 } },
+      },
+      { new: true }
+    ).exec((err, chat) => {
       if (err) return res.status(500).json({ error: err.message });
 
-      Message.populate(msg, { path: "receiver" }, (err, msg) => {
+      // populate sender and receiver
+      Message.populate(message, { path: "sender" }, (err, msg) => {
         if (err) return res.status(500).json({ error: err.message });
 
-        res.status(201).json(msg);
+        Message.populate(msg, { path: "receiver" }, (err, msg) => {
+          if (err) return res.status(500).json({ error: err.message });
+
+          res.status(201).json(msg);
+        });
       });
     });
   } catch (error) {
@@ -152,7 +192,18 @@ exports.clearChat = async (req, res) => {
 
     await Message.deleteMany({ chat: req.params.chatId });
 
-    res.status(200).json(chat);
+    // update unReadCounts
+    Chat.findByIdAndUpdate(
+      chat,
+      {
+        $set: { unReadCounts: { [chat.members[0]]: 0, [chat.members[1]]: 0 } },
+      },
+      { new: true }
+    ).exec((err, chat) => {
+      if (err) return res.status(500).json({ error: err.message });
+
+      res.status(200).json(chat);
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

@@ -6,8 +6,11 @@ import axios from "axios";
 function ReplyForm({
   user,
   forumId,
+  forumName,
   postId,
   commentId,
+  commentAuthorName,
+  commentAuthorMail,
   replies,
   setReplies,
   comments,
@@ -158,9 +161,27 @@ function ReplyForm({
 
     axios
       .post(`/api/notifications/activityNotification`, body, headers)
+      .then(() => {
+        let body = {
+          author: `${user.firstName} ${user.lastName}`,
+          email: commentAuthorMail,
+          postId,
+          forumId,
+          name: commentAuthorName,
+          forumName,
+        };
+
+        sendMail(body);
+      })
       .catch((err) => {
         console.log(err.response);
       });
+  }
+
+  function sendMail(body) {
+    axios.post("/api/mail/reply", body).catch((err) => {
+      console.error(err);
+    });
   }
 
   function handleRemoveFile(e, index) {

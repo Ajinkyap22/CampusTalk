@@ -22,6 +22,7 @@
 
 .react-pdf__Page__textContent {
   max-width: 100% !important;
+  overflow: hidden;
 }
 
 .react-pdf__Page__textContent > * {

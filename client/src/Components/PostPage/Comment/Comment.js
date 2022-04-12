@@ -12,6 +12,7 @@ function Comment({
   moderators,
   comment,
   forumId,
+  forumName,
   postId,
   comments,
   setComments,
@@ -220,8 +221,11 @@ function Comment({
               user={user}
               replies={replies}
               forumId={forumId}
+              forumName={forumName}
               postId={postId}
               commentId={comment._id}
+              commentAuthorName={comment.author.firstName}
+              commentAuthorMail={comment.author.email}
               setReplies={setReplies}
               comments={comments}
               setComments={setComments}

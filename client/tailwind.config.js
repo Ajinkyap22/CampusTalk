@@ -31,6 +31,13 @@ module.exports = {
       "2xl": "1536px",
       "3xl": "1920px",
     },
+    gridTemplateRows: {
+      // prettier-ignore
+      '10': 'repeat(10, minmax(0, 1fr))',
+    },
+    gridRow: {
+      "span-8": "span 8 / span 8",
+    },
   },
   plugins: [],
   darkMode: "class",

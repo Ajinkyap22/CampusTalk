@@ -5,7 +5,16 @@ import axios from "axios";
 import FileInputs from "./FileInputs";
 import FilePreview from "../../Create Post/FilePreview";
 
-function CommentForm({ forumId, postId, postAuthorId, comments, setComments }) {
+function CommentForm({
+  forumId,
+  forumName,
+  postId,
+  postAuthorId,
+  postAuthorMail,
+  postAuthorName,
+  comments,
+  setComments,
+}) {
   const [user, setUser] = useContext(UserContext);
   const [posts, setPosts] = useContext(PostContext);
 
@@ -174,9 +183,27 @@ function CommentForm({ forumId, postId, postAuthorId, comments, setComments }) {
 
     axios
       .post(`/api/notifications/activityNotification`, body, headers)
+      .then(() => {
+        let body = {
+          author: `${user.firstName} ${user.lastName}`,
+          email: postAuthorMail,
+          postId,
+          forumId,
+          name: postAuthorName,
+          forumName,
+        };
+
+        sendMail(body);
+      })
       .catch((err) => {
-        console.log(err.response);
+        console.error(err);
       });
+  }
+
+  function sendMail(body) {
+    axios.post("/api/mail/comment", body).catch((err) => {
+      console.error(err);
+    });
   }
 
   return (

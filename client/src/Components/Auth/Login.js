@@ -46,7 +46,6 @@ function Login({ title, ...props }) {
       .then((res) => {
         localStorage.setItem("user", JSON.stringify(res.data));
         setUser(res.data.user);
-        socket.current.emit("join", res.data.user._id);
         props.history.push("/join-forum");
       })
       .catch((err) => {
@@ -66,7 +65,6 @@ function Login({ title, ...props }) {
       .then((res) => {
         localStorage.setItem("user", JSON.stringify(res.data));
         setUser(res.data.user);
-        socket.current.emit("join", res.data.user._id);
 
         if (res.data.user.forums.length > 0) {
           props.history.push("/feed");

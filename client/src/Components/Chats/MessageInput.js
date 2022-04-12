@@ -121,7 +121,7 @@ function MessageInput({ chat, user, receiver, setMessages, socket }) {
   }, [file]);
 
   return (
-    <div className="w-full p-2.5  bg-white dark:bg-dark shadow-base fixed bottom-0">
+    <div className="w-full p-2.5 row-span-1 bg-white dark:bg-dark shadow-base fixed bottom-0">
       <form className="flex items-center" onSubmit={handleSubmit} ref={formRef}>
         <FileInputs
           imageInput={imageInput}

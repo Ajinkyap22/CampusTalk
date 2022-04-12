@@ -34,7 +34,7 @@ function PostFile({ post, handleBack }) {
   return (
     <section
       className={`${
-        !post.file || !post.file.length ? "hidden" : ""
+        !post.file || !post.file.length ? "hidden lg:block" : ""
       } lg:col-span-3 bg-black relative`}
     >
       {/* file */}

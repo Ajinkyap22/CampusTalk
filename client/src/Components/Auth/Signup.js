@@ -72,7 +72,6 @@ function Signup({ title, ...props }) {
           JSON.stringify({ token: res.data.token, user: res.data.user })
         );
         setUser(res.data.user);
-        socket.current.emit("join", res.data.user._id);
         props.history.push("/user-info");
       })
       .catch((err) => {
