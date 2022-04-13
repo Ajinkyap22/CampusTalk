@@ -66,7 +66,7 @@ function Filter({
       {/* latest */}
       <button
         onClick={() => switchActiveFilter("latest")}
-        className="p-2 text-xsm xl:text-sm 2xl:text-lg 3xl:text-xl"
+        className="p-2 text-xsm lg:text-xs xl:text-sm 2xl:text-lg 3xl:text-xl"
       >
         <span
           className={`${
@@ -97,7 +97,7 @@ function Filter({
       {/* important */}
       <button
         onClick={() => switchActiveFilter("important")}
-        className="p-2 lg:p-2 text-xsm xl:text-sm 2xl:text-lg 3xl:text-xl"
+        className="p-2 lg:p-2 text-xsm lg:text-xs xl:text-sm 2xl:text-lg 3xl:text-xl"
       >
         <span
           className={`${
@@ -127,7 +127,7 @@ function Filter({
       {/* top */}
       <button
         onClick={toggleDay}
-        className="p-2 lg:p-2 text-xsm xl:text-sm 2xl:text-lg 3xl:text-xl"
+        className="p-2 lg:p-2 text-xsm lg:text-xs xl:text-sm 2xl:text-lg 3xl:text-xl"
       >
         <span
           className={`${
@@ -163,7 +163,7 @@ function Filter({
       <button
         onClick={handleDropdown}
         disabled={activeFilter === "top" ? false : true}
-        className="p-2 lg:p-2 text-xsm xl:text-sm 2xl:text-lg 3xl:text-xl dropDownToggle"
+        className="p-2 lg:p-2 text-xsm lg:text-xs xl:text-sm 2xl:text-lg 3xl:text-xl dropDownToggle"
       >
         <span
           className={`${

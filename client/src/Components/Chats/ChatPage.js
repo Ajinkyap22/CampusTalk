@@ -7,15 +7,7 @@ import MessageInput from "./MessageInput";
 import Loading from "../Loading";
 import Messages from "./Messages";
 
-function ChatPage({
-  chat,
-  user,
-  socket,
-  activeChat,
-  setActiveChat,
-  chats,
-  setChats,
-}) {
+function ChatPage({ chat, user, socket, setActiveChat, chats, setChats }) {
   const [files, setFiles] = useContext(FileContext);
   const [receiver, setReceiver] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -26,6 +18,7 @@ function ChatPage({
     let isMounted = true;
 
     if (isMounted) {
+      console.log(chat, receiver);
       chat &&
         setReceiver(chat.members.find((member) => member._id !== user?._id));
 
@@ -68,7 +61,7 @@ function ChatPage({
     return () => {
       isMounted = false;
     };
-  }, [user]);
+  }, [user, chat]);
 
   useEffect(() => {
     // get messages
@@ -78,7 +71,7 @@ function ChatPage({
         setMessages(res.data);
         setLoading(false);
       })
-      .catch((err) => console.log(err.response));
+      .catch((err) => console.error(err));
   }, [chat]);
 
   useEffect(() => {
@@ -86,6 +79,33 @@ function ChatPage({
       newMessage.sender === receiver._id &&
       setMessages((messages) => [...messages, newMessage]);
   }, [newMessage, receiver]);
+
+  useEffect(() => {
+    if (!receiver || !user) return;
+
+    let body = {
+      userId: user._id,
+      receiverId: receiver?._id,
+      prevCount: chat.unReadCounts[receiver?.id] || 0,
+    };
+
+    axios
+      .post(`/api/chats/${chat._id}/update-unreadcount`, body)
+      .then((res) => {
+        setChats(
+          chats.map((c) => {
+            if (c._id === chat._id && user) {
+              c.unReadCounts[user?.id] = 0;
+            }
+
+            return c;
+          })
+        );
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, [receiver, user]);
 
   return (
     <div className="lg:col-span-4 h-full lg:grid grid-cols-1 grid-rows-10 justify-between dark:bg-darkSecondary bg-[#F0F2F5] overflow-auto relative">
@@ -167,6 +187,8 @@ function ChatPage({
       {/* message input */}
       <MessageInput
         chat={chat}
+        chats={chats}
+        setChats={setChats}
         user={user}
         receiver={receiver}
         setMessages={setMessages}

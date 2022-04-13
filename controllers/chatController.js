@@ -5,7 +5,6 @@ const Message = require("../models/message");
 exports.createChat = async (req, res) => {
   try {
     const { members } = req.body;
-    console.log(members);
 
     let unReadCounts = {
       [members[0]]: 0,
@@ -45,17 +44,32 @@ exports.getMessages = async (req, res) => {
       .populate("sender")
       .populate("receiver");
 
-    // update unReadCounts
+    res.status(200).json(messages);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// update unRead counr to 0
+exports.updateUnReadCount = async (req, res) => {
+  try {
+    let { userId, receiverId, prevCount } = req.body;
+
     Chat.findByIdAndUpdate(
       req.params.chatId,
       {
-        $set: { unReadCounts: { [req.params.userId]: 0 } },
+        $set: {
+          unReadCounts: {
+            [receiverId]: prevCount,
+            [userId]: 0,
+          },
+        },
       },
       { new: true }
     ).exec((err, chat) => {
       if (err) return res.status(500).json({ error: err.message });
 
-      res.status(200).json(messages);
+      res.status(200).json(chat);
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -65,7 +79,7 @@ exports.getMessages = async (req, res) => {
 // send a text message
 exports.sendMessage = async (req, res) => {
   try {
-    const { text, sender, receiver, chat } = req.body;
+    const { text, sender, receiver, chat, currentUnReadCount } = req.body;
 
     let message = new Message({
       text,
@@ -80,7 +94,12 @@ exports.sendMessage = async (req, res) => {
     Chat.findByIdAndUpdate(
       chat,
       {
-        $inc: { unReadCounts: { [receiver]: 1 } },
+        $set: {
+          unReadCounts: {
+            [receiver]: currentUnReadCount[receiver] + 1,
+            [sender]: currentUnReadCount[sender],
+          },
+        },
       },
       { new: true }
     ).exec((err, chat) => {
@@ -105,7 +124,7 @@ exports.sendMessage = async (req, res) => {
 // send a file message
 exports.sendFileMessage = async (req, res) => {
   try {
-    const { sender, receiver, chat } = req.body;
+    const { sender, receiver, chat, currentUnReadCount } = req.body;
 
     const filename = JSON.parse(req.body.originalFileName);
 
@@ -125,7 +144,7 @@ exports.sendFileMessage = async (req, res) => {
     Chat.findByIdAndUpdate(
       chat,
       {
-        $inc: { unReadCounts: { [receiver]: 1 } },
+        $set: { unReadCounts: { [receiver]: currentUnReadCount + 1 } },
       },
       { new: true }
     ).exec((err, chat) => {

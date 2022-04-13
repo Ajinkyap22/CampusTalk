@@ -1,9 +1,45 @@
 import { useState, useEffect } from "react";
 
-function ChatPreview({ chat, user, activeChat, setActiveChat, onlineUsers }) {
+function ChatPreview({
+  chat,
+  user,
+  socket,
+  activeChat,
+  setActiveChat,
+  onlineUsers,
+}) {
   const [receiver, setReceiver] = useState(null);
   const [online, setOnline] = useState(false);
-  const [unReadCount, setUnReadCount] = useState(0);
+  const [unReadCount, setUnReadCount] = useState({});
+
+  useEffect(() => {
+    let mounted = true;
+
+    if (mounted) {
+      socket.on("updateReadCount", ({ receiverId, chatId }) => {
+        if (chatId === chat._id && activeChat?._id !== chatId) {
+          setUnReadCount((prev) => ({
+            ...prev,
+            [receiverId]: prev[receiverId] + 1,
+          }));
+        }
+      });
+
+      if (user) {
+        socket?.on("clearChat", (message) => {
+          // set unread count to 0
+          setUnReadCount((prev) => ({
+            ...prev,
+            [user?._id]: 0,
+          }));
+        });
+      }
+    }
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   useEffect(() => {
     let r = chat.members.find((member) => member._id !== user._id);
@@ -17,12 +53,30 @@ function ChatPreview({ chat, user, activeChat, setActiveChat, onlineUsers }) {
   }, [onlineUsers]);
 
   useEffect(() => {
-    setUnReadCount(chat.unReadCounts[user._id]);
-    console.log(chat.unReadCounts);
-  }, [chat]);
+    let newUnReadCount = {};
+
+    if (receiver) {
+      newUnReadCount = {
+        [user._id]: chat.unReadCounts[user._id],
+        [receiver._id]: chat.unReadCounts[receiver._id],
+      };
+
+      setUnReadCount(newUnReadCount);
+    }
+  }, [chat, receiver]);
 
   function handleClick() {
+    let newUnReadCount = {};
+
     setActiveChat(chat);
+    if (receiver) {
+      newUnReadCount = {
+        [user._id]: 0,
+        [receiver._id]: chat.unReadCounts[receiver._id],
+      };
+
+      setUnReadCount(newUnReadCount);
+    }
   }
 
   return (
@@ -56,10 +110,16 @@ function ChatPreview({ chat, user, activeChat, setActiveChat, onlineUsers }) {
         )}
 
         {/* name */}
-        <div className="flex flex-col justify-center">
+        <div className="flex items-center">
           <span className="text-sm text-justify mx-1 dark:text-darkLight">
             {receiver && receiver.firstName} {receiver && receiver.lastName}
           </span>
+
+          {user && unReadCount[user._id] > 0 && (
+            <span className="text-xsm text-center bg-primary-light text-white py-0.5 px-1.5 rounded-full mx-1">
+              {unReadCount[user._id]}
+            </span>
+          )}
         </div>
       </div>
 
@@ -80,10 +140,6 @@ function ChatPreview({ chat, user, activeChat, setActiveChat, onlineUsers }) {
             <circle cx="8" cy="8" r="8" />
           </svg>
         )}
-
-        {/* <span className="text-xs text-center bg-primary-light text-white py-1 px-2 rounded-full mx-1">
-          2
-        </span> */}
       </div>
     </div>
   );

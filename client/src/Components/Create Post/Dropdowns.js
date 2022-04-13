@@ -8,17 +8,17 @@ function Dropdowns({ forums, forum, setForum, anonymous, setAnonymous }) {
   }
 
   return (
-    <div className="flex justify-center items-center py-6 lg:p-6">
+    <div className="flex justify-center items-center py-6 lg:px-4 xl:p-6">
       {/* dropdown 1 */}
       <div className="relative mx-2">
         <select
           onChange={handleForumChange}
           value={forum || ""}
-          className="block appearance-none max-w-[12rem] lg:max-w-[18rem] text-sm w-full bg-white dark:bg-darkSecondary dark:text-darkLight shadow-base px-4 py-2 pr-8 rounded shadow focus:outline-none cursor-pointer focus:shadow-outline"
+          className="block appearance-none max-w-[12rem] lg:max-w-[16rem] xl:max-w-[18rem] text-sm w-full bg-white dark:bg-darkSecondary dark:text-darkLight shadow-base px-4 py-2 pr-8 rounded shadow focus:outline-none cursor-pointer focus:shadow-outline"
         >
-          <option className="text-xsm lg:text-base">Select a Forum</option>
+          <option className="text-xsm lg:text-sm">Select a Forum</option>
           {forums.map((f, i) => (
-            <option key={i} className="text-xsm lg:text-base" value={f._id}>
+            <option key={i} className="text-xsm lg:text-sm" value={f._id}>
               {f.forumName}
             </option>
           ))}
@@ -45,10 +45,10 @@ function Dropdowns({ forums, forum, setForum, anonymous, setAnonymous }) {
           value={anonymous ? "anonymous" : "public"}
           className="block appearance-none text-sm w-full bg-white dark:bg-darkSecondary dark:text-darkLight shadow-base px-4 py-2 pr-8 rounded shadow focus:outline-none cursor-pointer focus:shadow-outline"
         >
-          <option value="public" className="text-xsm lg:text-base">
+          <option value="public" className="text-xsm lg:text-sm">
             Public Mode
           </option>
-          <option value="anonymous" className="text-xsm lg:text-base">
+          <option value="anonymous" className="text-xsm lg:text-sm">
             Anonymous Mode
           </option>
         </select>

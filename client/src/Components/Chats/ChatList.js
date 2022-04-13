@@ -72,10 +72,12 @@ function ChatList({
           <ChatPreview
             chat={chat}
             user={user}
+            chats={chats}
             key={i}
             activeChat={activeChat}
             setActiveChat={setActiveChat}
             onlineUsers={onlineUsers}
+            socket={socket.current}
           />
         ))
       ) : (

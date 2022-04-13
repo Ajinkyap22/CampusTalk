@@ -103,7 +103,7 @@ function CreatePost({ title, post, ...props }) {
       <Guidelines />
 
       {/* post info */}
-      <div className="bg-white dark:bg-darkSecondary shadow-base rounded relative w-full lg:w-[30rem]">
+      <div className="bg-white dark:bg-darkSecondary shadow-base rounded relative w-full lg:w-[26rem] xl:w-[30rem]">
         {/* user profile picture & name */}
         <AuthorInfo
           picture={user?.picture}

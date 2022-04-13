@@ -13,6 +13,9 @@ router.get("/:userId", chatController.getChats);
 // get a chat's messages
 router.get("/messages/:chatId/:userId", chatController.getMessages);
 
+// update unreadcount
+router.post("/:chatId/update-unreadcount", chatController.updateUnReadCount);
+
 // send a text message
 router.post("/send-message", verifyToken, chatController.sendMessage);
 

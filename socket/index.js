@@ -31,12 +31,23 @@ io.on("connection", (socket) => {
   // send and receive message
   socket.on("sendMessage", ({ senderId, receiverId, text }) => {
     const receiver = users[receiverId];
-    console.log("text");
 
     if (receiver) {
       io.to(receiver).emit("message", {
         senderId,
         text,
+      });
+    }
+  });
+
+  // update read count
+  socket.on("newUnreadCount", ({ receiverId, chatId }) => {
+    const receiver = users[receiverId];
+
+    if (receiver) {
+      io.to(receiver).emit("updateReadCount", {
+        receiverId,
+        chatId,
       });
     }
   });

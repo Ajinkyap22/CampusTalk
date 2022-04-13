@@ -15,6 +15,14 @@ function PostInfo({ postId, author, forum, timestamp, anonymous, important }) {
   const [overModal, setOverModal] = useState(false);
 
   useEffect(() => {
+    let mounted = true;
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  useEffect(() => {
     // check if author is the same as user
     if (user && user._id === author._id) {
       setIsAuthor(true);

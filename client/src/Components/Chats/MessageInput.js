@@ -2,7 +2,15 @@ import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import FileInputs from "../PostPage/Comment/FileInputs";
 
-function MessageInput({ chat, user, receiver, setMessages, socket }) {
+function MessageInput({
+  chat,
+  chats,
+  setChats,
+  user,
+  receiver,
+  setMessages,
+  socket,
+}) {
   const [text, setText] = useState("");
   const [file, setFile] = useState(null);
   const imageInput = useRef(null);
@@ -34,6 +42,7 @@ function MessageInput({ chat, user, receiver, setMessages, socket }) {
       formData.append("receiver", receiver._id);
       formData.append("chat", chat._id);
       formData.append("file", file);
+      formData.append("currentUnReadCount", chat.unReadCounts);
       formData.append("originalFileName", JSON.stringify(originalFileName));
 
       apiRequest(fileType, formData);
@@ -43,6 +52,7 @@ function MessageInput({ chat, user, receiver, setMessages, socket }) {
         sender: user._id,
         receiver: receiver._id,
         chat: chat._id,
+        currentUnReadCount: chat.unReadCounts,
       };
 
       apiRequest("text", formData);
@@ -56,6 +66,18 @@ function MessageInput({ chat, user, receiver, setMessages, socket }) {
     setOriginalFileName("");
     setFileType("");
     setEnableSend(false);
+
+    let newUnReadCount = chat.unReadCounts[receiver._id] + 1;
+
+    setChats(
+      chats.map((c) => {
+        if (c._id === chat._id) {
+          c.unReadCounts[receiver._id] = newUnReadCount;
+        }
+
+        return c;
+      })
+    );
 
     if (type === "text") {
       socket.emit("sendMessage", {
@@ -72,6 +94,11 @@ function MessageInput({ chat, user, receiver, setMessages, socket }) {
         originalFileName: res.originalFileName,
       });
     }
+
+    socket.emit("newUnreadCount", {
+      receiverId: receiver._id,
+      chatId: chat._id,
+    });
   }
 
   function apiRequest(type, formData) {

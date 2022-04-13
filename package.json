@@ -32,10 +32,8 @@
     "morgan": "~1.9.1",
     "multer": "^1.4.3",
     "passport": "^0.5.0",
-    "passport-google-oauth20": "^2.0.0",
     "passport-jwt": "^4.0.0",
-    "passport-local": "^1.0.0",
-    "react-avatar-editor": "^12.0.0"
+    "passport-local": "^1.0.0"
   },
   "devDependencies": {
     "concurrently": "^6.5.1",
