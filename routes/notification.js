@@ -17,6 +17,13 @@ router.post(
   notificatinController.activityNotfication
 );
 
+// join request approved notidication
+router.post(
+  "/join-request-approved",
+  verifyToken,
+  notificatinController.joinRequestApproved
+);
+
 // get an user's notifications
 router.get("/:userId", notificatinController.getNotifications);
 

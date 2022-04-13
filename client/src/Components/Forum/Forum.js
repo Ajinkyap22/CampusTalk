@@ -193,7 +193,7 @@ function Forum({ forum, title, defaultTab = "posts" }) {
   }
 
   return (
-    <main className="w-full min-h-screen lg:h-full flex flex-col items-start bg-[#F0F2F5] overflow-auto dark:bg-dark relative">
+    <main className="w-full min-h-screen lg:h-full flex flex-col items-start bg-[#F0F2F5] dark:bg-dark relative">
       <Nav />
 
       {/* forum content */}
@@ -305,7 +305,7 @@ function Forum({ forum, title, defaultTab = "posts" }) {
               {/* icon */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-20 w-auto mx-auto my-4 fill-[rgba(0, 0, 0, 0.6)] dark:fill-gray-300"
+                className="h-20 w-auto mx-auto my-4 fill-zinc-600 dark:fill-gray-300"
                 viewBox="0 0 20 20"
               >
                 <path

@@ -17,4 +17,7 @@ router.post("/comment", mailController.comment_mail);
 // reply mail
 router.post("/reply", mailController.reply_mail);
 
+// join request approved mail
+router.post("/join-request-approved", mailController.join_request_approved);
+
 module.exports = router;

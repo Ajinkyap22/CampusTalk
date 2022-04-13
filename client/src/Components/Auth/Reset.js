@@ -2,17 +2,16 @@ import { useState, useEffect, useContext } from "react";
 import { UserContext } from "../../Contexts/UserContext";
 import { withRouter, Link } from "react-router-dom";
 import Logo from "../Logo";
-import Input from "../FormControl/Input";
 import Password from "../FormControl/Password";
 import axios from "axios";
 
-function Reset({ title, history }) {
+function Reset({ title, history, match }) {
   const [formData, setFormData] = useState({
-    email: "",
+    resetPasswordToken: match.params.id,
     newPassword: "",
     confirmPassword: "",
   });
-  const [status, setStatus] = useState(0);
+  const [status, setStatus] = useState({});
   const [changed, setChanged] = useState(false);
   const [user] = useContext(UserContext);
 
@@ -21,7 +20,6 @@ function Reset({ title, history }) {
   }, [title]);
 
   useEffect(() => {
-    console.log(user);
     if (user) history.push("/feed");
   }, [user]);
 
@@ -34,10 +32,10 @@ function Reset({ title, history }) {
         setChanged(true);
       })
       .catch((err) => {
-        if (err.response?.status === 404) {
-          setStatus(404);
+        if (err.response.status === 404) {
+          setStatus({ code: 404 });
         } else if (err.response?.status === 401) {
-          setStatus(401);
+          setStatus({ code: 401, message: err.response.data.error });
         } else {
           console.error(err);
         }
@@ -81,25 +79,6 @@ function Reset({ title, history }) {
           </div>
         ) : (
           <form className="my-2 mt-6 px-2" onSubmit={handleSubmit}>
-            {/* email */}
-            <Input
-              type="email"
-              name="email"
-              placeholder="Enter your email address"
-              label="Email"
-              minLength={3}
-              required={true}
-              callback={handleChange}
-              setState={false}
-            />
-
-            <p
-              className="mt-3 text-sm text-red-600"
-              hidden={status === 404 ? false : true}
-            >
-              Email is not registered.
-            </p>
-
             {/* Password */}
             <Password
               name="newPassword"
@@ -110,13 +89,6 @@ function Reset({ title, history }) {
               callback={handleChange}
               setState={false}
             />
-
-            <p
-              className="mt-3 text-sm text-red-600"
-              hidden={status === 401 ? false : true}
-            >
-              Confirmed Password must be the same as password
-            </p>
 
             {/* Confirm password */}
             <Password
@@ -129,9 +101,25 @@ function Reset({ title, history }) {
               setState={false}
             />
 
-            <button className="float-right relative px-2 md:px-3 py-1.5 lg:py-2 ml-1 my-2 mt-4 text-xs md:text-sm 2xl:text-lg bg-primary text-white rounded hover:bg-blue-700">
-              Reset Password
-            </button>
+            <p
+              className="mt-3 text-sm text-red-600"
+              hidden={status.code === 401 ? false : true}
+            >
+              {status.message}
+            </p>
+
+            <p
+              className="mt-3 text-sm text-red-600"
+              hidden={status.code === 404 ? false : true}
+            >
+              User not found. Please check your email and try again.
+            </p>
+
+            <div className="text-center py-2">
+              <button className="px-2 md:px-3 py-1.5 lg:py-2 text-xs md:text-sm 2xl:text-lg bg-primary text-white rounded hover:bg-blue-700">
+                Reset Password
+              </button>
+            </div>
           </form>
         )}
       </section>

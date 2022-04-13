@@ -115,7 +115,7 @@ function App() {
           {/* reset password */}
           <Route
             exact
-            path="/reset-password"
+            path="/reset-password/:id"
             render={() => <Reset title={"Reset Password | CampusTalk"} />}
           />
 

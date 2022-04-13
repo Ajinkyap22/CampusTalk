@@ -89,6 +89,43 @@ exports.activityNotfication = async (req, res) => {
   }
 };
 
+// join request approved notification
+exports.joinRequestApproved = async (req, res) => {
+  try {
+    const { forum, to } = req.body;
+
+    let notification = new Notification({
+      type: "requestApproved",
+      forum,
+      to,
+    });
+
+    await notification.save();
+
+    // send notificatino to the user who joined the forum
+    User.findById(to)
+      .populate("notifications")
+      .exec((err, user) => {
+        if (err) return res.status(500).json({ error: err.message });
+
+        user.notifications.push(notification);
+        user.save();
+      });
+
+    Notification.populate(
+      notification,
+      { path: "forum" },
+      (err, newNotification) => {
+        if (err) return res.status(500).json({ error: err.message });
+
+        res.status(201).json(newNotification);
+      }
+    );
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 // get all notifications
 exports.getNotifications = async (req, res) => {
   try {

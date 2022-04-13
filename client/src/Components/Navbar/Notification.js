@@ -2,8 +2,15 @@ import { useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import moment from "moment";
 import axios from "axios";
+import LogoCropped from "../LogoCropped";
 
-function Notification({ notification, setNotifications, history, user }) {
+function Notification({
+  notification,
+  setNotifications,
+  setShowNotifications,
+  history,
+  user,
+}) {
   useEffect(() => {
     let mounted = true;
 
@@ -52,11 +59,15 @@ function Notification({ notification, setNotifications, history, user }) {
       notification.type === "postRequest"
     ) {
       history.push(`/forums/${notification.forum._id}/${notification.type}s`);
+    } else if (notification.type === "requestApproved") {
+      history.push(`/forums/${notification.forum._id}`);
     } else {
       history.push(
         `/forums/${notification.forum._id}/posts/${notification.post}`
       );
     }
+
+    setShowNotifications(false);
   }
 
   function handleDelete() {
@@ -118,7 +129,7 @@ function Notification({ notification, setNotifications, history, user }) {
         >
           <path d="M16 9v-4l8 7-8 7v-4h-8v-6h8zm-2 10v-.083c-1.178.685-2.542 1.083-4 1.083-4.411 0-8-3.589-8-8s3.589-8 8-8c1.458 0 2.822.398 4 1.083v-2.245c-1.226-.536-2.577-.838-4-.838-5.522 0-10 4.477-10 10s4.478 10 10 10c1.423 0 2.774-.302 4-.838v-2.162z" />
         </svg>
-      ) : (
+      ) : notification.type === "postRequest" ? (
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="w-10 inline mx-2.5 align-middle fill-primary"
@@ -129,6 +140,8 @@ function Notification({ notification, setNotifications, history, user }) {
             d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2ZM1 4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4Zm7.5.5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7ZM2 5.5a.5.5 0 0 1 .5-.5H6a.5.5 0 0 1 0 1H2.5a.5.5 0 0 1-.5-.5Zm0 2a.5.5 0 0 1 .5-.5H6a.5.5 0 0 1 0 1H2.5a.5.5 0 0 1-.5-.5Zm0 2a.5.5 0 0 1 .5-.5H6a.5.5 0 0 1 0 1H2.5a.5.5 0 0 1-.5-.5ZM10.5 5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3ZM13 8h-2V6h2v2Z"
           />
         </svg>
+      ) : (
+        <LogoCropped width="100" color="#0F8CFF" />
       )}
 
       {/* text */}
@@ -141,6 +154,12 @@ function Notification({ notification, setNotifications, history, user }) {
             ? "commented on your post in"
             : "replied to your comment on a post in"}{" "}
           <span className="font-semibold">{notification.forum.forumName}</span>
+        </p>
+      ) : notification.type === "requestApproved" ? (
+        <p className="text-mxs ml-2.5 dark:text-darkLight mr-1">
+          Your request to join{" "}
+          <span className="font-semibold">{notification.forum.forumName}</span>{" "}
+          has been approved. You can now view and create posts in the forum.
         </p>
       ) : (
         <p className="text-mxs dark:text-darkLight mr-1">

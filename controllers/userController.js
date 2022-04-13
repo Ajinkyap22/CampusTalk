@@ -221,16 +221,6 @@ exports.google = async function (req, res) {
                 user,
               });
             });
-
-          // return res.json({
-          //   token: token,
-          //   user: {
-          //     _id: user._id,
-          //     email: user.email,
-          //     firstName: user.firstName,
-          //     lastName: user.lastName,
-          //   },
-          // });
         }
       );
     }
@@ -314,10 +304,12 @@ exports.get_user_posts = function (req, res) {
 
 // reset password
 exports.reset_password = function (req, res) {
-  const { email, newPassword, confirmPassword } = req.body;
+  const { resetPasswordToken, newPassword, confirmPassword } = req.body;
 
-  User.findOne({ email }, (err, user) => {
+  User.findOne({ resetPasswordToken }, (err, user) => {
     if (err) return res.json(err);
+
+    console.log(user);
 
     if (!user) return res.status(404).json({ error: "User not found" });
 
@@ -327,25 +319,32 @@ exports.reset_password = function (req, res) {
         error: "Confirmed Password must be the same as password.",
       });
 
+    // check if token is expired
+    if (new Date(user.passwordResetExpires) < new Date()) {
+      return res.status(401).json({
+        error: "Password reset token has expired.",
+      });
+    }
+
     // hash new password
-    bcrypt.hash(newPassword, 10, (err, hash) => {
-      if (err) return res.json(err);
+    // bcrypt.hash(newPassword, 10, (err, hash) => {
+    //   if (err) return res.json(err);
 
-      // update password
-      User.findByIdAndUpdate(
-        user._id,
-        {
-          $set: {
-            password: hash,
-          },
-        },
-        { new: true },
-        (err, user) => {
-          if (err) return res.json(err);
+    //   // update password
+    //   User.findByIdAndUpdate(
+    //     user._id,
+    //     {
+    //       $set: {
+    //         password: hash,
+    //       },
+    //     },
+    //     { new: true },
+    //     (err, user) => {
+    //       if (err) return res.json(err);
 
-          return res.json(user);
-        }
-      );
-    });
+    //       return res.json(user);
+    //     }
+    //   );
+    // });
   });
 };

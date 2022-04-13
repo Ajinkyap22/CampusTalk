@@ -90,6 +90,7 @@ function Notifications({
               notification={notification}
               setNotifications={setNotifications}
               user={user}
+              setShowNotifications={setShowNotifications}
             />
           );
         })

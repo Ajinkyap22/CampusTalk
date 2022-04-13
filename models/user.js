@@ -13,6 +13,8 @@ const UserSchema = new Schema({
   notifications: [{ type: Schema.Types.ObjectId, ref: "Notification" }],
   timestamp: { type: Date, default: Date.now },
   active: { type: Boolean, default: false },
+  resetPasswordToken: { type: String },
+  resetPasswordExpires: { type: Date },
 });
 
 module.exports = mongoose.model("User", UserSchema);

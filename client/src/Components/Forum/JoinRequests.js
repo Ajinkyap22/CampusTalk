@@ -37,6 +37,10 @@ function JoinRequests({
         );
 
         setJoinRequests(newJoinRequests);
+
+        sendNotification(request._id, forum._id);
+
+        sendMail(request.email, request.firstName, forum.forumName, forum._id);
       })
       .catch((err) => {
         console.error(err);
@@ -65,6 +69,41 @@ function JoinRequests({
       .catch((err) => {
         console.error(err);
       });
+  }
+
+  function sendNotification(author, forum) {
+    let headers = {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(localStorage.getItem("user")).token
+        }`,
+      },
+    };
+
+    let body = {
+      type: "requestApproved",
+      forum,
+      to: author,
+    };
+
+    axios
+      .post("/api/notifications/join-request-approved", body, headers)
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  function sendMail(email, name, forumName, forumId) {
+    let body = {
+      email,
+      name,
+      forumName,
+      forumId,
+    };
+
+    axios.post("/api/mail/join-request-approved", body).catch((err) => {
+      console.error(err);
+    });
   }
 
   return (
