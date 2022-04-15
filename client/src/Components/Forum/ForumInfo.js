@@ -7,6 +7,7 @@ import axios from "axios";
 
 function ForumInfo({
   forum,
+  forums,
   showModal,
   setShowModal,
   requestSent,
@@ -49,6 +50,9 @@ function ForumInfo({
             { forum: forum._id || forum, type: "joinRequest" },
             headers
           )
+          .then(() => {
+            sendMail(forum._id);
+          })
           .catch((err) => {
             console.log(err.response);
           });
@@ -70,14 +74,29 @@ function ForumInfo({
         }`,
       },
     };
+  }
+
+  function sendMail(f) {
+    let forum = forums.find((forum) => forum._id === f);
+
+    let forumName = forum?.forumName;
+    let forumId = forum?._id;
+
+    let mods = forum?.moderators;
+
+    mods = mods.map((moderator) => moderator.email);
+
     let body = {
-      text: "Are you sure you want to delete this forum?",
+      forumName,
+      forumId,
+      emails: mods,
+      type: "join",
     };
 
     axios
-      .post("/api/mail/send_mail", body, headers)
+      .post("/api/mail/requests", body)
       .then((res) => {
-        console.log("mail sent");
+        console.log(res.data);
       })
       .catch((err) => {
         console.error(err);

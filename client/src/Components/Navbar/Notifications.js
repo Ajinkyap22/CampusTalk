@@ -65,7 +65,7 @@ function Notifications({
       {isMobile && <Nav />}
 
       <button
-        className="text-secondary border-b dark:border-secondary self-end dark:text-gray-300 text-right p-2 mx-2 text-sm"
+        className="text-secondary border-b dark:border-secondary self-end dark:text-gray-300 text-right p-2 mx-2 text-sm 2xl:text-base"
         hidden={!notifications.length}
         onClick={clearNotifications}
       >

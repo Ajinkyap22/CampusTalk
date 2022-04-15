@@ -52,9 +52,6 @@ function JoinForum({ title, forums, setForums, ...props }) {
       id: user._id,
     };
 
-    // let userForums = [];
-    // let forumsData = [...forums];
-
     // send join requests to each selected forum after confirming rather than sending on selection & then cancelling
     joinList.forEach((forumId) => {
       axios
@@ -66,9 +63,6 @@ function JoinForum({ title, forums, setForums, ...props }) {
           console.error(err);
         });
     });
-
-    // setUser({ ...user, forums: userForums });
-    // setForums(forumsData);
   };
 
   function sendMail(f) {

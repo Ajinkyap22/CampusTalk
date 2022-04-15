@@ -1,4 +1,8 @@
 import { UserContext } from "../../Contexts/UserContext";
+import { ForumContext } from "../../Contexts/ForumContext";
+import { PostContext } from "../../Contexts/PostContext";
+import { EventContext } from "../../Contexts/EventContext";
+import { NotificationContext } from "../../Contexts/NotificationContext";
 import { SocketContext } from "../../Contexts/SocketContext";
 import { NavLink } from "react-router-dom";
 import { useContext, useRef } from "react";
@@ -7,6 +11,10 @@ import Toggle from "./Toggle";
 
 function Dropdown({ showDropdown, setShowDropdown }) {
   const [user, setUser] = useContext(UserContext);
+  const [forums, setForums] = useContext(ForumContext);
+  const [posts, setPosts] = useContext(PostContext);
+  const [events, setEvents] = useContext(EventContext);
+  const [notifications, setNotifications] = useContext(NotificationContext);
   const [socket] = useContext(SocketContext);
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef, setShowDropdown);
@@ -20,24 +28,28 @@ function Dropdown({ showDropdown, setShowDropdown }) {
     localStorage.removeItem("user");
     setUser(undefined);
     socket.current.emit("logout", user._id);
+    setForums([]);
+    setPosts([]);
+    setEvents([]);
+    setNotifications([]);
   }
 
   return (
     <div
-      className="absolute bg-white shadow-base p-2 2xl:p-2.5 top-14 2xl:top-15 right-28 2xl:right-36 3xl:right-52 z-30 rounded dark:bg-darkSecondary"
+      className="absolute bg-white shadow-base p-2 2xl:p-2.5 top-14 2xl:top-15 3xl:top-20 right-28 2xl:right-36 3xl:right-52 z-30 rounded dark:bg-darkSecondary"
       hidden={showDropdown ? false : true}
       ref={wrapperRef}
     >
       <ul>
         {/* profile */}
         <li
-          className="p-2 2xl:p-2.5 text-sm 2xl:text-lg dark:text-darkLight"
+          className="p-2 2xl:p-2.5 text-sm 2xl:text-lg 3xl:p-3 3xl:text-xl dark:text-darkLight"
           onClick={handleClick}
         >
           <NavLink to="/profile">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="inline mr-2 fill-[#818181] dark:fill-darkLight w-4 2xl:w-5"
+              className="inline mr-2 fill-[#818181] dark:fill-darkLight w-4 2xl:w-5 3xl:w-6"
               viewBox="0 0 16 18"
             >
               <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
@@ -52,11 +64,11 @@ function Dropdown({ showDropdown, setShowDropdown }) {
         <hr />
 
         {/* settings */}
-        {/* <li className="p-2 2xl:p-2.5 text-sm 2xl:text-lg dark:text-darkLight" onClick={handleClick}>
+        {/* <li className="p-2 2xl:p-2.5 text-sm 2xl:text-lg 3xl:p-3 3xl:text-xl dark:text-darkLight" onClick={handleClick}>
           <NavLink to="/settings">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="inline mr-2 fill-[#818181] dark:fill-darkLight w-4 2xl:w-5"
+              className="inline mr-2 fill-[#818181] dark:fill-darkLight w-4 2xl:w-5 3xl:w-6"
               viewBox="0 0 16 16"
             >
               <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z" />
@@ -73,13 +85,13 @@ function Dropdown({ showDropdown, setShowDropdown }) {
 
         {/* logout */}
         <li
-          className="p-2 2xl:p-2.5 text-sm 2xl:text-lg dark:text-darkLight"
+          className="p-2 2xl:p-2.5 text-sm 2xl:text-lg 3xl:p-3 3xl:text-xl dark:text-darkLight"
           onClick={logout}
         >
           <NavLink to="/">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="inline mr-2 fill-[#818181] dark:fill-darkLight w-4 2xl:w-5"
+              className="inline mr-2 fill-[#818181] dark:fill-darkLight w-4 2xl:w-5 3xl:w-6"
               viewBox="0 0 16 16"
             >
               <path

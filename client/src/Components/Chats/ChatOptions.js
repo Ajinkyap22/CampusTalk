@@ -71,17 +71,19 @@ function ChatOptions({
   return (
     <div
       ref={wrapperRef}
-      className="absolute bg-white dark:bg-[#3e3d3d] shadow-base p-1.5 top-14 right-4 rounded z-10"
+      className="absolute bg-white dark:bg-[#3e3d3d] shadow-base p-1.5 2xl:p-2 top-14 2xl:top-20 3xl:top-22 right-4 rounded z-10"
       hidden={!showOptions}
     >
       <ul>
         {/* delete chat */}
-        <li className="p-1.5 text-sm dark:text-darkLight" onClick={deleteChat}>
+        <li
+          className="p-1.5 2xl:p-2 text-sm 2xl:text-base 3xl:text-lg dark:text-darkLight"
+          onClick={deleteChat}
+        >
           <button>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              className="inline mr-2 fill-[#818181] dark:fill-darkLight"
+              className="inline mr-2 fill-[#818181] dark:fill-darkLight w-4 2xl:w-5 3xl:w-6"
               viewBox="0 0 16 16"
             >
               <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
@@ -97,12 +99,14 @@ function ChatOptions({
         <hr className="dark:border-t dark:border-secondary" />
 
         {/* clear chat */}
-        <li className="p-1.5 text-sm dark:text-darkLight" onClick={clearChat}>
+        <li
+          className="p-1.5 2xl:p-2 text-sm 2xl:text-base 3xl:text-lg dark:text-darkLight"
+          onClick={clearChat}
+        >
           <button>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              className="inline mr-2 fill-[#818181] dark:fill-darkLight"
+              className="inline mr-2 fill-[#818181] dark:fill-darkLight w-4 2xl:w-5 3xl:w-6"
               viewBox="0 0 16 16"
             >
               <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />

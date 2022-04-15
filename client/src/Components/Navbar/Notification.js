@@ -93,7 +93,7 @@ function Notification({
 
   return (
     <div
-      className={`flex items-center p-2.5 dark:border-secondary cursor-pointer ${
+      className={`flex items-center p-2.5 2xl:p-3 dark:border-secondary cursor-pointer ${
         !notification.hasSeen
           ? "bg-[#cfe2ff] dark:bg-dark"
           : "bg-[#f3f3f3] dark:bg-transparent"
@@ -105,13 +105,13 @@ function Notification({
         notification.from.picture ? (
           <img
             src={`http://localhost:3000/uploads/images/${notification.from.picture}`}
-            className="rounded-full object-cover w-10 h-auto inline mx-2"
+            className="rounded-full object-cover w-10 3xl:w-11 h-auto inline mx-2"
             alt=""
           />
         ) : (
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="inline mx-2 w-10 align-middle fill-[#818181] dark:fill-darkLight"
+            className="inline mx-2 w-10 2xl:w-12 3xl:w-14 2xl:mx-3 align-middle fill-[#818181] dark:fill-darkLight"
             viewBox="0 0 16 16"
           >
             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
@@ -124,7 +124,7 @@ function Notification({
       ) : notification.type === "joinRequest" ? (
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="w-10 inline mx-2 align-middle fill-primary"
+          className="w-10 2xl:w-12 3xl:w-14 2xl:mx-3 inline mx-2 align-middle fill-primary"
           viewBox="0 0 24 24"
         >
           <path d="M16 9v-4l8 7-8 7v-4h-8v-6h8zm-2 10v-.083c-1.178.685-2.542 1.083-4 1.083-4.411 0-8-3.589-8-8s3.589-8 8-8c1.458 0 2.822.398 4 1.083v-2.245c-1.226-.536-2.577-.838-4-.838-5.522 0-10 4.477-10 10s4.478 10 10 10c1.423 0 2.774-.302 4-.838v-2.162z" />
@@ -132,7 +132,7 @@ function Notification({
       ) : notification.type === "postRequest" ? (
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="w-10 inline mx-2.5 align-middle fill-primary"
+          className="w-10 2xl:w-12 3xl:w-14 2xl:mx-3 inline mx-2.5 align-middle fill-primary"
           viewBox="0 0 16 16"
         >
           <path
@@ -146,7 +146,7 @@ function Notification({
 
       {/* text */}
       {notification.type === "comment" || notification.type === "reply" ? (
-        <p className="text-mxs dark:text-darkLight mr-1">
+        <p className="text-mxs 2xl:text-sm 3xl:text-base dark:text-darkLight mr-1">
           <span className="font-semibold">
             {notification.from.firstName} {notification.from.lastName}
           </span>{" "}
@@ -156,13 +156,13 @@ function Notification({
           <span className="font-semibold">{notification.forum.forumName}</span>
         </p>
       ) : notification.type === "requestApproved" ? (
-        <p className="text-mxs ml-2.5 dark:text-darkLight mr-1">
+        <p className="text-mxs 2xl:text-sm 3xl:text-base ml-2.5 dark:text-darkLight mr-1">
           Your request to join{" "}
           <span className="font-semibold">{notification.forum.forumName}</span>{" "}
           has been approved. You can now view and create posts in the forum.
         </p>
       ) : (
-        <p className="text-mxs dark:text-darkLight mr-1">
+        <p className="text-mxs 2xl:text-sm 3xl:text-base dark:text-darkLight mr-1">
           There are new {notification.type === "joinRequest" ? "join" : "post"}{" "}
           requests in{" "}
           <span className="font-semibold">{notification.forum.forumName}</span>
@@ -172,7 +172,7 @@ function Notification({
       {/* time and delete button */}
       <div className="ml-1 flex flex-col items-center">
         {/* time */}
-        <p className="text-xsm text-center pb-1.5 dark:text-darkLight">
+        <p className="text-xsm 2xl:text-mxs 3xl:text-sm text-center pb-1.5 2xl:pb-1 dark:text-darkLight">
           {moment(notification.timestamp).fromNow()}
         </p>
 
@@ -180,7 +180,7 @@ function Notification({
         <button title="Delete" className="delete" onClick={handleDelete}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-4 w-4 stroke-[#818181] dark:stroke-gray-300 delete"
+            className="w-4 2xl:w-5 3xl:w-6 stroke-[#818181] dark:stroke-gray-300 delete"
             viewBox="0 0 24 24"
             fill="none"
             strokeWidth={2}

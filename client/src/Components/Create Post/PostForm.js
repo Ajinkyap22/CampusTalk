@@ -315,9 +315,14 @@ function PostForm({
       type: "post",
     };
 
-    axios.post("/api/mail/requests", body).catch((err) => {
-      console.error(err);
-    });
+    axios
+      .post("/api/mail/requests", body)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
   return (

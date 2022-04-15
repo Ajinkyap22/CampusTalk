@@ -33,10 +33,10 @@ function ChatTitle({
       {/* picture and name */}
       <div className="flex items-center">
         {/* back button for mobile */}
-        <button className="lg:hidden" onClick={back}>
+        <button className="" onClick={back}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 stroke-darkLight"
+            className="w-6 xl:w-7 xl:mx-1 2xl:w-9 3xl:w-10 stroke-darkLight"
             viewBox="0 0 24 24"
             strokeWidth={2}
           >
@@ -49,16 +49,16 @@ function ChatTitle({
         </button>
 
         {/* picture */}
-        {receiver && receiver.picture ? (
+        {!receiver && receiver.picture ? (
           <img
             src={`http://localhost:3000/uploads/images/${receiver.picture}`}
-            className="rounded-full object-cover w-9 h-auto inline mx-2"
+            className="rounded-full object-cover w-9 2xl:w-12 3xl:w-14 h-auto inline mx-2"
             alt=""
           />
         ) : (
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="inline mx-2 w-10 align-middle fill-[#818181] dark:fill-darkLight"
+            className="inline mx-2 w-10 2xl:w-14 3xl:16 align-middle fill-darkLight"
             viewBox="0 0 16 16"
           >
             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
@@ -70,7 +70,7 @@ function ChatTitle({
         )}
 
         {/* name */}
-        <span className="text-justify mx-1 text-white dark:text-darkLight">
+        <span className="text-justify mx-1 2xl:text-2xl 3xl:text-3xl text-white dark:text-darkLight">
           {receiver && receiver.firstName} {receiver && receiver.lastName}
         </span>
       </div>
@@ -83,8 +83,7 @@ function ChatTitle({
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="22"
-          className="fill-white inline rotate-90 dropDownToggle"
+          className="fill-white inline w-6 2xl:w-7 3xl:w-8 rotate-90 dropDownToggle"
           viewBox="0 0 16 16"
         >
           <path

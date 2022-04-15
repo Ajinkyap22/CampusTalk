@@ -25,10 +25,11 @@ function Forget({ title, history }) {
     axios
       .post("/api/mail/reset-password", { email })
       .then((res) => {
-        console.log(res.data);
         setSent(true);
       })
       .catch((err) => {
+        console.log("haha");
+        console.log(err.response);
         console.error(err);
       });
   }

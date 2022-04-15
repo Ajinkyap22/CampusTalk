@@ -177,7 +177,6 @@ function Forum({ forum, title, defaultTab = "posts" }) {
     axios
       .post(`/api/forums/${forum._id}/moderators/dismiss`, body, headers)
       .then((res) => {
-        console.log(res.data, forums);
         let newForums = [...forums];
         newForums = newForums.map((f) =>
           f._id === forum._id ? { ...forum, moderators: res.data } : f
@@ -335,6 +334,7 @@ function Forum({ forum, title, defaultTab = "posts" }) {
           {/* forum info */}
           <ForumInfo
             forum={forum}
+            forums={forums}
             showModal={showModal}
             setShowModal={setShowModal}
             requestSent={requestSent}

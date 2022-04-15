@@ -18,7 +18,6 @@ function ChatPage({ chat, user, socket, setActiveChat, chats, setChats }) {
     let isMounted = true;
 
     if (isMounted) {
-      console.log(chat, receiver);
       chat &&
         setReceiver(chat.members.find((member) => member._id !== user?._id));
 
@@ -121,19 +120,18 @@ function ChatPage({ chat, user, socket, setActiveChat, chats, setChats }) {
 
       {/* messages */}
       {loading ? (
-        <div className="text-center mt-8 row-span-8">
+        <div className="text-center mt-8 2xl:mt-10 3xl:mt-12 row-span-8">
           <Loading />
         </div>
       ) : (
-        <div className="pt-2 row-span-8 overflow-auto postData">
+        <div className="pt-2 2xl:pt-4 3xl:pt-6 row-span-8 overflow-auto postData">
           {messages && messages.length ? (
             <Messages messages={messages} user={user} loading={loading} />
           ) : (
             <div className="p-3 text-center pt-16 text-secondary dark:text-darkLight">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="80"
-                className="fill-[#818181] dark:fill-darkLight mx-auto my-4"
+                className="fill-[#818181] dark:fill-darkLight mx-auto my-4 w-20 2xl:w-24 3xl:w-28"
                 viewBox="0 0 256 256"
               >
                 <rect width="256" height="256" fill="none"></rect>
@@ -178,7 +176,9 @@ function ChatPage({ chat, user, socket, setActiveChat, chats, setChats }) {
                   strokeWidth="16"
                 ></path>
               </svg>
-              <span>Say hello to {receiver.firstName}!</span>
+              <span className="2xl:text-xl 3xl:text-3xl">
+                Say hello to {receiver.firstName}!
+              </span>
             </div>
           )}
         </div>

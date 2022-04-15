@@ -17,7 +17,7 @@ function Message({ message, user }) {
               message.sender._id === user._id
                 ? "bg-primary-light text-white dark:text-darkLight"
                 : "bg-white dark:bg-darkLight shadow"
-            } p-1.5 rounded-lg text-sm`}
+            } p-1.5 2xl:p-2 3xl:p-2.5 rounded-lg text-sm 2xl:text-lg 3xl:text-xl`}
           >
             {message.text}
           </div>
@@ -38,7 +38,7 @@ function Message({ message, user }) {
         <div
           className={`${
             message.sender._id === user._id ? "text-right" : "text-left"
-          } text-xs text-secondary dark:text-gray-300 p-1`}
+          } text-xs 2xl:text-sm 3xl:text-base text-secondary dark:text-gray-300 p-1`}
         >
           {moment(message.timestamp).format("LT")}
         </div>

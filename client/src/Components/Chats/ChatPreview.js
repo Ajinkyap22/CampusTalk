@@ -92,13 +92,13 @@ function ChatPreview({
         {receiver && receiver.picture ? (
           <img
             src={`http://localhost:3000/uploads/images/${receiver.picture}`}
-            className="rounded-full object-cover w-10 h-auto inline mx-2"
+            className="rounded-full object-cover w-10 2xl:w-12 3xl:w-14 h-auto inline mx-2"
             alt=""
           />
         ) : (
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="inline mx-2 w-10 align-middle fill-[#818181] dark:fill-darkLight"
+            className="inline mx-2 w-10 2xl:w-12 3xl:w-14 align-middle fill-[#818181] dark:fill-darkLight"
             viewBox="0 0 16 16"
           >
             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
@@ -111,13 +111,13 @@ function ChatPreview({
 
         {/* name */}
         <div className="flex items-center">
-          <span className="text-sm text-justify mx-1 dark:text-darkLight">
+          <span className="text-sm 2xl:text-base 3xl:text-lg text-justify mx-1 dark:text-darkLight">
             {receiver && receiver.firstName} {receiver && receiver.lastName}
           </span>
 
-          {user && unReadCount[user._id] > 0 && (
-            <span className="text-xsm text-center bg-primary-light text-white py-0.5 px-1.5 rounded-full mx-1">
-              {unReadCount[user._id]}
+          {user && unReadCount[user._id] === 0 && (
+            <span className="text-xsm 2xl:text-sm 3xl:text-base text-center bg-primary-light text-white py-0.5 px-1.5 2xl:px-2 3xl:px-2.5 rounded-full mx-1">
+              {unReadCount[user._id] + 1}
             </span>
           )}
         </div>
@@ -125,16 +125,12 @@ function ChatPreview({
 
       {/* timestamp & unread messages count */}
       <div className="flex flex-col justify-center items-center">
-        {/* <span className="text-xs mb-1 text-justify text-secondary dark:text-gray-300 mx-1">
-          08.00 PM
-        </span> */}
-
         {/* online status */}
         {online && (
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="10"
-            className="fill-green-500 inline"
+            className="fill-green-500 inline 2xl:w-3 3xl:w-3.5"
             viewBox="0 0 16 16"
           >
             <circle cx="8" cy="8" r="8" />
