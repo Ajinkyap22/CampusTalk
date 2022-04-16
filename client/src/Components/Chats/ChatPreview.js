@@ -115,9 +115,9 @@ function ChatPreview({
             {receiver && receiver.firstName} {receiver && receiver.lastName}
           </span>
 
-          {user && unReadCount[user._id] === 0 && (
+          {user && unReadCount[user._id] > 0 && (
             <span className="text-xsm 2xl:text-sm 3xl:text-base text-center bg-primary-light text-white py-0.5 px-1.5 2xl:px-2 3xl:px-2.5 rounded-full mx-1">
-              {unReadCount[user._id] + 1}
+              {unReadCount[user._id]}
             </span>
           )}
         </div>

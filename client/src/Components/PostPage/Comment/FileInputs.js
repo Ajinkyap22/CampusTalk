@@ -160,9 +160,10 @@ function FileInputs({
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          fill={disabled ? "#ababab" : "#818181"}
           className={`inline ${
             small ? "w-4 2xl:w-5 3xl:w-6" : "w-5 2xl:w-6 3xl:w-7"
+          } ${
+            disabled ? "fill-[#ababab]" : "fill-[#818181] dark:fill-gray-300"
           }`}
           viewBox="0 0 16 16"
         >
@@ -181,9 +182,10 @@ function FileInputs({
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          fill={disabled ? "#ababab" : "#818181"}
           className={`inline ${
             small ? "w-4 2xl:w-5 3xl:w-6" : "w-5 2xl:w-6 3xl:w-7"
+          } ${
+            disabled ? "fill-[#ababab]" : "fill-[#818181] dark:fill-gray-300"
           }`}
           viewBox="0 0 16 16"
         >

@@ -21,7 +21,13 @@ function MobileNav({ handleClick, activeTab, notificationCount }) {
 
   function toggleMode() {
     setToggle(!toggle);
-    mode === "light" ? setMode("dark") : setMode("light");
+    if (mode === "light") {
+      setMode("dark");
+      localStorage.setItem("mode", "dark");
+    } else {
+      setMode("light");
+      localStorage.setItem("mode", "dark");
+    }
   }
 
   function logout() {

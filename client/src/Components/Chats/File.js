@@ -21,7 +21,7 @@ function File({
       } cursor-pointer ${
         sender._id === user._id && type !== "doc"
           ? "border-[5px] border-primary-light"
-          : "border-[5px] border-white"
+          : "border-[5px] border-white dark:border-[#3e3d3d]"
       }`}
     >
       {type === "image" && (
@@ -44,7 +44,7 @@ function File({
 
       {type === "doc" && (
         <div
-          className="flex items-center justify-center w-full h-full p-2 rounded"
+          className="flex items-center dark:bg-[#3e3d3d] justify-center w-full h-full p-2"
           onClick={handleClick}
         >
           <svg
@@ -55,7 +55,7 @@ function File({
             <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20M13,13V18H10V13H13Z" />
           </svg>
 
-          <span className="ml-2 block text-sm 2xl:text-base 3xl:text-lg">
+          <span className="ml-2 block text-sm dark:text-darkLight 2xl:text-base 3xl:text-lg">
             {" "}
             {originalFileName.name.length > 25
               ? originalFileName.name.substring(0, 25) + "..."
@@ -63,7 +63,7 @@ function File({
           </span>
           {/* file size in kb or mb */}
           {originalFileName.size && (
-            <span className="ml-2 text-secondary text-mxs 2xl:text-sm 3xl:text-base">
+            <span className="ml-2 text-secondary text-mxs 2xl:text-sm 3xl:text-base dark:text-gray-300">
               {originalFileName.size > 1000000
                 ? `(${(originalFileName.size / 1024 / 1024).toFixed(2)} MB)`
                 : originalFileName.size > 1024

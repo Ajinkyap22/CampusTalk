@@ -65,15 +65,6 @@ function Forum({ forum, title, defaultTab = "posts" }) {
   }, []);
 
   useEffect(() => {
-    // hiden overflow when modal is open
-    if (showModal) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "visible";
-    }
-  }, [showModal]);
-
-  useEffect(() => {
     if (!user) return;
 
     if (forum.moderators.find((moderator) => moderator._id === user._id)) {
@@ -196,8 +187,8 @@ function Forum({ forum, title, defaultTab = "posts" }) {
       <Nav />
 
       {/* forum content */}
-      <section className="lg:flex justify-between items-start w-full lg:w-[80%] xl:w-[70%] mx-auto h-full">
-        <div className="flex flex-col max-w-full lg:max-w-[28rem] xl:max-w-[32rem] my-4 lg:my-8 h-full">
+      <section className="lg:flex justify-between items-start w-full lg:w-[80%] xl:w-[70%] 2xl:w-[60%] 3xl:w-1/2 mx-auto h-full">
+        <div className="flex flex-col max-w-full lg:max-w-[28rem] xl:max-w-[32rem] 2xl:max-w-[36rem] 3xl:max-w-[40rem] my-4 lg:my-8 2xl:my-10 3xl:my-12 h-full">
           {/* tab */}
           <TabToggle
             tab={tab}
@@ -330,7 +321,7 @@ function Forum({ forum, title, defaultTab = "posts" }) {
           )}
         </div>
 
-        <div className="hidden lg:block mt-8 sticky">
+        <div className="hidden lg:block mt-8 2xl:my-10 3xl:my-12 sticky">
           {/* forum info */}
           <ForumInfo
             forum={forum}

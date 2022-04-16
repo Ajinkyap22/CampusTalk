@@ -88,7 +88,9 @@ function PostInfo({ postId, author, forum, timestamp, anonymous, important }) {
         {/* user name */}
         <span
           className={`text-xs xl:text-sm 2xl:text-xl dark:text-darkLight ${
-            !anonymous && author._id !== user._id && "hover:underline"
+            !anonymous &&
+            author._id !== user._id &&
+            "hover:underline transition-all"
           }`}
           onMouseEnter={handleHover}
           onMouseLeave={handleLeave}
@@ -110,7 +112,7 @@ function PostInfo({ postId, author, forum, timestamp, anonymous, important }) {
         {/* forum name */}
         <Link
           to={`/forums/${forum._id}/`}
-          className="mr-1 text-xs xl:text-sm 2xl:text-xl hover:underline dark:text-darkLight"
+          className="mr-1 text-xs xl:text-sm 2xl:text-xl hover:underline transition-all dark:text-darkLight"
         >
           {forum.forumName}
           {/* important */}

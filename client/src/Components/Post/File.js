@@ -122,7 +122,7 @@ function File({
             )) || (
               <div
                 key={i}
-                className="flex items-center justify-center bg-[#cfe2ff] max-w-full p-2 doc"
+                className="flex items-center justify-center bg-[#cfe2ff] max-w-full p-2 doc dark:bg-[#3e3d3d]"
                 onClick={handleDocClick.bind(this, file)}
               >
                 <svg
@@ -137,14 +137,18 @@ function File({
                 </svg>
 
                 <span
-                  className={`ml-2 ${small ? "text-mxs" : "text-sm"} block doc`}
+                  className={`ml-2 ${
+                    small ? "text-mxs" : "text-sm"
+                  } block doc dark:text-darkLight`}
                 >
-                  {originalFileNames[i].name}
+                  {originalFileNames[i].name.length > 25
+                    ? originalFileNames[i].name.substring(0, 25) + "..."
+                    : originalFileNames[i].name}
                 </span>
 
                 {/* convert file size from bytes to kb or mb */}
                 {originalFileNames[i].size && (
-                  <span className="ml-2 text-secondary text-center text-xs doc">
+                  <span className="ml-2 text-secondary text-center text-xs doc dark:text-gray-300">
                     {originalFileNames[i].size > 1000000
                       ? `${(originalFileNames[i].size / 1024 / 1024).toFixed(
                           2

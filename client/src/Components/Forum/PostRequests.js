@@ -97,7 +97,7 @@ function PostRequests({
         <div>
           <div className="text-center my-4" hidden={postRequests.length}>
             <LogoCropped color="rgba(98,98,98,0.9)" width="80" />
-            <p className="text-secondary dark:text-gray-300">
+            <p className="text-secondary dark:text-gray-300 2xl:text-lg 2xl:mt-2 3xl:text-xl">
               There no new post requests.
             </p>
           </div>

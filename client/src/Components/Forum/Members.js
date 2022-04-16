@@ -25,7 +25,7 @@ function Members({
   }, [moderators]);
 
   return (
-    <div className="bg-white dark:bg-darkSecondary shadow-base w-full lg:min-w-[32rem] lg:rounded">
+    <div className="bg-white dark:bg-darkSecondary shadow-base w-full lg:min-w-[28rem] xl:min-w-[32rem] lg:rounded">
       {members.map((member, i) => (
         <Member
           key={i}

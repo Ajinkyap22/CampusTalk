@@ -55,14 +55,12 @@ function LeaveModal({ forumName, forumId, showModal, setShowModal, ...props }) {
 
   return (
     <div
-      className="absolute top-1/2 left-1/2 -translate-x-[45%] -translate-y-[45%] translate-x- bg-white mx-auto rounded text-center py-2 shadow-base z-10 w-[80%] xsm:w-[70%] md:w-[50%] lg:w-[30%] 2xl:w-[25%]"
+      className="absolute left-[10%] xsm:left-[15%] lg:left-1/3 top-[40vh] bg-white mx-auto rounded text-center py-2 shadow-base z-10 w-[80%] xsm:w-[70%] md:w-[50%] lg:w-[30%] 2xl:w-[25%]"
       hidden={!showModal}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="50"
-        height="50"
-        className="mx-auto mt-3 mb-2"
+        className="mx-auto mt-3 mb-2 w-10 lg:w-12"
         fill="#626262"
         viewBox="0 0 16 16"
       >
@@ -70,18 +68,20 @@ function LeaveModal({ forumName, forumId, showModal, setShowModal, ...props }) {
         <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z" />
       </svg>
 
-      <p className="p-4">Are you sure you want to leave {forumName}?</p>
+      <p className="p-4 text-sm lg:text-base">
+        Are you sure you want to leave {forumName}?
+      </p>
 
       <div>
         <button
-          className="border border-primary font-bold text-primary text-sm px-4 py-2 rounded mx-2 mb-4 hover:bg-primary hover:text-white"
+          className="border border-primary font-bold text-primary text-xs lg:text-sm px-4 py-2 rounded mx-2 mb-4 hover:bg-primary hover:text-white"
           onClick={handleClose}
         >
           Cancel
         </button>
 
         <button
-          className="border border-red-500 bg-red-500 text-sm px-4 py-2 text-white rounded mx-2 mb-4 hover:bg-red-600"
+          className="border border-red-500 bg-red-500 text-xs lg:text-sm px-4 py-2 text-white rounded mx-2 mb-4 hover:bg-red-600"
           onClick={leaveForum}
         >
           Leave Forum

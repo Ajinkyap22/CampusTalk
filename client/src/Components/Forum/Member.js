@@ -51,7 +51,7 @@ function Member({
 
   return (
     <div
-      className={`flex border-b relative dark:border-secondary justify-between items-center w-full p-2 lg:p-2.5 ${
+      className={`flex border-b relative dark:border-secondary justify-between items-center w-full p-2 lg:p-2.5 2xl:p-3 ${
         i === members.length - 1 ? "border-none" : ""
       }`}
     >
@@ -60,13 +60,13 @@ function Member({
         {member.picture ? (
           <img
             src={`http://localhost:3000/uploads/images/${member.picture}`}
-            className="rounded-full object-cover w-8 lg:w-10 h-auto inline mx-1 lg:mx-2"
+            className="rounded-full object-cover w-8 lg:w-10 2xl:w-12 3xl:w-14 h-auto inline mx-1 lg:mx-2"
             alt=""
           />
         ) : (
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="inline mx-1 lg:mx-2 w-8 lg:w-10 align-middle fill-[#818181] dark:fill-darkLight"
+            className="inline mx-1 lg:mx-2 w-8 lg:w-10 2xl:w-12 3xl:w-14 align-middle fill-[#818181] dark:fill-darkLight"
             viewBox="0 0 16 16"
           >
             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
@@ -78,7 +78,7 @@ function Member({
         )}
 
         {/* name */}
-        <span className="text-xs lg:text-sm text-justify mx-1 dark:text-darkLight">
+        <span className="text-xs lg:text-sm 2xl:text-base 3xl:text-lg text-justify mx-1 dark:text-darkLight">
           {member.firstName} {member.lastName}
         </span>
 
@@ -86,9 +86,8 @@ function Member({
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="#0F8CFF"
-            className="inline mx-1 lg:mx-2 w-3.5 lg:w-4"
+            className="inline mx-1 lg:mx-2 w-3.5 lg:w-4 2xl:w-5"
             viewBox="0 0 16 16"
-            // check if the user is a moderator
             hidden={moderatorsList[member._id] ? false : true}
           >
             <path
@@ -105,7 +104,7 @@ function Member({
           {/* remove member */}
           <button
             onClick={newChat}
-            className="p-1 px-1.5 lg:px-2 rounded-full text-xsm lg:text-mxs text-white dark:text-darkLight mx-1 bg-primary-light hover:bg-primary"
+            className="p-1 px-1.5 lg:px-2 2xl:px-2.5 3xl:px-3 rounded-full text-xsm lg:text-mxs 2xl:text-sm 3xl:text-base text-white dark:text-darkLight mx-1 bg-primary-light hover:bg-primary"
           >
             Message
           </button>
@@ -113,7 +112,7 @@ function Member({
           {/* remove member */}
           {moderatorsList[user._id] && (
             <button
-              className="bg-red-500 p-1 px-1.5 lg:px-2 rounded-full text-xsm lg:text-mxs text-white dark:text-darkLight mx-1 hover:bg-red-600"
+              className="bg-red-500 p-1 px-1.5 lg:px-2 2xl:px-2.5 3xl:px-3 rounded-full text-xsm lg:text-mxs 2xl:text-sm 3xl:text-base text-white dark:text-darkLight mx-1 hover:bg-red-600"
               onClick={() => removeMember(member)}
             >
               Remove

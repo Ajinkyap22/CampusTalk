@@ -4,7 +4,6 @@ const Schema = mongoose.Schema;
 const ChatSchema = new Schema({
   members: [{ type: Schema.Types.ObjectId, ref: "User", required: true }],
   unReadCounts: { type: Object },
-  unReadCounts: {},
   timestamp: { type: Date, default: Date.now },
 });
 

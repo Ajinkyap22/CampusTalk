@@ -162,7 +162,9 @@ function EventMedia({
               </svg>
 
               <span className="ml-2 dark:text-darkLight">
-                {name}.{doc.split(".")[1]}
+                {name.length > 25
+                  ? `${name.substring(0, 25)}...`
+                  : name + "." + doc.split(".")[1]}
               </span>
             </div>
 
@@ -347,7 +349,10 @@ function EventMedia({
         {images && images.length > 0 ? (
           <div className="flex flex-wrap justify-center">
             {images.map((image, i) => (
-              <div key={i} className="relative w-full h-full">
+              <div
+                key={i}
+                className="relative w-full h-full dark:text-gray-300"
+              >
                 <img
                   src={`http://localhost:3000/uploads/images/${image}`}
                   alt={image}

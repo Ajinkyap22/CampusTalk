@@ -33,7 +33,7 @@ function ChatTitle({
       {/* picture and name */}
       <div className="flex items-center">
         {/* back button for mobile */}
-        <button className="" onClick={back}>
+        <button onClick={back}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="w-6 xl:w-7 xl:mx-1 2xl:w-9 3xl:w-10 stroke-darkLight"
@@ -49,7 +49,7 @@ function ChatTitle({
         </button>
 
         {/* picture */}
-        {!receiver && receiver.picture ? (
+        {receiver && receiver.picture ? (
           <img
             src={`http://localhost:3000/uploads/images/${receiver.picture}`}
             className="rounded-full object-cover w-9 2xl:w-12 3xl:w-14 h-auto inline mx-2"

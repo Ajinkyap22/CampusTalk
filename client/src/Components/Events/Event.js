@@ -195,9 +195,9 @@ function Event({ event, title, events, setEvents, history }) {
                 href={event.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-primary dark:text-primary-dark underline"
+                className="px-2 md:px-3 py-1.5 lg:py-2 text-xs md:text-sm lg:text-base 2xl:text-lg bg-primary text-white rounded hover:bg-blue-700 hover:scale-110 transition-all"
               >
-                {event.link}
+                Register
               </a>
             </section>
           )}

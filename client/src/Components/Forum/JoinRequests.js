@@ -116,13 +116,13 @@ function JoinRequests({
         <div>
           <div className="text-center my-4" hidden={joinRequests.length}>
             <LogoCropped color="rgba(98,98,98,0.9)" width="80" />
-            <p className="text-secondary dark:text-gray-300">
+            <p className="text-secondary dark:text-gray-300 2xl:text-lg 2xl:mt-2 3xl:text-xl">
               There no new join requests.
             </p>
           </div>
 
           {/* if not empty */}
-          <div className="bg-white dark:bg-darkSecondary shadow-base lg:min-w-[32rem] rounded">
+          <div className="bg-white dark:bg-darkSecondary shadow-base lg:min-w-[28rem] xl:min-w-[32rem] rounded">
             {joinRequests.map((joinRequest, i) => (
               <div
                 className={`flex border-b justify-between items-center w-full p-2 lg:p-2.5 ${

@@ -104,19 +104,22 @@ function ForumInfo({
   }
 
   return (
-    <div className="bg-white dark:bg-darkSecondary shadow-base max-w-[22rem] pb-1 rounded">
+    <div className="bg-white dark:bg-darkSecondary shadow-base max-w-[22rem] 2xl:max-w-[26rem] 3xl:max-w-[30rem] pb-1 rounded">
       {/* title */}
-      <div className="flex items-center w-full bg-primary-light p-3 py-2  rounded-t">
+      <div className="flex items-center w-full bg-primary-light p-3 2xl:p-4 py-2 rounded-t">
         <div className="mr-1">
           <LogoCropped />
         </div>
-        <p className="text-white text-lg inline"> {forum.forumName}</p>
+        <p className="text-white text-lg 2xl:text-xl inline">
+          {" "}
+          {forum.forumName}
+        </p>
       </div>
 
       {/* info */}
       <div className="p-2 border-b border-[#cfcdcd] dark:border-secondary px-3">
         {/* website */}
-        <p className="text-xs p-1">
+        <p className="text-xs 2xl:text-sm 3xl:text-base p-1">
           <span className="underline underline-offset-1 dark:text-darkLight">
             Website:{" "}
           </span>
@@ -131,7 +134,7 @@ function ForumInfo({
         </p>
 
         {/* email */}
-        <p className="text-xs p-1">
+        <p className="text-xs 2xl:text-sm 3xl:text-base p-1">
           <span className="underline underline-offset-1 dark:text-darkLight">
             Email:{" "}
           </span>
@@ -141,7 +144,7 @@ function ForumInfo({
         </p>
 
         {/* address */}
-        <p className="text-xs p-1">
+        <p className="text-xs 2xl:text-sm 3xl:text-base p-1">
           <span className="underline underline-offset-1 dark:text-darkLight">
             Address:{" "}
           </span>
@@ -166,7 +169,7 @@ function ForumInfo({
         </div>
 
         {/* created date */}
-        <p className="text-xs pt-3 text-secondary dark:text-gray-300">
+        <p className="text-xs 2xl:text-sm 3xl:text-base pt-3 text-secondary dark:text-gray-300">
           Created {moment(forum.timestamp).format("LL")}
         </p>
       </div>
