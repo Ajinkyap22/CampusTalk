@@ -21,7 +21,7 @@ function Toggle() {
       localStorage.setItem("mode", "dark");
     } else {
       setMode("light");
-      localStorage.setItem("mode", "dark");
+      localStorage.setItem("mode", "light");
     }
   }
 

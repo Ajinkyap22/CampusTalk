@@ -61,6 +61,10 @@ function Feed({ title }) {
     setActiveTab("feed");
   }, [activeTab]);
 
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
+
   return (
     <main className="w-full min-h-full bg-[#F0F2F5] dark:bg-dark">
       <Nav />

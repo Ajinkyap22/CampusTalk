@@ -1,13 +1,21 @@
 import { UserContext } from "../../Contexts/UserContext";
+import { PostContext } from "../../Contexts/PostContext";
+import { EventContext } from "../../Contexts/EventContext";
 import { useContext } from "react";
 import { Link, withRouter } from "react-router-dom";
 import LogoCropped from "../LogoCropped";
 import moment from "moment";
 import axios from "axios";
 
+// TODO
+// fix the mounting issue at forum
+// TODO: fix the forum route bug after logging out and logging in again
+// TODO: we setPosts to forum posts in forum but don't change it back to feed posts in feed
+
 function ForumInfo({
   forum,
   forums,
+  setForums,
   showModal,
   setShowModal,
   requestSent,
@@ -15,9 +23,12 @@ function ForumInfo({
   joinRequests,
   setJoinRequests,
   isModerator,
+  setAction,
   ...props
 }) {
-  const [user] = useContext(UserContext);
+  const [user, setUser] = useContext(UserContext);
+  const [posts, setPosts] = useContext(PostContext);
+  const [events, setEvents] = useContext(EventContext);
 
   function joinForum() {
     if (!user) return;
@@ -62,18 +73,9 @@ function ForumInfo({
       });
   }
 
-  function toggleModal() {
+  function toggleModal(action) {
     setShowModal(!showModal);
-  }
-
-  function deleteForum() {
-    let headers = {
-      headers: {
-        Authorization: `Bearer ${
-          JSON.parse(localStorage.getItem("user")).token
-        }`,
-      },
-    };
+    setAction(action);
   }
 
   function sendMail(f) {
@@ -93,14 +95,9 @@ function ForumInfo({
       type: "join",
     };
 
-    axios
-      .post("/api/mail/requests", body)
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    axios.post("/api/mail/requests", body).catch((err) => {
+      console.error(err);
+    });
   }
 
   return (
@@ -185,7 +182,7 @@ function ForumInfo({
           </Link>
 
           <button
-            onClick={toggleModal}
+            onClick={() => toggleModal("Leave")}
             className="mx-auto w-1/2 block text-centr p-2 py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-red-500 bg-transparent text-red-500 dark:text-[#ff5656] rounded-full hover:bg-red-500 hover:text-white dark:hover:text-darkLight"
           >
             Leave Forum
@@ -193,7 +190,7 @@ function ForumInfo({
 
           {isModerator && (
             <button
-              onClick={deleteForum}
+              onClick={() => toggleModal("Delete")}
               className="mx-auto w-1/2 block text-centr p-2 py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-red-500 bg-transparent text-red-500 dark:text-[#ff5656] rounded-full hover:bg-red-500 hover:text-white dark:hover:text-darkLight"
             >
               Delete Forum

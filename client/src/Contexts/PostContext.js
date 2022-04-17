@@ -24,21 +24,6 @@ export function PostProvider({ children }) {
           console.error(err);
         });
     }
-    // else {
-    //   // for testing purposes
-    //   axios
-    //     .get("/api/forums/62067ce47911a04b1fd71495/posts")
-    //     .then((res) => {
-    //       setPosts(
-    //         [...res.data].sort(
-    //           (a, b) => -a.timestamp.localeCompare(b.timestamp)
-    //         )
-    //       );
-    //     })
-    //     .catch((err) => {
-    //       console.error(err);
-    //     });
-    // }
   }, [user]);
 
   return (

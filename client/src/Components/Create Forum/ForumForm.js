@@ -17,6 +17,7 @@ function ForumForm(props) {
     address: "",
     website: "",
     email: "",
+    user: user?._id,
   });
 
   const handleChange = function (e) {
@@ -49,42 +50,25 @@ function ForumForm(props) {
       },
     };
 
+    if (!formData.user) {
+      formData.user = user._id;
+    }
+
     axios
       .post(`/api/forums/create-forum`, formData, headers)
       .then((res) => {
-        // make moderator
-        makeModerator(res.data._id);
-        // add forum to user's forums
+        // update forums
         setForums((forums) => [...forums, res.data]);
+        // add forum to user's forums
+        setUser((user) => ({
+          ...user,
+          forums: [...user.forums, res.data],
+        }));
         // redirect
-        // props.history.push(`forums/${res.data._id}`);
         props.history.push(`/forums/${res.data._id}`);
       })
       .catch((err) => {
         setStatus(err?.response?.status || 0);
-      });
-  }
-
-  function makeModerator(forumId) {
-    if (!user) return;
-
-    let body = { id: user._id };
-
-    let headers = {
-      headers: {
-        Authorization: `Bearer ${
-          JSON.parse(localStorage.getItem("user"))?.token
-        }`,
-      },
-    };
-
-    axios
-      .post(`/api/forums/${forumId}/moderators/make`, body, headers)
-      .then((res) => {
-        setUser((user) => ({ ...user, forums: [...user.forums, res.data] }));
-      })
-      .catch((err) => {
-        console.error(err);
       });
   }
 

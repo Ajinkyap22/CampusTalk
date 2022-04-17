@@ -1,5 +1,7 @@
 const Forum = require("../models/forum");
 const User = require("../models/user");
+const Post = require("../models/post");
+const Event = require("../models/event");
 const { body, validationResult } = require("express-validator");
 
 // get all forums
@@ -62,11 +64,38 @@ exports.create_forum = [
         address: req.body.address,
         website: req.body.website,
         email: req.body.email,
+        members: [req.body.user],
+        moderators: [req.body.user],
       },
       (err, forum) => {
         if (err) return res.json(err);
 
-        return res.json(forum);
+        // add forum to user's joined forums
+        User.findByIdAndUpdate(
+          req.body.user,
+          {
+            $push: {
+              forums: forum._id,
+            },
+          },
+          { new: true },
+          (err, user) => {
+            if (err) return res.json(err);
+            Forum.populate(forum, { path: "members" }, (err, forum) => {
+              if (err) return res.json(err);
+
+              Forum.populate(forum, { path: "moderators" }, (err, forum) => {
+                if (err) return res.json(err);
+
+                Forum.populate(forum, { path: "posts" }, (err, forum) => {
+                  if (err) return res.json(err);
+
+                  return res.json(forum);
+                });
+              });
+            });
+          }
+        );
       }
     );
   },
@@ -77,7 +106,54 @@ exports.delete_forum = function (req, res) {
   Forum.findByIdAndRemove(req.params.id, function (err, forum) {
     if (err) return res.json(err);
 
-    return res.json(forum);
+    // remove forum from user's joined forums
+    User.findByIdAndUpdate(
+      req.body.id,
+      {
+        $pull: {
+          forums: forum._id,
+        },
+      },
+      { new: true },
+      (err, user) => {
+        if (err) return res.json(err);
+
+        // remove all posts in forum
+        Post.deleteMany({ forum: forum._id }, (err, posts) => {
+          if (err) return res.json(err);
+
+          // remove those posts from user's posts only if they exist
+          if (posts.length > 0) {
+            User.findByIdAndUpdate(
+              req.body.id,
+              {
+                $pull: {
+                  posts: { $in: posts },
+                },
+              },
+              { new: true },
+              (err, user) => {
+                if (err) return res.json(err);
+
+                // remove all events in forum
+                Event.deleteMany({ forum: forum._id }, (err, events) => {
+                  if (err) return res.json(err);
+
+                  return res.json(events);
+                });
+              }
+            );
+          } else {
+            // remove all events in forum
+            Event.deleteMany({ forum: forum._id }, (err, events) => {
+              if (err) return res.json(err);
+
+              return res.json(events);
+            });
+          }
+        });
+      }
+    );
   });
 };
 
@@ -339,6 +415,8 @@ exports.make_moderator = function (req, res) {
     .populate({ path: "moderators", model: "User" })
     .exec((err, forum) => {
       if (err) return res.json(err);
+
+      console.log(forum._id, forum.members);
 
       return res.json(forum.moderators);
     });

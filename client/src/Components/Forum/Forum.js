@@ -38,6 +38,7 @@ function Forum({ forum, title, defaultTab = "posts" }) {
   const [postRequests, setPostRequests] = useState([]);
   const [postRequestLoading, setPostRequestLoading] = useState(true);
   const [joinRequestLoading, setJoinRequestLoading] = useState(true);
+  const [action, setAction] = useState("");
 
   useEffect(() => {
     document.title = title || `${forum.forumName} | CampusTalk`;
@@ -326,7 +327,9 @@ function Forum({ forum, title, defaultTab = "posts" }) {
           <ForumInfo
             forum={forum}
             forums={forums}
+            setForums={setForums}
             showModal={showModal}
+            setAction={setAction}
             setShowModal={setShowModal}
             requestSent={requestSent}
             setRequestSent={setRequestSent}
@@ -360,6 +363,7 @@ function Forum({ forum, title, defaultTab = "posts" }) {
         showModal={showModal}
         setShowModal={setShowModal}
         forumId={forum._id}
+        action={action}
       />
 
       {/* overlay */}

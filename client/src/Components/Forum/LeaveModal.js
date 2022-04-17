@@ -1,12 +1,23 @@
 import { UserContext } from "../../Contexts/UserContext";
 import { ForumContext } from "../../Contexts/ForumContext";
+import { PostContext } from "../../Contexts/PostContext";
+import { EventContext } from "../../Contexts/EventContext";
 import { useContext } from "react";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
 
-function LeaveModal({ forumName, forumId, showModal, setShowModal, ...props }) {
+function LeaveModal({
+  forumName,
+  forumId,
+  showModal,
+  action = "Leave",
+  setShowModal,
+  ...props
+}) {
   const [user, setUser] = useContext(UserContext);
   const [forums, setForums] = useContext(ForumContext);
+  const [posts, setPosts] = useContext(PostContext);
+  const [events, setEvents] = useContext(EventContext);
 
   function leaveForum() {
     let headers = {
@@ -27,13 +38,13 @@ function LeaveModal({ forumName, forumId, showModal, setShowModal, ...props }) {
         // remove forum from users forums
         setUser({
           ...user,
-          forums: user.forums.filter((forum) => forum._id !== forumId),
+          forums: user.forums.filter((forum) => forumId !== forum._id),
         });
 
         // remove user from forum members
         setForums((prevForums) =>
           prevForums.map((forum) => {
-            if (forum._id === forumId) {
+            if (forumId === forum._id) {
               return {
                 ...forum,
                 members: res.data,
@@ -46,6 +57,41 @@ function LeaveModal({ forumName, forumId, showModal, setShowModal, ...props }) {
 
         setShowModal(false);
         props.history.push(`/forums/${forumId}`);
+      });
+  }
+
+  function deleteForum() {
+    axios
+      .delete(`/api/forums/delete/${forumId}`, {
+        data: { id: user._id },
+        headers: {
+          Authorization: `Bearer ${
+            JSON.parse(localStorage.getItem("user")).token
+          }`,
+        },
+      })
+      .then((res) => {
+        setShowModal(false);
+        // update forums
+        setForums(forums.filter((f) => f._id !== forumId));
+
+        setUser({
+          ...user,
+          forums: user.forums.filter((f) => f._id !== forumId),
+          posts: user.posts.filter((p) => p.forum !== forumId),
+        });
+
+        // set posts to empty
+        setPosts([]);
+
+        // remove all events from forum
+        setEvents(events.filter((e) => e.forumId !== forumId));
+
+        // redirecr
+        props.history.push("/feed");
+      })
+      .catch((err) => {
+        console.error(err);
       });
   }
 
@@ -69,7 +115,7 @@ function LeaveModal({ forumName, forumId, showModal, setShowModal, ...props }) {
       </svg>
 
       <p className="p-4 text-sm lg:text-base">
-        Are you sure you want to leave {forumName}?
+        Are you sure you want to {action} {forumName}?
       </p>
 
       <div>
@@ -82,9 +128,9 @@ function LeaveModal({ forumName, forumId, showModal, setShowModal, ...props }) {
 
         <button
           className="border border-red-500 bg-red-500 text-xs lg:text-sm px-4 py-2 text-white rounded mx-2 mb-4 hover:bg-red-600"
-          onClick={leaveForum}
+          onClick={action === "Leave" ? leaveForum : deleteForum}
         >
-          Leave Forum
+          {action} Forum
         </button>
       </div>
     </div>

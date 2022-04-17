@@ -26,7 +26,7 @@ function MobileNav({ handleClick, activeTab, notificationCount }) {
       localStorage.setItem("mode", "dark");
     } else {
       setMode("light");
-      localStorage.setItem("mode", "dark");
+      localStorage.setItem("mode", "light");
     }
   }
 
