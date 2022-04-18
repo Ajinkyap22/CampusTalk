@@ -50,8 +50,8 @@ function Feed({ title }) {
   const [activeFilter, setActiveFilter] = useState("latest");
   const [dateRange, setDateRange] = useState("Today");
   const [posts, setPosts, loading] = useContext(PostContext);
-  const [user, setUser] = useContext(UserContext);
-  const [events, setEvents] = useContext(EventContext);
+  const [user] = useContext(UserContext);
+  const [events] = useContext(EventContext);
 
   useEffect(() => {
     document.title = title || "Feed | CampusTalk";
@@ -134,7 +134,7 @@ function Feed({ title }) {
 
         <div className="mt-8">
           {/* home info box */}
-          <HomeBox />
+          <HomeBox user={user} />
 
           {/* forums joined box */}
           <ForumBox user={user} />

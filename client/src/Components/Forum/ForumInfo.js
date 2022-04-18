@@ -5,11 +5,6 @@ import LogoCropped from "../LogoCropped";
 import moment from "moment";
 import axios from "axios";
 
-// TODO: fix the forum route bug after logging out and logging in again
-// In event form show only those forums wher user is a mod
-// In the forum info box show create event to mods
-// in the homebox show create event to users who are moderators of a forum
-
 function ForumInfo({
   forum,
   forums,
@@ -176,6 +171,15 @@ function ForumInfo({
           >
             Create Post
           </Link>
+
+          {isModerator && (
+            <Link
+              to="/create-event"
+              className="w-1/2 mx-auto text-center block py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-primary bg-primary text-white rounded-full hover:bg-blue-700 dark:hover:bg-primary-light"
+            >
+              Create Event
+            </Link>
+          )}
 
           <button
             onClick={() => toggleModal("Leave")}

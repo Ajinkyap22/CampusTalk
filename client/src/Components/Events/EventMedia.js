@@ -140,28 +140,26 @@ function EventMedia({
   }
 
   return (
-    <div className="lg:col-span-2">
+    <div className="lg:col-span-2 2xl:col-span-3">
       {/* event doc */}
       <section className="text-center my-8 lg:w-2/3">
-        <h2 className="text-xl my-4 text-primary dark:text-primary-dark">
+        <h2 className="text-xl 2xl:text-3xl my-4 2xl:my-5 text-primary dark:text-primary-dark">
           Information Document
         </h2>
 
         {doc ? (
-          <div className="flex items-center bg-white dark:bg-[#3e3d3d] mx-auto w-[90%] lg:w-full justify-between h-full p-2 rounded">
+          <div className="flex items-center bg-white dark:bg-[#3e3d3d] mx-auto w-[90%] lg:w-full 2xl:w-[90%] justify-between h-full p-2 rounded">
             {/* info */}
             <div className="flex items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
                 viewBox="0 0 24 24"
-                className="fill-current text-primary-light border-r-2 mx-1 border-primary-light inline"
+                className="fill-current text-primary-light border-r-2 mx-1 border-primary-light inline w-6 2xl:w-7"
               >
                 <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20M13,13V18H10V13H13Z" />
               </svg>
 
-              <span className="ml-2 dark:text-darkLight">
+              <span className="ml-2 2xl:text-xl dark:text-darkLight">
                 {name.length > 25
                   ? `${name.substring(0, 25)}...`
                   : name + "." + doc.split(".")[1]}
@@ -179,7 +177,7 @@ function EventMedia({
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="w-6 mx-1 stroke-red-500 dark:stroke-gray-400"
+                    className="w-6 2xl:w-7 2xl:mx-1.5 mx-1 stroke-red-500 dark:stroke-gray-400"
                     fill="none"
                     viewBox="0 0 24 24"
                     strokeWidth={2}
@@ -201,7 +199,7 @@ function EventMedia({
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-7 w-7 stroke-primary-light"
+                  className="w-7 2xl:w-8 2xl:w-9 stroke-primary-light"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={2}
@@ -218,10 +216,8 @@ function EventMedia({
               <button onClick={handleClick} title="Open Document">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
                   viewBox="0 0 24 24"
-                  className="fill-current text-primary-light ml-2 justify-self-end"
+                  className="fill-current text-primary-light ml-2 justify-self-end w-6 2xl:w-7"
                 >
                   <path d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z" />
                 </svg>
@@ -230,25 +226,25 @@ function EventMedia({
           </div>
         ) : (
           <div>
-            <span className="text-secondary dark:text-gray-300">
+            <span className="text-secondary dark:text-gray-300 2xl:text-xl">
               There are no documents
             </span>
 
             <button
-              className="mt-4 block mx-auto hover:scale-125 transition-all"
+              className="mt-4 2xl:mt-5 2xl:mb-2 block mx-auto hover:scale-125 transition-all"
               onClick={() => handleFileInput(docRef)}
               hidden={!isModerator}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="w-8 fill-[#818181] dark:fill-gray-300 mx-auto"
+                className="w-8 2xl:w-9 fill-[#818181] dark:fill-gray-300 mx-auto"
                 viewBox="0 0 16 16"
               >
                 <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
               </svg>
             </button>
 
-            <span className="mt-2 block text-secondary dark:text-gray-300">
+            <span className="mt-2 block text-secondary dark:text-gray-300 2xl:text-xl">
               Click here to add a document
             </span>
 
@@ -269,7 +265,7 @@ function EventMedia({
       {/* event video */}
       <section className="my-8 text-center lg:w-2/3">
         <div className="flex items-center justify-center">
-          <h2 className="text-xl  my-4 text-primary dark:text-primary-dark">
+          <h2 className="text-xl 2xl:text-3xl my-4 2xl:my-5 text-primary dark:text-primary-dark">
             Video
           </h2>
 
@@ -281,7 +277,7 @@ function EventMedia({
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="w-5 mx-1.5 stroke-red-500 dark:stroke-gray-300"
+                className="w-5 2xl:w-6 mx-1.5 2xl:mx-2 stroke-red-500 dark:stroke-gray-300"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth={2}
@@ -300,29 +296,29 @@ function EventMedia({
           <video
             src={`http://localhost:3000/uploads/videos/${video}`}
             controls
-            className="w-[90%] mx-auto lg:w-full h-full"
+            className="w-[90%] mx-auto lg:w-full 2xl:w-[90%] h-full"
           />
         ) : (
           <div>
-            <span className="text-secondary dark:text-gray-300">
+            <span className="text-secondary dark:text-gray-300 2xl:text-xl">
               There are no videos
             </span>
 
             <button
-              className="mt-4 block mx-auto hover:scale-125 transition-all"
+              className="mt-4 2xl:mt-5 2xl:mb-2 block mx-auto hover:scale-125 transition-all"
               onClick={() => handleFileInput(videoRef)}
               hidden={!isModerator}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="w-8 fill-[#818181] dark:fill-gray-300 mx-auto"
+                className="w-8 2xl:w-9 fill-[#818181] dark:fill-gray-300 mx-auto"
                 viewBox="0 0 16 16"
               >
                 <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
               </svg>
             </button>
 
-            <span className="mt-2 block text-secondary dark:text-gray-300">
+            <span className="mt-2 block text-secondary dark:text-gray-300 2xl:text-xl">
               Click here to add a video
             </span>
 
@@ -342,7 +338,7 @@ function EventMedia({
 
       {/* images */}
       <section className="my-8 text-center lg:w-2/3">
-        <h2 className="text-xl my-4 text-primary dark:text-primary-dark">
+        <h2 className="text-xl 2xl:text-3xl my-4 text-primary dark:text-primary-dark">
           Images
         </h2>
 
@@ -357,12 +353,12 @@ function EventMedia({
                   src={`http://localhost:3000/uploads/images/${image}`}
                   alt={image}
                   onClick={() => handleImageClick(i)}
-                  className="m-2 cursor-pointer w-[90%] lg:w-full"
+                  className="m-2 cursor-pointer w-[90%] lg:w-full 2xl:w-[90%] 2xl:text-xl"
                 />
 
                 {isModerator && (
                   <button
-                    className="text-sm text-secondary dark:text-gray-300 hover:scale-105 transition-all underline dark:hover:text-red-500 hover:text-red-500"
+                    className="text-sm text-secondary dark:text-gray-300 2xl:text-xl hover:scale-105 transition-all underline dark:hover:text-red-500 hover:text-red-500"
                     title="Delete Document"
                     onClick={() => deleteMedia("image", image)}
                   >
@@ -375,7 +371,7 @@ function EventMedia({
         ) : null}
 
         <span
-          className="text-secondary dark:text-gray-300"
+          className="text-secondary dark:text-gray-300 2xl:text-xl"
           hidden={images.length !== 0}
         >
           There are no images
@@ -383,22 +379,22 @@ function EventMedia({
 
         <div hidden={images.length === 5 || !isModerator}>
           <button
-            className="mt-4 block mx-auto hover:scale-125 transition-all"
+            className="mt-4 2xl:mt-5 2xl:mb-2 block mx-auto hover:scale-125 transition-all"
             onClick={() => handleFileInput(imageRef)}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="w-8 fill-[#818181] dark:fill-gray-300 mx-auto"
+              className="w-8 2xl:w-9 fill-[#818181] dark:fill-gray-300 mx-auto"
               viewBox="0 0 16 16"
             >
               <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
             </svg>
           </button>
 
-          <span className="mt-2 block text-secondary dark:text-gray-300">
+          <span className="mt-2 block text-secondary dark:text-gray-300 2xl:text-xl">
             Click here to add images
           </span>
-          <span className="mt-2 block text-sm text-secondary dark:text-gray-300">
+          <span className="mt-2 block text-sm text-secondary dark:text-gray-300 2xl:text-xl">
             (You can add upto 5 images)
           </span>
 

@@ -10,7 +10,7 @@ import axios from "axios";
 
 function Event({ event, title, events, setEvents, history }) {
   const [activeTab, setActiveTab] = useContext(TabContext);
-  const [user, setUser] = useContext(UserContext);
+  const [user] = useContext(UserContext);
   const [files, setFiles] = useContext(FileContext);
   const [isModerator, setIsModerator] = useState(false);
 
@@ -85,12 +85,12 @@ function Event({ event, title, events, setEvents, history }) {
     <main className="w-full h-full overflow-auto bg-[#F0F2F5] dark:bg-dark">
       <Nav />
 
-      <div className="flex flex-col items-center lg:items-start lg:grid lg:grid-cols-5">
+      <div className="flex flex-col items-center lg:items-start lg:grid lg:grid-cols-5 2xl:grid-cols-6">
         {/* left side */}
         <div className="lg:col-span-3">
-          <section className="text-center lg:text-left px-6 my-8">
+          <section className="text-center lg:text-left px-6 2xl:px-8 my-8 2xl:my-10">
             {/* name */}
-            <h1 className="text-3xl lg:inline my-2 text-primary dark:text-primary-dark">
+            <h1 className="text-3xl 2xl:text-5xl lg:inline my-2 2xl:my-4 text-primary dark:text-primary-dark">
               {event.name}
             </h1>
 
@@ -102,7 +102,7 @@ function Event({ event, title, events, setEvents, history }) {
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="w-5 mx-1 ml-3 stroke-[#818181] dark:stroke-gray-300"
+                  className="w-5 2xl:w-6 mx-1 ml-3 stroke-[#818181] dark:stroke-gray-300"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={2}
@@ -126,7 +126,7 @@ function Event({ event, title, events, setEvents, history }) {
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="w-5 mx-1 stroke-red-500 dark:stroke-gray-300"
+                  className="w-5 2xl:w-6 mx-1 stroke-red-500 dark:stroke-gray-300"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={2}
@@ -143,7 +143,7 @@ function Event({ event, title, events, setEvents, history }) {
             {/* forum */}
             <Link
               to={`/forums/${event.forum._id}`}
-              className="text-lg dark:text-darkLight block mt-1"
+              className="text-lg 2xl:text-xl dark:text-darkLight block mt-1 2xl:mt-2"
             >
               Organized by :{" "}
               <span className="underline underline-offset-1 hover:text-primary dark:hover:text-primary transition-all">
@@ -153,21 +153,23 @@ function Event({ event, title, events, setEvents, history }) {
           </section>
 
           {/* event info */}
-          <section className="text-center lg:text-left px-6 my-8 lg:w-2/3">
-            <h2 className="text-xl my-4 text-primary dark:text-primary-dark">
+          <section className="text-center lg:text-left px-6 2xl:px-8 my-8 2xl:my-10 lg:w-2/3">
+            <h2 className="text-xl 2xl:text-3xl my-4 text-primary dark:text-primary-dark">
               About the event
             </h2>
 
             {/* description */}
-            <p className="my-2 dark:text-darkLight">{event.description}</p>
+            <p className="my-2 2xl:my-3 dark:text-darkLight 2xl:text-xl">
+              {event.description}
+            </p>
 
             {/* Event date */}
             {event.date && (
               <div className="mt-4">
-                <h2 className="text-xl text-primary dark:text-primary-dark">
+                <h2 className="text-xl 2xl:text-3xl text-primary dark:text-primary-dark">
                   Date
                 </h2>
-                <p className="my-2 dark:text-darkLight">
+                <p className="my-2 2xl:my-3 dark:text-darkLight 2xl:text-xl">
                   {moment(event.date).format("MMMM Do YYYY")}
                 </p>
               </div>
@@ -175,19 +177,21 @@ function Event({ event, title, events, setEvents, history }) {
 
             {/* Event venue */}
             {event.venue && (
-              <div className="mt-4">
-                <h2 className="text-xl  text-primary dark:text-primary-dark">
+              <div className="mt-4 2xl:mt-5">
+                <h2 className="text-xl 2xl:text-3xl text-primary dark:text-primary-dark">
                   Venue
                 </h2>
-                <p className="my-2 dark:text-darkLight">{event.venue}</p>
+                <p className="my-2 2xl:my-3 2xl:text-xl dark:text-darkLight">
+                  {event.venue}
+                </p>
               </div>
             )}
           </section>
 
           {/* event registration link */}
           {event.link && (
-            <section className="text-center lg:text-left px-6 my-8 lg:w-2/3">
-              <h2 className="text-xl my-4 text-primary dark:text-primary-dark">
+            <section className="text-center lg:text-left px-6 2xl:px-8 my-8 2xl:my-10 lg:w-2/3">
+              <h2 className="text-xl 2xl:text-3xl my-5 2xl:my-6 text-primary dark:text-primary-dark">
                 Registration
               </h2>
 
@@ -195,7 +199,7 @@ function Event({ event, title, events, setEvents, history }) {
                 href={event.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-2 md:px-3 py-1.5 lg:py-2 text-xs md:text-sm lg:text-base 2xl:text-lg bg-primary text-white rounded hover:bg-blue-700 hover:scale-110 transition-all"
+                className="px-2 md:px-3 py-1.5 lg:py-2 text-xs md:text-sm lg:text-base 2xl:text-xl bg-primary text-white rounded hover:bg-blue-700 hover:scale-110 transition-all"
               >
                 Register
               </a>

@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import { UserContext } from "./UserContext";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 
 export const ForumContext = React.createContext();
 
 export function ForumProvider({ children }) {
   const [forums, setForums] = useState([]);
+  const [user] = useContext(UserContext);
 
   // fetch forum list
   useEffect(() => {
@@ -16,7 +18,7 @@ export function ForumProvider({ children }) {
       .catch((err) => {
         console.error(err);
       });
-  }, []);
+  }, [user]);
 
   return (
     <ForumContext.Provider value={[forums, setForums]}>

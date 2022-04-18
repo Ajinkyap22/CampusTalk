@@ -1,8 +1,26 @@
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
-function HomeBox() {
+function HomeBox({ user }) {
+  const [isModerator, setIsModerator] = useState(false);
+
+  useEffect(() => {
+    if (!user) return;
+
+    let forums = user.forums;
+
+    if (!forums.length) return;
+
+    // check if user is in the moderator array of any forum
+    let isMod = forums.some(
+      (forum) => forum.moderators.indexOf(user._id) !== -1
+    );
+
+    setIsModerator(isMod);
+  }, [user]);
+
   return (
-    <div className="hidden md:block bg-white dark:bg-darkSecondary shadow-base lg:max-w-[18rem] xl:max-w-[21rem] 2xl:max-w-[26rem] 3xl:max-w-[30rem] pb-2 rounded sticky top-[5.5rem]">
+    <div className="hidden md:block bg-white dark:bg-darkSecondary shadow-base lg:max-w-[18rem] xl:max-w-[21rem] 2xl:max-w-[26rem] 3xl:max-w-[30rem] pb-2 rounded sticky top-[5.5rem] 2xl:top-[6rem] 3xl:top-[6.5rem]">
       {/* title */}
       <div className="w-full bg-primary-light dark:bg-[#389fff] lg:px-2 xl:p-3 py-2 2xl:px-4 2xl:py-3 rounded-t flex items-center">
         <svg
@@ -34,12 +52,14 @@ function HomeBox() {
           Create Post
         </Link>
 
-        <Link
-          to="/create-event"
-          className="w-1/2 mx-auto text-center block py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-primary bg-primary text-white rounded-full hover:bg-blue-700 dark:hover:bg-primary-light"
-        >
-          Create Event
-        </Link>
+        {isModerator && (
+          <Link
+            to="/create-event"
+            className="w-1/2 mx-auto text-center block py-1.5 my-5 text-xs md:text-sm 2xl:text-base border border-primary bg-primary text-white rounded-full hover:bg-blue-700 dark:hover:bg-primary-light"
+          >
+            Create Event
+          </Link>
+        )}
 
         <Link
           to="/create-forum"

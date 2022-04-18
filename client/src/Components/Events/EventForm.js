@@ -1,14 +1,15 @@
 import { UserContext } from "../../Contexts/UserContext";
 import { EventContext } from "../../Contexts/EventContext";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import Input from "../FormControl/Input";
 import ActionButtons from "../FormControl/ActionButtons";
 import axios from "axios";
 
 function EventForm({ history }) {
-  const [user, setUser] = useContext(UserContext);
+  const [user] = useContext(UserContext);
   const [events, setEvents] = useContext(EventContext);
+  const [userForums, setUserForums] = useState([]);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -19,6 +20,22 @@ function EventForm({ history }) {
     venue: "",
     forum: null,
   });
+
+  useEffect(() => {
+    if (!user) return;
+
+    let forums = user.forums.filter((forum) => {
+      let isMod = forum.moderators.indexOf(user._id) !== -1;
+
+      return isMod;
+    });
+
+    if (forums.length === 0) {
+      history.push("/forums");
+    }
+
+    setUserForums(forums);
+  }, [user]);
 
   const handleChange = function (e) {
     const { name, value } = e.target;
@@ -181,7 +198,7 @@ function EventForm({ history }) {
           required
         >
           <option value="">Select a forum</option>
-          {user?.forums?.map((forum) => (
+          {userForums?.map((forum) => (
             <option key={forum?._id} value={forum?._id}>
               {forum?.forumName}
             </option>
