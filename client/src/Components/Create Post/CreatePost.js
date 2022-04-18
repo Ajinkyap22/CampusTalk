@@ -59,31 +59,39 @@ function CreatePost({ title, post, ...props }) {
   }, [title, post]);
 
   useEffect(() => {
-    // redirect to the previus page if there is no user or if the user is not the author of the post
-    if (!user || (post && post.author._id !== user._id)) {
-      props.history.goBack();
-    }
-  }, [user, post]);
-
-  useEffect(() => {
-    if (!post) return;
-
-    setForum(post.forum);
-    setText(post.text);
-    setAnonymous(post.anonymous);
-    setImportant(post.important);
-    setOriginalFileNames(post.originalFileNames);
-    setFile(post.file);
-    setIsEditing(true);
-  }, [post]);
-
-  useEffect(() => {
     let mounted = true;
+
+    if (mounted) {
+      // redirect to the previus page if there is no user or if the user is not the author of the post
+      if (!user || (post && post.author._id !== user._id)) {
+        props.history.goBack();
+      }
+    }
 
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [user, post]);
+
+  useEffect(() => {
+    let mounted = true;
+
+    if (mounted) {
+      if (!post) return;
+
+      setForum(post.forum);
+      setText(post.text);
+      setAnonymous(post.anonymous);
+      setImportant(post.important);
+      setOriginalFileNames(post.originalFileNames);
+      setFile(post.file);
+      setIsEditing(true);
+    }
+
+    return () => {
+      mounted = false;
+    };
+  }, [post]);
 
   return (
     <main className="w-full h-full bg-[#F0F2F5] dark:bg-dark flex flex-col items-center lg:p-4 text-center relative">

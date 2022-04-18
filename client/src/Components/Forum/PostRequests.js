@@ -13,6 +13,8 @@ function PostRequests({
   postRequests,
   setPostRequests,
   postRequestLoading,
+  setForumPosts,
+  forumPosts,
 }) {
   const [posts, setPosts] = useContext(PostContext);
   const [user, setUser] = useContext(UserContext);
@@ -34,25 +36,24 @@ function PostRequests({
       )
       .then((res) => {
         let newForum = forums.find((forum) => forum._id === post.forum._id);
-
         newForum.posts.push(res.data);
-
-        // sort newForum's post by date
+        // sort newForum's post by date & update forums
         newForum.posts.sort((a, b) => -a.timestamp.localeCompare(b.timestamp));
-
         let newForums = forums.map((f) =>
           f._id === newForum._id ? newForum : f
         );
-
-        // update forums
         setForums(newForums);
 
         // update posts
         let newPosts = [...posts, res.data];
 
         newPosts.sort((a, b) => -a.timestamp.localeCompare(b.timestamp));
-
         setPosts(newPosts);
+
+        // update forum posts
+        let newForumPosts = [...forumPosts, res.data];
+        newForumPosts.sort((a, b) => -a.timestamp.localeCompare(b.timestamp));
+        setForumPosts(newForumPosts);
 
         // update post requests
         setPostRequests(postRequests.filter((p) => p._id !== post._id));
@@ -79,7 +80,6 @@ function PostRequests({
     axios
       .put(`/api/forums/${forum._id}/posts/reject/${post._id}`, {}, headers)
       .then((res) => {
-        console.log(res.data);
         setPostRequests(postRequests.filter((p) => p._id !== post._id));
       })
       .catch((err) => {

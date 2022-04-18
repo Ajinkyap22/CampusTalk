@@ -58,12 +58,12 @@ function Notification({
       notification.type === "joinRequest" ||
       notification.type === "postRequest"
     ) {
-      history.push(`/forums/${notification.forum._id}/${notification.type}s`);
+      history.push(`/forums/${notification.forum?._id}/${notification.type}s`);
     } else if (notification.type === "requestApproved") {
-      history.push(`/forums/${notification.forum._id}`);
+      history.push(`/forums/${notification.forum?._id}`);
     } else {
       history.push(
-        `/forums/${notification.forum._id}/posts/${notification.post}`
+        `/forums/${notification.forum?._id}/posts/${notification.post}`
       );
     }
 
@@ -97,7 +97,7 @@ function Notification({
         !notification.hasSeen
           ? "bg-[#cfe2ff] dark:bg-dark"
           : "bg-[#f3f3f3] dark:bg-transparent"
-      }`}
+      } ${!notification.forum ? "hidden" : ""}`}
       onClick={handleClick}
     >
       {/* picture */}
@@ -153,19 +153,19 @@ function Notification({
           {notification.type === "comment"
             ? "commented on your post in"
             : "replied to your comment on a post in"}{" "}
-          <span className="font-semibold">{notification.forum.forumName}</span>
+          <span className="font-semibold">{notification.forum?.forumName}</span>
         </p>
       ) : notification.type === "requestApproved" ? (
         <p className="text-mxs 2xl:text-sm 3xl:text-base ml-2.5 dark:text-darkLight mr-1">
           Your request to join{" "}
-          <span className="font-semibold">{notification.forum.forumName}</span>{" "}
+          <span className="font-semibold">{notification.forum?.forumName}</span>{" "}
           has been approved. You can now view and create posts in the forum.
         </p>
       ) : (
         <p className="text-mxs 2xl:text-sm 3xl:text-base dark:text-darkLight mr-1">
           There are new {notification.type === "joinRequest" ? "join" : "post"}{" "}
           requests in{" "}
-          <span className="font-semibold">{notification.forum.forumName}</span>
+          <span className="font-semibold">{notification.forum?.forumName}</span>
         </p>
       )}
 

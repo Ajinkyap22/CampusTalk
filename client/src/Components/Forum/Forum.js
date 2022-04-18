@@ -27,7 +27,7 @@ function Forum({ forum, title, defaultTab = "posts" }) {
   const [forums, setForums] = useContext(ForumContext);
   const [activeFilter, setActiveFilter] = useState("latest");
   const [dateRange, setDateRange] = useState("Today");
-  const [posts, setPosts] = useContext(PostContext);
+  const [forumPosts, setForumPosts] = useState([]);
   const [tab, setTab] = useState("posts");
   const [showModal, setShowModal] = useState(false);
   const [showToast, setShowToast] = useState(false);
@@ -41,7 +41,15 @@ function Forum({ forum, title, defaultTab = "posts" }) {
   const [action, setAction] = useState("");
 
   useEffect(() => {
-    document.title = title || `${forum.forumName} | CampusTalk`;
+    let mounted = true;
+
+    if (mounted) {
+      document.title = title || `${forum.forumName} | CampusTalk`;
+    }
+
+    return () => {
+      mounted = false;
+    };
   }, [title, forum.forumName]);
 
   useEffect(() => {
@@ -49,47 +57,59 @@ function Forum({ forum, title, defaultTab = "posts" }) {
   }, [activeTab]);
 
   useEffect(() => {
-    // get all posts in the forum
-    setTab(defaultTab);
+    let mounted = true;
 
-    // get posts
-    axios.get(`/api/forums/${forum._id}/posts`).then((res) => {
-      setPosts(res.data);
-      setLoading(false);
-    });
+    if (mounted) {
+      // get all posts in the forum
+      setTab(defaultTab);
 
-    // get post requests
-    axios.get(`/api/forums/${forum._id}/posts/postRequests`).then((res) => {
-      setPostRequests(res.data);
-      setPostRequestLoading(false);
-    });
+      // get posts
+      axios.get(`/api/forums/${forum._id}/posts`).then((res) => {
+        setForumPosts(res.data);
+        setLoading(false);
+      });
+
+      // get post requests
+      axios.get(`/api/forums/${forum._id}/posts/postRequests`).then((res) => {
+        setPostRequests(res.data);
+        setPostRequestLoading(false);
+      });
+    }
+
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   useEffect(() => {
-    if (!user) return;
+    let mounted = true;
 
-    if (forum.moderators.find((moderator) => moderator._id === user._id)) {
-      setIsModerator(true);
-    } else {
-      setIsModerator(false);
-    }
-  }, [user]);
+    if (mounted) {
+      if (!user) return;
 
-  useEffect(() => {
-    if (!user) return;
-
-    // get all join requests
-    axios.get(`/api/forums/${forum._id}/join_requests`).then((res) => {
-      setJoinRequests(res.data);
-      setJoinRequestLoading(false);
-
-      // chec if user is in the join requests
-      if (res.data.find((request) => request._id === user._id)) {
-        setRequestSent(true);
+      if (forum.moderators.find((moderator) => moderator._id === user._id)) {
+        setIsModerator(true);
       } else {
-        setRequestSent(false);
+        setIsModerator(false);
       }
-    });
+
+      // get all join requests
+      axios.get(`/api/forums/${forum._id}/join_requests`).then((res) => {
+        setJoinRequests(res.data);
+        setJoinRequestLoading(false);
+
+        // chec if user is in the join requests
+        if (res.data.find((request) => request._id === user._id)) {
+          setRequestSent(true);
+        } else {
+          setRequestSent(false);
+        }
+      });
+    }
+
+    return () => {
+      mounted = false;
+    };
   }, [user]);
 
   function removeMember(member) {
@@ -218,8 +238,8 @@ function Forum({ forum, title, defaultTab = "posts" }) {
                 <Filter
                   activeFilter={activeFilter}
                   setActiveFilter={setActiveFilter}
-                  posts={posts}
-                  setPosts={setPosts}
+                  posts={forumPosts}
+                  setPosts={setForumPosts}
                   dateRange={dateRange}
                   setDateRange={setDateRange}
                 />
@@ -232,17 +252,18 @@ function Forum({ forum, title, defaultTab = "posts" }) {
 
                 {/* posts */}
                 {!loading &&
-                  posts.map((post) => (
+                  forumPosts.map((post) => (
                     <Post
                       key={post._id}
                       post={post}
                       activeFilter={activeFilter}
                       range={dateRange}
+                      setForumPosts={setForumPosts}
                     />
                   ))}
 
                 {/* if there are no posts */}
-                {posts.length === 0 && !loading && (
+                {forumPosts.length === 0 && !loading && (
                   <div className="text-center my-6">
                     <LogoCropped color="rgba(98,98,98,0.9)" width="80" />
                     <p className="text-gray-600 my-4">
@@ -274,6 +295,8 @@ function Forum({ forum, title, defaultTab = "posts" }) {
                   postRequests={postRequests}
                   setPostRequests={setPostRequests}
                   postRequestLoading={postRequestLoading}
+                  setForumPosts={setForumPosts}
+                  forumPosts={forumPosts}
                 />
               )}
 
@@ -364,6 +387,7 @@ function Forum({ forum, title, defaultTab = "posts" }) {
         setShowModal={setShowModal}
         forumId={forum._id}
         action={action}
+        setForumPosts={setForumPosts}
       />
 
       {/* overlay */}

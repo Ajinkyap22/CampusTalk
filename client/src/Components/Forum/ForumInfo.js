@@ -1,16 +1,14 @@
 import { UserContext } from "../../Contexts/UserContext";
-import { PostContext } from "../../Contexts/PostContext";
-import { EventContext } from "../../Contexts/EventContext";
 import { useContext } from "react";
 import { Link, withRouter } from "react-router-dom";
 import LogoCropped from "../LogoCropped";
 import moment from "moment";
 import axios from "axios";
 
-// TODO
-// fix the mounting issue at forum
 // TODO: fix the forum route bug after logging out and logging in again
-// TODO: we setPosts to forum posts in forum but don't change it back to feed posts in feed
+// In event form show only those forums wher user is a mod
+// In the forum info box show create event to mods
+// in the homebox show create event to users who are moderators of a forum
 
 function ForumInfo({
   forum,
@@ -26,9 +24,7 @@ function ForumInfo({
   setAction,
   ...props
 }) {
-  const [user, setUser] = useContext(UserContext);
-  const [posts, setPosts] = useContext(PostContext);
-  const [events, setEvents] = useContext(EventContext);
+  const [user] = useContext(UserContext);
 
   function joinForum() {
     if (!user) return;

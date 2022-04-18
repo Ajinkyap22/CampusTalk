@@ -5,7 +5,13 @@ import PostActions from "./PostActions";
 import { withRouter } from "react-router-dom";
 import File from "./File";
 
-function Post({ post, activeFilter, range = "Today", ...props }) {
+function Post({
+  post,
+  activeFilter,
+  range = "Today",
+  setForumPosts,
+  ...props
+}) {
   const [showPost, setShowPost] = useState(true);
   const [currentFile, setCurrentFile] = useState(0);
   const [files, setFiles] = useContext(FileContext);
@@ -94,6 +100,7 @@ function Post({ post, activeFilter, range = "Today", ...props }) {
         timestamp={post.timestamp}
         anonymous={post.anonymous}
         important={post.important}
+        setForumPosts={setForumPosts}
       />
 
       {/* caption */}
@@ -121,6 +128,7 @@ function Post({ post, activeFilter, range = "Today", ...props }) {
         downvotes={post.downvotes}
         comments={post.comments}
         onPostClick={onPostClick}
+        setForumPosts={setForumPosts}
       />
     </div>
   );

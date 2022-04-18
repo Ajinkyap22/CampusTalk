@@ -12,6 +12,7 @@ function LeaveModal({
   showModal,
   action = "Leave",
   setShowModal,
+  setForumPosts,
   ...props
 }) {
   const [user, setUser] = useContext(UserContext);
@@ -70,7 +71,7 @@ function LeaveModal({
           }`,
         },
       })
-      .then((res) => {
+      .then(() => {
         setShowModal(false);
         // update forums
         setForums(forums.filter((f) => f._id !== forumId));
@@ -81,11 +82,14 @@ function LeaveModal({
           posts: user.posts.filter((p) => p.forum !== forumId),
         });
 
-        // set posts to empty
-        setPosts([]);
+        // update posts
+        setPosts(posts.filter((p) => p.forum !== forumId));
+
+        // set forumPosts to empty array
+        setForumPosts([]);
 
         // remove all events from forum
-        setEvents(events.filter((e) => e.forumId !== forumId));
+        setEvents(events.filter((e) => e.forum._id !== forumId));
 
         // redirecr
         props.history.push("/feed");

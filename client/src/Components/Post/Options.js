@@ -6,7 +6,14 @@ import { Link } from "react-router-dom";
 import useOutsideAlerter from "../../Hooks/useOutsideAlerter";
 import axios from "axios";
 
-function Options({ postId, forum, showOptions, setShowOptions, isAuthor }) {
+function Options({
+  postId,
+  forum,
+  showOptions,
+  setShowOptions,
+  isAuthor,
+  setForumPosts,
+}) {
   const wrapperRef = useRef(null);
   const [user, setUser] = useContext(UserContext);
   const [forums, setForums] = useContext(ForumContext);
@@ -41,6 +48,9 @@ function Options({ postId, forum, showOptions, setShowOptions, isAuthor }) {
 
         // remove post from posts
         setPosts(posts.filter((post) => post._id !== postId));
+        if (setForumPosts) {
+          setForumPosts((prev) => prev.filter((post) => post._id !== postId));
+        }
 
         setShowOptions(false);
       })

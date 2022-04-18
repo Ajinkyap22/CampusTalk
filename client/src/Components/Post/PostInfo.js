@@ -5,7 +5,15 @@ import moment from "moment";
 import Options from "./Options";
 import UserModal from "../UserModal";
 
-function PostInfo({ postId, author, forum, timestamp, anonymous, important }) {
+function PostInfo({
+  postId,
+  author,
+  forum,
+  timestamp,
+  anonymous,
+  important,
+  setForumPosts,
+}) {
   const [user] = useContext(UserContext);
   const [showOptions, setShowOptions] = useState(false);
   const [isAuthor, setIsAuthor] = useState(false);
@@ -151,6 +159,7 @@ function PostInfo({ postId, author, forum, timestamp, anonymous, important }) {
           isAuthor={isAuthor}
           postId={postId}
           forum={forum}
+          setForumPosts={setForumPosts}
         />
 
         {/* date */}

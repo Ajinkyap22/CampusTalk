@@ -53,15 +53,12 @@ function EventForm({ history }) {
     axios
       .post("/api/events/create-event", formData, headers)
       .then((res) => {
-        console.log(res.data);
-
         setEvents([...events, res.data]);
 
         history.push(`/events/${res.data._id}`);
       })
       .catch((err) => {
         console.error(err);
-        console.log(err.response);
       });
   }
 

@@ -11,6 +11,7 @@ function PostActions({
   comments,
   onPostClick,
   showCommentButton = true,
+  setForumPosts,
 }) {
   const [user] = useContext(UserContext);
   const [upvoted, setUpvoted] = useState(false);
@@ -121,6 +122,12 @@ function PostActions({
     setPosts((prevState) =>
       prevState.map((post) => (data._id === post._id ? data : post))
     );
+
+    if (setForumPosts) {
+      setForumPosts((prevState) =>
+        prevState.map((post) => (data._id === post._id ? data : post))
+      );
+    }
   }
 
   return (
