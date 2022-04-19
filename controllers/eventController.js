@@ -190,7 +190,7 @@ exports.getUserEvents = async (req, res, next) => {
 exports.updateEvent = async (req, res, next) => {
   try {
     const { eventId } = req.params;
-    const { name, description, link, time, date, venue } = req.body;
+    const { name, description, link, time, date, venue, forum } = req.body;
 
     const event = await Event.findByIdAndUpdate(
       eventId,
@@ -202,12 +202,17 @@ exports.updateEvent = async (req, res, next) => {
           time,
           date,
           venue,
+          forum,
         },
       },
       { new: true }
     );
 
-    res.status(200).json(event);
+    Event.populate(event, { path: "forum" }, (err, newEvent) => {
+      if (err) return res.status(500).json({ error: err.message });
+
+      res.status(201).json(newEvent);
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

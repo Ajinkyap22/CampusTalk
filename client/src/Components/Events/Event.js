@@ -96,24 +96,26 @@ function Event({ event, title, events, setEvents, history }) {
 
             {/* edit */}
             {isModerator && (
-              <button
-                className="inline-flex items-center hover:scale-110 transition-all"
-                title="Edit Event"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-5 2xl:w-6 mx-1 ml-3 stroke-[#818181] dark:stroke-gray-300"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={2}
+              <Link to={`/events/${event._id}/edit-event`}>
+                <button
+                  className="inline-flex items-center hover:scale-110 transition-all"
+                  title="Edit Event"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                  />
-                </svg>
-              </button>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-5 2xl:w-6 mx-1 ml-3 stroke-[#818181] dark:stroke-gray-300"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                    />
+                  </svg>
+                </button>
+              </Link>
             )}
 
             {/* delete */}
@@ -171,6 +173,19 @@ function Event({ event, title, events, setEvents, history }) {
                 </h2>
                 <p className="my-2 2xl:my-3 dark:text-darkLight 2xl:text-xl">
                   {moment(event.date).format("MMMM Do YYYY")}
+                </p>
+              </div>
+            )}
+
+            {/* Event time */}
+            {event.time && (
+              <div className="mt-4">
+                <h2 className="text-xl 2xl:text-3xl text-primary dark:text-primary-dark">
+                  Time
+                </h2>
+                <p className="my-2 2xl:my-3 dark:text-darkLight 2xl:text-xl">
+                  {/* convert time to 12 hour format with am or pm */}
+                  {moment(event.time, "HH:mm").format("h:mm a")}
                 </p>
               </div>
             )}

@@ -25,6 +25,7 @@ import Confirm from "./Components/Auth/Confirm";
 import Forget from "./Components/Auth/Forget";
 import Reset from "./Components/Auth/Reset";
 import EditForum from "./Components/Forum/EditForum";
+import EditEvent from "./Components/Events/EditEvent";
 
 import { ForumContext } from "./Contexts/ForumContext";
 import { PostContext } from "./Contexts/PostContext";
@@ -285,19 +286,31 @@ function App() {
 
             {/* event page */}
             {events.map((event, i) => (
-              <Route
-                exact
-                path={`/events/${event._id}`}
-                key={i}
-                render={() => (
-                  <Event
-                    title={`${event.name} | CampusTalk`}
-                    event={event}
-                    events={events}
-                    setEvents={setEvents}
-                  />
-                )}
-              />
+              <div key={i}>
+                <Route
+                  exact
+                  path={`/events/${event._id}`}
+                  render={() => (
+                    <Event
+                      title={`${event.name} | CampusTalk`}
+                      event={event}
+                      events={events}
+                      setEvents={setEvents}
+                    />
+                  )}
+                />
+
+                <Route
+                  exact
+                  path={`/events/${event._id}/edit-event`}
+                  render={() => (
+                    <EditEvent
+                      title={"Edit Event | CampusTalk"}
+                      event={event}
+                    />
+                  )}
+                />
+              </div>
             ))}
 
             {/* create event */}
