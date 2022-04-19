@@ -1,8 +1,8 @@
-function Rules({ rules }) {
+function Rules({ rules, isModerator }) {
   return (
     <div
       className="bg-white dark:bg-darkSecondary shadow-base max-w-[22rem] 2xl:max-w-[26rem] 3xl:max-w-[30rem] pb-2 my-8 2xl:my-12 3xl:my-16 rounded"
-      hidden={rules.length ? false : true}
+      hidden={rules.length || isModerator ? false : true}
     >
       {/* title */}
       <div className="w-full bg-primary-light p-3 2xl:p-4 py-2 rounded-t flex items-center">
@@ -23,20 +23,54 @@ function Rules({ rules }) {
 
       {/* rules */}
       <div>
-        {rules.map((rule, i) => (
-          <div
-            className={`${
-              rules[i + 1]
-                ? "border-b border-[#cfcfcf] dark:border-secondary dark:text-darkLight"
-                : ""
-            } py-3`}
-            key={i}
-          >
-            <p className="px-3 text-sm 2xl:text-base 3xl:text-lg dark:text-darkLight">
-              {i + 1}. {rule}
-            </p>
-          </div>
-        ))}
+        {rules.length &&
+          rules.map((rule, i) => (
+            <div
+              className={`${
+                rules[i + 1]
+                  ? "border-b border-[#cfcfcf] dark:border-secondary dark:text-darkLight"
+                  : ""
+              } py-3 flex items-center justify-between flex-nowrap`}
+              key={i}
+            >
+              <p className="pl-3 px-1 inline text-sm 2xl:text-base 3xl:text-lg dark:text-darkLight">
+                {i + 1}. {rule}
+              </p>
+
+              {isModerator && (
+                <button
+                  className="inline hover:scale-110 mr-1 transition-all"
+                  title="Edit Rules"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-4 2xl:w-5 fill-[#818181] dark:fill-gray-300"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                  </svg>
+                </button>
+              )}
+            </div>
+          ))}
+
+        {!rules.length && (
+          <p className="text-secondary text-center pt-3 px-3 text-sm 2xl:text-base 3xl:text-lg dark:text-gray-300 hover:underline transition-all cursor-pointer">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-5 inline fill-[#818181] mx-1 align-text-top dark:fill-gray-300"
+              viewBox="0 0 20 20"
+            >
+              <path
+                fillRule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
+                clipRule="evenodd"
+              />
+            </svg>
+            Click here to add rules.
+          </p>
+        )}
       </div>
     </div>
   );

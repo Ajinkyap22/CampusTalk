@@ -186,14 +186,25 @@ exports.update_forum = [
           website: req.body.website,
           email: req.body.email,
           description: req.body.description,
-          picture: req.file.filename || req.body.picture || "",
         },
       },
       { new: true },
       function (err, forum) {
         if (err) return res.json(err);
 
-        return res.json(forum);
+        Forum.populate(forum, { path: "members" }, (err, forum) => {
+          if (err) return res.json(err);
+
+          Forum.populate(forum, { path: "moderators" }, (err, forum) => {
+            if (err) return res.json(err);
+
+            Forum.populate(forum, { path: "posts" }, (err, forum) => {
+              if (err) return res.json(err);
+
+              return res.json(forum);
+            });
+          });
+        });
       }
     );
   },

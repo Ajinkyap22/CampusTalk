@@ -1,7 +1,6 @@
 import { ForumContext } from "../../Contexts/ForumContext";
 import { TabContext } from "../../Contexts/TabContext";
 import { UserContext } from "../../Contexts/UserContext";
-import { PostContext } from "../../Contexts/PostContext";
 import { useEffect, useContext } from "react";
 import { useState } from "react";
 import axios from "axios";
@@ -362,7 +361,7 @@ function Forum({ forum, title, defaultTab = "posts" }) {
           />
 
           {/* rules */}
-          <Rules rules={forum.rules} />
+          <Rules rules={forum.rules} isModerator={isModerator} />
         </div>
 
         {tab === "info" && (

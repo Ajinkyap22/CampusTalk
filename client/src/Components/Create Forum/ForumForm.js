@@ -1,22 +1,26 @@
 import { ForumContext } from "../../Contexts/ForumContext";
 import { UserContext } from "../../Contexts/UserContext";
+import { PostContext } from "../../Contexts/PostContext";
+import { EventContext } from "../../Contexts/EventContext";
 import { useState, useContext } from "react";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
 import Input from "../FormControl/Input";
 import ActionButtons from "../FormControl/ActionButtons";
 
-function ForumForm(props) {
+function ForumForm({ forum, ...props }) {
   const [checked, setChecked] = useState(false);
   const [user, setUser] = useContext(UserContext);
   const [forums, setForums] = useContext(ForumContext);
+  const [posts, setPosts] = useContext(PostContext);
+  const [events, setEvents] = useContext(EventContext);
   const [status, setStatus] = useState(0);
 
   const [formData, setFormData] = useState({
-    forumName: "",
-    address: "",
-    website: "",
-    email: "",
+    forumName: forum?.forumName || "",
+    address: forum?.address || "",
+    website: forum?.website || "",
+    email: forum?.email || "",
     user: user?._id,
   });
 
@@ -54,6 +58,14 @@ function ForumForm(props) {
       formData.user = user._id;
     }
 
+    if (!forum) {
+      createRequest(formData, headers);
+    } else {
+      editRequest(formData, headers);
+    }
+  }
+
+  function createRequest(formData, headers) {
     axios
       .post(`/api/forums/create-forum`, formData, headers)
       .then((res) => {
@@ -72,12 +84,54 @@ function ForumForm(props) {
       });
   }
 
+  function editRequest(formData, headers) {
+    axios
+      .put(`/api/forums/update/${forum._id}`, formData, headers)
+      .then((res) => {
+        console.log(res.data);
+
+        // update forums
+        setForums((forums) =>
+          forums.map((f) => (f._id === res.data._id ? res.data : f))
+        );
+
+        // update user
+        setUser((user) => ({
+          ...user,
+          forums: user.forums.map((f) =>
+            f._id === res.data._id ? res.data : f
+          ),
+        }));
+
+        // update posts
+        setPosts((posts) =>
+          posts.map((p) =>
+            p.forum._id === res.data._id ? { ...p, forum: res.data } : p
+          )
+        );
+
+        // update events
+        setEvents((events) =>
+          events.map((e) =>
+            e.forum._id === res.data._id ? { ...e, forum: res.data } : e
+          )
+        );
+
+        props.history.push(`/forums/${res.data._id}`);
+      })
+      .catch((err) => {
+        console.error(err);
+        console.log(err.response);
+      });
+  }
+
   return (
     <form className="px-5 md:px-8 py-2" onSubmit={handleSubmit}>
       {/* forum name */}
       <Input
         type="text"
         name="forumName"
+        value={formData.forumName}
         label="Institute's Name"
         callback={(e) => handleChange(e)}
         placeholder="Your institute's official name"
@@ -89,6 +143,7 @@ function ForumForm(props) {
       <Input
         type="text"
         name="address"
+        value={formData.address}
         label="Institute's Address"
         callback={(e) => handleChange(e)}
         placeholder="Your institute's address"
@@ -105,6 +160,7 @@ function ForumForm(props) {
         <input
           type="url"
           name="website"
+          value={formData.website}
           onChange={handleChange}
           placeholder="Your institute's official website"
           className="mt-2 block w-full px-3 py-1.5 border border-gray-300 bg-[#f6f6f6] rounded-md text-xs lg:text-sm 2xl:text-base shadow-sm placeholder-[#818181] 
@@ -118,6 +174,7 @@ function ForumForm(props) {
       <Input
         type="email"
         name="email"
+        value={formData.email}
         label="Institute's email"
         callback={(e) => handleChange(e)}
         placeholder="Your institute's official email id"
@@ -157,8 +214,8 @@ function ForumForm(props) {
 
       {/* Submit */}
       <ActionButtons
-        path="join-forum"
-        action="Next"
+        path={!forum ? "join-forum" : `/forums/${forum._id}`}
+        action={!forum ? "Next" : "Save"}
         classes="my-4 md:my-5 2xl:my-6 float-right"
       />
     </form>

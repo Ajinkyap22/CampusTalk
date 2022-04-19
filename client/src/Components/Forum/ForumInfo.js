@@ -107,6 +107,24 @@ function ForumInfo({
       {/* info */}
       <div className="p-2 border-b border-[#cfcdcd] dark:border-secondary px-3">
         {/* website */}
+        {isModerator && (
+          <Link to={`/forums/${forum._id}/edit-forum`}>
+            <button
+              className="float-right inline-flex items-center hover:scale-110 transition-all"
+              title="Edit Forum"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-5 2xl:w-6 fill-[#818181] dark:fill-gray-300 mt-1"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+              </svg>
+            </button>
+          </Link>
+        )}
+
         <p className="text-xs 2xl:text-sm 3xl:text-base p-1">
           <span className="underline underline-offset-1 dark:text-darkLight">
             Website:{" "}

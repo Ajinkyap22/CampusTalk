@@ -120,6 +120,7 @@ function Signup({ title, ...props }) {
             name="email"
             placeholder="Enter your email address"
             label="Email"
+            value={email}
             minLength={3}
             required={true}
             status={status}

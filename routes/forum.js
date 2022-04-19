@@ -17,12 +17,7 @@ router.post("/create-forum", verifyToken, forumController.create_forum);
 router.delete("/delete/:id", verifyToken, forumController.delete_forum);
 
 // update forum
-router.put(
-  "/update/:id",
-  verifyToken,
-  upload.single("picture"),
-  forumController.update_forum
-);
+router.put("/update/:id", verifyToken, forumController.update_forum);
 
 // get rules
 router.get("/:id/rules", forumController.get_rules);

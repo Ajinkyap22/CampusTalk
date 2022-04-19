@@ -24,6 +24,7 @@ import Verify from "./Components/Auth/Verify";
 import Confirm from "./Components/Auth/Confirm";
 import Forget from "./Components/Auth/Forget";
 import Reset from "./Components/Auth/Reset";
+import EditForum from "./Components/Forum/EditForum";
 
 import { ForumContext } from "./Contexts/ForumContext";
 import { PostContext } from "./Contexts/PostContext";
@@ -209,6 +210,17 @@ function App() {
                         title={`${forum.forumName} | CampusTalk`}
                         forum={forum}
                         defaultTab="joinRequests"
+                      />
+                    )}
+                  />
+
+                  <Route
+                    exact
+                    path={`/forums/${forum._id}/edit-forum`}
+                    render={() => (
+                      <EditForum
+                        title={"Edit Forum | CampusTalk"}
+                        forum={forum}
                       />
                     )}
                   />

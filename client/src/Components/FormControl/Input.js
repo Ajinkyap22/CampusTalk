@@ -6,6 +6,7 @@ function Input({
   callback,
   minLength = 0,
   required,
+  value,
   setState = true,
 }) {
   return (
@@ -25,6 +26,7 @@ function Input({
       <input
         type={type}
         name={name}
+        value={value}
         onChange={(e) => (setState ? callback(e.target.value) : callback(e))}
         placeholder={placeholder}
         className="mt-2 block w-full px-3 py-1.5 border dark:text-dark border-gray-300 bg-[#f6f6f6] rounded-md text-xs lg:text-sm 2xl:text-base shadow-sm placeholder-[#818181] 
