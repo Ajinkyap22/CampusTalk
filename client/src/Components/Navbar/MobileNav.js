@@ -83,7 +83,7 @@ function MobileNav({ handleClick, activeTab, notificationCount }) {
           <NavLink
             to={"/notifications"}
             onClick={() => handleClick("notifications")}
-            className={`mx-1 text-xsm lg:text-sm flex flex-col relative justify-between items-center 2xl:text-lg pb-0.5 lg:py-3 2xl:py-2.5 px-1 ${
+            className={`notifications mx-1 text-xsm lg:text-sm flex flex-col relative justify-between items-center 2xl:text-lg pb-0.5 lg:py-3 2xl:py-2.5 px-1 ${
               activeTab === "notifications"
                 ? "border-b-[2px] border-primary text-primary dark:text-primary-dark"
                 : "dark:text-darkLight"
@@ -108,7 +108,7 @@ function MobileNav({ handleClick, activeTab, notificationCount }) {
           <NavLink
             to={"/profile"}
             onClick={() => handleClick("profile")}
-            className={`mx-2 text-xsm lg:text-sm flex-col justify-between items-center 2xl:text-lg pb-1 lg:py-3 2xl:py-2.5 px-1 ${
+            className={`profile mx-2 text-xsm lg:text-sm flex-col justify-between items-center 2xl:text-lg pb-1 lg:py-3 2xl:py-2.5 px-1 ${
               activeTab === "profile"
                 ? "border-b-[2px] border-primary text-primary dark:text-primary-dark"
                 : "dark:text-darkLight"
@@ -162,7 +162,7 @@ function MobileNav({ handleClick, activeTab, notificationCount }) {
       <hr className="py-0.5 dark:border-t dark:border-secondary" />
 
       {/* main nav */}
-      <div className=" grid grid-cols-4 justify-center w-full justify-items-center items-center">
+      <div className="tabs grid grid-cols-4 justify-center w-full justify-items-center items-center">
         {/* feed */}
         <NavLink
           to={"/feed"}

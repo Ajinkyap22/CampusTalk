@@ -104,7 +104,7 @@ exports.signup_post = [
       if (err) return next(err);
 
       User.create(
-        { email: req.body.email, password: hash, active: false },
+        { email: req.body.email, password: hash, active: false, new: true },
         (err, user) => {
           if (err) return next(err);
 

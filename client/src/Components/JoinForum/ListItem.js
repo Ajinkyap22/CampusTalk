@@ -36,7 +36,7 @@ function ListItem({ forum, setShowAlert }) {
 
   return (
     <tr className="text-center text-sm py-4">
-      <td className="text-xs lg:text-sm 2xl:text-lg">{forum.forumName}</td>
+      <td className="text-xs lg:text-sm 2xl:text-lg pl-4">{forum.forumName}</td>
       <td className="text-xs lg:text-sm 2xl:text-lg">{forum.members.length}</td>
       <td>
         <button

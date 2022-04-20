@@ -14,6 +14,8 @@ import LogoCropped from "../LogoCropped";
 import Loading from "../Loading";
 import EventsBox from "./EventsBox";
 import MobileActions from "./MobileActions";
+import Tour from "reactour";
+import axios from "axios";
 
 const faqData = [
   {
@@ -50,8 +52,9 @@ function Feed({ title }) {
   const [activeFilter, setActiveFilter] = useState("latest");
   const [dateRange, setDateRange] = useState("Today");
   const [posts, setPosts, loading] = useContext(PostContext);
-  const [user] = useContext(UserContext);
+  const [user, setUser] = useContext(UserContext);
   const [events] = useContext(EventContext);
+  const [tourOpen, setTourOpen] = useState(false);
 
   useEffect(() => {
     document.title = title || "Feed | CampusTalk";
@@ -61,10 +64,45 @@ function Feed({ title }) {
     setActiveTab("feed");
   }, [activeTab]);
 
+  useEffect(() => {
+    if (!user) return;
+
+    setTourOpen(user.new);
+  }, [user]);
+
+  function closeTour() {
+    setTourOpen(false);
+  }
+
+  function disableBodyScroll() {
+    document.body.style.overflow = "hidden";
+  }
+
+  function enableBodyScroll() {
+    document.body.style.overflow = "auto";
+  }
+
+  function onBeforeClose() {
+    enableBodyScroll();
+
+    if (!user) return;
+
+    axios
+      .put(`/api/users/${user?._id}/unmark`)
+      .then((res) => {
+        setUser({ ...user, new: false });
+      })
+      .catch((err) => {
+        console.error(err);
+        console.log(err.response);
+      });
+  }
+
   return (
     <main className="w-full min-h-full bg-[#F0F2F5] dark:bg-dark">
       <Nav />
 
+      {/* Feed content */}
       <section className="flex justify-evenly md:w-full mx-auto h-full relative">
         <div>
           {/* faq */}
@@ -75,7 +113,7 @@ function Feed({ title }) {
         </div>
 
         {/* posts and filters */}
-        <div className="flex flex-col items-center my-6 lg:my-8 h-full lg:max-w-[28rem] xl:max-w-[32rem] 2xl:max-w-[36rem] 3xl:max-w-[40rem] col-start-1 col-span-2">
+        <div className="posts flex flex-col items-center my-6 lg:my-8 h-full lg:max-w-[28rem] xl:max-w-[32rem] 2xl:max-w-[36rem] 3xl:max-w-[40rem] col-start-1 col-span-2">
           {/* filters */}
           <Filter
             activeFilter={activeFilter}
@@ -142,8 +180,91 @@ function Feed({ title }) {
 
         <MobileActions />
       </section>
+
+      {/* tour */}
+      <Tour
+        steps={steps}
+        isOpen={tourOpen}
+        onRequestClose={closeTour}
+        className="helper"
+        rounded={5}
+        onAfterOpen={disableBodyScroll}
+        onBeforeClose={onBeforeClose}
+        badgeContent={(curr, tot) => `${curr} of ${tot}`}
+        closeButtonAriaLabel="Close the tour"
+        closeWithMask={false}
+        lastStepNextButton={
+          <button className="px-1.5 py-1.5 text-xs md:text-sm 2xl:text-lg bg-primary text-white rounded hover:bg-blue-700">
+            Done!
+          </button>
+        }
+        nextButton={
+          <button className="px-2 py-1.5 text-xs md:text-sm 2xl:text-lg bg-primary text-white rounded hover:bg-blue-700">
+            Next
+          </button>
+        }
+      />
     </main>
   );
 }
 
 export default Feed;
+
+const steps = [
+  {
+    content:
+      "Welcome to CampusTalk! before you get started, here's a quick tour for you.",
+  },
+  {
+    content:
+      "This is the feed page, you can see all the posts from the forums you have joined.",
+  },
+  {
+    selector: ".tabs",
+    content:
+      "This is the tabs bar, you can see the tabs that you can switch between.",
+  },
+  {
+    selector: ".filters",
+    content:
+      "This is the filters menu, you can see the filters that you can apply to the posts in your feed.",
+  },
+  {
+    selector: ".posts",
+    content:
+      "This is the posts section, you can see all the posts from the forums you have joined here.",
+  },
+  {
+    selector: ".actions",
+    content:
+      "These are the actions you can perform from your feed. If you are a moderator, you'll also see a 'Create Event' option",
+  },
+  {
+    selector: ".forumsBox",
+    content:
+      "This box show you the forums you have joined recently, click on the 'See All' button to see all forums.",
+  },
+  {
+    selector: ".eventsBox",
+    content:
+      "This box shows you the upcoming events from the forums you have joined, click on the 'See All' button to see all events.",
+  },
+  {
+    selector: ".faq",
+    content:
+      "This is the FAQ section, you can see the frequently asked questions if you have any doubts.",
+  },
+  {
+    selector: ".notifications",
+    content:
+      "This is the notifications section, you can see all of your notifications here.",
+  },
+  {
+    selector: ".profile",
+    content:
+      "This is the profile menu, you can see all profile-related options you can perform from here, including switching to dark mode! (if you are using desktop)",
+  },
+  {
+    content: "You're all set, enjoy CampusTalk!",
+  },
+];

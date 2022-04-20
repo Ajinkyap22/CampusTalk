@@ -69,7 +69,7 @@ function Nav() {
       </div>
 
       {/* Mid part */}
-      <div className="hidden lg:block">
+      <div className="hidden lg:block tabs">
         {/* feed */}
         <NavLink
           to={"/feed"}
@@ -126,7 +126,10 @@ function Nav() {
       {/* user section */}
       <div className="hidden lg:flex items-center dropDownToggle">
         {/* notifications */}
-        <button className="h-auto relative" onClick={toggleNotifications}>
+        <button
+          className="h-auto relative notifications"
+          onClick={toggleNotifications}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="fill-[#818181] inline dark:fill-gray-300 dropDownToggle w-5 2xl:w-7 3xl:w-8"
@@ -144,7 +147,7 @@ function Nav() {
 
         {/* profile */}
         <button
-          className="mx-2 2xl:mx-3 dropDownToggle"
+          className="mx-2 2xl:mx-3 dropDownToggle profile"
           onClick={() => setShowDropdown(!showDropdown)}
         >
           {/* avatar */}

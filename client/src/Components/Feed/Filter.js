@@ -50,7 +50,7 @@ function Filter({
   }
 
   return (
-    <div className="bg-white dark:bg-darkSecondary relative shadow-base dark:shadow-darkLight flex justify-between items-center w-full rounded">
+    <div className="filters bg-white dark:bg-darkSecondary relative shadow-base dark:shadow-darkLight flex justify-between items-center w-full rounded">
       {/* filter label */}
       <p className="inline p-2 lg:p-2.5 xl:p-3 text-xs xl:text-sm 2xl:text-lg 3xl:text-xl bg-[#f3f3f3] dark:bg-neutral-700 dark:text-darkLight">
         <svg

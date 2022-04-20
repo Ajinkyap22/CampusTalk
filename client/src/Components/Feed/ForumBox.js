@@ -1,14 +1,36 @@
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import LogoCropped from "../LogoCropped";
 import ForumsList from "./ForumsList";
-import { Link } from "react-router-dom";
 
 function ForumBox({ user, fixed = true, onProfilePage = false }) {
+  const [isModerator, setIsModerator] = useState(false);
+
+  useEffect(() => {
+    if (!user) return;
+
+    let forums = user.forums;
+
+    if (!forums.length) return;
+
+    // check if user is in the moderator array of any forum
+    let isMod = forums.some(
+      (forum) => forum.moderators.indexOf(user._id) !== -1
+    );
+
+    setIsModerator(isMod);
+  }, [user]);
+
   return (
     <div
-      className={`${
+      className={`forumsBox ${
         onProfilePage ? "" : "hidden"
       } md:block bg-white dark:bg-darkSecondary shadow-base lg:max-w-[18rem] xl:max-w-[21rem] 2xl:max-w-[26rem] 3xl:max-w-[30rem] my-4 rounded ${
-        fixed ? "fixed xl:top-[60%] 2xl:top-1/3 3xl:top-[40%]" : ""
+        fixed
+          ? `fixed 2xl:top-1/3 3xl:top-[40%] ${
+              isModerator ? "xl-top-[70%] 2xl:top-[40%]" : "xl:top-[60%]"
+            }`
+          : ""
       }`}
     >
       {/* title */}

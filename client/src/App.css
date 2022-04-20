@@ -241,3 +241,12 @@ thead tr .rowFirst {
     opacity: 0.5;
   }
 }
+
+.reactour__close {
+  top: 1rem !important;
+  right: 1rem !important;
+}
+
+.helper {
+  max-width: 25rem !important;
+}

@@ -9,6 +9,7 @@
     "axios": "^0.24.0",
     "moment": "^2.29.1",
     "react": "^17.0.2",
+    "react-avatar-editor": "^12.0.0",
     "react-burger-menu": "^3.0.6",
     "react-dom": "^17.0.2",
     "react-easy-swipe": "^0.0.22",
@@ -17,8 +18,8 @@
     "react-pdf": "^5.7.1",
     "react-router-dom": "^5.3.0",
     "react-scripts": "5.0.0",
+    "reactour": "^1.18.7",
     "socket.io-client": "^4.4.1",
-    "react-avatar-editor": "^12.0.0",
     "web-vitals": "^2.1.2"
   },
   "scripts": {
