@@ -265,6 +265,24 @@ exports.delete_rules = function (req, res) {
   );
 };
 
+// update rules
+exports.update_rules = function (req, res) {
+  Forum.findByIdAndUpdate(
+    req.params.id,
+    {
+      $set: {
+        rules: req.body.rules,
+      },
+    },
+    { new: true },
+    (err, forum) => {
+      if (err) return res.json(err);
+
+      return res.json(forum.rules);
+    }
+  );
+};
+
 // join forum
 exports.join_forum = function (req, res) {
   Forum.findByIdAndUpdate(

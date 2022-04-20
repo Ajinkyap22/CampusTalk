@@ -361,7 +361,11 @@ function Forum({ forum, title, defaultTab = "posts" }) {
           />
 
           {/* rules */}
-          <Rules rules={forum.rules} isModerator={isModerator} />
+          <Rules
+            rules={forum.rules}
+            forumId={forum?._id}
+            isModerator={isModerator}
+          />
         </div>
 
         {tab === "info" && (

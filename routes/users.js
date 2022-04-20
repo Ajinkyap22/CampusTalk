@@ -39,4 +39,7 @@ router.get("/:id/posts", userController.get_user_posts);
 // reset password
 router.post("/reset-password", userController.reset_password);
 
+// unmark as new
+router.put("/:id/unmark", userController.unmark_as_new);
+
 module.exports = router;

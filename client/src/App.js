@@ -26,6 +26,7 @@ import Forget from "./Components/Auth/Forget";
 import Reset from "./Components/Auth/Reset";
 import EditForum from "./Components/Forum/EditForum";
 import EditEvent from "./Components/Events/EditEvent";
+import AddRules from "./Components/Forum/AddRules";
 
 import { ForumContext } from "./Contexts/ForumContext";
 import { PostContext } from "./Contexts/PostContext";
@@ -215,6 +216,7 @@ function App() {
                     )}
                   />
 
+                  {/* edit */}
                   <Route
                     exact
                     path={`/forums/${forum._id}/edit-forum`}
@@ -222,6 +224,19 @@ function App() {
                       <EditForum
                         title={"Edit Forum | CampusTalk"}
                         forum={forum}
+                      />
+                    )}
+                  />
+
+                  {/* rules */}
+                  <Route
+                    exact
+                    path={`/forums/${forum._id}/rules`}
+                    render={() => (
+                      <AddRules
+                        title={"Forum Rules | CampusTalk"}
+                        forumRules={forum.rules}
+                        forumId={forum._id}
                       />
                     )}
                   />

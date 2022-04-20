@@ -28,6 +28,9 @@ router.post("/:id/rules/add", verifyToken, forumController.add_rule);
 // delete all rules
 router.delete("/:id/rules/delete", verifyToken, forumController.delete_rules);
 
+// update rules
+router.put("/:id/rules", verifyToken, forumController.update_rules);
+
 // join forum
 router.post("/:id/join", verifyToken, forumController.join_forum);
 

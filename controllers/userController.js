@@ -348,3 +348,21 @@ exports.reset_password = function (req, res) {
     // });
   });
 };
+
+// unmark as new
+exports.unmark_as_new = function (req, res) {
+  User.findByIdAndUpdate(
+    req.params.id,
+    {
+      $set: {
+        new: false,
+      },
+    },
+    { new: true },
+    (err, user) => {
+      if (err) return res.json(err);
+
+      return res.json(user);
+    }
+  );
+};
