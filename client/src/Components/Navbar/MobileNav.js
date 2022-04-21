@@ -83,7 +83,7 @@ function MobileNav({ handleClick, activeTab, notificationCount }) {
           <NavLink
             to={"/notifications"}
             onClick={() => handleClick("notifications")}
-            className={`notifications mx-1 text-xsm lg:text-sm flex flex-col relative justify-between items-center 2xl:text-lg pb-0.5 lg:py-3 2xl:py-2.5 px-1 ${
+            className={`mobileNotifications mx-1 text-xsm lg:text-sm flex flex-col relative justify-between items-center 2xl:text-lg pb-0.5 lg:py-3 2xl:py-2.5 px-1 ${
               activeTab === "notifications"
                 ? "border-b-[2px] border-primary text-primary dark:text-primary-dark"
                 : "dark:text-darkLight"
@@ -108,7 +108,7 @@ function MobileNav({ handleClick, activeTab, notificationCount }) {
           <NavLink
             to={"/profile"}
             onClick={() => handleClick("profile")}
-            className={`profile mx-2 text-xsm lg:text-sm flex-col justify-between items-center 2xl:text-lg pb-1 lg:py-3 2xl:py-2.5 px-1 ${
+            className={`mobileProfile mx-2 text-xsm lg:text-sm flex-col justify-between items-center 2xl:text-lg pb-1 lg:py-3 2xl:py-2.5 px-1 ${
               activeTab === "profile"
                 ? "border-b-[2px] border-primary text-primary dark:text-primary-dark"
                 : "dark:text-darkLight"
@@ -162,7 +162,7 @@ function MobileNav({ handleClick, activeTab, notificationCount }) {
       <hr className="py-0.5 dark:border-t dark:border-secondary" />
 
       {/* main nav */}
-      <div className="tabs grid grid-cols-4 justify-center w-full justify-items-center items-center">
+      <div className="mobileTabs grid grid-cols-4 justify-center w-full justify-items-center items-center">
         {/* feed */}
         <NavLink
           to={"/feed"}
@@ -193,7 +193,7 @@ function MobileNav({ handleClick, activeTab, notificationCount }) {
         <NavLink
           to={"/chats"}
           onClick={() => handleClick("chats")}
-          className={`mx-2 text-xsm flex flex-col items-center justify-between   lg:text-sm 2xl:text-lg pb-0.5 lg:py-3 2xl:py-2.5 px-1 ${
+          className={`chats mx-2 text-xsm flex flex-col items-center justify-between lg:text-sm 2xl:text-lg pb-0.5 lg:py-3 2xl:py-2.5 px-1 ${
             activeTab === "chats"
               ? "border-b-[2px] border-primary text-primary dark:text-primary-dark"
               : "dark:text-darkLight"
@@ -219,7 +219,7 @@ function MobileNav({ handleClick, activeTab, notificationCount }) {
         <NavLink
           to={"/forums"}
           onClick={() => handleClick("forums")}
-          className={`mx-2 text-xsm flex flex-col items-center justify-between lg:text-sm 2xl:text-lg py-0.5 lg:py-3 2xl:py-2.5 px-1 ${
+          className={`mobileForums mx-2 text-xsm flex flex-col items-center justify-between lg:text-sm 2xl:text-lg py-0.5 lg:py-3 2xl:py-2.5 px-1 ${
             activeTab === "forums"
               ? "border-b-[2px] border-primary text-primary dark:text-primary-dark"
               : "dark:text-darkLight"
@@ -256,7 +256,7 @@ function MobileNav({ handleClick, activeTab, notificationCount }) {
         <NavLink
           to={"/events"}
           onClick={() => handleClick("events")}
-          className={`mx-2 text-xsm flex flex-col items-center justify-between lg:text-sm py-0.5 2xl:text-lg lg:py-3 2xl:py-2.5 px-1 ${
+          className={`mobileEvents mx-2 text-xsm flex flex-col items-center justify-between lg:text-sm py-0.5 2xl:text-lg lg:py-3 2xl:py-2.5 px-1 ${
             activeTab === "events"
               ? "border-b-[2px] border-primary text-primary dark:text-primary-dark"
               : "dark:text-darkLight"

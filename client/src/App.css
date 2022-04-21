@@ -250,3 +250,16 @@ thead tr .rowFirst {
 .helper {
   max-width: 25rem !important;
 }
+
+[data-tour-elem="badge"] {
+  background-color: #0278e4 !important;
+  font-family: "Poppins", sans-serif !important;
+  font-size: 0.8rem !important;
+}
+
+@media (max-width: 768px) {
+  .helper {
+    max-width: 20rem !important;
+    font-size: 0.9rem !important;
+  }
+}

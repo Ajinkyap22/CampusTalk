@@ -16,6 +16,11 @@ import EventsBox from "./EventsBox";
 import MobileActions from "./MobileActions";
 import Tour from "reactour";
 import axios from "axios";
+import useCheckMobileScreen from "../../Hooks/useCheckMobileScreen";
+
+// TODO - install helmet at backed
+// TODO - create react, node and tailwind build
+// TODO - modify file paths from localhost to real server
 
 const faqData = [
   {
@@ -55,6 +60,8 @@ function Feed({ title }) {
   const [user, setUser] = useContext(UserContext);
   const [events] = useContext(EventContext);
   const [tourOpen, setTourOpen] = useState(false);
+  const isMobile = useCheckMobileScreen();
+  const [steps, setSteps] = useState([]);
 
   useEffect(() => {
     document.title = title || "Feed | CampusTalk";
@@ -69,6 +76,72 @@ function Feed({ title }) {
 
     setTourOpen(user.new);
   }, [user]);
+
+  useEffect(() => {
+    setSteps([
+      {
+        content:
+          "Welcome to CampusTalk! before you get started, here's a quick tour for you.",
+      },
+      {
+        content:
+          "This is the feed page, you can see all the posts from the forums you have joined.",
+      },
+      {
+        selector: isMobile ? ".mobileTabs" : ".tabs",
+        content:
+          "This is the tabs bar, you can see the tabs that you can switch between.",
+      },
+      {
+        selector: ".filters",
+        content:
+          "This is the filters menu, you can see the filters that you can apply to the posts in your feed.",
+      },
+      {
+        selector: ".posts",
+        content:
+          "This is the posts section, you can see all the posts from the forums you have joined here.",
+      },
+      {
+        selector: isMobile ? ".mobileActions" : ".actions",
+        content:
+          "These are the actions you can perform from your feed. If you are a moderator, you'll also see a 'Create Event' option",
+      },
+      {
+        selector: isMobile ? ".mobileForums" : ".forumsBox",
+        content: isMobile
+          ? "This tab shows the forums you have joined and all other CampusTalk forums."
+          : "This box shows the forums you have joined recently, click on the 'See All' button to see all forums.",
+      },
+      {
+        selector: isMobile ? ".mobileEvents" : ".eventsBox",
+        content: isMobile
+          ? "This tab shows the upcoming events from the forums you have joined."
+          : "This box shows the upcoming events from the forums you have joined, click on the 'See All' button to see all events.",
+      },
+      {
+        selector: isMobile ? ".chats" : ".faq",
+        content: isMobile
+          ? "This is the chats tab, you can access all of your chats here."
+          : "This is the FAQ section, you can see the frequently asked questions if you have any doubts.",
+      },
+      {
+        selector: isMobile ? ".mobileNotifications" : ".notifications",
+        content: isMobile
+          ? "This is the notifications tab, you can see all of your notifications here."
+          : "This is the notifications section, you can see all of your notifications here.",
+      },
+      {
+        selector: isMobile ? ".mobileProfile" : ".profile",
+        content: isMobile
+          ? "This is the profile tab, you can see view or edit your profile information here."
+          : "This is the profile menu, you can see all profile-related options you can perform from here, including switching to dark mode!",
+      },
+      {
+        content: "You're all set, enjoy CampusTalk!",
+      },
+    ]);
+  }, [isMobile]);
 
   function closeTour() {
     setTourOpen(false);
@@ -89,12 +162,11 @@ function Feed({ title }) {
 
     axios
       .put(`/api/users/${user?._id}/unmark`)
-      .then((res) => {
+      .then(() => {
         setUser({ ...user, new: false });
       })
       .catch((err) => {
         console.error(err);
-        console.log(err.response);
       });
   }
 
@@ -193,6 +265,7 @@ function Feed({ title }) {
         badgeContent={(curr, tot) => `${curr} of ${tot}`}
         closeButtonAriaLabel="Close the tour"
         closeWithMask={false}
+        disableInteraction={true}
         lastStepNextButton={
           <button className="px-1.5 py-1.5 text-xs md:text-sm 2xl:text-lg bg-primary text-white rounded hover:bg-blue-700">
             Done!
@@ -209,62 +282,3 @@ function Feed({ title }) {
 }
 
 export default Feed;
-
-const steps = [
-  {
-    content:
-      "Welcome to CampusTalk! before you get started, here's a quick tour for you.",
-  },
-  {
-    content:
-      "This is the feed page, you can see all the posts from the forums you have joined.",
-  },
-  {
-    selector: ".tabs",
-    content:
-      "This is the tabs bar, you can see the tabs that you can switch between.",
-  },
-  {
-    selector: ".filters",
-    content:
-      "This is the filters menu, you can see the filters that you can apply to the posts in your feed.",
-  },
-  {
-    selector: ".posts",
-    content:
-      "This is the posts section, you can see all the posts from the forums you have joined here.",
-  },
-  {
-    selector: ".actions",
-    content:
-      "These are the actions you can perform from your feed. If you are a moderator, you'll also see a 'Create Event' option",
-  },
-  {
-    selector: ".forumsBox",
-    content:
-      "This box show you the forums you have joined recently, click on the 'See All' button to see all forums.",
-  },
-  {
-    selector: ".eventsBox",
-    content:
-      "This box shows you the upcoming events from the forums you have joined, click on the 'See All' button to see all events.",
-  },
-  {
-    selector: ".faq",
-    content:
-      "This is the FAQ section, you can see the frequently asked questions if you have any doubts.",
-  },
-  {
-    selector: ".notifications",
-    content:
-      "This is the notifications section, you can see all of your notifications here.",
-  },
-  {
-    selector: ".profile",
-    content:
-      "This is the profile menu, you can see all profile-related options you can perform from here, including switching to dark mode! (if you are using desktop)",
-  },
-  {
-    content: "You're all set, enjoy CampusTalk!",
-  },
-];
