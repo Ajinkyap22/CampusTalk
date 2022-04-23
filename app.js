@@ -36,21 +36,23 @@ app.use(express.static(path.resolve(__dirname, "./client/build")));
 app.use(compression());
 app.use(
   helmet({
-    contentSecurityPolicy: {
-      directives: {
-        defaultSrc: ["'self'"],
-        styleSrc: ["'self'", "'unsafe-inline'"],
-        scriptSrc: [
-          "'self'",
-          "'unsafe-inline'",
-          "'unsafe-eval'",
-          "https://www.google-analytics.com/analytics.js",
-        ],
-        imgSrc: ["'self'", "data:"],
-        fontSrc: ["'self'", "data:"],
-        connectSrc: ["'self'", "https://www.google-analytics.com/analytics.js"],
-      },
-    },
+    //   contentSecurityPolicy: {
+    //     directives: {
+    //       defaultSrc: ["'self'"],
+    //       styleSrc: ["'self'", "'unsafe-inline'"],
+    //       scriptSrc: [
+    //         "'self'",
+    //         "'unsafe-inline'",
+    //         "'unsafe-eval'",
+    //         "https://www.google-analytics.com/analytics.js",
+    //       ],
+    //       imgSrc: ["'self'", "data:"],
+    //       fontSrc: ["'self'", "data:"],
+    //       connectSrc: ["'self'", "https://www.google-analytics.com/analytics.js"],
+    //     },
+    //   },
+    // })
+    contentSecurityPolicy: false,
   })
 );
 
