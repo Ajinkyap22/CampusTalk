@@ -74,7 +74,7 @@ function UserModal({ receiver, hovering, setOverModal, history }) {
           </svg>
         ) : (
           <img
-            src={`http://localhost:3000/uploads/images/${receiver.picture}`}
+            src={`/uploads/images/${receiver.picture}`}
             alt=""
             className="rounded-full inline lg:h-8 xl:h-10 2xl:h-12 mx-1"
           />

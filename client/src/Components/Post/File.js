@@ -78,7 +78,7 @@ function File({
               file.endsWith(".png") ||
               file.endsWith(".gif")) && (
               <img
-                src={`http://localhost:3000/uploads/images/${file}`}
+                src={`/uploads/images/${file}`}
                 key={i}
                 alt=""
                 className="mx-auto w-full h-full object-cover"
@@ -90,7 +90,7 @@ function File({
               file.endsWith(".mkv") ||
               file.endsWith(".mpeg-4")) && (
               <video
-                src={`http://localhost:3000/uploads/videos/${file}`}
+                src={`/uploads/videos/${file}`}
                 key={i}
                 alt=""
                 className="mx-auto w-full h-full object-cover"
@@ -101,7 +101,7 @@ function File({
             // if file is a pdf
             (file.endsWith(".pdf") && (
               <Document
-                file={`http://localhost:3000/uploads/docs/${file}`}
+                file={`/uploads/docs/${file}`}
                 onLoadSuccess={onDocumentLoadSuccess}
                 options={options}
                 key={i}
