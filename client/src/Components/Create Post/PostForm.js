@@ -378,7 +378,7 @@ function PostForm({
       <div className="absolute right-3 bottom-2.5">
         <Link
           to="/feed"
-          className=" text-primary dark:text-primary-light border border-primary dark:border-primary-light mx-1 p-1.5 px-4 rounded-full text-sm hover:bg-primary hover:text-white hover:dark:text-darkLight"
+          className=" text-primary dark:text-primary-light border border-primary dark:border-primary-light mx-1 p-1.5 px-4 rounded-full text-sm 2xl:text-base hover:bg-primary hover:text-white hover:dark:text-darkLight"
         >
           Cancel
         </Link>
@@ -388,8 +388,8 @@ function PostForm({
           type="submit"
           className={
             enablePost
-              ? "text-white border border-primary bg-primary mx-1 p-1.5 px-4 rounded-full text-sm hover:bg-blue-700"
-              : "text-[#ffffff80] bg-[#818181] border border-[#818181] mx-1 p-1.5 px-4 rounded-full text-sm"
+              ? "text-white border border-primary bg-primary mx-1 p-1.5 px-4 rounded-full text-sm 2xl:text-base hover:bg-blue-700"
+              : "text-[#ffffff80] bg-[#818181] border border-[#818181] mx-1 p-1.5 px-4 rounded-full text-sm 2xl:text-base"
           }
         >
           {isEditing ? "Save" : "Post"}

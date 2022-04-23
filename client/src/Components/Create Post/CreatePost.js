@@ -111,7 +111,7 @@ function CreatePost({ title, post, ...props }) {
       <Guidelines />
 
       {/* post info */}
-      <div className="bg-white dark:bg-darkSecondary shadow-base rounded relative w-full lg:w-[26rem] xl:w-[30rem]">
+      <div className="bg-white dark:bg-darkSecondary shadow-base rounded relative w-full lg:w-[26rem] xl:w-[30rem] 2xl:w-[34rem] 3xl:w-[38rem]">
         {/* user profile picture & name */}
         <AuthorInfo
           picture={user?.picture}
@@ -145,7 +145,7 @@ function CreatePost({ title, post, ...props }) {
         />
       </div>
 
-      <div className="hidden lg:block absolute right-2 top-[9%] mx-5">
+      <div className="hidden lg:block absolute 2xl:right-[5%] 3xl:right-[8%] right-2 top-[9%] mx-5">
         <FAQ faqData={faqData} />
       </div>
 

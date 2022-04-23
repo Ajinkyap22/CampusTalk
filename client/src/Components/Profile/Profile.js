@@ -46,21 +46,20 @@ function Profile({ ...props }) {
     <main className="w-full min-h-full overflow-auto bg-[#F0F2F5] dark:bg-dark">
       <Nav />
 
-      <section className="flex flex-col items-center lg:flex-row lg:items-start relative p-2 mt-4">
+      <section className="flex flex-col items-center lg:flex-row lg:items-start 2xl:justify-evenly relative p-2 mt-4">
         <div className="lg:ml-12 w-[80%] lg:w-auto">
           <div className="bg-white dark:bg-darkSecondary p-2 rounded shadow-base mt-2 relative text-center">
             {/* user picture */}
-            {user && user?.picture ? (
+            {!user && user?.picture ? (
               <img
                 src={`http://localhost:3000/uploads/images/${user?.picture}`}
                 alt=""
-                className="rounded-full inline h-28 w-auto mt-4 my-2"
+                className="rounded-full inline h-28 2xl:h-32 3xl:h-36 w-auto mt-4 my-2"
               />
             ) : (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="120"
-                className="inline my-2 mt-4 fill-[#818181] dark:fill-darkLight"
+                className="inline my-2 mt-4 w-28 2xl:w-32 3xl:w-36 fill-[#818181] dark:fill-darkLight"
                 viewBox="0 0 16 16"
               >
                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
@@ -71,32 +70,36 @@ function Profile({ ...props }) {
               </svg>
             )}
             {/* user name */}
-            <h1 className="text-lg text-center mt-2 dark:text-darkLight">
+            <h1 className="text-lg 2xl:text-xl 3xl:text-2xl text-center mt-2 2xl:mt-3 dark:text-darkLight">
               {user?.firstName} {user?.lastName}
             </h1>
 
             {/* user join date */}
-            <p className="text-mxs text-secondary dark:text-gray-300 mt-1">
+            <p className="text-mxs 2xl:text-sm 3xl:text-base text-secondary dark:text-gray-300 mt-1 2xl:mt-2">
               Joined {moment(user?.timestamp).format("LL")}
             </p>
-            <hr className="mt-2 dark:border-t dark:border-secondary" />
+            <hr className="mt-2 2xl:mt-3 dark:border-t dark:border-secondary" />
 
             {/* stats */}
-            <div className="flex justify-center items-center mt-3">
+            <div className="flex justify-center items-center mt-3 2xl:mt-4">
               {/* members */}
               <div className="flex flex-col items-center px-2.5">
-                <span className="dark:text-darkLight">
+                <span className="dark:text-darkLight 2xl:text-lg">
                   {user?.posts.length}
                 </span>
-                <span className="text-mxs dark:text-darkLight">Posts</span>
+                <span className="text-mxs 2xl:text-sm dark:text-darkLight">
+                  Posts
+                </span>
               </div>
 
               {/* posts */}
               <div className="flex flex-col items-center px-2.5">
-                <span className="dark:text-darkLight">
+                <span className="dark:text-darkLight 2xl:text-lg">
                   {user?.forums.length}
                 </span>
-                <span className="text-mxs dark:text-darkLight">Forums</span>
+                <span className="text-mxs 2xl:text-sm dark:text-darkLight">
+                  Forums
+                </span>
               </div>
             </div>
 
@@ -104,10 +107,8 @@ function Profile({ ...props }) {
             <Link to="/user-info">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
                 fill="#919191"
-                className="absolute top-3 right-3"
+                className="absolute top-3 w-4 2xl:w-5 3xl:w-6 right-3"
                 viewBox="0 0 16 16"
               >
                 <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
@@ -120,13 +121,13 @@ function Profile({ ...props }) {
           </div>
 
           {/* user forums */}
-          <div>
+          <div className="2xl:mt-8 3xl:mt-12">
             <ForumBox user={user} fixed={false} onProfilePage={true} />
           </div>
         </div>
 
         {/* user posts */}
-        <div className="lg:max-w-[32rem] mt-6 lg:mt-2 lg:ml-24">
+        <div className="lg:max-w-[32rem] 2xl:max-w-[36rem] 3xl:max-w-[40rem] mt-6 lg:mt-2 lg:ml-24 2xl:justify-self-center">
           {/* filters */}
           <Filter
             activeFilter={activeFilter}
@@ -138,7 +139,7 @@ function Profile({ ...props }) {
           />
 
           {loading && (
-            <div className="mx-auto text-center mt-8">
+            <div className="mx-auto text-center mt-8 2xl:mt-12">
               <Loading />
             </div>
           )}
@@ -156,9 +157,9 @@ function Profile({ ...props }) {
 
           {/* if there are no posts */}
           {posts.length === 0 && !loading && (
-            <div className="text-center my-6">
+            <div className="text-center my-6 2xl:my-10">
               <LogoCropped color="rgba(98,98,98,0.9)" width="80" />
-              <p className="text-gray-600 dark:text-gray-300 my-4">
+              <p className="text-gray-600 dark:text-gray-300 2xl:text-lg 3xl:text-xl my-4">
                 You haven't created any posts yet.
               </p>
             </div>

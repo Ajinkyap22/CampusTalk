@@ -1,4 +1,5 @@
 # CampusTalk
+
 > A web-application that provides a platform for colleges to host Asynchronous Online Discussion Forums for their students.
 
 ## Table of contents
@@ -23,9 +24,9 @@
 
 ## Setup
 
-* You will need to install Node.js
-* Go to the project directory in the terminal & install the required dependencies by using: npm install
-* Type the command : npm run dev
+- You will need to install Node.js
+- Go to the project directory in the terminal & install the required dependencies by using: npm install
+- Type the command : npm run dev
 
 ## Features
 
@@ -48,4 +49,3 @@ Project is: _in progress_
 ## Contact
 
 Feel free to contact me at my mail - palaskarajinkya22@gmail.com
-

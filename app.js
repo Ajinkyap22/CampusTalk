@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const cors = require("cors");
 const compression = require("compression");
+const helmet = require("helmet");
 require("./config/passport");
 
 const usersRouter = require("./routes/users");
@@ -31,8 +32,9 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.resolve(__dirname, "./client/build")));
 app.use(compression());
+app.use(helmet());
 
 app.use("/api/users", usersRouter);
 app.use("/api/forums", forumRouter);
@@ -43,5 +45,9 @@ app.use("/api/chats", chatRouter);
 app.use("/api/notifications", notificationRouter);
 app.use("/api/events", eventRouter);
 app.use("/api/mail", mailRouter);
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
+});
 
 module.exports = app;

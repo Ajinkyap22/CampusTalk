@@ -18,10 +18,6 @@ import Tour from "reactour";
 import axios from "axios";
 import useCheckMobileScreen from "../../Hooks/useCheckMobileScreen";
 
-// TODO - install helmet at backed
-// TODO - create react, node and tailwind build
-// TODO - modify file paths from localhost to real server
-
 const faqData = [
   {
     question: "How do I post anonymously?",

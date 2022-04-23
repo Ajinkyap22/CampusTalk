@@ -10,7 +10,7 @@ const guidelines = [
 
 function Guidelines() {
   return (
-    <div className="hidden lg:block bg-white dark:bg-darkSecondary shadow-base lg:max-w-[16rem] xl:max-w-[20rem] pb-2 my-2 rounded absolute left-2 top-[12%] mx-4">
+    <div className="hidden lg:block bg-white dark:bg-darkSecondary shadow-base lg:max-w-[16rem] xl:max-w-[20rem] 2xl:max-w-[24rem] 3xl:max-w-[28rem] pb-2 rounded absolute left-2 2xl:left-[5%] 3xl:left-[8%] top-[13%] 2xl:top-[10%] mx-4">
       {/* title */}
       <div className="w-full bg-primary-light p-3 py-2 rounded-t">
         <svg

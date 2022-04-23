@@ -34,7 +34,7 @@ function AuthorInfo({
         />
       )}
 
-      <span className="text-sm mx-1 dark:text-darkLight">
+      <span className="text-sm 2xl:text-base mx-1 dark:text-darkLight">
         {!anonymous ? `${firstName} ${lastName}` : "Anonymous"}
       </span>
 

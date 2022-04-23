@@ -1,32 +1,9 @@
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, lazy, Suspense } from "react";
 
 import { Join } from "./Components/JoinForum/Join";
-import Home from "./Components/Homepage/Home";
-import UserInfo from "./Components/User Info/UserInfo";
-import CreateForum from "./Components/Create Forum/Create";
-import Forums from "./Components/Forum/Forums";
-import Forum from "././Components/Forum/Forum";
-import Login from "./Components/Auth/Login";
-import Signup from "./Components/Auth/Signup";
-import Feed from "./Components/Feed/Feed";
-import CreatePost from "./Components/Create Post/CreatePost";
-import PostPage from "./Components/PostPage/PostPage";
-import Profile from "./Components/Profile/Profile";
-import Chats from "./Components/Chats/Chats";
-import FileView from "./Components/Chats/FileView";
-import Events from "./Components/Events/Events";
-import Event from "./Components/Events/Event";
-import CreateEvent from "./Components/Events/CreateEvent";
-import Notifications from "./Components/Navbar/Notifications";
-import Verify from "./Components/Auth/Verify";
-import Confirm from "./Components/Auth/Confirm";
-import Forget from "./Components/Auth/Forget";
-import Reset from "./Components/Auth/Reset";
-import EditForum from "./Components/Forum/EditForum";
-import EditEvent from "./Components/Events/EditEvent";
-import AddRules from "./Components/Forum/AddRules";
+import Loading from "./Components/Loading";
 
 import { ForumContext } from "./Contexts/ForumContext";
 import { PostContext } from "./Contexts/PostContext";
@@ -36,6 +13,31 @@ import { TabProvider } from "./Contexts/TabContext";
 import { EventContext } from "./Contexts/EventContext";
 import { NotificationContext } from "./Contexts/NotificationContext";
 import { UserContext } from "./Contexts/UserContext";
+
+const Home = lazy(() => import("./Components/Homepage/Home"));
+const UserInfo = lazy(() => import("./Components/User Info/UserInfo"));
+const CreateForum = lazy(() => import("./Components/Create Forum/Create"));
+const Forums = lazy(() => import("./Components/Forum/Forums"));
+const Forum = lazy(() => import("./Components/Forum/Forum"));
+const Login = lazy(() => import("./Components/Auth/Login"));
+const Signup = lazy(() => import("./Components/Auth/Signup"));
+const Feed = lazy(() => import("./Components/Feed/Feed"));
+const CreatePost = lazy(() => import("./Components/Create Post/CreatePost"));
+const PostPage = lazy(() => import("./Components/PostPage/PostPage"));
+const Profile = lazy(() => import("./Components/Profile/Profile"));
+const Chats = lazy(() => import("./Components/Chats/Chats"));
+const FileView = lazy(() => import("./Components/Chats/FileView"));
+const Events = lazy(() => import("./Components/Events/Events"));
+const Event = lazy(() => import("./Components/Events/Event"));
+const CreateEvent = lazy(() => import("./Components/Events/CreateEvent"));
+const Notifications = lazy(() => import("./Components/Navbar/Notifications"));
+const Verify = lazy(() => import("./Components/Auth/Verify"));
+const Confirm = lazy(() => import("./Components/Auth/Confirm"));
+const Forget = lazy(() => import("./Components/Auth/Forget"));
+const Reset = lazy(() => import("./Components/Auth/Reset"));
+const EditForum = lazy(() => import("./Components/Forum/EditForum"));
+const EditEvent = lazy(() => import("./Components/Events/EditEvent"));
+const AddRules = lazy(() => import("./Components/Forum/AddRules"));
 
 function App() {
   const [forums, setForums] = useContext(ForumContext);
@@ -64,297 +66,307 @@ function App() {
 
   return (
     <div className="App relative dark:bg-dark">
-      <Router>
-        <Switch>
-          {/* Homepage */}
-          <Route exact path="/" render={() => <Home />} />
+      <Suspense
+        fallback={
+          <div className="w-full h-full flex justify-center items-center">
+            <Loading />
+          </div>
+        }
+      >
+        <Router>
+          <Switch>
+            {/* Homepage */}
+            <Route exact path="/" render={() => <Home />} />
 
-          {/* Login */}
-          <Route
-            exact
-            path="/login"
-            render={() => <Login title="Log in | CampusTalk" />}
-          />
-
-          {/* Signup */}
-          <Route
-            exact
-            path="/signup"
-            render={() => <Signup title={"Sign up | CampusTalk"} />}
-          />
-
-          {/* User info page*/}
-          <Route
-            exact
-            path="/user-info"
-            render={() => <UserInfo title={"User Profile | CampusTalk"} />}
-          />
-
-          {/* verify page */}
-          <Route
-            exact
-            path="/verify"
-            render={() => <Verify title={"Account Created | CampusTalk"} />}
-          />
-
-          {/* confirm page */}
-          {user && (
+            {/* Login */}
             <Route
               exact
-              path={`/confirm/${user._id}`}
-              render={() => (
-                <Confirm title={"Account Confirmed | CampusTalk"} />
-              )}
+              path="/login"
+              render={() => <Login title="Log in | CampusTalk" />}
             />
-          )}
 
-          {/* forget password */}
-          <Route
-            exact
-            path="/forgot-password"
-            render={() => <Forget title={"Forget Password | CampusTalk"} />}
-          />
+            {/* Signup */}
+            <Route
+              exact
+              path="/signup"
+              render={() => <Signup title={"Sign up | CampusTalk"} />}
+            />
 
-          {/* reset password */}
-          <Route
-            exact
-            path="/reset-password/:id"
-            render={() => <Reset title={"Reset Password | CampusTalk"} />}
-          />
+            {/* User info page*/}
+            <Route
+              exact
+              path="/user-info"
+              render={() => <UserInfo title={"User Profile | CampusTalk"} />}
+            />
 
-          {/* Join Forum */}
-          <Route
-            exact
-            path="/join-forum"
-            render={() => (
-              <Join
-                title={"Join Forum | CampusTalk"}
-                forums={forums}
-                setForums={setForums}
+            {/* verify page */}
+            <Route
+              exact
+              path="/verify"
+              render={() => <Verify title={"Account Created | CampusTalk"} />}
+            />
+
+            {/* confirm page */}
+            {user && (
+              <Route
+                exact
+                path={`/confirm/${user._id}`}
+                render={() => (
+                  <Confirm title={"Account Confirmed | CampusTalk"} />
+                )}
               />
             )}
-          />
 
-          {/* Create forum */}
-          <Route
-            exact
-            path="/create-forum"
-            render={() => <CreateForum title={"Create Forum | CampusTalk"} />}
-          />
-
-          {/* chat file view */}
-          {files.map((file, i) => (
+            {/* forget password */}
             <Route
               exact
-              path={`/media/${file.file}`}
+              path="/forgot-password"
+              render={() => <Forget title={"Forget Password | CampusTalk"} />}
+            />
+
+            {/* reset password */}
+            <Route
+              exact
+              path="/reset-password/:id"
+              render={() => <Reset title={"Reset Password | CampusTalk"} />}
+            />
+
+            {/* Join Forum */}
+            <Route
+              exact
+              path="/join-forum"
               render={() => (
-                <FileView
-                  file={file.file}
-                  name={file.name}
-                  type={file.type}
-                  title={`${file.name} | CampusTalk`}
+                <Join
+                  title={"Join Forum | CampusTalk"}
+                  forums={forums}
+                  setForums={setForums}
                 />
               )}
-              key={i}
             />
-          ))}
 
-          {/* Feed */}
-          <TabProvider>
+            {/* Create forum */}
             <Route
               exact
-              path="/feed"
-              render={() => <Feed title={"Feed | CampusTalk"} />}
+              path="/create-forum"
+              render={() => <CreateForum title={"Create Forum | CampusTalk"} />}
             />
 
-            {/* Forums */}
-            <Route
-              exact
-              path="/forums"
-              render={() => <Forums title={"Forums | CampusTalk"} />}
-            />
+            {/* chat file view */}
+            {files.map((file, i) => (
+              <Route
+                exact
+                path={`/media/${file.file}`}
+                render={() => (
+                  <FileView
+                    file={file.file}
+                    name={file.name}
+                    type={file.type}
+                    title={`${file.name} | CampusTalk`}
+                  />
+                )}
+                key={i}
+              />
+            ))}
 
-            {/* forum page */}
-            {forums.map((forum, i) => {
-              return (
+            {/* Feed */}
+            <TabProvider>
+              <Route
+                exact
+                path="/feed"
+                render={() => <Feed title={"Feed | CampusTalk"} />}
+              />
+
+              {/* Forums */}
+              <Route
+                exact
+                path="/forums"
+                render={() => <Forums title={"Forums | CampusTalk"} />}
+              />
+
+              {/* forum page */}
+              {forums.map((forum, i) => {
+                return (
+                  <div key={i}>
+                    {/* default */}
+                    <Route
+                      exact
+                      path={`/forums/${forum._id}`}
+                      render={() => (
+                        <Forum
+                          title={`${forum.forumName} | CampusTalk`}
+                          forum={forum}
+                        />
+                      )}
+                    />
+
+                    {/* postRequests */}
+                    <Route
+                      exact
+                      path={`/forums/${forum._id}/postRequests`}
+                      render={() => (
+                        <Forum
+                          title={`${forum.forumName} | CampusTalk`}
+                          forum={forum}
+                          defaultTab="postRequests"
+                        />
+                      )}
+                    />
+
+                    {/* joinRequests */}
+                    <Route
+                      exact
+                      path={`/forums/${forum._id}/joinRequests`}
+                      render={() => (
+                        <Forum
+                          title={`${forum.forumName} | CampusTalk`}
+                          forum={forum}
+                          defaultTab="joinRequests"
+                        />
+                      )}
+                    />
+
+                    {/* edit */}
+                    <Route
+                      exact
+                      path={`/forums/${forum._id}/edit-forum`}
+                      render={() => (
+                        <EditForum
+                          title={"Edit Forum | CampusTalk"}
+                          forum={forum}
+                        />
+                      )}
+                    />
+
+                    {/* rules */}
+                    <Route
+                      exact
+                      path={`/forums/${forum._id}/rules`}
+                      render={() => (
+                        <AddRules
+                          title={"Forum Rules | CampusTalk"}
+                          forumRules={forum.rules}
+                          forumId={forum._id}
+                        />
+                      )}
+                    />
+                  </div>
+                );
+              })}
+
+              {/* Create post */}
+              <Route
+                exact
+                path="/create-post"
+                render={() => <CreatePost title={"Create Post | CampusTalk"} />}
+              />
+
+              {/* edit post page for each post */}
+              {posts.map((post, i) => (
+                <Route
+                  exact
+                  path={`/forums/${post.forum._id}/posts/${post._id}/edit-post`}
+                  key={i}
+                  render={() => (
+                    <CreatePost title={`Edit Post | CampusTalk`} post={post} />
+                  )}
+                />
+              ))}
+
+              {/* post page for each post */}
+              {posts.map((post, i) => (
+                <Route
+                  exact
+                  path={`/forums/${post.forum._id}/posts/${post._id}`}
+                  key={i}
+                  render={() => (
+                    <PostPage
+                      title={`${post.author.firstName}'s Post in ${post.forum.forumName} | CampusTalk`}
+                      post={post}
+                    />
+                  )}
+                />
+              ))}
+
+              {/* profile page */}
+              <Route
+                exact
+                path="/profile"
+                render={() => <Profile title={"My Profile | CampusTalk"} />}
+              />
+
+              {/* chats */}
+              <Route
+                exact
+                path="/chats"
+                render={() => <Chats title={"Chats | CampusTalk"} />}
+              />
+
+              {/* events */}
+              <Route
+                exact
+                path="/events"
+                render={() => <Events title={"Events | CampusTalk"} />}
+              />
+
+              {/* event page */}
+              {events.map((event, i) => (
                 <div key={i}>
-                  {/* default */}
                   <Route
                     exact
-                    path={`/forums/${forum._id}`}
+                    path={`/events/${event._id}`}
                     render={() => (
-                      <Forum
-                        title={`${forum.forumName} | CampusTalk`}
-                        forum={forum}
+                      <Event
+                        title={`${event.name} | CampusTalk`}
+                        event={event}
+                        events={events}
+                        setEvents={setEvents}
                       />
                     )}
                   />
 
-                  {/* postRequests */}
                   <Route
                     exact
-                    path={`/forums/${forum._id}/postRequests`}
+                    path={`/events/${event._id}/edit-event`}
                     render={() => (
-                      <Forum
-                        title={`${forum.forumName} | CampusTalk`}
-                        forum={forum}
-                        defaultTab="postRequests"
-                      />
-                    )}
-                  />
-
-                  {/* joinRequests */}
-                  <Route
-                    exact
-                    path={`/forums/${forum._id}/joinRequests`}
-                    render={() => (
-                      <Forum
-                        title={`${forum.forumName} | CampusTalk`}
-                        forum={forum}
-                        defaultTab="joinRequests"
-                      />
-                    )}
-                  />
-
-                  {/* edit */}
-                  <Route
-                    exact
-                    path={`/forums/${forum._id}/edit-forum`}
-                    render={() => (
-                      <EditForum
-                        title={"Edit Forum | CampusTalk"}
-                        forum={forum}
-                      />
-                    )}
-                  />
-
-                  {/* rules */}
-                  <Route
-                    exact
-                    path={`/forums/${forum._id}/rules`}
-                    render={() => (
-                      <AddRules
-                        title={"Forum Rules | CampusTalk"}
-                        forumRules={forum.rules}
-                        forumId={forum._id}
+                      <EditEvent
+                        title={"Edit Event | CampusTalk"}
+                        event={event}
                       />
                     )}
                   />
                 </div>
-              );
-            })}
+              ))}
 
-            {/* Create post */}
-            <Route
-              exact
-              path="/create-post"
-              render={() => <CreatePost title={"Create Post | CampusTalk"} />}
-            />
-
-            {/* edit post page for each post */}
-            {posts.map((post, i) => (
+              {/* create event */}
               <Route
                 exact
-                path={`/forums/${post.forum._id}/posts/${post._id}/edit-post`}
-                key={i}
+                path="/create-event"
                 render={() => (
-                  <CreatePost title={`Edit Post | CampusTalk`} post={post} />
+                  <CreateEvent title={"Create Event | CampusTalk"} />
                 )}
               />
-            ))}
 
-            {/* post page for each post */}
-            {posts.map((post, i) => (
+              {/* notifications */}
               <Route
                 exact
-                path={`/forums/${post.forum._id}/posts/${post._id}`}
-                key={i}
+                path="/notifications"
                 render={() => (
-                  <PostPage
-                    title={`${post.author.firstName}'s Post in ${post.forum.forumName} | CampusTalk`}
-                    post={post}
+                  <Notifications
+                    title={"Notifications | CampusTalk"}
+                    isMobile={true}
+                    showNotifications={showNotifications}
+                    setShowNotifications={setShowNotifications}
+                    notifications={notifications}
+                    setNotifications={setNotifications}
+                    setNotificationCount={setNotificationCount}
+                    classes="z-20 bg-white dark:bg-[#3e3d3d] flex flex-col"
                   />
                 )}
               />
-            ))}
-
-            {/* profile page */}
-            <Route
-              exact
-              path="/profile"
-              render={() => <Profile title={"My Profile | CampusTalk"} />}
-            />
-
-            {/* chats */}
-            <Route
-              exact
-              path="/chats"
-              render={() => <Chats title={"Chats | CampusTalk"} />}
-            />
-
-            {/* events */}
-            <Route
-              exact
-              path="/events"
-              render={() => <Events title={"Events | CampusTalk"} />}
-            />
-
-            {/* event page */}
-            {events.map((event, i) => (
-              <div key={i}>
-                <Route
-                  exact
-                  path={`/events/${event._id}`}
-                  render={() => (
-                    <Event
-                      title={`${event.name} | CampusTalk`}
-                      event={event}
-                      events={events}
-                      setEvents={setEvents}
-                    />
-                  )}
-                />
-
-                <Route
-                  exact
-                  path={`/events/${event._id}/edit-event`}
-                  render={() => (
-                    <EditEvent
-                      title={"Edit Event | CampusTalk"}
-                      event={event}
-                    />
-                  )}
-                />
-              </div>
-            ))}
-
-            {/* create event */}
-            <Route
-              exact
-              path="/create-event"
-              render={() => <CreateEvent title={"Create Event | CampusTalk"} />}
-            />
-
-            {/* notifications */}
-            <Route
-              exact
-              path="/notifications"
-              render={() => (
-                <Notifications
-                  title={"Notifications | CampusTalk"}
-                  isMobile={true}
-                  showNotifications={showNotifications}
-                  setShowNotifications={setShowNotifications}
-                  notifications={notifications}
-                  setNotifications={setNotifications}
-                  setNotificationCount={setNotificationCount}
-                  classes="z-20 bg-white dark:bg-[#3e3d3d] flex flex-col"
-                />
-              )}
-            />
-          </TabProvider>
-        </Switch>
-      </Router>
+            </TabProvider>
+          </Switch>
+        </Router>
+      </Suspense>
     </div>
   );
 }
