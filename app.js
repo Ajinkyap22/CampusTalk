@@ -19,8 +19,10 @@ const eventRouter = require("./routes/event");
 const mailRouter = require("./routes/mail");
 
 const app = express();
-const server = require("http").Server(app);
+const server = require("http").createServer(app);
 const io = require("./socket/index").listen(server);
+
+server.listen(process.env.PORT || 3000);
 
 // Set up mongoose
 const mongoose = require("mongoose");
