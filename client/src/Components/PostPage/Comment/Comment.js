@@ -93,7 +93,7 @@ function Comment({
       {/* author picture */}
       {comment.author.picture ? (
         <img
-          src={`http://localhost:3000/uploads/images/${comment.author.picture}`}
+          src={`https://campustalk-app.herokuapp.com/uploads/images/${comment.author.picture}`}
           alt=""
           className="rounded-full inline h-8 mx-1"
         />

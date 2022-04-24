@@ -59,7 +59,7 @@ function Member({
         {/* image */}
         {member.picture ? (
           <img
-            src={`http://localhost:3000/uploads/images/${member.picture}`}
+            src={`https://campustalk-app.herokuapp.com/uploads/images/${member.picture}`}
             className="rounded-full object-cover w-8 lg:w-10 2xl:w-12 3xl:w-14 h-auto inline mx-1 lg:mx-2"
             alt=""
           />

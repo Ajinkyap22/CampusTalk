@@ -116,7 +116,7 @@ function MobileNav({ handleClick, activeTab, notificationCount }) {
           >
             {user && user.picture ? (
               <img
-                src={`http://localhost:3000/uploads/images/${user.picture}`}
+                src={`https://campustalk-app.herokuapp.com/uploads/images/${user.picture}`}
                 alt=""
                 className="rounded-full w-6 mx-auto"
               />

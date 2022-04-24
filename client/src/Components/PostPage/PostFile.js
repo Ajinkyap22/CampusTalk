@@ -19,7 +19,7 @@ function PostFile({ post, handleBack }) {
 
   function handleDownload() {
     fetch(
-      `http://localhost:3000/uploads/${folder}/${post.file[currentFile]}`
+      `https://campustalk-app.herokuapp.com/uploads/${folder}/${post.file[currentFile]}`
     ).then((response) => {
       response.blob().then((blob) => {
         let url = window.URL.createObjectURL(blob);

@@ -224,7 +224,7 @@ function CommentForm({
         </svg>
       ) : (
         <img
-          src={`http://localhost:3000/uploads/images/${user.picture}`}
+          src={`https://campustalk-app.herokuapp.com/uploads/images/${user.picture}`}
           alt=""
           className="rounded-full inline h-8 mx-1"
         />

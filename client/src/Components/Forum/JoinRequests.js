@@ -135,7 +135,7 @@ function JoinRequests({
                   {/* image */}
                   {joinRequest.picture ? (
                     <img
-                      src={`http://localhost:3000/uploads/images/${joinRequest.picture}`}
+                      src={`https://campustalk-app.herokuapp.com/uploads/images/${joinRequest.picture}`}
                       className="rounded-full object-cover w-8 lg:w-10 h-auto inline mx-1 lg:mx-2"
                       alt=""
                     />

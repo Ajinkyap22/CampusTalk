@@ -59,7 +59,7 @@ function Reply({
       {/* picture */}
       {reply.author.picture ? (
         <img
-          src={`http://localhost:3000/uploads/images/${reply.author.picture}`}
+          src={`https://campustalk-app.herokuapp.com/uploads/images/${reply.author.picture}`}
           alt=""
           className="rounded-full inline h-8 mx-1"
         />

@@ -52,7 +52,7 @@ function Profile({ ...props }) {
             {/* user picture */}
             {!user && user?.picture ? (
               <img
-                src={`http://localhost:3000/uploads/images/${user?.picture}`}
+                src={`https://campustalk-app.herokuapp.com/uploads/images/${user?.picture}`}
                 alt=""
                 className="rounded-full inline h-28 2xl:h-32 3xl:h-36 w-auto mt-4 my-2"
               />
