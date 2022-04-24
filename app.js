@@ -22,8 +22,6 @@ const app = express();
 const server = require("http").createServer(app);
 const io = require("socket.io")(server);
 
-// server.listen(process.env.PORT || 3000);
-
 // Set up mongoose
 const mongoose = require("mongoose");
 const mongoDB = process.env.MONGO_URL;
