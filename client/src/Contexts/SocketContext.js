@@ -8,7 +8,7 @@ export function SocketProvider({ children }) {
   const [onlineUsers, setOnlineUsers] = useState({});
 
   useEffect(() => {
-    socket.current = io("ws://campustalk-app.herokuapp.com/");
+    socket.current = io("https://campustalk-app.herokuapp.com/");
 
     socket.current.on("users", (users) => {
       setOnlineUsers(users);
