@@ -1,8 +1,6 @@
-const io = require("socket.io")(8900, {
-  cors: {
-    origin: "*",
-  },
-});
+const app = require("express")();
+const http = require("http").Server(app);
+const io = require("socket.io")(http);
 
 let users = {};
 
