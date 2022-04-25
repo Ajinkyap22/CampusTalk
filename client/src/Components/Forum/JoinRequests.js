@@ -40,7 +40,7 @@ function JoinRequests({
 
         sendNotification(request._id, forum._id);
 
-        sendMail(request.email, request.firstName, forum.forumName, forum._id);
+        // sendMail(request.email, request.firstName, forum.forumName, forum._id);
       })
       .catch((err) => {
         console.error(err);
