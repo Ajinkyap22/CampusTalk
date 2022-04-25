@@ -107,7 +107,6 @@ function UserInfo({ title, ...props }) {
       })
       .catch((err) => {
         console.error(err);
-        console.log(err.response);
         setError(err.response || err);
       });
   }
@@ -133,6 +132,7 @@ function UserInfo({ title, ...props }) {
         console.log(res.data);
       })
       .catch((err) => {
+        console.log(err.response);
         console.error(err);
       });
   }
