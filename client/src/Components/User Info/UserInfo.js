@@ -107,6 +107,7 @@ function UserInfo({ title, ...props }) {
       })
       .catch((err) => {
         console.error(err);
+        console.log(err.response);
         setError(err.response || err);
       });
   }
