@@ -179,7 +179,7 @@ exports.verifiation_mail = (req, res) => {
     "Hey",
     name,
     "Thank you for joining CampusTalk. Please confirm your account by clicking on the following link.",
-    `http://localhost:3001/confirm/${confirmationCode}`,
+    `https://campustalk-app.herokuapp.com/confirm/${confirmationCode}`,
     "Confirm Account"
   );
 
@@ -232,7 +232,7 @@ exports.reset_password = (req, res) => {
             "Hey",
             name,
             "You requested to reset your CampusTalk password. You can reset your password by clicking on the following link.",
-            `http://localhost:3001/reset-password/${user.resetPasswordToken}`,
+            `https://campustalk-app.herokuapp.com/reset-password/${user.resetPasswordToken}`,
             "Reset Password"
           );
 
@@ -274,7 +274,7 @@ exports.post_requests_mail = (req, res) => {
     "Hey",
     "fellow Moderator!",
     `There are new ${type} requests in ${forumName} waiting to be approved by you. Click on the below link to view them.`,
-    `http://localhost:3001/forums/${forumId}/${type}Requests`,
+    `https://campustalk-app.herokuapp.com/forums/${forumId}/${type}Requests`,
     "View Requests"
   );
 
@@ -308,7 +308,7 @@ exports.comment_mail = (req, res) => {
     "Hey",
     name,
     `${author} commented on your post in ${forumName}. Click on the below link to view the comments.`,
-    `http://localhost:3001/forums/${forumId}/posts/${postId}`,
+    `https://campustalk-app.herokuapp.com/forums/${forumId}/posts/${postId}`,
     "View Comments"
   );
 
@@ -342,7 +342,7 @@ exports.reply_mail = (req, res) => {
     "Hey",
     name,
     `${author} replied to your comment on a post in ${forumName}. Click on the below link to view the reply.`,
-    `http://localhost:3001/forums/${forumId}/posts/${postId}`,
+    `https://campustalk-app.herokuapp.com/forums/${forumId}/posts/${postId}`,
     "View Reply"
   );
 
@@ -376,7 +376,7 @@ exports.join_request_approved = (req, res) => {
     "Hey",
     name,
     `Your request to join ${forumName} has been approved. You can now view and create posts in the forum. Click on the below link to view the forum.`,
-    `http://localhost:3001/forums/${forumId}`,
+    `https://campustalk-app.herokuapp.com/forums/${forumId}`,
     "View Forum"
   );
 
