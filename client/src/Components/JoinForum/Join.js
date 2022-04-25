@@ -57,7 +57,7 @@ function JoinForum({ title, forums, setForums, ...props }) {
       axios
         .post(`/api/forums/${forumId}/join`, body, headers)
         .then((res) => {
-          sendMail(forumId);
+          // sendMail(forumId);
         })
         .catch((err) => {
           console.error(err);
