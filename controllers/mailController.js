@@ -190,6 +190,8 @@ exports.verifiation_mail = (req, res) => {
     html,
   };
 
+  console.log(process.env.SENDGRID_API_KEY);
+
   sgMail
     .send(msg)
     .then(() => {
