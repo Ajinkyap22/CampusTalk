@@ -17,7 +17,10 @@ function Password({
 
   return (
     <div className="my-4 relative">
-      <label htmlFor={name} className="text-xs lg:text-sm 2xl:text-lg">
+      <label
+        htmlFor={name}
+        className="text-xs lg:text-sm 2xl:text-lg dark:text-darkLight"
+      >
         {label}{" "}
         <span className="text-red-600" hidden={required ? false : true}>
           *
@@ -28,7 +31,7 @@ function Password({
         name={name}
         onChange={(e) => (setState ? callback(e.target.value) : callback(e))}
         placeholder={placeholder}
-        className="mt-2 block w-full px-3 py-1.5 border border-gray-300 bg-[#f6f6f6] rounded-md text-xs lg:text-sm 2xl:text-base shadow-sm placeholder-[#818181] 
+        className="mt-2 block w-full px-3 py-1.5 border dark:text-darkLight border-gray-300 dark:border-[#3e3d3d] bg-[#f6f6f6] dark:bg-[#3e3d3d] rounded-md text-xs lg:text-sm 2xl:text-base shadow-sm placeholder-[#818181] 
               focus:outline-none focus:border-sky-500"
         minLength={minLength}
         required={required}
@@ -36,9 +39,8 @@ function Password({
 
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        className="h-4 w-auto absolute right-0 mr-3 top-[61.5%] 2xl:top-[62%]"
+        className="h-4 w-auto absolute right-0 mr-3 top-[61.5%] 2xl:top-[62%] fill-[#626262] dark:fill-gray-400"
         viewBox="0 0 20 20"
-        fill="#626262"
         hidden={showPassword ? true : false}
         onClick={toggleShowPassword}
       >
@@ -52,9 +54,8 @@ function Password({
 
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        className="h-4 w-auto absolute right-0 mr-3 top-[61.5%] 2xl:top-[62%]"
+        className="h-4 w-auto absolute right-0 mr-3 top-[61.5%] 2xl:top-[62%] fill-[#626262] dark:fill-gray-400"
         viewBox="0 0 20 20"
-        fill="#626262"
         hidden={showPassword ? false : true}
         onClick={toggleShowPassword}
       >

@@ -179,7 +179,7 @@ exports.verifiation_mail = (req, res) => {
     "Hey",
     name,
     "Thank you for joining CampusTalk. Please confirm your account by clicking on the following link.",
-    `https://campustalk-app.herokuapp.com/confirm/${confirmationCode}`,
+    `${process.env.APP_URL}/confirm/${confirmationCode}`,
     "Confirm Account"
   );
 
@@ -189,8 +189,6 @@ exports.verifiation_mail = (req, res) => {
     subject: "Please confirm your CampusTalk account",
     html,
   };
-
-  console.log(process.env.SENDGRID_API_KEY);
 
   sgMail
     .send(msg)
@@ -232,7 +230,7 @@ exports.reset_password = (req, res) => {
             "Hey",
             name,
             "You requested to reset your CampusTalk password. You can reset your password by clicking on the following link.",
-            `https://campustalk-app.herokuapp.com/reset-password/${user.resetPasswordToken}`,
+            `${process.env.APP_URL}/reset-password/${user.resetPasswordToken}`,
             "Reset Password"
           );
 
@@ -274,7 +272,7 @@ exports.post_requests_mail = (req, res) => {
     "Hey",
     "fellow Moderator!",
     `There are new ${type} requests in ${forumName} waiting to be approved by you. Click on the below link to view them.`,
-    `https://campustalk-app.herokuapp.com/forums/${forumId}/${type}Requests`,
+    `${process.env.APP_URL}/forums/${forumId}/${type}Requests`,
     "View Requests"
   );
 
@@ -308,7 +306,7 @@ exports.comment_mail = (req, res) => {
     "Hey",
     name,
     `${author} commented on your post in ${forumName}. Click on the below link to view the comments.`,
-    `https://campustalk-app.herokuapp.com/forums/${forumId}/posts/${postId}`,
+    `${process.env.APP_URL}/forums/${forumId}/posts/${postId}`,
     "View Comments"
   );
 
@@ -342,7 +340,7 @@ exports.reply_mail = (req, res) => {
     "Hey",
     name,
     `${author} replied to your comment on a post in ${forumName}. Click on the below link to view the reply.`,
-    `https://campustalk-app.herokuapp.com/forums/${forumId}/posts/${postId}`,
+    `${process.env.APP_URL}/forums/${forumId}/posts/${postId}`,
     "View Reply"
   );
 
@@ -376,7 +374,7 @@ exports.join_request_approved = (req, res) => {
     "Hey",
     name,
     `Your request to join ${forumName} has been approved. You can now view and create posts in the forum. Click on the below link to view the forum.`,
-    `https://campustalk-app.herokuapp.com/forums/${forumId}`,
+    `${process.env.APP_URL}/forums/${forumId}`,
     "View Forum"
   );
 

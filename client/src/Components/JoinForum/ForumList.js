@@ -9,10 +9,10 @@ function ForumList({ forums, setShowAlert }) {
     <table className="table-fixed w-full" hidden={forums.length ? false : true}>
       <thead>
         <tr>
-          <th className="text-primary font-normal text-xs lg:text-sm lg:text-base 2xl:text-2xl">
+          <th className="text-primary dark:text-primary-light font-normal text-xs lg:text-sm lg:text-base 2xl:text-2xl">
             Institute Name
           </th>
-          <th className="text-primary font-normal text-xs lg:text-sm lg:text-base 2xl:text-2xl">
+          <th className="text-primary dark:text-primary-light font-normal text-xs lg:text-sm lg:text-base 2xl:text-2xl">
             Members
           </th>
         </tr>

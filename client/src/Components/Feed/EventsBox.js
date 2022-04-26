@@ -40,7 +40,7 @@ function EventBox({ events, fixed = true }) {
             </Link>
           </div>
         ) : (
-          <p className="block lg:p-2.5 xl:p-3 text-center text-sm 2xl:text-xl text-slate-800 dark:text-secondary hover:bg-gray-100">
+          <p className="block lg:p-2.5 xl:p-3 text-center text-sm 2xl:text-xl text-slate-800 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-dark">
             There are no upcoming events.
           </p>
         )}

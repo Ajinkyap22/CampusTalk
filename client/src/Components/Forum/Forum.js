@@ -265,7 +265,7 @@ function Forum({ forum, title, defaultTab = "posts" }) {
                 {forumPosts.length === 0 && !loading && (
                   <div className="text-center my-6">
                     <LogoCropped color="rgba(98,98,98,0.9)" width="80" />
-                    <p className="text-gray-600 my-4">
+                    <p className="text-gray-600 dark:text-gray-400 my-4">
                       No posts yet. Be the first to post!
                     </p>
                   </div>

@@ -22,7 +22,7 @@ function UserInfo({ title, ...props }) {
 
   // redirect back to login if there is no user
   useEffect(() => {
-    // if (!user) props.history.push("/login");
+    if (!user) props.history.push("/login");
   }, [user, props.history]);
 
   // Update page title
@@ -99,11 +99,24 @@ function UserInfo({ title, ...props }) {
     axios
       .put(`/api/users/profile/${user._id}`, formData, headers)
       .then((res) => {
-        setUser(res.data);
+        setUser({
+          ...user,
+          firstName: res.data.firstName,
+          lastName: res.data.lastName,
+          picture: res.data.picture,
+        });
 
-        sendVerificationMail(res.data.firstName, res.data.email, res.data._id);
+        if (user.new) {
+          sendVerificationMail(
+            res.data.firstName,
+            res.data.email,
+            res.data._id
+          );
+        }
 
-        props.history.push("/verify");
+        user.new
+          ? props.history.push("/verify")
+          : props.history.push("/profile");
       })
       .catch((err) => {
         console.error(err);
@@ -126,21 +139,16 @@ function UserInfo({ title, ...props }) {
       confirmationCode: id,
     };
 
-    axios
-      .post("/api/mail/verification", body, headers)
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err.response);
-        console.error(err);
-      });
+    axios.post("/api/mail/verification", body, headers).catch((err) => {
+      console.log(err.response);
+      console.error(err);
+    });
   }
 
   return (
     <div className="w-full h-full bg-bubble flex relative flex-col justify-center items-center">
-      <section className="bg-white rounded shadow-base p-2 md:p-5 w-[90%] md:w-2/3 lg:w-[40%] 2xl:w-1/3 my-14 md:my-20 2xl:my-28 mb-20 md:mb-14">
-        <h1 className="text-primary text-center text-xl pt-2 md:text-2xl">
+      <section className="bg-white dark:bg-darkSecondary rounded shadow-base p-2 md:p-5 w-[90%] md:w-2/3 lg:w-[40%] 2xl:w-1/3 my-14 md:my-20 2xl:my-28 mb-20 md:mb-14">
+        <h1 className="text-primary dark:text-primary-light text-center text-xl pt-2 md:text-2xl">
           Tell us a bit about yourself!
         </h1>
 
@@ -155,7 +163,13 @@ function UserInfo({ title, ...props }) {
             className="my-4 relative hover:scale-105 transition-all cursor-pointer"
           >
             <img
-              src={avatar}
+              src={
+                user.picture && user.picture.includes("googleusercontent")
+                  ? user.picture
+                  : user.picture
+                  ? `/uploads/images/${user.picture}`
+                  : avatar
+              }
               alt="Profile pic upload"
               className="rounded-full m-auto w-32 h-32 border-4 border-gray-400"
               title="Upload Profile Picture"
@@ -229,7 +243,7 @@ function UserInfo({ title, ...props }) {
           {/* Submit */}
           <div className="my-4 md:mt-6 float-right">
             <button className="px-2 md:px-3 py-1.5 mr-1 text-sm md:text-base 2xl:text-lg bg-primary text-white rounded hover:bg-blue-700">
-              Next
+              {user.new ? "Next" : "Save"}
             </button>
           </div>
         </form>

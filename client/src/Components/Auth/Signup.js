@@ -45,8 +45,12 @@ function Signup({ title, ...props }) {
       .then((res) => {
         localStorage.setItem("user", JSON.stringify(res.data));
         setUser(res.data.user);
-        props.history.push("/join-forum");
         socket.current.emit("join", res.data.user._id);
+        if (res.data.user.new) {
+          props.history.push("/user-info");
+        } else {
+          props.history.push("/feed");
+        }
       })
       .catch((err) => {
         if (err.response?.status === 401) {
@@ -90,7 +94,7 @@ function Signup({ title, ...props }) {
       <Title />
 
       {/* form box */}
-      <section className="bg-white rounded justify-center shadow-base w-[90%] md:w-2/3 lg:w-[40%] 2xl:w-[30%] md:my-2 lg:my-5 xl:my-8">
+      <section className="bg-white dark:bg-darkSecondary rounded justify-center shadow-base w-[90%] md:w-2/3 lg:w-[40%] 2xl:w-[30%] md:my-2 lg:my-5 xl:my-8">
         <h1 className="text-lg md:text-xl lg:text-2xl text-primary text-center mt-4">
           Create Your Account
         </h1>
@@ -109,7 +113,9 @@ function Signup({ title, ...props }) {
 
         {/* or */}
         <div className="or w-full mt-5 2xl:mt-6 px-4 md:px-6">
-          <span className="text-center text-sm 2xl:text-lg">OR</span>
+          <span className="text-center text-sm 2xl:text-lg dark:text-darkLight">
+            OR
+          </span>
         </div>
 
         {/* form */}
@@ -166,14 +172,14 @@ function Signup({ title, ...props }) {
             <div className="mt-2 md:mt-0">
               <Link
                 to="/login"
-                className="text-xsm md:text-xs text-primary block mb-1 md:mb-2 lg:mb-3"
+                className="text-xsm md:text-xs text-primary dark:text-primary-light block mb-1 md:mb-2 lg:mb-3"
               >
                 Have an account?
               </Link>
 
               <Link
                 to="/forgot-password"
-                className="text-xsm md:text-xs text-primary block mt-1 md:mt-2 lg:mt-3"
+                className="text-xsm md:text-xs text-primary dark:text-primary-light block mt-1 md:mt-2 lg:mt-3"
               >
                 Forgot Password?
               </Link>

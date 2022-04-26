@@ -39,10 +39,10 @@ function ProfileModal({
   return (
     <div
       ref={modalRef}
-      className="absolute bg-white rounded shadow-lg pb-5 z-10 w-[95%] xsm:w-[90%] md:w-[70%] lg:w-[50%] 2xl:w-[40%] my-14 md:my-20 2xl:my-28 mb-20 md:mb-14"
+      className="absolute bg-white dark:bg-dark rounded shadow-lg pb-5 z-10 w-[95%] xsm:w-[90%] md:w-[70%] lg:w-[50%] 2xl:w-[40%] my-14 md:my-20 2xl:my-28 mb-20 md:mb-14"
       hidden={showModal ? false : true}
     >
-      <h1 className="text-primary text-xl p-4 align-middle">
+      <h1 className="text-primary dark:text-primary-light text-xl p-4 align-middle">
         Adjust Profile Picture
       </h1>
 
@@ -81,7 +81,7 @@ function ProfileModal({
       {/* Save image */}
       <div className="mt-5 mx-6 flex justify-end">
         <button
-          className="px-2 md:px-3 text-sm md:text-base 2xl:text-lg py-2 mr-1 text-[#818181]"
+          className="px-2 md:px-3 text-sm md:text-base 2xl:text-lg py-2 mr-1 text-[#818181] dark:text-gray-300"
           onClick={closeModal}
         >
           Cancel

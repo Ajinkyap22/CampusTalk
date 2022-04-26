@@ -164,19 +164,19 @@ function PostForm({
     if (isEditing) {
       onEditingSuccess(res);
     } else {
-      // axios
-      //   .post(
-      //     `/api/notifications/requestNotification`,
-      //     { forum: forum || forum?._id, type: "postRequest" },
-      //     headers
-      //   )
-      //   .then((res) => {
-      //     props.history.push("/feed");
-      //     sendMail(forum);
-      //   })
-      //   .catch((err) => {
-      //     console.error(err);
-      //   });
+      axios
+        .post(
+          `/api/notifications/requestNotification`,
+          { forum: forum || forum?._id, type: "postRequest" },
+          headers
+        )
+        .then((res) => {
+          props.history.push("/feed");
+          sendMail(forum);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     }
 
     setIsEditing(false);

@@ -153,7 +153,11 @@ function Nav() {
           {/* avatar */}
           {user && user.picture ? (
             <img
-              src={`https://campustalk-app.herokuapp.com/uploads/images/${user.picture}`}
+              src={
+                user.picture.includes("googleusercontent")
+                  ? user.picture
+                  : `/uploads/images/${user.picture}`
+              }
               alt=""
               className="rounded-full inline h-6 2xl:h-9 3xl:h-10 w-auto ml-1 dropDownToggle"
             />

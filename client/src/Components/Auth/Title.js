@@ -72,7 +72,7 @@ function Title() {
         />
       </svg>
 
-      <p className="tracking-widest text-center text-xsm md:text-sm 2xl:text-base text-[#342F2F] font-extralight 2xl:mt-2">
+      <p className="tracking-widest text-center text-xsm md:text-sm 2xl:text-base text-[#342F2F] dark:text-gray-300 font-extralight 2xl:mt-2">
         YOUR COLLEGE LIFE MADE EASY
       </p>
     </section>

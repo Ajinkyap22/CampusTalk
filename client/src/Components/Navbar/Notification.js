@@ -104,7 +104,11 @@ function Notification({
       {notification.type === "comment" || notification.type === "reply" ? (
         notification.from.picture ? (
           <img
-            src={`https://campustalk-app.herokuapp.com/uploads/images/${notification.from.picture}`}
+            src={
+              notification.from.picture.includes("googleusercontent")
+                ? notification.from.picture
+                : `/uploads/images/${notification.from.picture}`
+            }
             className="rounded-full object-cover w-10 3xl:w-11 h-auto inline mx-2"
             alt=""
           />

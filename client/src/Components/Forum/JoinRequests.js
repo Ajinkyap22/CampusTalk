@@ -40,7 +40,7 @@ function JoinRequests({
 
         sendNotification(request._id, forum._id);
 
-        // sendMail(request.email, request.firstName, forum.forumName, forum._id);
+        sendMail(request.email, request.firstName, forum.forumName, forum._id);
       })
       .catch((err) => {
         console.error(err);
@@ -135,7 +135,11 @@ function JoinRequests({
                   {/* image */}
                   {joinRequest.picture ? (
                     <img
-                      src={`https://campustalk-app.herokuapp.com/uploads/images/${joinRequest.picture}`}
+                      src={
+                        joinRequest.picture.includes("googleusercontent")
+                          ? joinRequest.picture
+                          : `/uploads/images/${joinRequest.picture}`
+                      }
                       className="rounded-full object-cover w-8 lg:w-10 h-auto inline mx-1 lg:mx-2"
                       alt=""
                     />

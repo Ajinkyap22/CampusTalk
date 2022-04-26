@@ -29,9 +29,7 @@ function FileView({ file, name, type, title, history }) {
   }
 
   function handleDownload() {
-    fetch(
-      `https://campustalk-app.herokuapp.com/uploads/${folder}/${file}`
-    ).then((response) => {
+    fetch(`/uploads/${folder}/${file}`).then((response) => {
       response.blob().then((blob) => {
         let url = window.URL.createObjectURL(blob);
         let a = document.createElement("a");
@@ -59,13 +57,13 @@ function FileView({ file, name, type, title, history }) {
         {/* image */}
         {type === "image" ? (
           <img
-            src={`https://campustalk-app.herokuapp.com/uploads/images/${file}`}
+            src={`/uploads/images/${file}`}
             alt=""
             className="mx-auto max-h-screen object-cover"
           />
         ) : type === "doc" ? (
           <Document
-            file={`https://campustalk-app.herokuapp.com/uploads/docs/${file}`}
+            file={`/uploads/docs/${file}`}
             onLoadSuccess={onDocumentLoadSuccess}
             options={options}
           >

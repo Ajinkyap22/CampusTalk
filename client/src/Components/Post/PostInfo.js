@@ -87,7 +87,11 @@ function PostInfo({
         </svg>
       ) : (
         <img
-          src={`https://campustalk-app.herokuapp.com/uploads/images/${author.picture}`}
+          src={
+            author.picture.includes("googleusercontent")
+              ? author.picture
+              : `/uploads/images/${author.picture}`
+          }
           alt=""
           className="rounded-full inline h-8 xl:h-10 2xl:h-12 mx-1"
         />

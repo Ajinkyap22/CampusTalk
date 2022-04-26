@@ -22,8 +22,8 @@ function Verify({ title, history }) {
         <Logo width="250" height="100" />
       </div>
 
-      <section className="bg-white rounded p-3 py-4 shadow-base w-[90%] md:w-2/3 lg:w-[30%] 2xl:w-[25%]">
-        <h1 className="text-lg md:text-xl lg:text-2xl text-primary text-center mt-2">
+      <section className="bg-white dark:bg-darkSecondary rounded p-3 py-4 shadow-base w-[90%] md:w-2/3 lg:w-[30%] 2xl:w-[25%]">
+        <h1 className="text-lg md:text-xl lg:text-2xl text-primary dark:text-primary-light text-center mt-2">
           Confirm Your Account
         </h1>
 

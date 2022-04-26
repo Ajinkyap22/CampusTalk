@@ -50,9 +50,13 @@ function Profile({ ...props }) {
         <div className="lg:ml-12 w-[80%] lg:w-auto">
           <div className="bg-white dark:bg-darkSecondary p-2 rounded shadow-base mt-2 relative text-center">
             {/* user picture */}
-            {!user && user?.picture ? (
+            {user && user?.picture ? (
               <img
-                src={`https://campustalk-app.herokuapp.com/uploads/images/${user?.picture}`}
+                src={
+                  user?.picture.includes("googleusercontent")
+                    ? user?.picture
+                    : `/uploads/images/${user?.picture}`
+                }
                 alt=""
                 className="rounded-full inline h-28 2xl:h-32 3xl:h-36 w-auto mt-4 my-2"
               />
@@ -108,7 +112,7 @@ function Profile({ ...props }) {
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="#919191"
-                className="absolute top-3 w-4 2xl:w-5 3xl:w-6 right-3"
+                className="absolute top-3 w-4 2xl:w-5 3xl:w-6 right-3 hover:scale-110 transition-all"
                 viewBox="0 0 16 16"
               >
                 <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />

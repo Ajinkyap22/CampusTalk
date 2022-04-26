@@ -224,7 +224,11 @@ function CommentForm({
         </svg>
       ) : (
         <img
-          src={`https://campustalk-app.herokuapp.com/uploads/images/${user.picture}`}
+          src={
+            user.picture.includes("googleusercontent")
+              ? user.picture
+              : `/uploads/images/${user.picture}`
+          }
           alt=""
           className="rounded-full inline h-8 mx-1"
         />

@@ -46,7 +46,12 @@ function Login({ title, ...props }) {
       .then((res) => {
         localStorage.setItem("user", JSON.stringify(res.data));
         setUser(res.data.user);
-        props.history.push("/join-forum");
+        socket.current.emit("join", res.data.user._id);
+        if (res.data.user.new) {
+          props.history.push("/user-info");
+        } else {
+          props.history.push("/feed");
+        }
       })
       .catch((err) => {
         if (err.response?.status === 401) {
@@ -92,7 +97,7 @@ function Login({ title, ...props }) {
       <Title />
 
       {/* form box */}
-      <section className="bg-white rounded shadow-base w-[90%] md:w-[50%] lg:w-[40%] xl:w-[35%] 2xl:w-[20%] md:my-2 lg:my-5 xl:my-8">
+      <section className="bg-white dark:bg-darkSecondary rounded shadow-base w-[90%] md:w-[50%] lg:w-[40%] xl:w-[35%] 2xl:w-[20%] md:my-2 lg:my-5 xl:my-8">
         <h1 className="text-lg md:text-xl lg:text-2xl text-primary text-center mt-4">
           Log in to CampusTalk
         </h1>
@@ -109,7 +114,9 @@ function Login({ title, ...props }) {
         </div>
 
         <div className="or w-full mt-5 2xl:mt-6 px-4 md:px-6">
-          <span className="text-center text-sm 2xl:text-lg">OR</span>
+          <span className="text-center text-sm 2xl:text-lg dark:text-darkLight">
+            OR
+          </span>
         </div>
 
         <form className="px-5 md:px-10 py-2" onSubmit={loginHandler}>
@@ -146,14 +153,14 @@ function Login({ title, ...props }) {
             <div className="mt-2 md:mt-0">
               <Link
                 to="/signup"
-                className="text-xsm md:text-xs text-primary block mb-1 md:mb-2 lg:mb-3"
+                className="text-xsm md:text-xs text-primary dark:text-primary-light block mb-1 md:mb-2 lg:mb-3"
               >
                 Don't have an account?
               </Link>
 
               <Link
                 to="/forgot-password"
-                className="text-xsm md:text-xs text-primary block mt-1 md:mt-2 lg:mt-3"
+                className="text-xsm md:text-xs text-primary dark:text-primary-light block mt-1 md:mt-2 lg:mt-3"
               >
                 Forgot Password?
               </Link>

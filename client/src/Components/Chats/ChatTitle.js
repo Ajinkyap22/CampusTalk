@@ -51,7 +51,11 @@ function ChatTitle({
         {/* picture */}
         {receiver && receiver.picture ? (
           <img
-            src={`https://campustalk-app.herokuapp.com/uploads/images/${receiver.picture}`}
+            src={
+              receiver.picture.includes("googleusercontent")
+                ? receiver.picture
+                : `/uploads/images/${receiver.picture}`
+            }
             className="rounded-full object-cover w-9 2xl:w-12 3xl:w-14 h-auto inline mx-2"
             alt=""
           />

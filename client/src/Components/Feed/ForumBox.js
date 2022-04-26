@@ -64,7 +64,7 @@ function ForumBox({ user, fixed = true, onProfilePage = false }) {
             </Link>
           </div>
         ) : (
-          <p className="block p-2.5 xl:p-3 text-center text-sm 2xl:text-xl text-slate-800 dark:text-secondary hover:bg-gray-100">
+          <p className="block p-2.5 xl:p-3 text-center text-sm 2xl:text-xl text-slate-800 dark:text-gray-400 hover:bg-gray-100">
             You have not joined any forums yet.
           </p>
         )}
