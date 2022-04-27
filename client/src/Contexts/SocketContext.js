@@ -8,9 +8,15 @@ export function SocketProvider({ children }) {
   const [onlineUsers, setOnlineUsers] = useState({});
 
   useEffect(() => {
-    socket.current = io("/");
+    const url =
+      process.env.NODE_ENV === "production"
+        ? "https://campustalk-app.herokuapp.com"
+        : "http://localhost:8900";
+
+    socket.current = io(url);
 
     socket.current.on("users", (users) => {
+      console.log(users);
       setOnlineUsers(users);
     });
   }, []);
