@@ -11,6 +11,8 @@ module.exports = {
         darkSecondary: "#2b2b2b",
         secondary: "#626262",
         light: "rgba(255, 255, 255, 0.2)",
+        darkError: "#9c2b2e",
+        error: "#D8000C",
       },
       spacing: {
         128: "32rem",

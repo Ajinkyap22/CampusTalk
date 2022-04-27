@@ -24,12 +24,10 @@ function Forget({ title, history }) {
 
     axios
       .post("/api/mail/reset-password", { email })
-      .then((res) => {
+      .then(() => {
         setSent(true);
       })
       .catch((err) => {
-        console.log("haha");
-        console.log(err.response);
         console.error(err);
       });
   }
@@ -40,7 +38,7 @@ function Forget({ title, history }) {
         <Logo width="250" height="100" />
       </div>
 
-      <section className="bg-white rounded p-3 shadow-base w-[90%] md:w-2/3 lg:w-[30%] 2xl:w-[25%]">
+      <section className="bg-white dark:bg-darkSecondary rounded p-3 shadow-base w-[90%] md:w-2/3 lg:w-[30%] 2xl:w-[25%]">
         <h1 className="text-lg md:text-xl lg:text-2xl text-primary text-center mt-2">
           Forgot Password
         </h1>
@@ -68,7 +66,7 @@ function Forget({ title, history }) {
               name="email"
               onChange={(e) => setEmail(e.target.value)}
               value={email}
-              className="mt-2 block w-full px-3 py-1.5 border dark:text-dark border-gray-300 bg-[#f6f6f6] rounded-md text-xs lg:text-sm 2xl:text-base shadow-sm placeholder-[#818181] 
+              className="mt-2 block w-full px-3 py-1.5 border dark:text-darkLight dark:border-[#3e3d3d] dark:bg-[#3e3d3d] border-gray-300 bg-[#f6f6f6] rounded-md text-xs lg:text-sm 2xl:text-base shadow-sm placeholder-[#818181] 
               focus:outline-none focus:border-sky-500"
               placeholder="Your registered email address"
               required

@@ -39,15 +39,40 @@ function MobileNav({ handleClick, activeTab, notificationCount }) {
   return (
     <div className="lg:hidden w-full">
       {/* top part */}
-      <div className="flex items-center pb-0.5 justify-between my-1">
+      <div className="flex items-center pb-0.5 justify-between my-1.5">
         {/* logo */}
         <div className="px-4 pb-1">
           <Logo width="110" height="30" />
         </div>
 
         <div className="flex items-center">
+          {/* notifications */}
+          <NavLink
+            to={"/notifications"}
+            onClick={() => handleClick("notifications")}
+            className={`mobileNotifications mx-1.5 text-xsm lg:text-sm flex flex-col relative justify-between items-center 2xl:text-lg pb-0.5 lg:py-3 2xl:py-2.5 px-1 ${
+              activeTab === "notifications"
+                ? "border-b-[2px] border-primary text-primary dark:text-primary-dark"
+                : "dark:text-darkLight"
+            }`}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-5 mx-auto mb-1 fill-[#818181] dark:fill-gray-400"
+              viewBox="0 0 16 16"
+            >
+              <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z" />
+            </svg>
+
+            {notificationCount > 0 && (
+              <span className="text-[0.55rem] lg:text-xsm absolute top-[-2px] lg:top-0 left-3 lg:left-2 inline bg-[red] rounded-full px-1.5 text-white">
+                {notificationCount}
+              </span>
+            )}
+          </NavLink>
+
           {/* dark mode toggle */}
-          <button className="mb-1 mx-1" onClick={toggleMode}>
+          <button className="mb-1 mx-1.5" onClick={toggleMode}>
             {mode === "light" ? (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -78,31 +103,6 @@ function MobileNav({ handleClick, activeTab, notificationCount }) {
               </svg>
             )}
           </button>
-
-          {/* notifications */}
-          <NavLink
-            to={"/notifications"}
-            onClick={() => handleClick("notifications")}
-            className={`mobileNotifications mx-1 text-xsm lg:text-sm flex flex-col relative justify-between items-center 2xl:text-lg pb-0.5 lg:py-3 2xl:py-2.5 px-1 ${
-              activeTab === "notifications"
-                ? "border-b-[2px] border-primary text-primary dark:text-primary-dark"
-                : "dark:text-darkLight"
-            }`}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-5 mx-auto mb-1 fill-[#818181] dark:fill-gray-400"
-              viewBox="0 0 16 16"
-            >
-              <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z" />
-            </svg>
-
-            {notificationCount > 0 && (
-              <span className="text-[0.55rem] lg:text-xsm absolute top-[-2px] lg:top-0 left-3 lg:left-2 inline bg-[red] rounded-full px-1.5 text-white">
-                {notificationCount}
-              </span>
-            )}
-          </NavLink>
 
           {/* profile */}
           <NavLink
@@ -143,7 +143,7 @@ function MobileNav({ handleClick, activeTab, notificationCount }) {
           <NavLink
             to={"/"}
             onClick={logout}
-            className="mr-1 text-xsm lg:text-sm flex items-center relative 2xl:text-lg pb-0.5 lg:py-3 2xl:py-2.5 px-1"
+            className="mr-1.5 mx-1 text-xsm lg:text-sm flex items-center relative 2xl:text-lg pb-0.5 lg:py-3 2xl:py-2.5 px-1"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

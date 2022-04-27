@@ -134,10 +134,10 @@ function Signup({ title, ...props }) {
           />
 
           <p
-            className="mt-3 text-sm text-red-600"
+            className="mt-3 text-mxs dark:bg-darkError bg-red-200 text-error dark:text-darkLight border border-red-300 dark:border-red-500 rounded p-1 px-2"
             hidden={status === 409 ? false : true}
           >
-            Email is already in use.
+            Email ID is already in use.
           </p>
 
           {/* Password */}
@@ -161,7 +161,7 @@ function Signup({ title, ...props }) {
           />
 
           <p
-            className="mt-3 text-sm text-red-600"
+            className="mt-3 text-mxs dark:bg-darkError bg-red-200 text-error dark:text-darkLight border border-red-300 dark:border-red-500 rounded p-1 px-2"
             hidden={status === 401 ? false : true}
           >
             Confirmed Password must be the same as password

@@ -8,7 +8,7 @@ import axios from "axios";
 import Input from "../FormControl/Input";
 import ActionButtons from "../FormControl/ActionButtons";
 
-function ForumForm({ forum, ...props }) {
+function ForumForm({ forum, history }) {
   const [checked, setChecked] = useState(false);
   const [user, setUser] = useContext(UserContext);
   const [forums, setForums] = useContext(ForumContext);
@@ -77,7 +77,7 @@ function ForumForm({ forum, ...props }) {
           forums: [...user.forums, res.data],
         }));
         // redirect
-        props.history.push(`/forums/${res.data._id}`);
+        history.push(`/forums/${res.data._id}`);
       })
       .catch((err) => {
         setStatus(err?.response?.status || 0);
@@ -88,8 +88,6 @@ function ForumForm({ forum, ...props }) {
     axios
       .put(`/api/forums/update/${forum._id}`, formData, headers)
       .then((res) => {
-        console.log(res.data);
-
         // update forums
         setForums((forums) =>
           forums.map((f) => (f._id === res.data._id ? res.data : f))
@@ -117,12 +115,22 @@ function ForumForm({ forum, ...props }) {
           )
         );
 
-        props.history.push(`/forums/${res.data._id}`);
+        history.push(`/forums/${res.data._id}`);
       })
       .catch((err) => {
         console.error(err);
         console.log(err.response);
       });
+  }
+
+  function handleBack(e) {
+    e.preventDefault();
+
+    if (!forum) {
+      user.forums.length ? history.goBack() : history.push("/join-forum");
+    } else {
+      history.push(`/forums/${forum._id}`);
+    }
   }
 
   return (
@@ -153,7 +161,10 @@ function ForumForm({ forum, ...props }) {
 
       {/* website */}
       <div className="my-4 relative">
-        <label htmlFor="website" className="text-xs lg:text-sm 2xl:text-lg">
+        <label
+          htmlFor="website"
+          className="text-xs lg:text-sm 2xl:text-lg dark:text-darkLight"
+        >
           Institute's Website
           <span className="text-red-600">*</span>
         </label>
@@ -163,7 +174,7 @@ function ForumForm({ forum, ...props }) {
           value={formData.website}
           onChange={handleChange}
           placeholder="Your institute's official website"
-          className="mt-2 block w-full px-3 py-1.5 border border-gray-300 bg-[#f6f6f6] rounded-md text-xs lg:text-sm 2xl:text-base shadow-sm placeholder-[#818181] 
+          className="mt-2 block w-full px-3 py-1.5 border dark:text-darkLight dark:border-[#3e3d3d] dark:bg-[#3e3d3d] border-gray-300 bg-[#f6f6f6] rounded-md text-xs lg:text-sm 2xl:text-base shadow-sm placeholder-[#818181] 
               focus:outline-none focus:border-sky-500"
           required
           onBlur={checkUrl}
@@ -183,7 +194,7 @@ function ForumForm({ forum, ...props }) {
       />
 
       <p
-        className="mt-3 text-sm text-red-600"
+        className="mt-3 text-mxs dark:bg-darkError bg-red-200 text-error dark:text-darkLight border border-red-300 dark:border-red-500 rounded p-1 px-2"
         hidden={status === 409 ? false : true}
       >
         A forum with the same email address or website already exists. Please
@@ -203,7 +214,7 @@ function ForumForm({ forum, ...props }) {
         />
         <label
           htmlFor="consent"
-          className="text-xsm lg:text-xs mx-2 relative bottom-[0.2rem] lg:bottom-[0.1rem] "
+          className="text-xsm lg:text-xs mx-2 relative bottom-[0.2rem] dark:text-darkLight lg:bottom-[0.1rem] "
           value="yes"
         >
           I understand that this information will be used for the institute
@@ -213,11 +224,18 @@ function ForumForm({ forum, ...props }) {
       </div>
 
       {/* Submit */}
-      <ActionButtons
-        path={!forum ? "join-forum" : `/forums/${forum._id}`}
-        action={!forum ? "Next" : "Save"}
-        classes="my-4 md:my-5 2xl:my-6 float-right"
-      />
+      <div className="my-4 mdmy-5 2xl:my-6 float-right">
+        <button
+          className="px-2 md:px-3 text-xs md:text-sm lg:text-base 2xl:text-lg py-1.5 lg:py-2 mr-1 text-[#818181]"
+          onClick={handleBack}
+          type="button"
+        >
+          Cancel
+        </button>
+        <button className="px-2 md:px-3 py-1.5 lg:py-2 ml-1 text-xs md:text-sm lg:text-base 2xl:text-lg bg-primary text-white rounded hover:bg-blue-700">
+          {!forum ? "Next" : "Save"}
+        </button>
+      </div>
     </form>
   );
 }

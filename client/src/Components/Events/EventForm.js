@@ -107,7 +107,6 @@ function EventForm({ event, history }) {
       })
       .catch((err) => {
         console.error(err);
-        console.log(err.response);
       });
   }
 
@@ -138,7 +137,7 @@ function EventForm({ event, history }) {
           cols="30"
           rows="8"
           value={formData.description}
-          className="w-full mt-2 px-3 py-1.5 border-2 border-gray-300 bg-[#f6f6f6] rounded-lg text-xs lg:text-sm 2xl:text-base shadow-sm focus:outline-none focus:border-primary-500"
+          className="w-full mt-2 px-3 py-1.5 border-2 border-gray-300 dark:text-darkLight bg-[#f6f6f6] dark:border-[#3e3d3d] dark:bg-[#3e3d3d] rounded-lg text-xs lg:text-sm 2xl:text-base shadow-sm focus:outline-none focus:border-primary-500"
           placeholder="Information about the event e.g. What is the event about, rules, themes, requirements etc."
           onChange={handleChange}
           required
@@ -157,7 +156,7 @@ function EventForm({ event, history }) {
           type="date"
           name="date"
           value={formData.date}
-          className="w-full mt-2 px-3 py-1.5 border-2 border-gray-300 bg-[#f6f6f6] rounded-lg text-xs lg:text-sm 2xl:text-base shadow-sm focus:outline-none focus:border-primary-500"
+          className="w-full mt-2 px-3 py-1.5 border-2 border-gray-300 bg-[#f6f6f6] dark:text-darkLight dark:border-[#3e3d3d] dark:bg-[#3e3d3d] rounded-lg text-xs lg:text-sm 2xl:text-base shadow-sm focus:outline-none focus:border-primary-500"
           placeholder="Date of the event"
           onChange={handleChange}
           required
@@ -177,7 +176,7 @@ function EventForm({ event, history }) {
           type="time"
           name="time"
           value={formData.time}
-          className="w-full mt-2 px-3 py-1.5 border-2 border-gray-300 bg-[#f6f6f6] rounded-lg text-xs lg:text-sm 2xl:text-base shadow-sm focus:outline-none focus:border-primary-500"
+          className="w-full mt-2 px-3 py-1.5 border-2 border-gray-300 bg-[#f6f6f6] dark:text-darkLight dark:border-[#3e3d3d] dark:bg-[#3e3d3d] rounded-lg text-xs lg:text-sm 2xl:text-base shadow-sm focus:outline-none focus:border-primary-500"
           placeholder="Time of the event"
           onChange={handleChange}
         />
@@ -209,7 +208,7 @@ function EventForm({ event, history }) {
           onChange={handleChange}
           value={formData.link}
           placeholder="Link to register for the event"
-          className="mt-2 block w-full px-3 py-1.5 border border-gray-300 bg-[#f6f6f6] rounded-md text-xs lg:text-sm 2xl:text-base shadow-sm placeholder-[#818181] 
+          className="mt-2 block w-full px-3 py-1.5 border border-gray-300 dark:text-darkLight dark:border-[#3e3d3d] dark:bg-[#3e3d3d] bg-[#f6f6f6] rounded-md text-xs lg:text-sm 2xl:text-base shadow-sm placeholder-[#818181] 
               focus:outline-none focus:border-sky-500"
           onBlur={checkUrl}
         />
@@ -228,7 +227,7 @@ function EventForm({ event, history }) {
           name="forum"
           onChange={handleChange}
           value={formData.forum || ""}
-          className="mt-2 block w-full px-3 py-1.5 border border-gray-300 bg-[#f6f6f6] rounded-md text-xs lg:text-sm 2xl:text-base shadow-sm placeholder-[#818181]
+          className="mt-2 block w-full px-3 py-1.5 border border-gray-300 bg-[#f6f6f6] dark:text-darkLight dark:border-[#3e3d3d] dark:bg-[#3e3d3d] rounded-md text-xs lg:text-sm 2xl:text-base shadow-sm placeholder-[#818181]
               focus:outline-none focus:border-sky-500"
           required
         >

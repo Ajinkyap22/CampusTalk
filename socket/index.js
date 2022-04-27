@@ -8,6 +8,7 @@ let users = {};
 
 function addUser(userId, socketId) {
   !users[userId] && (users[userId] = socketId);
+  console.log(users);
 }
 
 function disconnect(socketId) {
