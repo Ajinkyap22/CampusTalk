@@ -10,10 +10,8 @@ export function SocketProvider({ children }) {
   useEffect(() => {
     const url =
       process.env.NODE_ENV === "production"
-        ? "https://campustalk-app.herokuapp.com"
+        ? "ws://campustalk-app.herokuapp.com/socket.io/?EIO=4&transport=websocket"
         : "http://localhost:8900";
-
-    console.log(url);
 
     socket.current = io(url);
 

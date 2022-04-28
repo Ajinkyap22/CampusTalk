@@ -127,8 +127,6 @@ io.on("connection", (socket) => {
   socket.on("sendFile", ({ senderId, receiverId, file, originalFileName }) => {
     const receiver = users[receiverId];
 
-    console.log("file");
-
     if (receiver) {
       io.to(receiver).emit("fileMessage", {
         senderId,
