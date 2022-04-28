@@ -10,7 +10,7 @@
   },
   "scripts": {
     "start": "node ./bin/www",
-    "devstart": "nodemon ./bin/www",
+    "devstart": "nodemon app.js",
     "serverstart": "SET DEBUG=locallibrary:* & npm run devstart",
     "test": "jest",
     "test:watch": "jest --watch --detectOpenHandles",

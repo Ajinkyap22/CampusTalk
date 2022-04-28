@@ -20,16 +20,11 @@ const mailRouter = require("./routes/mail");
 
 const app = express();
 const server = require("http").createServer(app);
+server.listen(process.ENV.PORT || 8900);
 const io = require("socket.io")(server, {
   cors: {
     origin: "*",
   },
-});
-
-const PORT = process.env.PORT || 8900;
-
-server.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
 });
 
 // Set up mongoose
