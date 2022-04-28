@@ -13,6 +13,8 @@ export function SocketProvider({ children }) {
         ? "https://campustalk-app.herokuapp.com"
         : "http://localhost:8900";
 
+    console.log(url);
+
     socket.current = io(url);
 
     socket.current.on("users", (users) => {
