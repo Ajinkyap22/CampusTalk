@@ -20,7 +20,7 @@ const mailRouter = require("./routes/mail");
 
 const app = express();
 const server = require("http").createServer(app);
-server.listen(process.ENV.PORT || 8900);
+server.listen(process.env.PORT || 3000);
 const io = require("socket.io")(server, {
   cors: {
     origin: "*",

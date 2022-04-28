@@ -11,7 +11,7 @@ export function SocketProvider({ children }) {
     const url =
       process.env.NODE_ENV === "production"
         ? "https://campustalk-app.herokuapp.com/socket.io/?EIO=4&transport=websocket"
-        : "http://localhost:8900";
+        : "http://localhost:3000";
 
     socket.current = io(url);
 
