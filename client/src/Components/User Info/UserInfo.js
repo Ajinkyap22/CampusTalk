@@ -205,7 +205,6 @@ function UserInfo({ title, ...props }) {
               name="profile_picture"
               placeholder="Profile picture"
               accept="image/*"
-              capture
               className="hidden"
               onChange={handlePreview}
             />
