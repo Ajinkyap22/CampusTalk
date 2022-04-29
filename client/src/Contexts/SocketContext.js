@@ -16,7 +16,6 @@ export function SocketProvider({ children }) {
     socket.current = io(url);
 
     socket.current.on("users", (users) => {
-      console.log(users);
       setOnlineUsers(users);
     });
   }, []);

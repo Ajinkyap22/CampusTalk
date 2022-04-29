@@ -4,6 +4,7 @@ import { useContext, useEffect, lazy, Suspense } from "react";
 
 import { Join } from "./Components/JoinForum/Join";
 import Loading from "./Components/Loading";
+import PageNotFound from "./Components/404";
 
 import { ForumContext } from "./Contexts/ForumContext";
 import { PostContext } from "./Contexts/PostContext";
@@ -363,6 +364,8 @@ function App() {
                   />
                 )}
               />
+
+              <Route component={PageNotFound} />
             </TabProvider>
           </Switch>
         </Router>
