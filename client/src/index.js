@@ -11,6 +11,7 @@ import { ChatProvider } from "./Contexts/ChatContext";
 import { FileProvider } from "./Contexts/FileContext";
 import { EventProvider } from "./Contexts/EventContext";
 import { NotificationProvider } from "./Contexts/NotificationContext";
+import { TabProvider } from "./Contexts/TabContext";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -23,7 +24,9 @@ ReactDOM.render(
                 <ChatProvider>
                   <EventProvider>
                     <NotificationProvider>
-                      <App />
+                      <TabProvider>
+                        <App />
+                      </TabProvider>
                     </NotificationProvider>
                   </EventProvider>
                 </ChatProvider>
