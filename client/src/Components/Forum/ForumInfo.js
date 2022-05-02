@@ -38,7 +38,7 @@ function ForumInfo({
 
     axios
       .post(`/api/forums/${forum._id}/join`, body, headers)
-      .then((res) => {
+      .then(() => {
         // update requestSent
         setRequestSent(true);
 

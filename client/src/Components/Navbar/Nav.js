@@ -21,7 +21,7 @@ function Nav() {
     setNotificationCount,
   ] = useContext(NotificationContext);
 
-  const [user, setUser] = useContext(UserContext);
+  const [user] = useContext(UserContext);
 
   useEffect(() => {
     if (!user) return;
@@ -62,7 +62,7 @@ function Nav() {
   };
 
   return (
-    <nav className="sticky top-0 z-30 w-full flex bg-white dark:bg-darkSecondary pt-2 2xl:pt-3.5 shadow-md justify-between md:justify-around items-center">
+    <nav className="sticky top-0 z-30 w-full flex bg-white dark:bg-darkSecondary pt-2 2xl:pt-3.5 shadow-md justify-between items-center">
       {/* logo */}
       <div className="hidden lg:block mb-2 2xl:mb-4">
         <Logo width="120" height="40" />

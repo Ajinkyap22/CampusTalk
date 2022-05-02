@@ -39,9 +39,9 @@ function MobileNav({ handleClick, activeTab, notificationCount }) {
   return (
     <div className="lg:hidden w-full">
       {/* top part */}
-      <div className="flex items-center pb-0.5 justify-between my-1.5">
+      <div className="flex items-center pb-0.5 md:pb-1 justify-between my-1.5 md:my-2">
         {/* logo */}
-        <div className="px-4 pb-1">
+        <div className="px-4 md:px-6 pb-1">
           <Logo width="110" height="30" />
         </div>
 
@@ -50,7 +50,7 @@ function MobileNav({ handleClick, activeTab, notificationCount }) {
           <NavLink
             to={"/notifications"}
             onClick={() => handleClick("notifications")}
-            className={`mobileNotifications mx-1.5 text-xsm lg:text-sm flex flex-col relative justify-between items-center 2xl:text-lg pb-0.5 lg:py-3 2xl:py-2.5 px-1 ${
+            className={`mobileNotifications mx-1.5 md:mx-2.5 text-xsm md:text-sm flex flex-col relative justify-between items-center pb-0.5 md:pb-1 px-1 ${
               activeTab === "notifications"
                 ? "border-b-[2px] border-primary text-primary dark:text-primary-dark"
                 : "dark:text-darkLight"
@@ -58,7 +58,7 @@ function MobileNav({ handleClick, activeTab, notificationCount }) {
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="w-5 mx-auto mb-1 fill-[#818181] dark:fill-gray-400"
+              className="w-5 md:w-6 mx-auto mb-1 fill-[#818181] dark:fill-gray-400"
               viewBox="0 0 16 16"
             >
               <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z" />
@@ -72,11 +72,14 @@ function MobileNav({ handleClick, activeTab, notificationCount }) {
           </NavLink>
 
           {/* dark mode toggle */}
-          <button className="mb-1 mx-1.5" onClick={toggleMode}>
+          <button
+            className="mb-1 md:mb-1.5 mx-1.5 md:mx-2.5"
+            onClick={toggleMode}
+          >
             {mode === "light" ? (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="w-6 stroke-[#818181]"
+                className="w-6 md:w-7 stroke-[#818181]"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth={2}
@@ -90,7 +93,7 @@ function MobileNav({ handleClick, activeTab, notificationCount }) {
             ) : (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="w-6 stroke-gray-400"
+                className="w-6 md:w-7 stroke-gray-400"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth={2}
@@ -108,7 +111,7 @@ function MobileNav({ handleClick, activeTab, notificationCount }) {
           <NavLink
             to={"/profile"}
             onClick={() => handleClick("profile")}
-            className={`mobileProfile mx-2 text-xsm lg:text-sm flex-col justify-between items-center 2xl:text-lg pb-1 lg:py-3 2xl:py-2.5 px-1 ${
+            className={`mobileProfile mx-2 md:mx-3 text-xsm md:text-sm flex-col justify-between items-center pb-1 md:pb-1.5 px-1 ${
               activeTab === "profile"
                 ? "border-b-[2px] border-primary text-primary dark:text-primary-dark"
                 : "dark:text-darkLight"
@@ -122,12 +125,12 @@ function MobileNav({ handleClick, activeTab, notificationCount }) {
                     : `/uploads/images/${user.picture}`
                 }
                 alt=""
-                className="rounded-full w-6 mx-auto"
+                className="rounded-full w-6 md:w-7 mx-auto"
               />
             ) : (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="w-6 mx-auto mb-0.5 fill-[#818181] dark:fill-gray-400"
+                className="w-6 md:w-7 mx-auto mb-0.5 fill-[#818181] dark:fill-gray-400"
                 viewBox="0 0 16 16"
               >
                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
@@ -143,11 +146,11 @@ function MobileNav({ handleClick, activeTab, notificationCount }) {
           <NavLink
             to={"/"}
             onClick={logout}
-            className="mr-1.5 mx-1 text-xsm lg:text-sm flex items-center relative 2xl:text-lg pb-0.5 lg:py-3 2xl:py-2.5 px-1"
+            className="mr-1.5 md:mr-2.5 mx-1 md:mx-2 text-xsm md:text-sm flex items-center relative pb-0.5 md:pb-1 px-1"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="w-5 mx-auto mb-0.5 fill-[#818181] dark:fill-gray-400"
+              className="w-5 md:w-6 mx-auto mb-0.5 fill-[#818181] dark:fill-gray-400"
               viewBox="0 0 16 16"
             >
               <path
@@ -163,7 +166,7 @@ function MobileNav({ handleClick, activeTab, notificationCount }) {
         </div>
       </div>
 
-      <hr className="py-0.5 dark:border-t dark:border-secondary" />
+      <hr className="py-0.5 md:py-1 dark:border-t dark:border-secondary" />
 
       {/* main nav */}
       <div className="mobileTabs grid grid-cols-4 justify-center w-full justify-items-center items-center">
@@ -171,7 +174,7 @@ function MobileNav({ handleClick, activeTab, notificationCount }) {
         <NavLink
           to={"/feed"}
           onClick={() => handleClick("feed")}
-          className={`mx-2 text-xsm flex flex-col items-center justify-between lg:text-sm 2xl:text-lg pb-0.5 lg:py-3 2xl:py-2.5 px-1 ${
+          className={`mx-2 text-xsm flex flex-col items-center justify-between md:text-sm pb-0.5 md:pb-1 px-1 ${
             activeTab === "feed"
               ? "border-b-[2px] border-primary text-primary dark:text-primary-dark"
               : "dark:text-darkLight"
@@ -197,7 +200,7 @@ function MobileNav({ handleClick, activeTab, notificationCount }) {
         <NavLink
           to={"/chats"}
           onClick={() => handleClick("chats")}
-          className={`chats mx-2 text-xsm flex flex-col items-center justify-between lg:text-sm 2xl:text-lg pb-0.5 lg:py-3 2xl:py-2.5 px-1 ${
+          className={`chats mx-2 text-xsm flex flex-col items-center justify-between md:text-sm pb-0.5 md:pb-1 px-1 ${
             activeTab === "chats"
               ? "border-b-[2px] border-primary text-primary dark:text-primary-dark"
               : "dark:text-darkLight"
@@ -223,7 +226,7 @@ function MobileNav({ handleClick, activeTab, notificationCount }) {
         <NavLink
           to={"/forums"}
           onClick={() => handleClick("forums")}
-          className={`mobileForums mx-2 text-xsm flex flex-col items-center justify-between lg:text-sm 2xl:text-lg py-0.5 lg:py-3 2xl:py-2.5 px-1 ${
+          className={`mobileForums mx-2 text-xsm flex flex-col items-center justify-between md:text-sm py-0.5 md:pb-1 px-1 ${
             activeTab === "forums"
               ? "border-b-[2px] border-primary text-primary dark:text-primary-dark"
               : "dark:text-darkLight"
@@ -260,7 +263,7 @@ function MobileNav({ handleClick, activeTab, notificationCount }) {
         <NavLink
           to={"/events"}
           onClick={() => handleClick("events")}
-          className={`mobileEvents mx-2 text-xsm flex flex-col items-center justify-between lg:text-sm py-0.5 2xl:text-lg lg:py-3 2xl:py-2.5 px-1 ${
+          className={`mobileEvents mx-2 text-xsm flex flex-col items-center justify-between md:text-sm py-0.5 md:pb-1 px-1 ${
             activeTab === "events"
               ? "border-b-[2px] border-primary text-primary dark:text-primary-dark"
               : "dark:text-darkLight"

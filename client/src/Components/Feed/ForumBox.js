@@ -25,7 +25,7 @@ function ForumBox({ user, fixed = true, onProfilePage = false }) {
     <div
       className={`forumsBox ${
         onProfilePage ? "" : "hidden"
-      } md:block bg-white dark:bg-darkSecondary shadow-base lg:max-w-[18rem] xl:max-w-[21rem] 2xl:max-w-[26rem] 3xl:max-w-[30rem] my-4 rounded ${
+      } lg:block bg-white dark:bg-darkSecondary shadow-base lg:max-w-[18rem] xl:max-w-[21rem] 2xl:max-w-[26rem] 3xl:max-w-[30rem] my-4 rounded ${
         fixed
           ? `fixed 2xl:top-1/3 3xl:top-[40%] ${
               isModerator ? "xl-top-[70%] 2xl:top-[40%]" : "xl:top-[60%]"

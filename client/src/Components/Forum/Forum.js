@@ -1,8 +1,8 @@
 import { ForumContext } from "../../Contexts/ForumContext";
 import { TabContext } from "../../Contexts/TabContext";
 import { UserContext } from "../../Contexts/UserContext";
-import { useEffect, useContext } from "react";
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
+import { withRouter } from "react-router-dom";
 import axios from "axios";
 import Nav from "../Navbar/Nav";
 import Filter from "../Feed/Filter";
@@ -20,7 +20,7 @@ import Loading from "../Loading";
 import MobileTabs from "./MobileTabs";
 import ForumInfoMobile from "./ForumInfoMobile";
 
-function Forum({ forum, title, defaultTab = "posts" }) {
+function Forum({ forum, title, defaultTab = "posts", history }) {
   const [activeTab, setActiveTab] = useContext(TabContext);
   const [user, setUser] = useContext(UserContext);
   const [forums, setForums] = useContext(ForumContext);
@@ -90,6 +90,13 @@ function Forum({ forum, title, defaultTab = "posts" }) {
         setIsModerator(true);
       } else {
         setIsModerator(false);
+
+        if (
+          window.location.href.includes("postRequests") ||
+          window.location.href.includes("joinRequests")
+        ) {
+          history.push(`/forums/${forum._id}`);
+        }
       }
 
       // get all join requests
@@ -203,7 +210,7 @@ function Forum({ forum, title, defaultTab = "posts" }) {
   }
 
   return (
-    <main className="w-full min-h-screen lg:h-full flex flex-col items-start bg-[#F0F2F5] dark:bg-dark relative">
+    <main className="w-full min-h-screen overflow-auto lg:h-full flex flex-col items-start bg-[#F0F2F5] dark:bg-dark relative">
       <Nav />
 
       {/* forum content */}
@@ -404,4 +411,4 @@ function Forum({ forum, title, defaultTab = "posts" }) {
   );
 }
 
-export default Forum;
+export default withRouter(Forum);

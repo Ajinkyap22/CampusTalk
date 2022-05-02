@@ -171,7 +171,7 @@ function Feed({ title }) {
       <Nav />
 
       {/* Feed content */}
-      <section className="flex justify-evenly md:w-full mx-auto h-full relative">
+      <section className="flex justify-evenly lg:w-full mx-auto h-full relative">
         <div>
           {/* faq */}
           <FAQ faqData={faqData} />
@@ -180,7 +180,7 @@ function Feed({ title }) {
           <EventsBox events={events} />
         </div>
 
-        {/* posts and filters */}
+        {/* posts and filters  */}
         <div className="posts flex flex-col items-center my-6 lg:my-8 h-full lg:max-w-[28rem] xl:max-w-[32rem] 2xl:max-w-[36rem] 3xl:max-w-[40rem] col-start-1 col-span-2">
           {/* filters */}
           <Filter
