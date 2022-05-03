@@ -182,7 +182,7 @@ function File({
       {/* show current image number on the top right */}
       <span
         hidden={files.length === 1}
-        className="text-sm bg-[rgba(10,10,10,0.5)] rounded p-1 px-2 text-white absolute lg:top-1 lg:right-1"
+        className="text-sm bg-[rgba(10,10,10,0.5)] rounded p-1 px-2 text-white absolute md:top-1 md:right-1"
       >
         {currentFile + 1}/{files.length}
       </span>

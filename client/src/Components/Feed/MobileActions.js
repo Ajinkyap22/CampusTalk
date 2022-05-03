@@ -37,7 +37,7 @@ function MobileActions() {
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="w-8 fill-primary-light dropDownToggle"
+          className="w-8 md:w-12 fill-primary-light dropDownToggle"
           viewBox="0 0 16 16"
         >
           <path
@@ -50,11 +50,11 @@ function MobileActions() {
       {showActions && (
         <div
           ref={wrapperRef}
-          className="fixed bg-white dark:bg-darkSecondary shadow-base p-1.5 right-3 bottom-16 z-20 rounded"
+          className="fixed bg-white dark:bg-darkSecondary shadow-base p-1.5 md:p-2 right-3 bottom-16 md:bottom-20 z-20 rounded"
         >
           <ul>
             {/* create post*/}
-            <li className="p-1 text-mxs dark:text-darkLight">
+            <li className="p-1 text-mxs md:p-1.5 md:text-sm dark:text-darkLight">
               <Link to={`/create-post`}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -70,7 +70,7 @@ function MobileActions() {
 
             {/* create event */}
             {isModerator && (
-              <li className="p-1 text-mxs dark:text-darkLight">
+              <li className="p-1 text-mxs md:p-1.5 md:text-sm dark:text-darkLight">
                 <Link to={`/create-event`}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -88,7 +88,7 @@ function MobileActions() {
             {isModerator && <hr />}
 
             {/* create forum*/}
-            <li className="p-1 text-mxs dark:text-darkLight">
+            <li className="p-1 text-mxs md:p-1.5 md:text-sm dark:text-darkLight">
               <Link to={`/create-forum`}>
                 <LogoCropped width="18" color="#818181" />
                 Create Forum

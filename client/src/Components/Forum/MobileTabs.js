@@ -15,10 +15,10 @@ function MobileTabs({
   return (
     <div className="lg:hidden w-full mb-5 shadow-base">
       {/* forum name */}
-      <div className="bg-primary text-center py-1.5">
+      <div className="bg-primary text-center py-1.5 md:py-2">
         <LogoCropped width="25" />
 
-        <span className="text-mxs font-seminold text-white dark:text-darkLight">
+        <span className="text-mxs md:text-sm font-seminold text-white dark:text-darkLight">
           {forumName}
         </span>
       </div>
@@ -26,12 +26,12 @@ function MobileTabs({
       {/* tabs */}
       <div
         className={`bg-white w-full dark:bg-darkSecondary text-center flex items-center ${
-          isModerator ? "justify-between" : "justify-evenly"
+          isModerator ? "justify-between md:justify-evenly" : "justify-evenly"
         }`}
       >
         {/* posts */}
         <button
-          className={`mx-1 text-[.7rem] py-2 px-1 ${
+          className={`mx-1 text-[.7rem] md:text-mxs py-2 px-1 ${
             tab === "posts"
               ? "border-b-2 border-primary text-primary dark:text-primary-dark"
               : "dark:text-darkLight"
@@ -43,7 +43,7 @@ function MobileTabs({
 
         {/* members */}
         <button
-          className={`mx-1 text-[.7rem] py-2 px-1 ${
+          className={`mx-1 text-[.7rem] md:text-mxs py-2 px-1 ${
             tab === "members"
               ? "border-b-2 border-primary text-primary dark:text-primary-dark"
               : "dark:text-darkLight"
@@ -55,7 +55,7 @@ function MobileTabs({
 
         {/* info */}
         <button
-          className={`mx-1 text-[.7rem] py-2 px-1  ${
+          className={`mx-1 text-[.7rem] md:text-mxs py-2 px-1  ${
             tab === "info"
               ? "border-b-2 border-primary text-primary dark:text-primary-dark"
               : "dark:text-darkLight"
@@ -67,7 +67,7 @@ function MobileTabs({
 
         {/* post requests */}
         <button
-          className={`mx-1 text-[.7rem] py-2 px-1 ${
+          className={`mx-1 text-[.7rem] md:text-mxs py-2 px-1 ${
             tab === "postRequests"
               ? "border-b-2 border-primary text-primary dark:text-primary-dark"
               : "dark:text-darkLight"
@@ -85,7 +85,7 @@ function MobileTabs({
 
         {/* requests */}
         <button
-          className={`mx-1 text-[.7rem] py-2 px-1 ${
+          className={`mx-1 text-[.7rem] md:text-mxs py-2 px-1 ${
             tab === "joinRequests"
               ? "border-b-2 border-primary text-primary dark:text-primary-dark"
               : "dark:text-darkLight"

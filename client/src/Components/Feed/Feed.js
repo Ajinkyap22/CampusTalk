@@ -181,7 +181,7 @@ function Feed({ title }) {
         </div>
 
         {/* posts and filters  */}
-        <div className="posts flex flex-col items-center my-6 lg:my-8 h-full lg:max-w-[28rem] xl:max-w-[32rem] 2xl:max-w-[36rem] 3xl:max-w-[40rem] col-start-1 col-span-2">
+        <div className="posts flex-grow flex flex-col items-center my-6 lg:my-8 h-full lg:max-w-[28rem] xl:max-w-[32rem] 2xl:max-w-[36rem] 3xl:max-w-[40rem]">
           {/* filters */}
           <Filter
             activeFilter={activeFilter}

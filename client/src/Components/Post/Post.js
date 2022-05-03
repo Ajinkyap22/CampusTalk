@@ -89,7 +89,7 @@ function Post({
 
   return (
     <div
-      className="bg-white dark:bg-darkSecondary shadow-base py-1 lg:py-1.5 xl:py-2 mt-4 lg:mt-8 w-full lg:rounded"
+      className="bg-white dark:bg-darkSecondary shadow-base py-1 md:py-1.5 xl:py-2 mt-4 md:mt-8 w-full lg:rounded"
       hidden={!showPost}
     >
       {/* user info */}
@@ -104,7 +104,7 @@ function Post({
       />
 
       {/* caption */}
-      <p className="m-2 my-3 2xl:my-4 px-1 lg:px-1.5 xl:px-2 text-xs xl:text-sm 2xl:text-xl dark:text-darkLight">
+      <p className="m-2 my-3 2xl:my-4 px-1 md:px-1.5 xl:px-2 text-xs md:text-sm lg:text-xs xl:text-sm 2xl:text-xl dark:text-darkLight">
         {post.text}
       </p>
 

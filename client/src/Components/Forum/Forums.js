@@ -40,7 +40,7 @@ function Forums({ title }) {
 
       <div className="my-5 mt-8 text-center">
         <button
-          className={`p-2 lg:p-3 shadow text-xs lg:text-sm rounded-l ${
+          className={`p-2 md:p-3 shadow text-xs md:text-sm rounded-l ${
             forumsTab === "userForums"
               ? "bg-primary-light text-white"
               : "bg-white dark:bg-zinc-700 dark:text-darkLight"
@@ -50,7 +50,7 @@ function Forums({ title }) {
           My Forums
         </button>
         <button
-          className={`p-2 lg:p-3 shadow text-xs lg:text-sm rounded-r ${
+          className={`p-2 md:p-3 shadow text-xs md:text-sm rounded-r ${
             forumsTab === "allForums"
               ? "bg-primary-light text-white"
               : "bg-white dark:bg-zinc-700 dark:text-darkLight"

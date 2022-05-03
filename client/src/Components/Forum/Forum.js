@@ -215,7 +215,7 @@ function Forum({ forum, title, defaultTab = "posts", history }) {
 
       {/* forum content */}
       <section className="lg:flex justify-between items-start w-full lg:w-[80%] xl:w-[70%] 2xl:w-[60%] 3xl:w-1/2 mx-auto h-full">
-        <div className="flex flex-col max-w-full lg:max-w-[28rem] xl:max-w-[32rem] 2xl:max-w-[36rem] 3xl:max-w-[40rem] my-4 lg:my-8 2xl:my-10 3xl:my-12 h-full">
+        <div className="flex flex-col max-w-full lg:max-w-[28rem] xl:max-w-[32rem] 2xl:max-w-[36rem] 3xl:max-w-[40rem] my-4 md:my-8 2xl:my-10 3xl:my-12 h-full">
           {/* tab */}
           <TabToggle
             tab={tab}

@@ -270,7 +270,7 @@ exports.post_requests_mail = (req, res) => {
 
   let html = generateHTML(
     "Hey",
-    "fellow Moderator!",
+    "fellow Moderator",
     `There are new ${type} requests in ${forumName} waiting to be approved by you. Click on the below link to view them.`,
     `${process.env.APP_URL}/forums/${forumId}/${type}Requests`,
     "View Requests"
