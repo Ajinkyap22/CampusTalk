@@ -132,7 +132,7 @@ function PostInfo({
             <svg
               viewBox="0 0 20 20"
               fill="#027bff"
-              className="inline ml-1 rotate-90 w-4 md:w-5 2xl:w-6"
+              className="inline ml-1 rotate-90 w-4 md:w-5 2xl:w-6 align-text-top"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path d="M2.9165 15.825L12.0832 15.8333C12.6415 15.8333 13.1415 15.5583 13.4415 15.1333L17.0832 9.99999L13.4415 4.86666C13.1415 4.44166 12.6415 4.16666 12.0832 4.16666L2.9165 4.17499L6.94984 9.99999L2.9165 15.825Z" />

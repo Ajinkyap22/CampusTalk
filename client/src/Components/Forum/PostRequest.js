@@ -16,13 +16,12 @@ function PostRequest({ post, ...props }) {
   return (
     <div className="bg-white dark:bg-darkSecondary shadow-base py-2 lg:mt-8 w-full rounded">
       {/* user info */}
-      <div className="flex my-1 px-2 w-full max-w-[32rem] relative">
+      <div className="flex my-1 px-2 w-full lg:max-w-[32rem] relative">
         {/* user profile pic */}
         {post.anonymous || !post.author.picture ? (
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="38"
-            className="inline mx-1 h-10 fill-[#818181] dark:fill-darkLight"
+            className="inline mx-1 h-9 md:h-10 lg:h-9 xl:h-10 2xl:h-12  fill-[#818181] dark:fill-darkLight"
             viewBox="0 0 16 16"
           >
             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
@@ -39,21 +38,20 @@ function PostRequest({ post, ...props }) {
                 : `/uploads/images/${post.author.picture}`
             }
             alt=""
-            className="rounded-full inline h-10 mx-1"
+            className="rounded-full inline h-8 md:h-9 lg:h-8 xl:h-10 2xl:h-12 mx-1"
           />
         )}
         <div className="mx-1 relative">
           {/* user name */}
-          <span className="text-sm dark:text-darkLight">
+          <span className="text-xs md:text-sm lg:text-xs xl:text-sm 2xl:text-xl dark:text-darkLight">
             {post.anonymous
               ? " Anonymous"
               : `${post.author.firstName} ${post.author.lastName}`}
           </span>
 
           <svg
-            width="16"
             viewBox="0 0 16 16"
-            className="inline ml-1"
+            className="inline ml-1 w-3 md:w-4 lg:w-3 xl:w-4 2xl:w-5"
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
@@ -65,7 +63,7 @@ function PostRequest({ post, ...props }) {
           {/* forum name */}
           <Link
             to={`/forums/${post.forum._id}/`}
-            className="mx-1 text-sm hover:underline dark:text-darkLight"
+            className="mx-1 text-xs md:text-sm lg:text-xs xl:text-sm 2xl:text-xl hover:underline dark:text-darkLight"
           >
             {post.forum.forumName}
             {/* important */}
@@ -73,10 +71,9 @@ function PostRequest({ post, ...props }) {
             {post.important && (
               <button title="Unmark as important">
                 <svg
-                  width="20"
                   viewBox="0 0 20 20"
                   fill="#027bff"
-                  className="inline ml-1 rotate-90"
+                  className="inline ml-1 align-text-top rotate-90 w-4 md:w-5 2xl:w-6"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path d="M2.9165 15.825L12.0832 15.8333C12.6415 15.8333 13.1415 15.5583 13.4415 15.1333L17.0832 9.99999L13.4415 4.86666C13.1415 4.44166 12.6415 4.16666 12.0832 4.16666L2.9165 4.17499L6.94984 9.99999L2.9165 15.825Z" />
@@ -86,14 +83,16 @@ function PostRequest({ post, ...props }) {
           </Link>
 
           {/* date */}
-          <p className="text-xs text-secondary dark:text-gray-300">
+          <p className="text-xsm md:text-xs lg:text-xsm xl:text-xs 2xl:text-lg text-secondary dark:text-gray-300">
             {moment(post.timestamp).fromNow()}
           </p>
         </div>
       </div>
 
       {/* caption */}
-      <p className="m-2 my-3 px-2 text-sm dark:text-darkLight">{post.text}</p>
+      <p className="m-2 my-3 2xl:my-4 px-2 text-xs md:text-sm lg:text-xs xl:text-sm 2xl:text-xl dark:text-darkLight">
+        {post.text}
+      </p>
 
       {/* image */}
       {post.file.length ? (

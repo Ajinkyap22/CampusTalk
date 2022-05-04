@@ -45,7 +45,7 @@ function ChatList({
       } lg:col-span-2 bg-white h-fit dark:bg-dark overflow-auto postData relative`}
     >
       {/* title */}
-      <div className="p-1.5 2xl:p-2.5 2xl:py-3.5 3xl:p-3 3xl:py-5 3xl px-3 border-b border-gray-300 dark:border-secondary">
+      <div className="p-1.5 md:p-2 lg:p-1.5 2xl:p-2.5 2xl:py-3.5 3xl:p-3 3xl:py-5 3xl px-3 border-b border-gray-300 dark:border-secondary">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="w-12 2xl:w-14 3xl:w-16 stroke-[#818181] dark:stroke-darkLight inline mx-1 2xl:mx-2"
@@ -86,7 +86,7 @@ function ChatList({
         <div className="text-center flex flex-col justify-center items-center h-full">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="w-12 2xl:w-14 3xl:w-16 mt-2 2xl:mt-4 3xl:mt-6 mx-auto stroke-[#818181] dark:stroke-darkLight"
+            className="w-12 md:w-14 lg:w-12 2xl:w-14 3xl:w-16 mt-2 2xl:mt-4 3xl:mt-6 mx-auto stroke-[#818181] dark:stroke-darkLight"
             fill="none"
             viewBox="0 0 24 24"
             strokeWidth={2}
@@ -98,7 +98,7 @@ function ChatList({
             />
           </svg>
 
-          <p className="text-[#818181] dark:text-gray-300 my-2 mb-20 2xl:text-xl 3xl:text-2xl">
+          <p className="text-[#818181] dark:text-gray-300 my-2 mb-20 md:text-lg lg:text-base 2xl:text-xl 3xl:text-2xl">
             You have no chats, why not create one?
           </p>
         </div>

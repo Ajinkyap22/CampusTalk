@@ -7,7 +7,7 @@ import Row from "./Row";
 
 function Events({ title }) {
   const [activeTab, setActiveTab] = useContext(TabContext);
-  const [events, setEvents] = useContext(EventContext);
+  const [events] = useContext(EventContext);
 
   useEffect(() => {
     document.title = title || `Events | CampusTalk`;
