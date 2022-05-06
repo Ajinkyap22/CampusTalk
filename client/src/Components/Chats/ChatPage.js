@@ -107,7 +107,7 @@ function ChatPage({ chat, user, socket, setActiveChat, chats, setChats }) {
   }, [receiver, user]);
 
   return (
-    <div className="lg:col-span-4 h-full lg:grid grid-cols-1 grid-rows-10 justify-between dark:bg-darkSecondary bg-[#F0F2F5] overflow-auto relative">
+    <div className="lg:col-span-4 h-full lg:grid lg:grid-cols-1 lg:grid-rows-10 lg:justify-between dark:bg-darkSecondary bg-[#F0F2F5] overflow-auto relative">
       {/* chat title */}
       <ChatTitle
         receiver={receiver}
@@ -120,11 +120,11 @@ function ChatPage({ chat, user, socket, setActiveChat, chats, setChats }) {
 
       {/* messages */}
       {loading ? (
-        <div className="text-center mt-8 2xl:mt-10 3xl:mt-12 row-span-8">
+        <div className="text-center mt-8 2xl:mt-10 3xl:mt-12 lg:row-span-8">
           <Loading />
         </div>
       ) : (
-        <div className="pt-2 2xl:pt-4 3xl:pt-6 row-span-8 overflow-auto postData">
+        <div className="pt-2 2xl:pt-4 3xl:pt-6 lg:row-span-8 postData">
           {messages && messages.length ? (
             <Messages messages={messages} user={user} loading={loading} />
           ) : (

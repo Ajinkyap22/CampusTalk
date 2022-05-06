@@ -402,7 +402,7 @@ function Forum({ forum, title, defaultTab = "posts", history }) {
 
       {/* overlay */}
       <div
-        className="w-full h-full absolute bg-[rgba(0,0,0,0.7)]"
+        className="fixed w-full h-full top-0 left-0 z-10 bg-[rgba(0,0,0,0.7)]"
         hidden={!showModal}
       ></div>
 

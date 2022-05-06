@@ -40,7 +40,7 @@ function PostInfo({
   }, [user, author]);
 
   useEffect(() => {
-    if (forum.moderators.includes(user._id)) {
+    if (forum.moderators?.includes(user._id)) {
       setIsModerator(true);
     } else {
       setIsModerator(false);
@@ -88,7 +88,7 @@ function PostInfo({
       ) : (
         <img
           src={
-            author.picture.includes("googleusercontent")
+            author.picture?.includes("googleusercontent")
               ? author.picture
               : `/uploads/images/${author.picture}`
           }

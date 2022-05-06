@@ -60,9 +60,9 @@ function Reply({
       {reply.author.picture ? (
         <img
           src={
-            reply.picture.includes("googleusercontent")
-              ? reply.picture
-              : `/uploads/images/${reply.picture}`
+            reply.author.picture?.includes("googleusercontent")
+              ? reply.author.picture
+              : `/uploads/images/${reply.author.picture}`
           }
           alt=""
           className="rounded-full inline h-8 mx-1"

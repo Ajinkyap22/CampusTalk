@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 function EventBox({ events, fixed = true }) {
   return (
     <div
-      className={`eventsBox hidden lg:block bg-white dark:bg-darkSecondary shadow-base lg-max-w-[14rem] xl:w-[17rem] xl:max-w-[17rem] 2xl:w-[24rem] 2xl:max-w-[24rem] 3xl:w-[28rem] 3xl:max-w-[28rem] rounded ${
+      className={`eventsBox hidden lg:block bg-white dark:bg-darkSecondary shadow-base lg:max-w-[14rem] xl:w-[17rem] xl:max-w-[17rem] 2xl:w-[24rem] 2xl:max-w-[24rem] 3xl:w-[28rem] 3xl:max-w-[28rem] rounded ${
         fixed ? "fixed xl:top-[60%] 2xl:top-1/3 3xl:top-[40%]" : ""
       }`}
     >

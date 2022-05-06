@@ -105,7 +105,7 @@ function LeaveModal({
 
   return (
     <div
-      className="absolute left-[10%] xsm:left-[15%] lg:left-1/3 top-[40vh] bg-white mx-auto rounded text-center py-2 shadow-base z-10 w-[80%] xsm:w-[70%] md:w-[50%] lg:w-[30%] 2xl:w-[25%]"
+      className="absolute left-[10%] xsm:left-[15%] lg:left-1/3 top-[40vh] bg-white mx-auto rounded text-center py-2 shadow-base z-20 w-[80%] xsm:w-[70%] md:w-[50%] lg:w-[30%] 2xl:w-[25%]"
       hidden={!showModal}
     >
       <svg
