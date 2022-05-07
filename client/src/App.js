@@ -13,12 +13,13 @@ import { FileContext } from "./Contexts/FileContext";
 import { EventContext } from "./Contexts/EventContext";
 import { NotificationContext } from "./Contexts/NotificationContext";
 import { UserContext } from "./Contexts/UserContext";
+import Forum from "./Components/Forum/Forum";
 
 const Home = lazy(() => import("./Components/Homepage/Home"));
 const UserInfo = lazy(() => import("./Components/User Info/UserInfo"));
 const CreateForum = lazy(() => import("./Components/Create Forum/Create"));
 const Forums = lazy(() => import("./Components/Forum/Forums"));
-const Forum = lazy(() => import("./Components/Forum/Forum"));
+// const Forum = lazy(() => import("./Components/Forum/Forum"));
 const Login = lazy(() => import("./Components/Auth/Login"));
 const Signup = lazy(() => import("./Components/Auth/Signup"));
 const Feed = lazy(() => import("./Components/Feed/Feed"));

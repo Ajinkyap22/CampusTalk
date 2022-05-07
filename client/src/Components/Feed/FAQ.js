@@ -9,7 +9,7 @@ function FAQ({ faqData }) {
   };
 
   return (
-    <div className="faq hidden lg:block sticky top-[5.5rem] 2xl:top-[6rem] 3xl:top-[6.5rem] bg-white dark:bg-darkSecondary shadow-base text-[#000000e6] my-8 lg:w-[14rem] lg-max-w-[14rem] xl:w-[17rem] xl:max-w-[17rem] 2xl:w-[24rem] 2xl:max-w-[24rem] 3xl:w-[28rem] 3xl:max-w-[28rem] rounded self-start">
+    <div className="faq hidden lg:block bg-white dark:bg-darkSecondary shadow-base text-[#000000e6] mb-8 lg:w-[14rem] lg-max-w-[14rem] xl:w-[17rem] xl:max-w-[17rem] 2xl:w-[24rem] 2xl:max-w-[24rem] 3xl:w-[28rem] 3xl:max-w-[28rem] rounded self-start">
       {/* title */}
       <div className="bg-primary-light lg:px-2 xl:p-3 py-2 2xl:px-4 2xl:py-3 rounded-t flex items-center">
         <svg

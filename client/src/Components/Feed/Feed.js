@@ -171,8 +171,8 @@ function Feed({ title }) {
       <Nav />
 
       {/* Feed content */}
-      <section className="flex justify-evenly lg:w-full mx-auto h-full relative">
-        <div>
+      <section className="flex justify-evenly items-start lg:w-full mx-auto h-full relative">
+        <div className="sticky top-[5.5rem] 2xl:top-[6rem] 3xl:top-[6.5rem]">
           {/* faq */}
           <FAQ faqData={faqData} />
 
@@ -238,7 +238,7 @@ function Feed({ title }) {
           </div>
         </div>
 
-        <div className="mt-8">
+        <div className="sticky top-[5.5rem] 2xl:top-[6rem] 3xl:top-[6.5rem]">
           {/* home info box */}
           <HomeBox user={user} />
 
