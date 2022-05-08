@@ -4,25 +4,41 @@ const faqData = [
   {
     question: "What should I do if my institute's forum is not on the list?",
     answer:
-      "Click on the 'Create New Forum' button, you will be taken to a form. Fill up the form with details about your institute and submit the form. We will vertify the information and if everything goes well, your institute’s forum will be created within 1 - 4 days. ",
+      "Click on the 'Create New Forum' button, you will be taken to a form. Fill up the form with details about your institute and submit the form. Make sure you submit the form with the correct details. Incorrect details will result in deletion of the forum.",
   },
   {
     question: "Can I join multiple forums?",
-    answer: "FAQ Answer 2",
+    answer:
+      "Yes, you can join upto 3 forums. This limit is to ensure that your feed is not overcrowded.",
   },
   {
     question: "How do I change my password?",
-    answer: "FAQ Answer 3",
+    answer:
+      "Go to the login or signup page and click on the 'Forget Password' button to change your password.",
   },
 
   {
     question: "How do I post anonymously?",
-    answer: "FAQ Answer 4",
+    answer:
+      "When creating a post, you will see a dropdown menu. Select 'Anonymous Mode' to post anonymously.",
   },
 
   {
     question: "Can I attach files to my posts?",
-    answer: "FAQ Answer 5",
+    answer:
+      "Yes, you can attach images, videos and pdf files to your posts We are working on adding support for other document files.",
+  },
+
+  {
+    question: "Can I send messages to other members of the forum?",
+    answer:
+      "Yes, you can send messages to other members of the forum by creating a new chat.",
+  },
+
+  {
+    question: "Can I my name and profile picture?",
+    answer:
+      "Yes, you can change your user info and picture from the profile tab.",
   },
 ];
 
