@@ -8,6 +8,7 @@
   "jest": {
     "testEnvironment": "node"
   },
+  "main": "app.js",
   "scripts": {
     "start": "node app.js",
     "devstart": "nodemon app.js",
