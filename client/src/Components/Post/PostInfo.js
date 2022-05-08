@@ -124,7 +124,7 @@ function PostInfo({
         {/* forum name */}
         <Link
           to={`/forums/${forum._id}/`}
-          className="mr-1 text-xs md:text-sm lg:text-xs xl:text-sm 2xl:text-xl hover:underline transition-all dark:text-darkLight"
+          className="mr-1.5 text-xs md:text-sm lg:text-xs xl:text-sm 2xl:text-xl hover:underline transition-all dark:text-darkLight"
         >
           {forum.forumName}
           {/* important */}

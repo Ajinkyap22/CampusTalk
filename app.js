@@ -62,6 +62,7 @@ app.use(
     //   },
     // })
     contentSecurityPolicy: false,
+    crossOriginResourcePolicy: false,
   })
 );
 

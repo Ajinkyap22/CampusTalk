@@ -79,7 +79,34 @@ function FileView({ file, name, type, title, history }) {
               onClick={() => changePage(1)}
             />
           </Document>
-        ) : null}
+        ) : (
+          <div>
+            <iframe
+              src={`https://view.officeapps.live.com/op/embed.aspx?src=https://campustalk-app.herokuapp.com/public/uploads/docs/${file}`}
+              title={name}
+              width="1366px"
+              height="623px"
+              frameborder="0"
+            >
+              This is an embedded{" "}
+              <a
+                target="_blank"
+                href="http://office.com"
+                rel="noopener noreferrer"
+              >
+                Microsoft Office
+              </a>{" "}
+              document, powered by{" "}
+              <a
+                target="_blank"
+                href="http://office.com/webapps"
+                rel="noopener noreferrer"
+              >
+                Office Online
+              </a>
+            </iframe>
+          </div>
+        )}
       </div>
 
       {/* back button */}
