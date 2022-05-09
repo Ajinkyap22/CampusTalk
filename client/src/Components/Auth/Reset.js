@@ -30,6 +30,7 @@ function Reset({ title, history, match }) {
       .post("/api/users/reset-password", formData)
       .then(() => {
         setChanged(true);
+        history.push("/login");
       })
       .catch((err) => {
         if (err.response.status === 404) {
