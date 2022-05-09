@@ -9,6 +9,7 @@ import GoogleButton from "./GoogleButton";
 import Input from "../FormControl/Input";
 import Password from "../FormControl/Password";
 import ActionButtons from "../FormControl/ActionButtons";
+import Overlay from "../Overlay";
 
 function Login({ title, ...props }) {
   const [user, setUser] = useContext(UserContext);
@@ -16,6 +17,7 @@ function Login({ title, ...props }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState(0);
+  const [showOverlay, setShowOverlay] = useState(false);
 
   useEffect(() => {
     document.title = title || "Log in | CampusTalk";
@@ -65,11 +67,14 @@ function Login({ title, ...props }) {
   const loginHandler = (e) => {
     e.preventDefault();
 
+    setShowOverlay(true);
+
     axios
       .post("/api/users/login", { email, password })
       .then((res) => {
         localStorage.setItem("user", JSON.stringify(res.data));
         setUser(res.data.user);
+        setShowOverlay(false);
 
         if (res.data.user.forums.length > 0) {
           props.history.push("/feed");
@@ -171,6 +176,9 @@ function Login({ title, ...props }) {
           </div>
         </form>
       </section>
+
+      {/* overlay */}
+      <Overlay text="Logging in..." showOverlay={showOverlay} />
     </main>
   );
 }

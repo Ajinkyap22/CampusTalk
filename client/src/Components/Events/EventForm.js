@@ -7,7 +7,7 @@ import ActionButtons from "../FormControl/ActionButtons";
 import axios from "axios";
 import moment from "moment";
 
-function EventForm({ event, history }) {
+function EventForm({ event, history, setShowOverlay }) {
   const [user] = useContext(UserContext);
   const [events, setEvents] = useContext(EventContext);
   const [userForums, setUserForums] = useState([]);
@@ -77,6 +77,8 @@ function EventForm({ event, history }) {
       },
     };
 
+    setShowOverlay(true);
+
     if (event) {
       editRequest(formData, headers);
     } else {
@@ -89,6 +91,8 @@ function EventForm({ event, history }) {
       .post("/api/events/create-event", formData, headers)
       .then((res) => {
         setEvents([...events, res.data]);
+
+        setShowOverlay(false);
 
         history.push(`/events/${res.data._id}`);
       })

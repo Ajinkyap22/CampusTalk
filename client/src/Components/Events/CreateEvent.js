@@ -1,10 +1,12 @@
 import { TabContext } from "../../Contexts/TabContext";
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 import Nav from "../Navbar/Nav";
 import EventForm from "./EventForm";
+import Overlay from "../Overlay";
 
 function CreateEvent({ title }) {
   const [activeTab, setActiveTab] = useContext(TabContext);
+  const [showOverlay, setShowOverlay] = useState(false);
 
   useEffect(() => {
     setActiveTab("events");
@@ -28,8 +30,11 @@ function CreateEvent({ title }) {
         </h2>
 
         {/* form */}
-        <EventForm />
+        <EventForm setShowOverlay={setShowOverlay} />
       </section>
+
+      {/* overlay */}
+      <Overlay text="Creating Event..." showOverlay={showOverlay} />
     </main>
   );
 }

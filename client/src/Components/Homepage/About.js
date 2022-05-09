@@ -16,10 +16,10 @@ const data2 = [
 function About() {
   return (
     <section
-      className="bg-picture text-center text-white mt-20 p-2 2xl:p-4"
+      className="bg-picture text-center text-white mt-24 p-2 2xl:p-4"
       id="about"
     >
-      <h1 className="font-bold text-xl md:text-3xl 2xl:text-5xl 2xl:pt-14 pt-8">
+      <h1 className="font-bold text-xl md:text-3xl 2xl:text-5xl 2xl:pt-16 pt-14">
         So, what is CampusTalk anyway?
       </h1>
 

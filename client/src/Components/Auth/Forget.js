@@ -3,11 +3,13 @@ import { useEffect, useState, useContext } from "react";
 import { withRouter } from "react-router-dom";
 import Logo from "../Logo";
 import axios from "axios";
+import Overlay from "../Overlay";
 
 function Forget({ title, history }) {
   const [user] = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
+  const [showOverlay, setShowOverlay] = useState(false);
 
   useEffect(() => {
     document.title = title || "Forgot Password | CampusTalk";
@@ -22,10 +24,13 @@ function Forget({ title, history }) {
 
     if (!email) return;
 
+    setShowOverlay(true);
+
     axios
       .post("/api/mail/reset-password", { email })
       .then(() => {
         setSent(true);
+        setShowOverlay(false);
       })
       .catch((err) => {
         console.error(err);
@@ -78,6 +83,9 @@ function Forget({ title, history }) {
           </form>
         )}
       </section>
+
+      {/* overlay */}
+      <Overlay text="Sending email..." showOverlay={showOverlay} />
     </main>
   );
 }

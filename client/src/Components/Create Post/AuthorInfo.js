@@ -1,4 +1,9 @@
+import { useEffect, useState } from "react";
+
 function AuthorInfo({
+  authorId,
+  authorForums,
+  forum,
   picture,
   firstName,
   lastName,
@@ -6,6 +11,17 @@ function AuthorInfo({
   important = false,
   setImportant,
 }) {
+  const [isModerator, setIsModerator] = useState(false);
+
+  useEffect(() => {
+    if (!forum) return;
+
+    let f = authorForums.find((f) => f._id === forum._id);
+    let isMod = f?.moderators.indexOf(authorId) !== -1;
+
+    setIsModerator(isMod);
+  }, [forum]);
+
   function handleImportant() {
     // set formData.important to the opposite of important
     setImportant(!important);
@@ -42,6 +58,7 @@ function AuthorInfo({
         onClick={handleImportant}
         className="absolute right-5 top-3.5"
         title={`${important ? "Unmark" : "Mark"} as important`}
+        hidden={!isModerator}
       >
         <svg
           width="20"

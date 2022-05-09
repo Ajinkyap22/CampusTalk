@@ -11,7 +11,7 @@ const JoinContext = React.createContext();
 function JoinForum({ title, forums, setForums, ...props }) {
   const [loading, setLoading] = useState(true);
   const [joinList, setJoinList] = useState([]);
-  const [user, setUser] = useContext(UserContext);
+  const [user] = useContext(UserContext);
   const [showAlert, setShowAlert] = useState(false);
 
   useEffect(() => {

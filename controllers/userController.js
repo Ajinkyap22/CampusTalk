@@ -309,8 +309,6 @@ exports.reset_password = function (req, res) {
   User.findOne({ resetPasswordToken }, (err, user) => {
     if (err) return res.json(err);
 
-    console.log(user);
-
     if (!user) return res.status(404).json({ error: "User not found" });
 
     // check if new password matches confirm password
@@ -327,25 +325,25 @@ exports.reset_password = function (req, res) {
     }
 
     // hash new password
-    // bcrypt.hash(newPassword, 10, (err, hash) => {
-    //   if (err) return res.json(err);
+    bcrypt.hash(newPassword, 10, (err, hash) => {
+      if (err) return res.json(err);
 
-    //   // update password
-    //   User.findByIdAndUpdate(
-    //     user._id,
-    //     {
-    //       $set: {
-    //         password: hash,
-    //       },
-    //     },
-    //     { new: true },
-    //     (err, user) => {
-    //       if (err) return res.json(err);
+      // update password
+      User.findByIdAndUpdate(
+        user._id,
+        {
+          $set: {
+            password: hash,
+          },
+        },
+        { new: true },
+        (err, user) => {
+          if (err) return res.json(err);
 
-    //       return res.json(user);
-    //     }
-    //   );
-    // });
+          return res.json(user);
+        }
+      );
+    });
   });
 };
 

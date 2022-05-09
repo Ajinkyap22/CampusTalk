@@ -8,7 +8,7 @@ import axios from "axios";
 import Input from "../FormControl/Input";
 import ActionButtons from "../FormControl/ActionButtons";
 
-function ForumForm({ forum, history }) {
+function ForumForm({ forum, setShowOverlay, history }) {
   const [checked, setChecked] = useState(false);
   const [user, setUser] = useContext(UserContext);
   const [forums, setForums] = useContext(ForumContext);
@@ -54,6 +54,8 @@ function ForumForm({ forum, history }) {
       },
     };
 
+    setShowOverlay(true);
+
     if (!formData.user) {
       formData.user = user._id;
     }
@@ -78,6 +80,7 @@ function ForumForm({ forum, history }) {
         }));
         // redirect
         history.push(`/forums/${res.data._id}`);
+        setShowOverlay(false);
       })
       .catch((err) => {
         setStatus(err?.response?.status || 0);

@@ -1,7 +1,10 @@
 import ForumForm from "./ForumForm";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import Overlay from "../Overlay";
 
 function CreateForum({ title }) {
+  const [showOverlay, setShowOverlay] = useState(false);
+
   useEffect(() => {
     document.title = title || "Create Forum | CampusTalk";
   }, [title]);
@@ -19,8 +22,11 @@ function CreateForum({ title }) {
         </h2>
 
         {/* form */}
-        <ForumForm />
+        <ForumForm setShowOverlay={setShowOverlay} />
       </section>
+
+      {/* overlay */}
+      <Overlay text="Creating Forum..." showOverlay={showOverlay} />
     </main>
   );
 }

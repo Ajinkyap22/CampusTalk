@@ -9,6 +9,7 @@ import GoogleButton from "./GoogleButton";
 import Input from "../FormControl/Input";
 import Password from "../FormControl/Password";
 import ActionButtons from "../FormControl/ActionButtons";
+import Overlay from "../Overlay";
 
 function Signup({ title, ...props }) {
   const [user, setUser] = useContext(UserContext);
@@ -17,6 +18,7 @@ function Signup({ title, ...props }) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [status, setStatus] = useState(0);
+  const [showOverlay, setShowOverlay] = useState(false);
 
   useEffect(() => {
     document.title = title || "Sign up | CampusTalk";
@@ -44,8 +46,11 @@ function Signup({ title, ...props }) {
       .post("/api/users/google", body, headers)
       .then((res) => {
         localStorage.setItem("user", JSON.stringify(res.data));
+
         setUser(res.data.user);
+
         socket.current.emit("join", res.data.user._id);
+
         if (res.data.user.new) {
           props.history.push("/user-info");
         } else {
@@ -64,6 +69,8 @@ function Signup({ title, ...props }) {
   const signupHandler = (e) => {
     e.preventDefault();
 
+    setShowOverlay(true);
+
     axios
       .post("/api/users/signup", {
         email,
@@ -71,6 +78,8 @@ function Signup({ title, ...props }) {
         confirmPassword,
       })
       .then((res) => {
+        setShowOverlay(false);
+
         localStorage.setItem(
           "user",
           JSON.stringify({ token: res.data.token, user: res.data.user })
@@ -190,6 +199,9 @@ function Signup({ title, ...props }) {
           </div>
         </form>
       </section>
+
+      {/* overlay */}
+      <Overlay text="Signing Up..." showOverlay={showOverlay} />
     </main>
   );
 }

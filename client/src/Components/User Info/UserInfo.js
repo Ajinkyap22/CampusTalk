@@ -6,6 +6,7 @@ import avatar from "../../assets/avatar.png";
 import Toast from "../Toast";
 import ProfileModal from "./ProfileModal";
 import Input from "../FormControl/Input";
+import Overlay from "../Overlay";
 
 function UserInfo({ title, ...props }) {
   const [firstName, setFirstName] = useState("");
@@ -260,14 +261,7 @@ function UserInfo({ title, ...props }) {
       />
 
       {/* overlay */}
-      <div
-        className={`absolute w-full ${
-          showModal ? "flex" : ""
-        } justify-center items-center h-full bg-[rgba(0,0,0,0.7)]`}
-        hidden={showModal ? false : true}
-      >
-        <h1 className="text-2xl text-white tracking-wide pulse">Saving...</h1>
-      </div>
+      <Overlay text="Saving..." showOverlay={showModal} />
 
       {/* toast notification */}
       <Toast text="Profile Picture Saved" show={showToast ? true : false} />

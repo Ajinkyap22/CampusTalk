@@ -4,6 +4,7 @@ import { withRouter, Link } from "react-router-dom";
 import Logo from "../Logo";
 import Password from "../FormControl/Password";
 import axios from "axios";
+import Overlay from "../Overlay";
 
 function Reset({ title, history, match }) {
   const [formData, setFormData] = useState({
@@ -14,6 +15,7 @@ function Reset({ title, history, match }) {
   const [status, setStatus] = useState({});
   const [changed, setChanged] = useState(false);
   const [user] = useContext(UserContext);
+  const [showOverlay, setShowOverlay] = useState(false);
 
   useEffect(() => {
     document.title = title || "Reset Password | CampusTalk";
@@ -25,12 +27,15 @@ function Reset({ title, history, match }) {
 
   function handleSubmit(e) {
     e.preventDefault();
+    setShowOverlay(true);
 
     axios
       .post("/api/users/reset-password", formData)
-      .then(() => {
+      .then((res) => {
+        console.log(res.data);
         setChanged(true);
         history.push("/login");
+        showOverlay(false);
       })
       .catch((err) => {
         if (err.response.status === 404) {
@@ -124,6 +129,9 @@ function Reset({ title, history, match }) {
           </form>
         )}
       </section>
+
+      {/* overlay */}
+      <Overlay text="Resetting password..." showOverlay={showOverlay} />
     </main>
   );
 }

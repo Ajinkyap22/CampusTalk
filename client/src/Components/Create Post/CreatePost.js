@@ -115,6 +115,8 @@ function CreatePost({ title, post, ...props }) {
         {/* user profile picture & name */}
         <AuthorInfo
           picture={user?.picture}
+          forum={forum}
+          authorForums={user?.forums || []}
           firstName={user?.firstName}
           anonymous={anonymous}
           lastName={user?.lastName}
