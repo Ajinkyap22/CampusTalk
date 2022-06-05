@@ -12,7 +12,7 @@
 
 ## Live Demo
 
-[CampusTalk](https://campustalk-app.herokuapp.com/)
+[CampusTalk](http://campustalk.live/)
 
 ## Technologies
 
