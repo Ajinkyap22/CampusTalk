@@ -12,7 +12,7 @@
 
 ## Live Demo
 
-[CampusTalk](http://campustalk.live/)
+[CampusTalk](https://campustalk.vercel.app/)
 
 ## Technologies
 
