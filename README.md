@@ -12,7 +12,7 @@
 
 ## Live Demo
 
-[CampusTalk](https://campustalk.vercel.app/)
+[CampusTalk](https://campustalk-client.onrender.com/)
 
 ## Technologies
 
