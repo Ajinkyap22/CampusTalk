@@ -5,6 +5,7 @@
 ## Table of contents
 
 - [Live Demo](#live-demo)
+- [Screenshots](#screenshots)
 - [Technologies](#technologies)
 - [Features](#features)
 - [Status](#status)
@@ -13,6 +14,30 @@
 ## Live Demo
 
 [CampusTalk](https://campustalk-client.onrender.com/)
+
+## Screenshots
+<kbd>
+<img src="https://github.com/Ajinkyap22/portfolio/blob/develop/src/images/Project%20thumbnails/CampusTalk.jpg?raw=true" width="600" alt="Home Screen" />
+</kbd>
+
+<hr/>
+
+<kbd>
+  <img src="https://github.com/Ajinkyap22/portfolio/blob/develop/src/images/Project%20screenshots/CampusTalk/1.png?raw=true" width="600" alt="Feed"  />
+</kbd>
+
+<hr/>
+
+
+<kbd>
+<img src="https://github.com/Ajinkyap22/portfolio/blob/develop/src/images/Project%20screenshots/CampusTalk/2.png?raw=true" width="600" alt="Forums" />
+</kbd>
+
+<hr/>
+
+<kbd>
+<img src="https://github.com/Ajinkyap22/portfolio/blob/develop/src/images/Project%20screenshots/CampusTalk/3.png?raw=true" width="600" alt="Create Forum" />
+</kbd>
 
 ## Technologies
 
